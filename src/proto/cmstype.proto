@@ -1,0 +1,414 @@
+syntax = "proto3";
+
+package pb;
+
+import "usertype.proto";
+
+// 管理员
+message Admin {
+    uint32 id = 1;
+    bool enable = 2;
+    string email = 3;
+    string password = 4;
+    // 真实姓名
+    string name = 5;
+    // 备注
+    string note = 6;
+    // 有权限的区域
+    repeated uint32 area_ids = 7;
+    // 有权限的应用
+    repeated uint32 app_ids = 8;
+    // 有权限的模块
+    repeated string modules = 9;
+    uint32 login_at = 10;
+    string login_ip = 11;
+    // 连续失败次数
+    uint32 fail_count = 12;
+    string access_token = 13;
+
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 功能模块
+message Module {
+    // 模块名称，英文，唯一，前端通过该字段显示或者隐藏功能模块
+    string name = 1;
+    // 模块中文名称，显示用
+    string title = 2;
+    // 仅该模块调用的api路径
+    repeated string api_paths = 3;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 操作记录
+message OpRecord {
+    uint64 id = 1;
+    uint32 admin_id = 2;
+    string email = 3;
+    string api_path = 4;
+    string desc = 5;
+    uint32 spent_ms = 6;
+    string ip = 7;
+    string request_data = 8;
+    string metadata = 9;
+    string reply_data = 10;
+    string error_data = 11;
+
+    uint32 created_at = 20;
+}
+
+// 工会
+message Guild {
+    uint32 id = 1;
+    // 区域id
+    uint32 area_id = 2;
+    // 名称
+    string name = 3;
+    // 邀请码
+    string invite_code = 4;
+    // 主播数量
+    uint32 anchor_count = 5;
+    // 是否启用
+    bool enable = 6;
+    // 备注
+    string note = 7;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 应用，每个app端都需要对应一个应用结构
+message App {
+    uint32 id = 1;
+    // 系统类型
+    OsType os_type = 2;
+    // 应用key
+    string app_key = 3;
+    // 是否启用
+    bool enable = 4;
+    // 应用名称
+    string title = 5;
+    // 包名
+    string bundle_id = 6;
+    // google play CredentialFile，apple store IAP Secret
+    string store_cred = 7;
+    // api地址
+    string api_addr = 8;
+    // 备注
+    string note = 9;
+    // 启用的区域
+    repeated uint32 area_ids = 10;
+    // Facebook app id
+    string facebook_id = 11;
+    // Google app id
+    string google_id = 12;
+    // Adjust id
+    string adjust_id = 13;
+
+    // 是否为老toya应用
+    bool is_old = 100;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 声网配置
+message AgoraConfig {
+    // 声网app id
+    string app_id = 1;
+    // 声网app证书
+    string app_cert = 2;
+    // REST Api客户id
+    string client_id = 3;
+    // REST Api客户密匙
+    string client_secret = 4;
+    // 视频录制时长
+    uint32 capture_duration = 5;
+    // 视频录制存储配置
+    uint32 storage_vendor = 6;
+    uint32 storage_region = 7;
+    string storage_endpoint = 8;
+    string storage_bucket = 9;
+    string storage_access_key = 10;
+    string storage_secret_key = 11;
+}
+
+// 阿里云oss配置
+message OssConfig {
+    string endpoint = 1;
+    string bucket = 2;
+    string key_id = 3;
+    string key_secret = 4;
+}
+
+// 融云配置
+message RongcloudConfig {
+    // 融云app key
+    string app_key = 1;
+    // 融云app secret
+    string app_secret = 2;
+    // 融云api 域名
+    string domain = 3;
+
+    // 融云app key
+    string old_app_key = 4;
+    // 融云app secret
+    string old_app_secret = 5;
+    // 融云api 域名
+    string old_domain = 6;
+}
+
+// App区域配置信息，每个app的每个区域一个
+message AreaConfig {
+    uint32 id = 1;
+    // 应用id，为0的时候表示区域全局配置
+    uint32 app_id = 2;
+    // 区域id，不可为0
+    uint32 area_id = 3;
+    // 用户和主播积分转换比例
+    uint32 convert_rate = 4;
+    // 用户充值分成比例，百分位，如果取值为10，表示分成10%
+    uint32 deposit_commission = 5;
+    // 用户赠送的钻石或积分消费分成比例，百分位，如果取值为10，表示分成10%
+    uint32 reward_commission = 6;
+    // 通话价格
+    uint32 call_price = 7;
+    // 免费消息数量
+    uint32 free_message_count = 8;
+    // 新用户奖励钻石数量
+    uint32 new_user_reward = 9;
+    // 心跳间隔，秒
+    uint32 heartbeat_interval = 10;
+    // 启用的支付渠道id
+    repeated uint32 pay_channel_ids = 11;
+    // cdn域名
+    string cdn = 12;
+    // 免打扰时长，秒
+    uint32 dnd_period = 13;
+    // 标签配置
+    repeated string tags = 14;
+
+    // 声网配置
+    AgoraConfig agora_config = 20;
+    // 阿里云oss配置
+    OssConfig oss_config = 21;
+    // 融云配置
+    RongcloudConfig rongcloud_config = 22;
+
+    // TODO ai policy
+    // 仅在服务端发起ai call
+    //    bool ai_call_in_server_only = 12;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+}
+
+// 支付配置
+message PayConfig {
+    uint32 id = 1;
+    // 区域id
+    uint32 area_id = 2;
+    // 支付方式
+    PayType type = 3;
+    // 应用id，payermax使用
+    string app_id = 4;
+    // 应用密匙，payermax、xendit使用
+    string app_secret = 6;
+    string redirect_url = 8;
+    string callback_url = 10;
+    // permax order prefix
+    string extra1 = 11;
+    string extra2 = 12;
+    string extra3 = 13;
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 应用版本，每个应用可以有多个版本
+message Version {
+    uint32 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 系统类型
+    OsType os_type = 3;
+    // 版本号
+    uint32 code = 4;
+    // 版本名称，如1.0.1，内部判断是否需要升级等都是用code
+    string name = 5;
+    // 是否启用
+    bool enable = 6;
+    // 是否审核中
+    bool in_review = 7;
+    // 备注
+    string note = 8;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 本地化
+message Localization {
+    // 语言类型
+    string lang = 1;
+    // 本地语言内容
+    string content = 2;
+}
+
+// 升级配置
+message Upgrade {
+    uint32 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 是否启用
+    bool enable = 3;
+    // 升级的系统类型
+    OsType os_type = 4;
+    // 最低版本号，低于该版本号的需要升级
+    uint32 min_version = 5;
+    // 升级名称，仅供内部是用
+    string title = 6;
+    // 提示升级
+    bool show_upgrade = 7;
+    // 强制升级
+    bool force_upgrade = 8;
+    // 升级包地址
+    string upgrade_url = 9;
+    // 升级提示信息，多语言配置，后台使用
+    repeated Localization upgrade_tips = 10;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+enum MessageType {
+    MessageTypeUnknown = 0;
+    // 文本
+    MessageText = 1;
+    // 礼物
+    MessageGift = 2;
+    // 充值
+    MessageDeposit = 3;
+    // 图片
+    MessageImage = 4;
+    // 视频
+    MessageVideo = 5;
+    // 语音
+    MessageAudio = 6;
+    // 位置
+    MessageLocation = 7;
+    // 虚拟视频
+    MessageVirtual = 8;
+    //    // 通话
+    //    MessageCall = 9;
+    //    // 通话结束
+    //    MessageHang = 10;
+}
+
+enum MessageDirection {
+    DirectionUnknown = 0;
+    ToUser = 1;
+    ToAnchor = 2;
+}
+
+/*
+
+	AIBMissCall = 1
+	AIBFollow = 2
+	AIBRecharge = 3
+	AIBSendGift = 4
+*/
+
+enum ActionType {
+    ActionTypeUnknown = 0;
+    // 拒绝接听
+    ActionRefuseCall = 1;
+    // 未界定
+    ActionMissCall = 2;
+    // 通话结束
+    ActionEndCall = 3;
+    // 关注
+    ActionFollow = 4;
+    // 充值
+    ActionDeposit = 5;
+    // 发送礼物
+    ActionSendGift = 6;
+}
+
+message RobotMessage {
+    uint32 id = 1;
+    uint32 area_id = 2;
+    // 机器人主播id
+    uint32 anchor_id = 3;
+    // 是否启用
+    bool enable = 4;
+    // 消息类型
+    MessageType type = 5;
+    // 消息内容
+    string text = 6;
+    // 图片、视频、语音消息链接
+    string uri = 7;
+    // 缩略图
+    string thumb = 8;
+    // 语音或视频消息时长
+    uint32 duration = 9;
+    // 顺序
+    uint32 sort = 10;
+    // 间隔时间
+    uint32 interval = 11;
+    // 动作类型
+    ActionType action = 12;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+message AutoMessage {
+    uint32 id = 1;
+    uint32 area_id = 2;
+    // 是否启用
+    bool enable = 3;
+    // 动作类型
+    ActionType action = 4;
+    // 消息类型
+    MessageType type = 5;
+    // 消息内容
+    string text = 6;
+    // 图片、视频、语音消息链接
+    string uri = 7;
+    // 缩略图
+    string thumb = 8;
+    // 语音或视频消息时长
+    uint32 duration = 9;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+message ChatMessage {
+    uint64 id = 1;
+    uint32 area_id = 2;
+    // 用户id
+    uint32 user_id = 3;
+    // 主播id
+    uint32 anchor_id = 4;
+    // 消息类型
+    MessageType type = 6;
+    // 消息方向
+    MessageDirection direction = 5;
+    // 消息内容
+    string text = 7;
+    // 图片、视频、语音消息链接
+    string uri = 8;
+    // 缩略图
+    string thumb = 9;
+    // 语音或视频消息时长
+    uint32 duration = 10;
+    // 消息发送时间
+    uint32 send_at = 11;
+
+    uint32 created_at = 21;
+}

@@ -1,0 +1,49 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "robotId": 10001,
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "type": "图片",
+                "fileName": "1002.jpg",
+                "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "content": "1002.jpg",
+                "sort": "1",
+                "status": 0
+            },
+            {
+                "robotId": 10001,
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "type": "图片",
+                "fileName": "1002.jpg",
+                "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "content": "have you ever felt lonely baby",
+                "sort": "1",
+                "status": 0
+            },
+            {
+                "robotId": 10001,
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "type": "图片",
+                "fileName": "1002.jpg",
+                "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "content": "1003.jpg",
+                "sort": "1",
+                "status": 0
+            },
+            {
+                "robotId": 10001,
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "type": "图片",
+                "fileName": "1002.jpg",
+                "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "content": "1004.jpg",
+                "sort": "1",
+                "status": 0
+            }
+        ]
+    },
+    "errorInfo": null
+}

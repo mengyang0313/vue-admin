@@ -1,0 +1,1183 @@
+syntax = "proto3";
+
+package pb;
+
+// grpc预定义了一套通用错误码 https://grpc.github.io/grpc/core/md_doc_statuscodes.html
+// 程序使用了其中的部分错误码，这个错误码直接通过捕获rpc的异常或者返回值获取，使用的错误码如下
+// 2 UNKNOWN 未知错误
+// 3 INVALID_ARGUMENT 调用参数非法
+// 5 NOT_FOUND 查询的记录不存在
+// 6 ALREADY_EXISTS 创建的记录已存在
+// 7 PERMISSION_DENIED 没有操作权限
+// 9 FAILED_PRECONDITION 前置条件不满足，用户已被封禁，检测到该错误时跳到封禁页面并调用GetBlockInfo获取封禁的详细信息
+// 13 INTERNAL 内部服务器错误
+// 14 UNAVAILABLE 网络错误或超时，app本地错误，请求没有到服务器
+// 16 UNAUTHENTICATED 未登录，检测到该错误时跳到登录页面
+// 其中需要特殊处理的是"2 UNKNOWN 未知错误"，检测到该错误码时表示为业务层错误，需要通过返回的header来获取详细的
+// 业务层错误码，业务层错误码通过枚举ErrorCode定义，header的key为"error-code"
+
+enum ErrorCode {
+    ErrNone = 0;
+    // 余额不足
+    ErrNotEnoughBalance = 1;
+    // 被叫离线
+    ErrCalleeOffline = 2;
+    // 被叫忙线
+    ErrCalleeBusy = 3;
+    // 被拉黑
+    ErrBlocked = 4;
+}
+
+// 系统类型
+enum OsType {
+    OsUnknown = 0;
+    Android = 1;
+    Ios = 2;
+}
+
+// 文件类型
+enum FileType {
+    FileTypeUnknown = 0;
+    FileImage = 1;
+    FileVideo = 2;
+}
+
+enum CurrencyType {
+    USD = 0;
+}
+
+// 职业类型
+enum OccupationType {
+    OccupationUnknown = 0;
+    // 互联网
+    OccupationInternet = 1;
+    // 金融
+    OccupationFinance = 2;
+    // 政府机构
+    OccupationGovernment = 3;
+    // 教育/科研
+    OccupationEducation = 4;
+    // 医疗
+    OccupationMedical = 5;
+    // 文化传媒
+    OccupationCulture = 6;
+    // 艺术/娱乐
+    OccupationArt = 7;
+    // 建筑
+    OccupationArchitecture = 8;
+    // 法律
+    OccupationLaw = 9;
+    // 工业制造
+    OccupationIndustry = 10;
+    // 服务行业
+    OccupationService = 11;
+    // 贸易/零售
+    OccupationTrading = 12;
+    // 酒店旅游
+    OccupationHotel = 13;
+    // 现代农业
+    OccupationAgriculture = 14;
+    // 在校学生
+    OccupationStudent = 15;
+    // 航空航天
+    OccupationAerospace = 16;
+    // 交通运输
+    OccupationTransport = 17;
+    // 餐饮
+    OccupationDining = 18;
+    // 体育
+    OccupationSports = 19;
+    // 公益
+    OccupationNonProfit = 20;
+    // 自由职业
+    OccupationFreelancer = 21;
+    // 其他
+    OccupationOther = 22;
+}
+
+// 认证类型
+enum AuthType {
+    AuthUnknown = 0;
+    // 匿名
+    AuthAnonymous = 1;
+    // 邮箱
+    AuthEmail = 2;
+    // 手机号
+    AuthPhone = 3;
+    // Google登录
+    AuthGoogle = 4;
+    // Facebook登录
+    AuthFacebook = 5;
+    // Apple登录
+    AuthApple = 6;
+}
+
+// 实体类型
+enum EntityType {
+    EntityUnknown = 0;
+    // 普通用户
+    EntityUser = 1;
+    // 主播
+    EntityAnchor = 2;
+    // 管理员
+    EntityAdmin = 3;
+    // 公会
+    EntityGuild = 4;
+    // 订阅订单
+    EntitySubscription = 5;
+    // 充值订单
+    EntityPayRecord = 6;
+    // 礼物记录
+    EntityGiftRecord = 7;
+    // VIP记录
+    EntityVipRecord = 8;
+    // 通话记录
+    EntityCallRecord = 9;
+    // 签到记录
+    EntityCheckinRecord = 10;
+    // 举报记录
+    EntityViolationRecord = 11;
+    // 在线记录
+    EntityOnlineRecord = 12;
+    // 结算记录
+    EntitySettleRecord = 13;
+}
+
+// 网络类型
+enum NetworkType {
+    NetworkUnknown = 0;
+    // Wifi
+    NetworkWifi = 1;
+    // 2G
+    Network2G = 2;
+    // 3G
+    Network3G = 3;
+    // 4G
+    Network4G = 4;
+    // 5G
+    Network5G = 5;
+}
+
+// 性别类型
+enum GenderType {
+    GenderUnknown = 0;
+    // 男
+    Male = 1;
+    // 女
+    Female = 2;
+}
+
+// 运营区域
+message Area {
+    uint32 id = 1;
+    // 区域标题，后台名称，仅后台使用
+    string title = 2;
+    // 区域名称，本地化名称
+    string name = 3;
+    // 区域覆盖的国家
+    repeated string countries = 4;
+    // 语言
+    string lang = 5;
+    // 是否启用
+    bool enable = 6;
+
+    uint32 updated_at = 10;
+    uint32 created_at = 11;
+}
+
+// 设备信息
+message Device {
+    uint32 id = 1;
+    // 设备id
+    string device_id = 2;
+    // 设备品牌
+    string device_brand = 3;
+    // 设备型号
+    string device_model = 4;
+    // 系统版本
+    string os_version = 5;
+    // 系统类型
+    OsType os_type = 6;
+    // 是否封禁
+    bool blocked = 7;
+    // 封禁原因
+    string reason = 8;
+    // 解封时间
+    uint32 release_at = 9;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 在线状态
+enum OnlineStatus {
+    OnlineStatusUnknown = 0;
+    // 离线
+    Offline = 1;
+    // 在线
+    Online = 2;
+    // 忙线
+    Busy = 3;
+    // 勿扰
+    Dnd = 4;
+}
+
+// 封禁类型
+enum BlockStatus {
+    BlockUnknown = 0;
+    // 未封禁
+    BlockNone = 1;
+    // 封禁账号
+    BlockAccount = 2;
+    // 封禁设备
+    BlockDevice = 3;
+    // 封禁所有，包括账号和设备
+    BlockAll = 4;
+}
+
+enum ToyaStatus {
+    // 已同步历史记录
+    HistorySynced = 0;
+    // 已实时同步，用户已接入新api
+    RealtimeSynced = 1;
+    // id冲突，已变更id，需要重新登录
+    IdChanged = 2;
+}
+
+message User {
+    // 用户id
+    uint32 id = 1;
+    // 归属的app
+    uint32 app_id = 2;
+    // 版本号
+    uint32 version = 3;
+    // 归属的区域
+    uint32 area_id = 4;
+    // 系统类型
+    OsType os_type = 5;
+    // 国家
+    string country = 6;
+    // 语言
+    string lang = 7;
+    // 在线状态
+    OnlineStatus online_status = 8;
+    // 封禁状态
+    BlockStatus block_status = 9;
+    // 余额
+    uint32 balance = 10;
+    // 锁定的余额，正在通话中的消耗，通话结束之后会结算
+    uint32 locked_balance = 11;
+    // 消费金额
+    uint32 expense = 12;
+    // 奖励和赠送的金额
+    uint32 reward = 13;
+    // 充值金额
+    uint32 deposit = 14;
+    // vip结束时间
+    uint32 vip_end_at = 15;
+    // 发送消息额度
+    uint32 message_quota = 16;
+    // 已发送消息数量
+    uint32 message_used = 17;
+    // 已签到天数
+    uint32 checkin_days = 18;
+    // 上次签到时间
+    uint32 checkin_at = 19;
+    // 粉丝数量
+    uint32 fans_count = 20;
+    // 昵称
+    string nickname = 21;
+    // 性别
+    GenderType gender = 22;
+    // 生日，unix时间戳，秒
+    uint32 birthday = 23;
+    // 头像
+    string avatar = 24;
+    // 签名
+    string signature = 25;
+    // 职业
+    OccupationType occupation = 26;
+    // 离线时间
+    uint32 offline_at = 27;
+    // 上线ip
+    string online_ip = 28;
+    // 经度
+    float longitude = 29;
+    // 纬度
+    float latitude = 30;
+    // 创建ip
+    string create_ip = 31;
+    // 设备id
+    uint32 device_id = 32;
+    // 网络类型
+    NetworkType network_type = 33;
+    // 登录后的访问token
+    string access_token = 34;
+    // 访问token过期时间
+    uint32 access_expire_at = 35;
+    // 封禁原因
+    string block_reason = 36;
+    // 是否为匿名用户
+    bool anonymous = 37;
+    // 声网信令token
+    string agora_rtm_token = 38;
+    // 声网信令过期时间，unix时间戳，秒
+    uint32 agora_rtm_expire_at = 39;
+    // 融云token
+    string rc_token = 40;
+    // 融云token过期时间
+    uint32 rc_expire_at = 41;
+
+    uint32 updated_at = 60;
+    uint32 created_at = 61;
+
+    // 以下字段仅用于兼容老toya，后续会去除
+    // 老toya id
+    uint32 toya_id = 62;
+    // toya同步时间
+    uint32 toya_synced_at = 63;
+    // toya同步状态
+    ToyaStatus toya_status = 64;
+
+    // 绑定的认证信息，仅app端使用，如果绑定的认证信息为空，则为游客
+    repeated EntityAuth auths = 100;
+    // 是否为新用户
+    bool is_new = 101;
+    // 关注状态
+    FollowStatus follow_status = 102;
+}
+
+// 主播等级
+enum AnchorLevel {
+    AnchorLevelUnknown = 0;
+    // 差劲
+    AnchorPoor = 1;
+    // 中等
+    AnchorModerate = 2;
+    // 良好
+    AnchorGood = 3;
+    // 优秀
+    AnchorExcellent = 4;
+}
+
+// 审核状态
+enum ReviewStatus {
+    ReviewStatusUnknown = 0;
+    // 未审核
+    Editing = 1;
+    // 已提交审核
+    Submitted = 2;
+    // 审核中
+    InReview = 3;
+    // 审核不通过
+    Rejected = 4;
+    // 审核通过
+    Approved = 5;
+}
+
+// 主播信息，客户端使用
+message AnchorInfo {
+    uint32 id = 1;
+    // 个人信息id
+    uint32 profile_id = 2;
+    // 国家
+    string country = 3;
+    // 在线状态
+    OnlineStatus status = 4;
+    // 等级
+    AnchorLevel level = 5;
+    // 语言
+    string lang = 6;
+    // 每分钟价格
+    uint32 price = 7;
+    // 粉丝数量
+    uint32 fans_count = 8;
+    // 性别
+    GenderType gender = 9;
+    // 昵称
+    string nickname = 10;
+    // 签名
+    string signature = 11;
+    // 头像
+    string avatar = 12;
+    // 职业
+    OccupationType occupation = 13;
+    // 生日，unix时间戳
+    uint32 birthday = 14;
+    // 标签
+    repeated string tags = 15;
+    // 语音问候
+    string voice_greeting = 16;
+    // 每日经常在线起始时间，小时，0-23
+    uint32 online_start = 17;
+    // 每日经常在线结束时间，小时，1-24
+    uint32 online_end = 18;
+    // 相册
+    repeated FileRecord photos = 19;
+    // 视频
+    repeated FileRecord videos = 20;
+    // 离线时间
+    uint32 offline_at = 21;
+    // 经度
+    float longitude = 22;
+    // 纬度
+    float latitude = 23;
+    // 在线视频
+    repeated FileRecord lives = 24;
+    // 关注状态
+    FollowStatus follow_status = 25;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+}
+
+// 关系类型
+enum RelationType {
+    RelationUnknown = 0;
+    // 用户关注主播
+    RelationUserFollowAnchor = 1;
+    // 主播关注用户
+    RelationAnchorFollowUser = 2;
+    // 用户拉黑主播
+    RelationUserBlockAnchor = 3;
+    // 主播拉黑用户
+    RelationAnchorBlockUser = 4;
+}
+
+// 关注状态
+enum FollowStatus {
+    // 无关注关系
+    FollowStatusNone = 0;
+    // 已关注
+    FollowStatusFollower = 1;
+    // 被关注
+    FollowStatusFollowed = 2;
+    // 互相关注，好友关系
+    FollowStatusFriend = 3;
+}
+
+// 用户主播关系
+message Relation {
+    uint64 id = 1;
+    // 关系类型，可以是多种关系组合
+    repeated RelationType types = 2;
+    // 用户id
+    uint32 user_id = 3;
+    // 主播id
+    uint32 anchor_id = 4;
+    // 消费金额
+    uint32 expense = 5;
+    // 用户关注时间
+    uint32 user_follow_at = 6;
+    // 主播关注时间
+    uint32 anchor_follow_at = 7;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 实体登录认证信息
+message EntityAuth {
+    uint32 id = 1;
+    uint32 app_id = 2;
+    uint32 area_id = 3;
+    // 实体类型
+    EntityType entity_type = 4;
+    // 关联的实体id
+    uint32 entity_id = 5;
+    // 认证类型
+    AuthType auth_type = 6;
+    // 认证的唯一id
+    string auth_id = 7;
+    // 认证补充信息，密码、第三方AccessToken等
+    string auth_extra = 8;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 签到配置
+message CheckinConfig {
+    uint32 id = 1;
+    // 应用id，为0的时候表示区域全局配置
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 奖励钻石数量
+    uint32 bonus = 4;
+    // 奖励vip天数
+    uint32 vip_days = 5;
+    // 奖励匹配次数
+    uint32 matches = 6;
+    // 权重，用于随机结果
+    uint32 weight = 7;
+    // 排序
+    uint32 sort = 8;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+message CheckinRecord {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 用户id
+    uint32 user_id = 3;
+    // 连续签到天数
+    uint32 continuous_days = 4;
+    // 奖励钻石数量
+    uint32 bonus = 5;
+    // 奖励vip天数
+    uint32 vip_days = 6;
+    // 奖励匹配次数
+    uint32 matches = 7;
+    // 签到id
+    uint32 config_id = 8;
+
+    uint32 created_at = 10;
+}
+
+// 通话发起类型
+enum CallType {
+    CallTypeUnknown = 0;
+    // 用户呼叫
+    CallByUser = 1;
+    // 主播呼叫
+    CallByAnchor = 2;
+    // 用户Ai呼叫
+    CallByUserAi = 3;
+    // 主播Ai呼叫
+    CallByAnchorAi = 4;
+}
+
+// 结束类型
+enum HangType {
+    HangTypeUnknown = 0;
+    // 用户挂断
+    HangByUser = 1;
+    // 主播挂断
+    HangByAnchor = 2;
+    // 无人接听
+    NoAnswer = 3;
+    // 客户端网络不好
+    BadNetwork = 4;
+    // 余额不足
+    InsufficientBalance = 5;
+    // 系统错误
+    SystemError = 6;
+    // 声网超时
+    AgoraTimeout = 7;
+    // 声网错误
+    AgoraError = 8;
+}
+
+// 录制状态
+enum CaptureStatus {
+    CaptureStatusUnknown = 0;
+    // 待录制
+    CaptureWaiting = 1;
+    // 正在录制
+    CaptureOngoing = 2;
+    // 转码中
+    CaptureTranscoding = 3;
+    // 录制完成
+    CaptureComplete = 4;
+    // 录制错误
+    CaptureError = 5;
+}
+
+// 通话记录
+message CallRecord {
+    uint64 id = 1;
+    // 所属APP
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 用户id
+    uint32 user_id = 4;
+    // 主播id
+    uint32 anchor_id = 5;
+    // 每分钟价格
+    uint32 price = 6;
+    // 通话发起类型
+    CallType call_type = 7;
+    // 通话建立时间
+    uint32 connected_at = 8;
+    // 通话时长，秒
+    uint32 duration = 9;
+    // 计费时长，秒
+    uint32 bill_duration = 10;
+    // 剩余时长，秒
+    uint32 remain_duration = 11;
+    // 用户消费，实时计费
+    uint32 expense = 12;
+    // 通话结束类型
+    HangType hang_type = 13;
+    // 通话结束时间
+    uint32 hang_at = 14;
+    // 主播收益，通话结束之后结算
+    uint32 income = 15;
+    // 用户评分
+    uint32 user_score = 16;
+    // 录屏状态
+    CaptureStatus capture_status = 17;
+    // 录制开始时间
+    uint32 capture_start_at = 18;
+    // 录制时长
+    uint32 capture_duration = 19;
+    // 录制文件id
+    uint64 capture_file_id = 20;
+    //    // 录制资源id
+    //    string capture_rid = 21;
+    //    // 录制会话id
+    //    string capture_sid = 22;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+
+    // 老toya频道id
+    uint64 toya_channel_id = 100;
+}
+
+// 礼物类型
+enum GiftType {
+    GiftTypeUnknown = 0;
+    // 普通礼物
+    GiftNormal = 1;
+    // 动效礼物
+    GiftAnimation = 2;
+}
+
+// 礼物配置
+message GiftConfig {
+    uint32 id = 1;
+    // 所属APP，为0的时候表示区域全局配置
+    uint32 app_id = 2;
+    // 所属区域
+    uint32 area_id = 3;
+    // 后台使用名称
+    string title = 4;
+    // 商品本地化名称，客户端使用
+    string name = 5;
+    // 礼物类型
+    GiftType type = 6;
+    // 是否启用
+    bool enable = 7;
+    // 价格
+    uint32 price = 8;
+    // 图标地址
+    string icon = 9;
+    // 动效地址
+    string animation = 10;
+    // 排序
+    uint32 sort = 11;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// vip配置，钻石或积分购买
+message VipConfig {
+    uint32 id = 1;
+    // 所属APP，为0的时候表示区域全局配置
+    uint32 app_id = 2;
+    // 所属区域
+    uint32 area_id = 3;
+    // 后台使用名称
+    string title = 4;
+    // 天数
+    uint32 days = 5;
+    // 价格，钻石或积分价格
+    uint32 price = 6;
+    // 客户端显示折扣，百分位，70表示7折
+    uint32 discount = 7;
+    // 是否启用
+    bool enable = 8;
+    // 排序
+    uint32 sort = 9;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 礼物记录
+message GiftRecord {
+    uint64 id = 1;
+    // 所属APP
+    uint32 app_id = 2;
+    // 用户id
+    uint32 user_id = 3;
+    // 主播id
+    uint32 anchor_id = 4;
+    // 通话id，为0的时表示是通过聊天发送的礼物
+    uint64 call_id = 5;
+    // 礼物id
+    uint32 gift_id = 6;
+    // 数量
+    uint32 quantity = 7;
+    // 单价
+    uint32 price = 8;
+    // 总价
+    uint32 total = 9;
+    // 主播端收入
+    uint32 income = 10;
+
+    uint32 created_at = 21;
+}
+
+// VIP记录
+message VipRecord {
+    uint64 id = 1;
+    // 所属APP
+    uint32 app_id = 2;
+    // 用户id
+    uint32 user_id = 3;
+    // vip配置id
+    uint32 vip_id = 4;
+    // 数量
+    uint32 quantity = 5;
+    // 单价
+    uint32 price = 6;
+    // 总天数
+    uint32 days = 7;
+    // 总价
+    uint32 total = 9;
+
+    uint32 created_at = 10;
+}
+
+// 商品
+message Commodity {
+    uint32 id = 1;
+    // 应用id，为0的时候表示区域全局配置
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 是否启用
+    bool enable = 4;
+    // 商品名称，仅供后台使用
+    string title = 5;
+    // 商品本地化名称，客户端使用
+    string name = 6;
+    // 内购商品id或第三方支付sku
+    string sku = 7;
+    // 价格，单位为分，后台配置为美元，返回给客户端时会自动转换成本地货币
+    uint32 price = 8;
+    // 货币类型
+    string currency = 9;
+    // 客户端显示折扣，百分位，70表示7折
+    uint32 discount = 10;
+    // 图标
+    string icon = 11;
+    // 充值数量
+    uint32 amount = 12;
+    // 奖励数量
+    uint32 bonus = 13;
+    // vip天数
+    uint32 vip_days = 14;
+    // 排序
+    uint32 sort = 15;
+
+    // 是否为订阅，为兼容之前的版本，客户端忽略
+    bool is_subscription = 16;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// banner配置
+message BannerConfig {
+    uint32 id = 1;
+    // 应用id，为0的时候表示区域全局配置
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // banner名称，仅供后台使用
+    string title = 4;
+    // banner本地化名称，客户端使用
+    string name = 5;
+    // 是否启用
+    bool enable = 6;
+    // 图片地址
+    string image = 7;
+    // 跳转地址，目前暂时只支持http和https，如果不是这两个scheme或者为空，则忽略
+    string target = 8;
+    // 是否外部跳转
+    bool external = 9;
+    // 排序
+    uint32 sort = 10;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 违规类型
+enum ViolationType {
+    ViolationUnknown = 0;
+    // 诈骗
+    ViolationFraud = 1;
+    // 色情
+    ViolationPorn = 2;
+    // 反动
+    ViolationReaction = 3;
+    // 其他
+    ViolationOther = 4;
+}
+
+// 违规记录
+message ViolationRecord {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 举报者类型，主播或用户
+    EntityType reporter_type = 4;
+    // 举报者id
+    uint32 reporter_id = 5;
+    // 被举报者类型，主播或用户
+    EntityType reported_type = 6;
+    // 被举报者id
+    uint32 reported_id = 7;
+    // 违规类型
+    ViolationType violation_type = 8;
+    // 举报信息
+    string report_message = 9;
+    // 处理状态
+    BlockStatus deal_status = 10;
+    // 处理信息
+    string deal_message = 11;
+    // 处理时间
+    uint32 deal_at = 12;
+    // 封禁时长，秒
+    uint32 block_duration = 13;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 订阅期限
+enum SubscriptionPeriod {
+    SubscriptionPeriodUnknown = 0;
+    SubscriptionPeriodWeekly = 1;
+    SubscriptionPeriodMonthly = 2;
+    SubscriptionPeriodQuarterly = 3;
+    SubscriptionPeriodYearly = 4;
+}
+
+// 订阅状态
+enum SubscriptionStatus {
+    SubscriptionStatusUnknown = 0;
+    // 活跃，自定订阅
+    SubscriptionStatusActive = 1;
+    // 已取消自动订阅，当前订阅有效
+    SubscriptionStatusCancelled = 2;
+    // 已撤销自动订阅并退款，当前订阅无效
+    SubscriptionStatusRevoked = 3;
+    SubscriptionStatusGrace = 4;
+    SubscriptionStatusHold = 5;
+    SubscriptionStatusPaused = 6;
+    SubscriptionStatusExpired = 7;
+}
+
+message Subscription {
+    uint64 id = 1;
+    uint32 app_id = 2;
+    uint32 user_id = 3;
+    OsType os_type = 4;
+    SubscriptionStatus status = 5;
+    SubscriptionPeriod period = 6;
+    string product_id = 7;
+    string original_order_id = 8;
+    string latest_order_id = 9;
+    uint32 renew_at = 10;
+    uint32 expire_at = 11;
+    uint32 cancel_at = 12;
+    uint32 revoke_at = 13;
+    uint32 grace_at = 14;
+    bool trial = 15;
+    uint32 created_at = 20;
+    uint32 updated_at = 21;
+}
+
+// 近似值配置，用于在转换本地货币之后取整，单位都为分
+message Approximation {
+    // 下限，闭区间，包括该值
+    uint32 low_value = 1;
+    // 上限，开区间，不包括该值
+    uint32 high_value = 2;
+    // 目标值，在上下限区间范围内的值都近似取值为目标值
+    uint32 target_value = 3;
+}
+
+// 支付方式
+enum PayType {
+    PayTypeUnknown = 0;
+    // Google支付
+    Google = 1;
+    // Apple支付
+    Apple = 2;
+    Xendit = 3;
+    PayerMax = 4;
+    //    Coda = 5;
+}
+
+// 国家配置
+message CountryConfig {
+    uint32 id = 1;
+    // 区域id
+    uint32 area_id = 2;
+    // 国家代码，为空时表示为该区域的默认配置
+    string country = 3;
+    // 是否启用
+    bool enable = 4;
+    // 国家名称，后台使用
+    string title = 5;
+    // 国家名称，客户端使用
+    string name = 6;
+    // 货币类型
+    string currency = 7;
+    // 图标
+    string icon = 8;
+    // 汇率，相对于美元
+    float exchange_rate = 9;
+    // 近似值配置
+    repeated Approximation approximations = 10;
+    // 启用的支付方式
+    repeated PayType pay_types = 11;
+    // 排序
+    uint32 sort = 12;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+
+    repeated PayChannel pay_channels = 40;
+}
+
+// 支付渠道配置
+message PayChannel {
+    uint32 id = 1;
+    // 区域id，不可为0
+    uint32 area_id = 2;
+    // 系统类型
+    OsType os_type = 3;
+    // 支付渠道
+    string channel = 4;
+    // 支付方式
+    PayType pay_type = 5;
+    // 渠道名称，后台使用
+    string title = 6;
+    // 渠道名称，客户端使用
+    string name = 7;
+    // 支付平台图标
+    string icon = 8;
+    // 是否启用
+    bool enable = 9;
+    // 折扣，百分位，99表示99折，0为不打折
+    uint32 discount = 10;
+    // 排序
+    uint32 sort = 11;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+
+    // 使用该支付渠道配置的商品列表
+    repeated Commodity commodities = 40;
+}
+
+// 支付状态
+enum PayStatus {
+    PayStatusUnknown = 0;
+    // 待支付
+    PayStatusPending = 1;
+    // 已支付
+    PayStatusPaid = 2;
+    // 已取消
+    PayStatusCancelled = 3;
+    // 已退款
+    PayStatusRefunded = 4;
+    // 已超时
+    PayStatusExpired = 5;
+}
+
+// 支付记录
+message PayRecord {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 用户id
+    uint32 user_id = 4;
+    // 关联的主播id，给主播佣金
+    uint32 anchor_id = 5;
+    // 主播佣金
+    uint32 commission = 6;
+    // 支付方式
+    PayType pay_type = 7;
+    // 支付渠道
+    string pay_channel = 8;
+    // 支付状态
+    PayStatus pay_status = 9;
+    // 国家
+    string country = 10;
+    // 支付货币类型
+    string currency = 11;
+    // 商品id
+    uint32 commodity_id = 12;
+    // 描述
+    string desc = 13;
+    // 第三方支付id
+    string pay_order_id = 14;
+    // 第三方支付url
+    string pay_url = 15;
+    // 支付价格，本地货币，单位为分
+    uint32 pay_price = 16;
+    // 美元价格，单位为分，仅供后台统计使用
+    uint32 usd_price = 17;
+    // 支付时间
+    uint32 paid_at = 18;
+    // 钻石数量
+    uint32 amount = 19;
+    // 是否为订阅
+    bool is_subscription = 20;
+    // 查询支付状态时间
+    uint32 query_at = 21;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+}
+
+// 交易记录
+message Transaction {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 交易者类型，只能为用户或主播
+    EntityType trader_type = 3;
+    // 交易者id
+    uint32 trader_id = 4;
+    // 交易实体类型，可以为礼物、通话、支付等
+    EntityType source_type = 5;
+    // 交易实体id
+    uint64 source_id = 6;
+    // 金额，正数为增加，负数为消费
+    int32 amount = 7;
+    // 交易完成之后交易者余额
+    uint32 balance = 8;
+    // 描述
+    string desc = 9;
+
+    uint32 created_at = 10;
+}
+
+// 文件分片
+message FileChunk {
+    // 偏移，必须连续
+    uint32 offset = 1;
+    // 文件名，为空时自动生成
+    string filename = 2;
+    // 文件类型
+    FileType type = 3;
+    // 文件内容，单个分片大小不要大于8MB
+    bytes content = 4;
+}
+
+// 文件记录
+message FileRecord {
+    uint64 id = 1;
+    // 应用id，对于主播为空
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 文件类型
+    FileType type = 4;
+    // 审核状态
+    ReviewStatus status = 5;
+    // 所有者类型，主播或用户
+    EntityType owner_type = 6;
+    // 所有者ID
+    uint32 owner_id = 7;
+    // 绑定类型
+    EntityType bind_type = 8;
+    // 文件地址
+    string uri = 9;
+    // 文件大小
+    uint32 size = 10;
+    // 截图，视频有效
+    string thumb = 11;
+    // 点赞次数
+    uint32 like_count = 12;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 长连接流式消息
+message StreamMessage {
+    // 时间戳，毫秒
+    uint64 ts = 1;
+    // 消息类型
+    MessageType type = 2;
+
+    oneof body {
+        SubscribeBody subscribe = 3;
+        AbortBody abort = 4;
+        StatusBody status = 5;
+        AiCallBody call = 6;
+        VirtualCallBody virtual = 7;
+    }
+
+    enum MessageType {
+        // 心跳
+        Heartbeat = 0;
+        // 重新拉取配置
+        Reconfig = 1;
+        // 终止通话
+        AbortCall = 2;
+        // 订阅状态主播状态变化
+        SubscribeStatus = 3;
+        // 在线状态变化
+        StatusChange = 4;
+        // 发起Ai呼叫
+        AiCall = 5;
+        // 发起虚拟通话
+        VirtualCall = 6;
+    }
+
+    message SubscribeBody {
+        repeated uint32 anchor_ids = 1;
+    }
+
+    message AbortBody {
+        // 通话id
+        uint64 call_id = 1;
+    }
+
+    message StatusBody {
+        // 实体类型，主播或者用户
+        EntityType entity_type = 1;
+        // 主播或者用户id
+        uint32 entity_id = 2;
+        // 状态
+        OnlineStatus status = 3;
+    }
+
+    message AiCallBody {
+        // 主播信息，客户端使用
+        AnchorInfo anchor = 1;
+        // 用户信息，主播端使用
+        User user = 2;
+    }
+
+    message VirtualCallBody {
+        // 主播信息
+        AnchorInfo anchor = 1;
+        // 通话视频
+        string video_url = 2;
+    }
+}
+
+message Empty {
+}

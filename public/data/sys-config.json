@@ -1,0 +1,37 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "item": "items",
+                "sys": "android",
+                "channel": "kafo",
+                "version": "1.0.1",
+                "num": 3200
+            },
+            {
+                "item": "items",
+                "sys": "android",
+                "channel": "kafo",
+                "version": "1.0.1",
+                "num": 3200
+            },
+            {
+                "item": "items",
+                "sys": "android",
+                "channel": "kafo",
+                "version": "1.0.1",
+                "num": 3200
+            },
+            {
+                "item": "items",
+                "sys": "android",
+                "channel": "kafo",
+                "version": "1.0.1",
+                "num": 3200
+            }
+        ]
+    },
+    "errorInfo": null
+}

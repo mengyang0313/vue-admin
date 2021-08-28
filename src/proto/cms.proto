@@ -1,0 +1,181 @@
+syntax = "proto3";
+
+package pb.cms;
+
+import "usertype.proto";
+import "anchortype.proto";
+import "cmstype.proto";
+
+service CmsSdk {
+    // 获取运营区域列表，不分页
+    rpc GetAreaList (Empty) returns (AreaListReply) {
+    }
+
+    // 登录
+    rpc Login (LoginRequest) returns (Admin) {
+    }
+
+    // 获取当前管理员信息
+    rpc GetAdminInfo (Empty) returns (Admin) {
+    }
+
+    // 保存管理员，id为0时创建
+    rpc SaveAdmin (Admin) returns (Admin) {
+    }
+
+    // 获取管理员列表，不分页
+    rpc GetAdminList (Empty) returns (AdminListReply) {
+    }
+
+    // 保存工会，id为0时创建
+    rpc SaveGuild (Guild) returns (Guild) {
+    }
+
+    // 获取工会列表，不分页
+    rpc GetGuildList (Empty) returns (GuildListReply) {
+    }
+
+    // 获取应用列表，不分页
+    rpc GetAppList (Empty) returns (AppListReply) {
+    }
+
+    // 获取主播列表
+    rpc GetAnchorList (AnchorListRequest) returns (AnchorListReply) {
+    }
+
+    // 获取用户列表
+    rpc GetUserList (UserListRequest) returns (UserListReply) {
+    }
+
+    // 调整余额
+    rpc AdjustBalance (AdjustBalanceRequest) returns (AdjustBalanceReply) {
+    }
+
+    // 上传文件
+    rpc UploadFile (stream AdminFileChunk) returns (FileRecord) {
+    }
+}
+
+message AreaListReply {
+    repeated Area areas = 1;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message AdminListReply {
+    repeated Admin admins = 1;
+}
+
+message GuildListReply {
+    repeated Guild guilds = 1;
+}
+
+message AppListReply {
+    repeated App apps = 1;
+}
+
+message AnchorListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 主播id
+    uint32 anchor_id = 3;
+    // 区域id
+    uint32 area_id = 4;
+    // 工会id
+    uint32 guild_id = 5;
+    // 封禁状态
+    BlockStatus block_status = 6;
+    // 在线状态
+    OnlineStatus online_status = 7;
+    // 创建起始时间
+    uint32 created_start = 8;
+    // 创建结束时间
+    uint32 created_end = 9;
+    // 最小离线时间，单位为秒
+    uint32 min_offline = 10;
+}
+
+message AnchorListReply {
+    // 主播
+    repeated AnchorBasic anchors = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message UserListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 用户id
+    uint32 user_id = 3;
+    // 区域id
+    uint32 area_id = 4;
+    // 昵称
+    string nickname = 5;
+    // 仅查询vip
+    bool vip_only = 6;
+    // 仅查询充值
+    bool deposit_only = 7;
+    // 最低余额
+    uint32 min_balance = 8;
+    // 创建起始时间
+    uint32 created_start = 9;
+    // 创建结束时间
+    uint32 created_end = 10;
+}
+
+message UserListReply {
+    // 用户
+    repeated User users = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message AdminFileChunk {
+    // 偏移，必须连续
+    uint32 offset = 1;
+    // 文件名，为空时自动生成
+    string filename = 2;
+    // 文件类型
+    FileType type = 3;
+    // 文件内容，单个分片大小不要大于8MB
+    bytes content = 4;
+    // 区域id，必选
+    uint32 area_id = 5;
+}
+
+message AdjustBalanceRequest {
+    // 主播或用户
+    EntityType entity_type = 1;
+    // 主播或用户id
+    uint32 entity_id = 2;
+    // 数量，正数为增加，负数为扣除
+    int32 amount = 3;
+    // 是否发生系统通知
+    bool send_notify = 4;
+    // 描述
+    string desc = 5;
+}
+
+message AdjustBalanceReply {
+    // 调整后余额
+    uint32 balance = 1;
+}

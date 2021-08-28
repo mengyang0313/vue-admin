@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package pb;
+
+import "usertype.proto";
+
+// 主播基础信息
+message AnchorBasic {
+    // 主播id，不能跟用户id重复
+    uint32 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 版本号
+    uint32 version = 3;
+    // 工会id
+    uint32 guild_id = 4;
+    // 归属的区域
+    uint32 area_id = 5;
+    // 是否为机器人
+    bool robot = 6;
+    // 国家
+    string country = 7;
+    // 在线状态
+    OnlineStatus online_status = 8;
+    // 审核状态
+    ReviewStatus review_status = 9;
+    // profile数量
+    uint32 profile_count = 10;
+    // 等级
+    AnchorLevel level = 11;
+    // 首选语言，app展示语言
+    string lang = 12;
+    // 支持的语言
+    repeated string langs = 13;
+    // 每分钟价格
+    uint32 price = 14;
+    // 通话收入
+    uint32 call_income = 15;
+    // 礼物收入
+    uint32 gift_income = 16;
+    // 用户充值分成
+    uint32 commission_income = 17;
+    // 当前余额
+    uint32 balance = 18;
+    // 已结算总收入
+    uint32 settled = 19;
+    // 粉丝数量
+    uint32 fans_count = 20;
+    // 通话视频id
+    repeated uint64 live_ids = 21;
+    // 离线时间
+    uint32 offline_at = 22;
+    // 封禁状态
+    BlockStatus block_status = 23;
+    // 上线ip
+    string online_ip = 24;
+    // 经度
+    float longitude = 25;
+    // 纬度
+    float latitude = 26;
+    // 创建ip
+    string create_ip = 27;
+    // 设备id
+    uint32 device_id = 28;
+    // 网络类型
+    NetworkType network_type = 29;
+    // 开户行
+    string bank_name = 30;
+    // 账户名
+    string account_name = 31;
+    // 银行账号
+    string bank_account = 32;
+    // 邮箱
+    string email = 33;
+    // 备注
+    string note = 34;
+    // 登录后的访问token
+    string access_token = 35;
+    // 访问token过期时间
+    uint32 access_expire_at = 36;
+    // 声网信令token
+    string agora_rtm_token = 37;
+    // 声网信令过期时间，unix时间戳，秒
+    uint32 agora_rtm_expire_at = 38;
+    // 融云token
+    string rc_token = 39;
+    // 融云token过期时间
+    uint32 rc_expire_at = 40;
+
+    uint32 updated_at = 50;
+    uint32 created_at = 51;
+
+    // 老toya主播id
+    uint32 toya_id = 52;
+    // toya同步时间
+    uint32 toya_synced_at = 53;
+    // toya同步状态
+    ToyaStatus toya_status = 54;
+
+
+    repeated AnchorProfile profiles = 100;
+    // 通话视频
+    repeated FileRecord lives = 101;
+}
+
+// 主播个人中心信息，一个主播可以有多套个人中心信息
+message AnchorProfile {
+    uint32 id = 1;
+    // 主播id
+    uint32 anchor_id = 2;
+    // 父信息id，处于审核中的记录使用，审核通过之后会覆盖父信息
+    uint32 parent_id = 3;
+    // 审核状态
+    ReviewStatus status = 4;
+    // 语言
+    string lang = 5;
+    // 性别
+    GenderType gender = 6;
+    // 昵称
+    string nickname = 7;
+    // 签名
+    string signature = 8;
+    // 头像
+    string avatar = 9;
+    // 职业
+    OccupationType occupation = 10;
+    // 生日，unix时间戳
+    uint32 birthday = 11;
+    // 标签
+    repeated string tags = 12;
+    // 语音问候
+    string voice_greeting = 13;
+    // 每日经常在线起始时间，小时，0-23
+    uint32 online_start = 14;
+    // 每日经常在线结束时间，小时，1-24
+    uint32 online_end = 15;
+    // 相册文件id
+    repeated uint64 photo_ids = 16;
+    // 视频文件id
+    repeated uint64 video_ids = 17;
+    // 审核不通过原因
+    string reject_reason = 18;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+
+    // 相册文件
+    repeated FileRecord photos = 100;
+    // 视频文件
+    repeated FileRecord videos = 101;
+
+    // 是否为老主播，仅为兼容老主播端，后续会删除
+    bool is_old = 200;
+}
+
+// 在线记录
+message OnlineRecord {
+    uint64 id = 1;
+    // 区域id
+    uint32 area_id = 2;
+    // 主播id
+    uint32 anchor_id = 3;
+    // 上线时间
+    uint32 online_at = 4;
+    // 在线时长
+    uint32 duration = 5;
+    // 离线时间
+    uint32 offline_at = 6;
+    // 上线ip
+    string online_ip = 7;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 结算记录
+message SettleRecord {
+    uint64 id = 1;
+    // 区域id
+    uint32 area_id = 2;
+    // 工会id
+    uint32 guild_id = 3;
+    // 主播id
+    uint32 anchor_id = 4;
+    // 结算起始时间
+    uint32 start_at = 5;
+    // 结算结束时间
+    uint32 end_at = 6;
+    // 通话收入
+    uint32 call_income = 7;
+    // 礼物收入
+    uint32 gift_income = 8;
+    // 用户充值分成
+    uint32 commission_income = 9;
+    // 奖金收入
+    uint32 bonus_income = 10;
+    // 罚金
+    uint32 penalty = 11;
+    // 实际结算收入，加上奖金并扣除罚金
+    uint32 settled = 12;
+    // 是否回滚结算
+    bool rollback = 13;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}

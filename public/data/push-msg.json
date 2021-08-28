@@ -1,0 +1,41 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "pushId": "10001",
+                "area": "中东",
+                "app": "kafo",
+                "title": "这是标题",
+                "content": "这是内容",
+                "time": "2021-07-12 13:02"
+            },
+            {
+                "pushId": "10001",
+                "area": "中东",
+                "app": "kafo",
+                "title": "这是标题",
+                "content": "这是内容",
+                "time": "2021-07-12 13:02"
+            },
+            {
+                "pushId": "10001",
+                "area": "中东",
+                "app": "kafo",
+                "title": "这是标题",
+                "content": "这是内容",
+                "time": "2021-07-12 13:02"
+            },
+            {
+                "pushId": "10001",
+                "area": "中东",
+                "app": "kafo",
+                "title": "这是标题",
+                "content": "这是内容",
+                "time": "2021-07-12 13:02"
+            }
+        ]
+    },
+    "errorInfo": null
+}
