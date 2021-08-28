@@ -136,6 +136,7 @@
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('ban',scope.row)">封禁</el-button>
                         <el-button type="text" @click="toDialog('recharge',scope.row)">充值</el-button>
+                        <el-button type="text" @click="toDialog('updateUser',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('multiAccount', scope.row)">多帐号查询</el-button>
                     </template>
                 </el-table-column>
@@ -144,14 +145,19 @@
             <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
                         @pagination="fetchData"/>
 
-            <!-- ip信息 弹出栏 -->
-            <recharge ref="recharge"/>
+
 
             <!-- 封禁设备 弹出栏 -->
             <ban ref="ban"/>
 
             <!-- 多帐号查询 弹出栏 -->
             <multiAccount ref="multiAccount"/>
+
+            <!-- 充值 弹出栏 -->
+            <recharge ref="recharge" @fetchData="fetchData"/>
+
+            <!-- 更新 弹出栏 -->
+            <updateUser ref="updateUser" @fetchData="fetchData"/>
 
         </el-card>
     </div>
@@ -162,10 +168,11 @@ import Pagination from '../../../components/Pagination'
 import ban from './dialog/ban'
 import multiAccount from './dialog/multi-account'
 import recharge from './dialog/recharge'
+import updateUser from './dialog/updateUser'
 import { areaData, boolDict } from '@/dict/index'
 
 export default {
-    components: { Pagination, ban, multiAccount, recharge},
+    components: { Pagination, ban, multiAccount, recharge, updateUser},
     data() {
         return {
             // 数据列表加载动画
@@ -206,14 +213,14 @@ export default {
                         "dlfs" : "登陆方式",
                         "blockStatus" : item.getBlockStatus(),
                         "onlineStatus" : item.getOnlineStatus(),
-                        "vipEndAt" : item.getVipEndAt(),
+                        "vipEndAt" : new Date(item.getVipEndAt()*1000).format('yyyy-MM-dd'),
                         "vipCount" : 3,
                         "expense" : item.getExpense(),
                         "deposit" : item.getDeposit(),
                         "balance" : item.getBalance(),
                         "schyrq" : "上次活跃日期",
                         "scczrq" : "上次充值日期",
-                        "createdAt" : item.getCreatedAt(),
+                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
                         "osType" : item.getOsType(),
                         "version" : "系统版本",
                         "appVersion" : item.getVersion(),

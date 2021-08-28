@@ -67,7 +67,6 @@ export default {
             const $this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert(this.form.sendNotify)
                     this.$service.anchor.adjustBalance(this.form, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")

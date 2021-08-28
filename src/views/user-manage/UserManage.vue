@@ -247,7 +247,7 @@ export default {
     methods: {
         // // 测试grpc
         // testGrpc() {
-        //     const greeterClient = new GreeterClient('http://localhost:8080', null, null)
+        //     const greeterClient = new GreeterClient('http://localhost:10000', null, null)
         //     const req = new HelloRequest()
         //     req.setName("vueName")
         //
