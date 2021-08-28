@@ -51,6 +51,10 @@ service CmsSdk {
     rpc AdjustBalance (AdjustBalanceRequest) returns (AdjustBalanceReply) {
     }
 
+    // 更新用户信息，目前仅支持更新vip到期时间
+    rpc UpdateUser (User) returns (User) {
+    }
+
     // 上传文件
     rpc UploadFile (stream AdminFileChunk) returns (FileRecord) {
     }

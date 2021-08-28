@@ -957,5 +957,85 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.adjustBalance =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.User,
+ *   !proto.pb.User>}
+ */
+const methodDescriptor_CmsSdk_UpdateUser = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/UpdateUser',
+  grpc.web.MethodType.UNARY,
+  usertype_pb.User,
+  usertype_pb.User,
+  /**
+   * @param {!proto.pb.User} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.User.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.User,
+ *   !proto.pb.User>}
+ */
+const methodInfo_CmsSdk_UpdateUser = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.User,
+  /**
+   * @param {!proto.pb.User} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.User.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.User} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.User)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.User>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.updateUser =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/UpdateUser',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_UpdateUser,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.User} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.User>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.updateUser =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/UpdateUser',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_UpdateUser);
+};
+
+
 module.exports = proto.pb.cms;
 
