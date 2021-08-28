@@ -1,0 +1,538 @@
+syntax = "proto3";
+
+package pb.user;
+
+import "usertype.proto";
+
+// 所有接口都需要在请求时通过metadata（类似http header）设置appkey
+// 除开GetAreaList接口的其他结构都需要通过metadata设置area-id（区域id）
+// 除开GetAreaList和Login无需登录状态外，其他接口都需要在登录之后调用，需要通过metadata设置token
+service UserSdk {
+    // 获取运营区域列表
+    rpc GetAreaList (Empty) returns (AreaListReply) {
+    }
+
+    // 登录
+    rpc Login (LoginRequest) returns (User) {
+    }
+
+    // 获取app配置信息，用户切换语言之后需要重新拉取
+    rpc GetConfig (ConfigRequest) returns (ConfigReply) {
+    }
+
+    // 签到
+    rpc Checkin (Empty) returns (CheckinRecord) {
+    }
+
+    // 获取支付渠道配置
+    rpc GetPayChannel (PayChannelRequest) returns (PayChannelReply) {
+    }
+
+    // 获取礼物配置
+    rpc GetGiftConfig (GiftConfigRequest) returns (GiftConfigReply) {
+    }
+
+    // 获取当前用户信息
+    rpc GetUserInfo (Empty) returns (User) {
+    }
+
+    // 修改用户信息
+    rpc UpdateUserInfo (User) returns (User) {
+    }
+
+    // 获取主播列表
+    rpc GetAnchorList (AnchorListRequest) returns (AnchorListReply) {
+    }
+
+    // 获取主播信息
+    rpc GetAnchorInfo (AnchorInfoRequest) returns (AnchorInfo) {
+    }
+
+    // 获取主播id列表，返回拉黑和关注的主播id列表
+    rpc GetAnchorIds (Empty) returns (AnchorIdsReply) {
+    }
+
+    // 变更主播关系，关注、取消关注、拉黑、取消拉黑操作
+    rpc ChangeAnchorRelation (AnchorRelationRequest) returns (Empty) {
+    }
+
+    // 获取用户列表
+    rpc GetUserList (UserListRequest) returns (UserListReply) {
+    }
+
+    // 获取交易列表
+    rpc GetTransactionList (TransactionListRequest) returns (TransactionListReply) {
+    }
+
+    // 搜索主播
+    rpc SearchAnchor (SearchAnchorRequest) returns (SearchAnchorReply) {
+    }
+
+    // 赠送礼物
+    rpc SendGift (SendGiftRequest) returns (GiftRecord) {
+    }
+
+    // 购买VIP
+    rpc BuyVip (BuyVipRequest) returns (VipRecord) {
+    }
+
+    // 举报
+    rpc ReportViolation (ReportViolationRequest) returns (ViolationRecord) {
+    }
+
+    // 上报用量
+    rpc ReportUsage (ReportUsageRequest) returns (ReportUsageReply) {
+    }
+
+    // 呼叫
+    rpc MakeCall (MakeCallRequest) returns (MakeCallReply) {
+    }
+
+    // 获取通话token
+    rpc FetchCall (FetchCallRequest) returns (FetchCallReply) {
+    }
+
+    // 挂断
+    rpc HangCall (HangCallRequest) returns (HangCallReply) {
+    }
+
+    // 更新呼叫信息，在接通之后立即调用，随后每隔60秒调用
+    rpc UpdateCall (UpdateCallRequest) returns (UpdateCallReply) {
+    }
+
+    // 通话结束之后打分
+    rpc ReportCall (ReportCallRequest) returns (Empty) {
+    }
+
+    // 购买商品下单充值
+    rpc BuyCommodity (BuyCommodityRequest) returns (BuyCommodityReply) {
+    }
+
+    // 获取支付订单列表
+    rpc GetPayList (PayListRequest) returns (PayListReply) {
+    }
+
+    // 检查支付订单是否完成
+    rpc VerifyPayRecord (VerifyPayRequest) returns (VerifyPayReply) {
+    }
+
+    // 长连接，用于心跳等
+    rpc Stream (stream StreamMessage) returns (stream StreamMessage) {
+    }
+
+    // 上传文件
+    rpc UploadFile (stream FileChunk) returns (FileRecord) {
+    }
+
+    // 保存媒体文件，用于兼容老客户端
+    rpc SaveMedia (SaveMediaRequest) returns (FileRecord) {
+    }
+}
+
+message AreaListReply {
+    repeated Area areas = 1;
+}
+
+message LoginRequest {
+    // 设备id
+    string device_id = 1;
+    // 设备型号
+    string device_brand = 2;
+    // 设备型号
+    string device_model = 3;
+    // 系统版本
+    string os_version = 4;
+    // 系统类型
+    OsType os_type = 5;
+    // 国家，iso代码
+    string country = 6;
+    // 语言，iso代码
+    string lang = 7;
+    // 认证方式
+    AuthType auth_type = 8;
+    // 认证的id，第三方登录的唯一id或用户名
+    string auth_id = 9;
+    // 认证的token，第三方登录的token或者密码
+    string auth_token = 10;
+    // 昵称
+    string nickname = 11;
+    // 性别
+    GenderType gender = 12;
+    // 头像
+    string avatar = 13;
+}
+
+message CheckinRequest {
+    // 包括本次签到的连续签到天数
+    uint32 continuous_days = 1;
+}
+
+message ConfigRequest {
+    // 经度
+    float longitude = 1;
+    // 纬度
+    float latitude = 2;
+    // 设备id
+    string device_id = 3;
+    // 网络类型
+    NetworkType network_type = 4;
+    // 版本
+    uint32 version = 5;
+}
+
+message ConfigReply {
+    // 签到配置
+    repeated CheckinConfig checkin_configs = 1;
+    // 礼物配置
+    repeated GiftConfig gift_configs = 2;
+    // VIP商品配置
+    repeated VipConfig vip_configs = 3;
+    // banner配置
+    repeated BannerConfig banner_configs = 4;
+    // 免费消息数量
+    uint32 free_message_count = 5;
+    // 声网app id
+    string agora_app_id = 6;
+    // 融云app key
+    string rc_app_key = 7;
+    // 提示升级
+    bool show_upgrade = 8;
+    // 强制升级
+    bool force_upgrade = 9;
+    // 升级包地址
+    string upgrade_url = 10;
+    // 本地化升级提示信息
+    string upgrade_tip = 11;
+    // 心跳间隔，秒
+    uint32 heartbeat_interval = 12;
+    // 免打扰时长，秒，开启免打扰经过该时长之后自动关闭
+    uint32 dnd_period = 13;
+}
+
+message PayChannelRequest {
+    // 国家iso代码，为空时使用用户设置的国家
+    string country = 1;
+    // 货币iso代码，USD等
+    string currency = 2;
+
+    // 是否获取所有，为兼容老版本，新版本忽略
+    bool get_all = 10;
+    // 是否为订阅，为兼容老版本，新版本忽略
+    bool subscription = 11;
+}
+
+message PayChannelReply {
+    // 支付渠道
+    repeated PayChannel pay_channels = 1;
+
+    // 为兼容老版本，新版本忽略
+    repeated CountryConfig country_configs = 10;
+}
+
+message GiftConfigRequest {
+    // 语言，iso代码，为空时使用用户设置的语言
+    string lang = 1;
+}
+
+message GiftConfigReply {
+    repeated GiftConfig gift_configs = 1;
+}
+
+enum AnchorListType {
+    // 推荐列表
+    AnchorListRecommend = 0;
+    // 在线列表
+    AnchorListOnline = 1;
+    // 关注列表
+    AnchorListFollow = 2;
+    // 粉丝列表
+    AnchorListFans = 3;
+    // 匹配列表
+    AnchorListMatch = 4;
+    // 热门列表
+    AnchorListHot = 5;
+}
+
+message AnchorListRequest {
+    // 列表类型
+    AnchorListType type = 1;
+    // 请求数量
+    uint32 count = 2;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 3;
+}
+
+message AnchorListReply {
+    // 主播列表
+    repeated AnchorInfo anchors = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message AnchorInfoRequest {
+    uint32 anchor_id = 1;
+}
+
+message AnchorIdsReply {
+    // 关注列表
+    repeated uint32 follow_ids = 1;
+    // 拉黑列表
+    repeated uint32 block_ids = 2;
+}
+
+enum RelationOpType {
+    // 关注
+    RelationFollow = 0;
+    // 取消关注
+    RelationUnFollow = 1;
+    // 拉黑
+    RelationBlock = 2;
+    // 取消拉黑
+    RelationUnBlock = 3;
+}
+
+message AnchorRelationRequest {
+    // 操作类型
+    RelationOpType op_type = 1;
+    // 主播id
+    uint32 anchor_id = 2;
+}
+
+enum UserListType {
+    // 主播粉丝列表
+    UserListAnchorFans = 0;
+    // 主播消费排行
+    UserListExpenseRank = 1;
+}
+
+message UserListRequest {
+    // 列表类型
+    UserListType type = 1;
+    // 主播id
+    uint32 anchor_id = 2;
+    // 请求数量
+    uint32 count = 3;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 4;
+}
+
+message UserListReply {
+    // 用户列表
+    repeated User users = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message TransactionListRequest {
+    // 请求数量
+    uint32 count = 1;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 2;
+}
+
+message TransactionListReply {
+    // 交易记录列表
+    repeated Transaction trans = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message SearchAnchorRequest {
+    // 昵称或者主播id
+    string keyword = 1;
+}
+
+message SearchAnchorReply {
+    // 主播列表
+    repeated AnchorInfo anchors = 1;
+}
+
+message SendGiftRequest {
+    // 礼物id
+    uint32 gift_id = 1;
+    // 数量
+    uint32 quantity = 2;
+    // 主播id
+    uint32 anchor_id = 3;
+    // 通话id，为0的时表示是通过聊天发送的礼物
+    uint64 call_id = 4;
+}
+
+message BuyVipRequest {
+    uint32 vip_id = 1;
+}
+
+message ReportViolationRequest {
+    // 举报的主播id
+    uint32 anchor_id = 1;
+    // 举报违规类型
+    ViolationType type = 2;
+    // 举报信息
+    string message = 3;
+}
+
+message ReportUsageRequest {
+    // 新发送的消息数量，不要每次发送都上报，汇总和定时上报
+    uint32 message_count = 1;
+}
+
+message ReportUsageReply {
+    // 发送消息额度
+    uint32 message_quota = 1;
+    // 已发送消息数量
+    uint32 message_used = 2;
+}
+
+message MakeCallRequest {
+    // 主播id
+    uint32 anchor_id = 1;
+    // 呼叫方式
+    CallType call_type = 2;
+}
+
+message MakeCallReply {
+    // 通话id，同时作为声网频道id
+    uint64 call_id = 1;
+    // 每分钟价格
+    uint32 price = 2;
+    // 声网主叫token
+    string caller_token = 3;
+    // 声网被叫token
+    string callee_token = 4;
+}
+
+message FetchCallRequest {
+    // 通话id，同时作为声网频道id
+    uint64 call_id = 1;
+}
+
+message FetchCallReply {
+    string rtc_token = 1;
+}
+
+message HangCallRequest {
+    // 通话id，同时作为声网频道id
+    uint64 call_id = 1;
+    // 通话结束类型
+    HangType hang_type = 2;
+    // 客户端通话时长
+    uint32 call_duration = 3;
+}
+
+message HangCallReply {
+    // 通话id
+    uint64 call_id = 1;
+    // 通话消费
+    uint32 call_expense = 2;
+    // 通话时长
+    uint32 call_duration = 3;
+    // 礼物消费
+    uint32 gift_expense = 4;
+    // 礼物数量
+    uint32 gift_count = 5;
+    // 余额
+    uint32 balance = 6;
+}
+
+message UpdateCallRequest {
+    // 通话id
+    uint64 call_id = 1;
+    // 通话建立时间，unix时间戳，秒
+    uint32 connected_at = 2;
+}
+
+message UpdateCallReply {
+    // 可用余额
+    uint32 balance = 1;
+    // 当前通话时间
+    uint32 current_duration = 2;
+    // 根据可用余额计算的剩余时间
+    uint32 remain_duration = 3;
+    // 根据可用余额计算的断线时间点
+    uint32 disconnect_at = 4;
+}
+
+message ReportCallRequest {
+    // 通话id
+    uint64 call_id = 1;
+    // 打分
+    uint32 score = 2;
+}
+
+message BuyCommodityRequest {
+    // 支付方式
+    PayType pay_type = 1;
+    // 支付渠道
+    string pay_channel = 2;
+    // 商品id
+    uint32 commodity_id = 3;
+    // 支付的货币
+    string currency = 4;
+    // 关联的主播id
+    uint32 anchor_id = 5;
+}
+
+message BuyCommodityReply {
+    // 订单id
+    uint64 record_id = 1;
+    // 支付方式
+    PayType pay_type = 2;
+    // 第三方支付url
+    string pay_url = 3;
+    // 支付价格，本地货币，单位为分
+    uint32 pay_price = 4;
+    // 支付货币类型
+    string currency = 5;
+    // 商品id
+    uint32 commodity_id = 6;
+}
+
+message PayListRequest {
+    // 请求数量
+    uint32 count = 1;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 2;
+}
+
+message PayListReply {
+    // 支付订单列表
+    repeated PayRecord orders = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message VerifyPayRequest {
+    // 订单id，校验应用市场内购内购为空
+    uint64 record_id = 1;
+
+    // 以下字段应用市场内购使用
+    // 合法值为Google和Apple
+    PayType pay_type = 2;
+    // 购买的内购的sku
+    string sku = 3;
+    // AppStore传receipt，Google Play传purchaseToken
+    string data = 4;
+    // 关联的主播id
+    uint32 anchor_id = 5;
+}
+
+message VerifyPayReply {
+    // 订单校验是否成功
+    bool success = 1;
+    // 订单记录
+    PayRecord record = 2;
+}
+
+message SaveMediaRequest {
+    string path = 1;
+    FileType type = 2;
+    string thumb = 3;
+}
