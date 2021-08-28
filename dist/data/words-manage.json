@@ -1,0 +1,37 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "wordsId": 10001,
+                "area": "中东",
+                "tags": "关注主播",
+                "content": "Thanks for following my boy, call me if you are free",
+                "status": 0
+            },
+            {
+                "wordsId": 10001,
+                "area": "中东",
+                "tags": "关注主播",
+                "content": "Thanks for following my boy, call me if you are free",
+                "status": 0
+            },
+            {
+                "wordsId": 10001,
+                "area": "中东",
+                "tags": "关注主播",
+                "content": "Thanks for following my boy, call me if you are free",
+                "status": 0
+            },
+            {
+                "wordsId": 10001,
+                "area": "中东",
+                "tags": "关注主播",
+                "content": "Thanks for following my boy, call me if you are free",
+                "status": 0
+            }
+        ]
+    },
+    "errorInfo": null
+}

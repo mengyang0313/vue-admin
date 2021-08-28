@@ -1,0 +1,57 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "transactionId": "1000000001",
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "transactionType": "通话消耗",
+                "amount": "200",
+                "time": "2021-07-12 13:02",
+                "balance": "6800",
+                "userBalance": "1500"
+            },
+            {
+                "transactionId": "1000000001",
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "transactionType": "通话消耗",
+                "amount": "200",
+                "time": "2021-07-12 13:02",
+                "balance": "6800",
+                "userBalance": "1500"
+            },
+            {
+                "transactionId": "1000000001",
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "transactionType": "通话消耗",
+                "amount": "200",
+                "time": "2021-07-12 13:02",
+                "balance": "6800",
+                "userBalance": "1500"
+            },
+            {
+                "transactionId": "1000000001",
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "transactionType": "通话消耗",
+                "amount": 200,
+                "time": "2021-07-12 13:02",
+                "balance": 6800,
+                "userBalance": 1500
+            }
+        ]
+    },
+    "errorInfo": null
+}

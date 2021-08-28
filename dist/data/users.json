@@ -1,0 +1,81 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "uid": 1001,
+                "area": "中东",
+                "app": "kafo",
+                "username": "海贼.王路飞",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "loginType": "Google",
+                "onlineStatus": "在线",
+                "accountStatus": "正常",
+                "vipEnd": "2021-07-12",
+                "diamond": 123,
+                "recharge": 456,
+                "lastActiveDate": "2021-07-12",
+                "regDate": "2021-07-12",
+                "phoneModel": "vivo xc60",
+                "sysVersion": "10.1",
+                "appVersion": "1.0.1"
+            },
+            {
+                "uid": 1001,
+                "area": "中东",
+                "app": "kafo",
+                "username": "海贼.王路飞",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "loginType": "Google",
+                "onlineStatus": "在线",
+                "accountStatus": "正常",
+                "vipEnd": "2021-07-12",
+                "diamond": 123,
+                "recharge": 456,
+                "lastActiveDate": "2021-07-12",
+                "regDate": "2021-07-12",
+                "phoneModel": "vivo xc60",
+                "sysVersion": "10.1",
+                "appVersion": "1.0.1"
+            },
+            {
+                "uid": 1001,
+                "area": "中东",
+                "app": "kafo",
+                "username": "海贼.王路飞",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "loginType": "Google",
+                "onlineStatus": "在线",
+                "accountStatus": "正常",
+                "vipEnd": "2021-07-12",
+                "diamond": 123,
+                "recharge": 456,
+                "lastActiveDate": "2021-07-12",
+                "regDate": "2021-07-12",
+                "phoneModel": "vivo xc60",
+                "sysVersion": "10.1",
+                "appVersion": "1.0.1"
+            },
+            {
+                "uid": 1001,
+                "area": "中东",
+                "app": "kafo",
+                "username": "海贼.王路飞",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "loginType": "Google",
+                "onlineStatus": "在线",
+                "accountStatus": "正常",
+                "vipEnd": "2021-07-12",
+                "diamond": 123,
+                "recharge": 456,
+                "lastActiveDate": "2021-07-12",
+                "regDate": "2021-07-12",
+                "phoneModel": "vivo xc60",
+                "sysVersion": "10.1",
+                "appVersion": "1.0.1"
+            }
+        ]
+    },
+    "errorInfo": null
+}

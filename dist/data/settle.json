@@ -1,0 +1,53 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "uid": 100001,
+                "nickname": "昵称啊",
+                "unionname": "工会啊",
+                "balance": 1002,
+                "settle": 900,
+                "call": 16.21,
+                "gift": 798,
+                "other": 100,
+                "reward": 120
+            },
+            {
+                "uid": 100001,
+                "nickname": "昵称啊",
+                "unionname": "工会啊",
+                "balance": 1002,
+                "settle": 900,
+                "call": 16.21,
+                "gift": 798,
+                "other": 100,
+                "reward": 120
+            },
+            {
+                "uid": 100001,
+                "nickname": "昵称啊",
+                "unionname": "工会啊",
+                "balance": 1002,
+                "settle": 900,
+                "call": 16.21,
+                "gift": 798,
+                "other": 100,
+                "reward": 120
+            },
+            {
+                "uid": 100001,
+                "nickname": "昵称啊",
+                "unionname": "工会啊",
+                "balance": 1002,
+                "settle": 900,
+                "call": 16.21,
+                "gift": 798,
+                "other": 100,
+                "reward": 120
+            }
+        ]
+    },
+    "errorInfo": null
+}

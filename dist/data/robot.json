@@ -1,0 +1,41 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "robotId": 100001,
+                "status": 0,
+                "country": "中东",
+                "nickname": "我是AIA",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "data": 2
+            },
+            {
+                "robotId": 100001,
+                "status": 0,
+                "country": "中东",
+                "nickname": "我是AIA",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "data": 2
+            },
+            {
+                "robotId": 100001,
+                "status": 0,
+                "country": "中东",
+                "nickname": "我是AIA",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "data": 2
+            },
+            {
+                "robotId": 100001,
+                "status": 0,
+                "country": "中东",
+                "nickname": "我是AIA",
+                "photo": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+                "data": 2
+            }
+        ]
+    },
+    "errorInfo": null
+}

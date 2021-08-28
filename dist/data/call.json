@@ -1,0 +1,57 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "status": "已结束",
+                "callType": "AIB",
+                "stopReason": "正常挂断",
+                "stopUid": "1001",
+                "callDuration": "1分58秒",
+                "startTime": "2021-07-12 13:02"
+            },
+            {
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "status": "已结束",
+                "callType": "AIB",
+                "stopReason": "正常挂断",
+                "stopUid": "1001",
+                "callDuration": "1分58秒",
+                "startTime": "2021-07-12 13:02"
+            },
+            {
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "status": "已结束",
+                "callType": "AIB",
+                "stopReason": "正常挂断",
+                "stopUid": "1001",
+                "callDuration": "1分58秒",
+                "startTime": "2021-07-12 13:02"
+            },
+            {
+                "app": "kafo",
+                "fromUid": "1001",
+                "toUid": "1002",
+                "area": "中东",
+                "status": "已结束",
+                "callType": "AIB",
+                "stopReason": "正常挂断",
+                "stopUid": "1001",
+                "callDuration": "1分58秒",
+                "startTime": "2021-07-12 13:02"
+            }
+        ]
+    },
+    "errorInfo": null
+}

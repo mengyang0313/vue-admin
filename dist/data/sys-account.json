@@ -1,0 +1,37 @@
+{
+    "code": 0,
+    "data": {
+        "total": 4,
+        "list": [
+            {
+                "num": 1001,
+                "area": "中东",
+                "email": "577****@gmail.com",
+                "name": "海贼.王路飞",
+                "status": 0
+            },
+            {
+                "num": 1001,
+                "area": "中东",
+                "email": "577****@gmail.com",
+                "name": "海贼.王路飞",
+                "status": 0
+            },
+            {
+                "num": 1001,
+                "area": "中东",
+                "email": "577****@gmail.com",
+                "name": "海贼.王路飞",
+                "status": 0
+            },
+            {
+                "num": 1001,
+                "area": "中东",
+                "email": "577****@gmail.com",
+                "name": "海贼.王路飞",
+                "status": 0
+            }
+        ]
+    },
+    "errorInfo": null
+}
