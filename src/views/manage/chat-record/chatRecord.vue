@@ -149,7 +149,7 @@ export default {
         // 获取数据列表
         fetchData() {
             this.listLoading = true
-            let url = "http://localhost:8000/data/msgs.json"
+            let url = process.env.VUE_APP_JSON_URI + "/msgs.json"
             // 获取数据列表接口
             getTableList(this.listQuery, url).then(res => {
                 const data = res.data

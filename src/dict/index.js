@@ -52,7 +52,13 @@ const reportAuditStatusData = [{
 
 const anchorLevel = [{
     value: '1',
-    label: '一般'
+    label: '差劲'
+}, {
+    value: '2',
+    label: '中等'
+}, {
+    value: '2',
+    label: '良好'
 }, {
     value: '2',
     label: '优秀'

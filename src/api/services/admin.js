@@ -1,9 +1,10 @@
 import {setToken, getToken} from '@/utils/cookie'
+import { error } from '@/utils/error'
 
 export default class {
     constructor (deps) {
         this.proto = deps.proto
-        this.client = new deps.proto.CmsClient("http://43.132.169.239:10000", null, null)
+        this.client = new deps.proto.CmsClient(process.env.VUE_APP_GRPC_PROXY_URI, null, null)
     }
 
 
@@ -19,7 +20,7 @@ export default class {
             if (!err) {
                 callback(resp)
             } else {
-                console.log(err)
+                error(err)
             }
         })
     }

@@ -1037,5 +1037,85 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.updateUser =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.AnchorBasic,
+ *   !proto.pb.AnchorBasic>}
+ */
+const methodDescriptor_CmsSdk_UpdateAnchorBasic = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/UpdateAnchorBasic',
+  grpc.web.MethodType.UNARY,
+  anchortype_pb.AnchorBasic,
+  anchortype_pb.AnchorBasic,
+  /**
+   * @param {!proto.pb.AnchorBasic} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  anchortype_pb.AnchorBasic.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.AnchorBasic,
+ *   !proto.pb.AnchorBasic>}
+ */
+const methodInfo_CmsSdk_UpdateAnchorBasic = new grpc.web.AbstractClientBase.MethodInfo(
+  anchortype_pb.AnchorBasic,
+  /**
+   * @param {!proto.pb.AnchorBasic} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  anchortype_pb.AnchorBasic.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.AnchorBasic} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.AnchorBasic)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.AnchorBasic>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.updateAnchorBasic =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/UpdateAnchorBasic',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_UpdateAnchorBasic,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.AnchorBasic} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.AnchorBasic>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.updateAnchorBasic =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/UpdateAnchorBasic',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_UpdateAnchorBasic);
+};
+
+
 module.exports = proto.pb.cms;
 

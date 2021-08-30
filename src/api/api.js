@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import { getToken } from '@/utils/cookie'
+import {getToken, removeToken} from '@/utils/cookie'
 import { events } from '@/constants'
 import {
     AreaListReply, LoginRequest, AdminListReply, GuildListReply, AppListReply, AnchorListRequest, UserListRequest,
     UserListReply, AdminFileChunk, AdjustBalanceRequest
 } from '../proto/js/cms_pb'
-import { Empty, EntityType, User } from '../proto/js/usertype_pb'
+import { Empty, EntityType, User, AnchorLevel } from '../proto/js/usertype_pb'
 import { Admin, Guild } from '../proto/js/cmstype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
 import axios from "axios";
@@ -33,6 +33,7 @@ const deps = {
       Empty,
       EntityType,
       User,
+      AnchorLevel,
       Admin,
       Guild,
       CmsClient: CmsSdkClient
@@ -44,8 +45,6 @@ const requireFile = require.context(
   false,
   /[\w-]+\.js$/
 )
-
-
 
 const initService = () => {
     const services = {}
@@ -62,6 +61,7 @@ const initService = () => {
 }
 initService()
 export default initService
+
 
 
 // 访问json文件

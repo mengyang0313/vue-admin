@@ -3,7 +3,7 @@
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="用户Id：" prop="uid">
-                    <el-input v-model="form.uid" placeholder="请输入" :disabled="true"/>
+                    <el-input v-model="form.id" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
                 <el-form-item label="主播地区" prop="area">
                     <el-select v-model="form.area" placeholder="请选择">
@@ -26,7 +26,13 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="主播工会" prop="unionId">
-                    <el-input v-model="form.unionId" placeholder="工会ID"/>
+                    <el-select v-model="form.guildId" placeholder="请选择">
+                        <el-option v-for="item in guildList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
 
                 <el-form-item class="submit-box">
@@ -39,22 +45,23 @@
 </template>
 
 <script>
-
-import { areaData, anchorLevel} from '@/dict/index'
+import {getAnchorLevel, getAreas, getGuildList} from "@/utils/common";
 
 export default {
     name: 'Form',
-    components: { areaData, anchorLevel},
+    components: {},
     data() {
         return {
             form: {
-                uid: '',
+                id: '',
                 area: '',
                 level: '',
                 unionId: ''
             },
             dialogVisible: false,
-            anchorLevel
+            anchorLevel: getAnchorLevel(),
+            areaData: getAreas(),
+            guildList: getGuildList()
         }
     },
     methods: {

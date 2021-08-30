@@ -107,7 +107,7 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
+                <el-table-column prop="id" label="主播id" align="center" width="120" />
                 <el-table-column prop="areaId" label="地区" align="center" width="120" />
                 <el-table-column prop="guildId" label="工会Id" align="center" width="120" />
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
@@ -223,6 +223,8 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
+import { anchorLevel, accountStatus, onlineStatus } from '@/dict/index'
+import {getAreas} from "@/utils/common";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
 import dataList from './dialog/dataInfo'
@@ -235,11 +237,8 @@ import multiAccount from './dialog/multi-account'
 import migrate from './dialog/migrate'
 import merge from './dialog/merge'
 import black from './dialog/black'
-import { areaData, anchorLevel, accountStatus, onlineStatus } from '@/dict/index'
 
-import {getToken} from "@/utils/cookie";
-import {cmsService} from "@/grpc/server";
-import {AnchorListRequest} from "@/proto/js/cms_pb";
+
 
 export default {
     components: { Pagination, videoList, accountStatusList, dataList, ban, auth, bankInfo, updateInfo, incentive, multiAccount, migrate, merge, black},
@@ -257,7 +256,7 @@ export default {
             multipleSelection: [],
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData,
+            areaData: getAreas(),
             anchorLevel,
             accountStatus,
             onlineStatus
@@ -278,7 +277,6 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
-                        "anchorId" : "10001",
                         "areaId" : item.getAreaId(),
                         "guildId" : item.getGuildId(),
                         "nickname" : "nickname",
@@ -296,12 +294,13 @@ export default {
                         "giftIncome" : item.getGiftIncome(),
                         "commissionIncome" : item.getCommissionIncome(),
                         "price" : item.getPrice(),
-                        "updatedAt" : item.getUpdatedAt(),
+                        "updatedAt" : new Date(item.getUpdatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
                         "sczc" : item.getCreatedAt(),
-                        "createdAt" : item.getCreatedAt(),
+                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
                         "sjxh" : "手机型号",
                         "xtbb" : "系统版本",
-                        "yhxx" : "银行"
+                        "yhxx" : "银行",
+                        "struct" : item
                     }
                     data.push(json)
                 })

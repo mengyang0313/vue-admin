@@ -149,7 +149,7 @@ export default {
         fetchData() {
             this.listLoading = true
             console.log(this.listQuery)
-            let url = "http://localhost:8000/data/anchor.json"
+            let url = process.env.VUE_APP_JSON_URI + "/anchor.json"
             // 获取数据列表接口
             getTableList(this.listQuery, url).then(res => {
                 const data = res.data

@@ -1,12 +1,15 @@
 <template>
-    <el-dialog title="更新信息" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="handleClose">
+    <el-dialog title="更新信息" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
-                <el-form-item label="主播ID：" prop="uid">
-                    <el-input v-model="form.uid" placeholder="请输入" :disabled="true"/>
+            <el-form ref="form" :model="form" label-width="150px" class="form-list">
+                <el-form-item label="主播ID：" prop="anchorId">
+                    <el-input v-model="form.id" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
-                <el-form-item label="主播地区" prop="area">
-                    <el-select v-model="form.area" placeholder="请选择">
+                <el-form-item label="主播昵称：" prop="nickname">
+                    <el-input v-model="form.nickname" placeholder="请输入" :disabled="true"/>
+                </el-form-item>
+                <el-form-item label="主播地区" prop="areaId">
+                    <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -14,12 +17,14 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="主播工会" prop="level">
-                    <el-option v-for="item in anchorLevel"
-                               :key="item.value"
-                               :label="item.label"
-                               :value="item.value">
-                    </el-option>
+                <el-form-item label="主播工会" prop="guildId">
+                    <el-select v-model="form.guildId" placeholder="请选择">
+                        <el-option v-for="item in guildList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="主播等级" prop="level">
                     <el-select v-model="form.level" placeholder="请选择">
@@ -30,12 +35,11 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-
-                <el-form-item label="备注" prop="remarks">
+                <el-form-item label="备注" prop="note">
                     <el-input
-                        v-model="form.remarks"
+                        v-model="form.note"
                         type="textarea"
-                        :autosize="{ minRows: 3, maxRows: 5 }"
+                        :autosize="{ minRows: 5, maxRows: 8 }"
                         placeholder="请输入内容"
                         maxlength="50"
                         show-word-limit
@@ -51,43 +55,47 @@
 </template>
 
 <script>
-import { areaData, anchorLevel } from '@/dict/index'
+import {getAnchorLevel, getAreas, getGuildList} from "@/utils/common";
 
 export default {
     data() {
         return {
             form: {
-                uid: '',
+                id: '',
                 nickname: '',
-                unionId: '',
+                guildId: '',
+                areaId: '',
                 level: '',
-                area: '',
-                remarks: ''
+                note: ''
             },
-            areaData,
-            anchorLevel,
+            areaData: getAreas(),
+            anchorLevel: getAnchorLevel(),
+            guildList: getGuildList(),
             dialogVisible: false
         }
     },
     methods: {
         init(row){
-            this.form.uid = row.anchorId
-            this.form.nickname = row.nickname
-            this.form.unionId = row.unionId
-            this.form.level = row.level
-            this.form.area = row.area
-            this.form.remarks = row.remarks
+            this.form = row
         },
         submitForm(formName) {
+            const $this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    // 此处添加后端接口
-                    alert('提交成功!')
-                } else {
-                    console.log('提交失败!')
-                    return false
+                    this.$service.anchor.updateAnchorBasic(this.form, function (result){
+                        if (result) {
+                            $this.$message.success("保存成功!")
+                            $this.closeDialog()
+                        } else {
+                            $this.$message.error("保存失败!")
+                        }
+                    })
                 }
             })
+        },
+        closeDialog() {
+            this.dialogVisible = false
+            this.$emit('fetchData');
         },
         resetForm(formName) {
             this.$refs[formName].resetFields()

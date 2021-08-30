@@ -1,4 +1,4 @@
-const host = 'http://43.132.169.239:10000'
+const host = 'http://localhost:10000'
 
 
 /**

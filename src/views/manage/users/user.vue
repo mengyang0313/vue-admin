@@ -98,7 +98,7 @@
                 <el-table-column prop="nickname" label="用户名" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
-                        <el-image style="width: 50px; height: 50px" :src="scope.row.avatar" contain></el-image>
+                        <imageShow :data="[scope.row.avatar]" :max-show="1"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="dlfs" label="登录方式" align="center" width="120"/>
@@ -121,7 +121,7 @@
                 <el-table-column prop="expense" label="累计送礼" align="center" width="150"/>
                 <el-table-column prop="deposit" label="累计充值" align="center" width="150"/>
                 <el-table-column prop="balance" label="账户余额" align="center" width="250" />
-                el-table-column prop="schyrq" label="上次活跃日期" align="center" width="150"/>
+                <el-table-column prop="schyrq" label="上次活跃日期" align="center" width="150"/>
                 <el-table-column prop="scczrq" label="上次充值日期" align="center" width="150"/>
                 <el-table-column prop="createdAt" label="注册日期" align="center" width="150"/>
                 <el-table-column prop="osType" label="手机机型" align="center" width="120" />
@@ -165,6 +165,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
+import imageShow from '../../../components/ImageShow/image-show'
 import ban from './dialog/ban'
 import multiAccount from './dialog/multi-account'
 import recharge from './dialog/recharge'
@@ -172,7 +173,7 @@ import updateUser from './dialog/updateUser'
 import { areaData, boolDict } from '@/dict/index'
 
 export default {
-    components: { Pagination, ban, multiAccount, recharge, updateUser},
+    components: { Pagination, imageShow, ban, multiAccount, recharge, updateUser},
     data() {
         return {
             // 数据列表加载动画
@@ -232,19 +233,6 @@ export default {
                 $this.tableData = data
                 $this.listLoading = false
             });
-            // console.log(this.listQuery)
-            // let url = "http://localhost:8000/data/users.json"
-            // // 获取数据列表接口
-            // getTableList(this.listQuery, url).then(res => {
-            //     const data = res.data
-            //     if (data.code === 0) {
-            //         this.total = data.data.total
-            //         this.tableData = data.data.list
-            //         this.listLoading = false
-            //     }
-            // }).catch(() => {
-            //     this.listLoading = false
-            // })
         },
         // 查询数据
         onSearch() {

@@ -33,7 +33,10 @@ module.exports = {
     },
     configureWebpack(config) {
         // 生产环境配置 Gzip 压缩
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'development') {
+            console.log("当前运行环境为：测试环境")
+        }else if (process.env.NODE_ENV === 'production') {
+            console.log("当前运行环境为：生产环境")
             config.plugins.push(
                 new CompressionWebpackPlugin({
                     // 正则匹配需要压缩的文件后缀
@@ -53,6 +56,8 @@ module.exports = {
                     'axios': 'axios'
                 }
             })
+        }else if (process.env.NODE_ENV === 'test') {
+            console.log("当前运行环境为：测试环境-发布")
         }
     },
     chainWebpack(config) {

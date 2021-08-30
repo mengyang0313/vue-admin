@@ -1,4 +1,5 @@
 import request from '../request'
+import {removeToken} from "@/utils/cookie";
 
 export function login(data) {
     return request({

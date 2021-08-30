@@ -67,7 +67,7 @@ export default {
             const $this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    this.$service.anchor.adjustBalance(this.form, function (result){
+                    this.$service.user.adjustBalance(this.form, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
                             $this.closeDialog()

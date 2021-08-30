@@ -55,6 +55,10 @@ service CmsSdk {
     rpc UpdateUser (User) returns (User) {
     }
 
+    // 更新主播基础信息
+    rpc UpdateAnchorBasic (AnchorBasic) returns (AnchorBasic) {
+    }
+
     // 上传文件
     rpc UploadFile (stream AdminFileChunk) returns (FileRecord) {
     }

@@ -51,7 +51,7 @@ export default {
             const $this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    this.$service.anchor.updateUser(this.form, function (result){
+                    this.$service.user.updateUser(this.form, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
                             $this.closeDialog()

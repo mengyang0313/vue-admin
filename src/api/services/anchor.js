@@ -1,9 +1,10 @@
 import {setToken, getToken} from '@/utils/cookie'
+import { error } from '@/utils/error'
 
 export default class {
     constructor (deps) {
         this.proto = deps.proto
-        this.client = new deps.proto.CmsClient("http://43.132.169.239:10000", null, null)
+        this.client = new deps.proto.CmsClient(process.env.VUE_APP_GRPC_PROXY_URI, null, null)
     }
 
 
@@ -31,51 +32,30 @@ export default class {
             if (!err) {
                 callback(resp)
             } else {
-                console.log(err)
-            }
-        })
-    }
-
-
-
-    /**
-     * 充值
-     */
-    async adjustBalance ( param, callback) {
-        const req = new this.proto.AdjustBalanceRequest()
-        req.setEntityType(this.proto.EntityType.ENTITYUSER)
-        req.setEntityId(param.id)
-        req.setAmount(param.amount)
-        req.setSendNotify(param.sendNotify)
-        req.setDesc(param.desc)
-
-        const metadata = {'token': getToken()};
-        this.client.adjustBalance(req, metadata, (err, resp) => {
-            if (!err) {
-                callback(resp)
-            } else {
-                console.log(err)
+                error(err)
             }
         })
     }
 
 
     /**
-     * 更新用户
+     * 更新主播基础信息
      */
-    async updateUser ( param, callback) {
-        const req = new this.proto.User()
+    async updateAnchorBasic (param, callback) {
+        const req = param.struct
         req.setId(param.id)
-        req.setVipEndAt(param.vipEndAt.getTime()/1000)
+        req.setGuildId(param.guildId)
+        req.setAreaId(param.areaId)
+        req.setLevel(param.level)
+        req.setNote(param.note)
 
         const metadata = {'token': getToken()};
-        this.client.updateUser(req, metadata, (err, resp) => {
+        this.client.updateAnchorBasic(req, metadata, (err, resp) => {
             if (!err) {
                 callback(resp)
             } else {
-                console.log(err)
+                error(err)
             }
         })
     }
-
 }
