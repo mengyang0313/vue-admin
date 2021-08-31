@@ -61,6 +61,27 @@ message OpRecord {
     uint32 created_at = 20;
 }
 
+// 安装归因信息
+message Install {
+    uint32 id = 1;
+    uint32 app_id = 2;
+    string device_id = 3;
+    string tracker_token = 4;
+    string tracker_name = 5;
+    string network = 6;
+    string campaign = 7;
+    string adgroup = 8;
+    string creative = 9;
+    string click_label = 10;
+    string adid = 11;
+    string cost_type = 12;
+    float cost_amount = 13;
+    string cost_currency = 14;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
 // 工会
 message Guild {
     uint32 id = 1;
@@ -102,12 +123,6 @@ message App {
     string note = 9;
     // 启用的区域
     repeated uint32 area_ids = 10;
-    // Facebook app id
-    string facebook_id = 11;
-    // Google app id
-    string google_id = 12;
-    // Adjust id
-    string adjust_id = 13;
 
     // 是否为老toya应用
     bool is_old = 100;
@@ -410,5 +425,37 @@ message ChatMessage {
     // 消息发送时间
     uint32 send_at = 11;
 
+    uint32 created_at = 21;
+}
+
+// 违规记录
+message ViolationRecord {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 举报者类型，主播或用户
+    EntityType reporter_type = 4;
+    // 举报者id
+    uint32 reporter_id = 5;
+    // 被举报者类型，主播或用户
+    EntityType reported_type = 6;
+    // 被举报者id
+    uint32 reported_id = 7;
+    // 违规类型
+    ViolationType violation_type = 8;
+    // 举报信息
+    string report_message = 9;
+    // 处理状态
+    BlockStatus deal_status = 10;
+    // 处理信息
+    string deal_message = 11;
+    // 处理时间
+    uint32 deal_at = 12;
+    // 封禁时长，秒
+    uint32 block_duration = 13;
+
+    uint32 updated_at = 20;
     uint32 created_at = 21;
 }

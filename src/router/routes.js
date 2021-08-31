@@ -95,8 +95,8 @@ export const asyncRoutes = [
         },
         children: [
             {
-                path: 'audit-anchor',
-                name: 'audit-anchor',
+                path: 'anchor-audit',
+                name: 'anchor-audit',
                 component: () => import('../views/manage/audit/anchor-audit'),
                 meta: {
                     title: '主播审核'

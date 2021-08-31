@@ -59,6 +59,22 @@ service CmsSdk {
     rpc UpdateAnchorBasic (AnchorBasic) returns (AnchorBasic) {
     }
 
+    // 获取主播资料列表
+    rpc GetProfileList (ProfileListRequest) returns (ProfileListReply) {
+    }
+
+    // 获取主播完整资料
+    rpc GetAnchorFull (AnchorFullRequest) returns (AnchorFullReply) {
+    }
+
+    // 获取举报记录
+    rpc GetViolationList (ViolationListRequest) returns (ViolationListReply) {
+    }
+
+    // 处理违规
+    rpc ProcessViolation (ViolationRecord) returns (ViolationRecord) {
+    }
+
     // 上传文件
     rpc UploadFile (stream AdminFileChunk) returns (FileRecord) {
     }
@@ -100,12 +116,14 @@ message AnchorListRequest {
     BlockStatus block_status = 6;
     // 在线状态
     OnlineStatus online_status = 7;
+    // 审核状态
+    ReviewStatus review_status = 8;
     // 创建起始时间
-    uint32 created_start = 8;
+    uint32 created_start = 9;
     // 创建结束时间
-    uint32 created_end = 9;
+    uint32 created_end = 10;
     // 最小离线时间，单位为秒
-    uint32 min_offline = 10;
+    uint32 min_offline = 11;
 }
 
 message AnchorListReply {
@@ -157,19 +175,6 @@ message UserListReply {
     uint32 total_count = 5;
 }
 
-message AdminFileChunk {
-    // 偏移，必须连续
-    uint32 offset = 1;
-    // 文件名，为空时自动生成
-    string filename = 2;
-    // 文件类型
-    FileType type = 3;
-    // 文件内容，单个分片大小不要大于8MB
-    bytes content = 4;
-    // 区域id，必选
-    uint32 area_id = 5;
-}
-
 message AdjustBalanceRequest {
     // 主播或用户
     EntityType entity_type = 1;
@@ -186,4 +191,86 @@ message AdjustBalanceRequest {
 message AdjustBalanceReply {
     // 调整后余额
     uint32 balance = 1;
+}
+
+message ProfileListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 主播id
+    uint32 anchor_id = 3;
+    // 区域id
+    uint32 area_id = 4;
+    // 审核状态
+    ReviewStatus status = 5;
+}
+
+message ProfileListReply {
+    repeated AnchorProfile profiles = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message AnchorFullRequest {
+    uint32 anchor_id = 1;
+}
+
+message AnchorFullReply {
+    AnchorBasic basic = 1;
+    repeated AnchorProfile profiles = 2;
+}
+
+message ViolationListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 处理状态，传空时查询未处理的举报
+    repeated BlockStatus deal_status = 4;
+    // 举报人类型
+    EntityType reporter_type = 5;
+    // 举报人id
+    uint32 reporter_id = 6;
+    // 被举报人类型
+    EntityType reported_type = 7;
+    // 被举报人id
+    uint32 reported_id = 8;
+    // 创建起始时间
+    uint32 created_start = 9;
+    // 创建结束时间
+    uint32 created_end = 10;
+}
+
+message ViolationListReply {
+    repeated ViolationRecord records = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message AdminFileChunk {
+    // 偏移，必须连续
+    uint32 offset = 1;
+    // 文件名，为空时自动生成
+    string filename = 2;
+    // 文件类型
+    FileType type = 3;
+    // 文件内容，单个分片大小不要大于8MB
+    bytes content = 4;
+    // 区域id，必选
+    uint32 area_id = 5;
 }

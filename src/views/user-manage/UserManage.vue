@@ -20,18 +20,18 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
                 <el-form-item label="编号">
-                    <el-input v-model="listQuery.id" placeholder="编号"/>
+                    <el-input v-model="search.id" placeholder="编号"/>
                 </el-form-item>
                 <el-form-item label="手机">
-                    <el-input v-model="listQuery.phone" placeholder="手机"/>
+                    <el-input v-model="search.phone" placeholder="手机"/>
                 </el-form-item>
                 <el-form-item label="婚姻状况">
-                    <el-select v-model="listQuery.married" placeholder="婚姻状况">
+                    <el-select v-model="search.married" placeholder="婚姻状况">
                         <el-option :value="0" label="单身"/>
                         <el-option :value="1" label="未婚"/>
                         <el-option :value="2" label="已婚"/>
@@ -98,7 +98,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
             <!-- 新增/编辑 弹出栏 -->
             <el-dialog
@@ -199,7 +199,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: {
+            search: {
                 id: undefined,
                 phone: undefined,
                 married: undefined,
@@ -322,7 +322,7 @@ export default {
         fetchData() {
             this.listLoading = true
             // 获取数据列表接口
-            getTableList(this.listQuery).then(res => {
+            getTableList(this.search).then(res => {
                 const data = res.data
                 if (data.code === 0) {
                     this.total = data.data.total
@@ -335,7 +335,7 @@ export default {
         },
         // 查询数据
         onSubmit() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         // 导入数据

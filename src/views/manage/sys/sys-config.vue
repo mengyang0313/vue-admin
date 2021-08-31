@@ -27,7 +27,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 编辑资料 -->
@@ -49,7 +49,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
@@ -67,7 +67,7 @@ export default {
             this.listLoading = true
             let url = process.env.VUE_APP_JSON_URI + "/sys-config.json"
             // 获取数据列表接口
-            getTableList(this.listQuery, url).then(res => {
+            getTableList(this.search, url).then(res => {
                 const data = res.data
                 if (data.code === 0) {
                     this.total = data.data.total
@@ -80,7 +80,7 @@ export default {
         },
         // 查询数据
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         // 弹框
@@ -92,7 +92,7 @@ export default {
         },
         //重置
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         initQuery() {
             return {

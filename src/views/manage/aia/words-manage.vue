@@ -10,7 +10,7 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
@@ -18,7 +18,7 @@
                     <el-row>
                         <el-col :span="6">
                             <el-form-item label="状态" >
-                                <el-select v-model="listQuery.area" placeholder="请选择">
+                                <el-select v-model="search.area" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -29,7 +29,7 @@
                         </el-col>
                         <el-col :span="6">
                             <el-form-item label="场景标签">
-                                <el-select v-model="listQuery.tags" placeholder="请选择">
+                                <el-select v-model="search.tags" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -81,7 +81,7 @@
                 <el-table-column prop="content" label="内容" align="center"/>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 编辑资料 -->
@@ -103,7 +103,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 多选数据暂存数组
@@ -127,7 +127,7 @@ export default {
             this.listLoading = true
             let url = process.env.VUE_APP_JSON_URI + "/words-manage.json"
             // 获取数据列表接口
-            getTableList(this.listQuery, url).then(res => {
+            getTableList(this.search, url).then(res => {
                 const data = res.data
                 if (data.code === 0) {
                     this.total = data.data.total
@@ -140,7 +140,7 @@ export default {
         },
         // 查询数据
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         // 弹框
@@ -152,7 +152,7 @@ export default {
         },
         //重置
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         // 删除数据
         handleDelete(index, row) {

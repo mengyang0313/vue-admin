@@ -5,37 +5,37 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="用户Id">
-                            <el-input v-model="listQuery.id" placeholder="用户Id"/>
+                        <el-form-item label="用户Id" prop="userId">
+                            <el-input v-model="search.userId" placeholder="用户Id"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="用户名">
-                            <el-input v-model="listQuery.nickname" placeholder="用户名"/>
+                        <el-form-item label="用户名" prop="nickname">
+                            <el-input v-model="search.nickname" placeholder="用户名"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="注册时间">
+                        <el-form-item label="注册时间" prop="createdStart">
                             <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="listQuery.createdStart" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
                             </el-col>
                             <el-col class="line" :span="1" align="center">-</el-col>
                             <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="listQuery.createdEnd" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="VIP">
-                            <el-select v-model="listQuery.vipOnly" placeholder="请选择">
+                        <el-form-item label="VIP" prop="vipOnly">
+                            <el-select v-model="search.vipOnly" placeholder="请选择">
                                 <el-option v-for="item in boolDict"
                                            :key="item.value"
                                            :label="item.label"
@@ -45,8 +45,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="是否付费">
-                            <el-select v-model="listQuery.depositOnly" placeholder="请选择">
+                        <el-form-item label="是否付费" prop="depositOnly">
+                            <el-select v-model="search.depositOnly" placeholder="请选择">
                                 <el-option v-for="item in boolDict"
                                            :key="item.value"
                                            :label="item.label"
@@ -56,15 +56,15 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="钻石余额">
-                            <el-input placeholder="请输入余额" v-model="listQuery.minBalance">
+                        <el-form-item label="钻石余额" prop="minBalance">
+                            <el-input placeholder="请输入余额" v-model="search.minBalance">
                                 <template slot="prepend">大于</template>
                             </el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="地区">
-                            <el-select v-model="listQuery.areaId" placeholder="请选择">
+                        <el-form-item label="地区" prop="areaId">
+                            <el-select v-model="search.areaId" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
                                            :label="item.label"
@@ -77,8 +77,8 @@
                 <el-row>
                     <el-col :span="24" class="search-box">
                         <el-form-item>
-                            <el-button @click="onSearch('searchForm')" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
-                            <el-button @click="resetForm('searchForm')" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
+                            <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
+                            <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -142,10 +142,8 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
-
-
 
             <!-- 封禁设备 弹出栏 -->
             <ban ref="ban"/>
@@ -179,7 +177,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 表格数据数组
@@ -200,9 +198,8 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.user.getUserList(this.listQuery, function (result){
+            this.$service.user.getUserList(this.search, function (result){
                 const list = result.getUsersList()
-                const length = list.length;
                 const data = []
                 list.forEach((item, index)=>{
                     const json = {
@@ -229,14 +226,14 @@ export default {
                     }
                     data.push(json)
                 })
-                $this.total = length
+                $this.total = result.getTotalCount()
                 $this.tableData = data
                 $this.listLoading = false
             });
         },
         // 查询数据
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
         // 弹框
@@ -248,11 +245,11 @@ export default {
         },
         //重置
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.$refs['searchForm'].resetFields()
         },
         initQuery() {
             return {
-                id: undefined,
+                userId: undefined,
                 nickname: undefined,
                 createdStart: undefined,
                 createdEnd: undefined,

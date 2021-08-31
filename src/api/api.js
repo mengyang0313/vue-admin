@@ -3,9 +3,9 @@ import {getToken, removeToken} from '@/utils/cookie'
 import { events } from '@/constants'
 import {
     AreaListReply, LoginRequest, AdminListReply, GuildListReply, AppListReply, AnchorListRequest, UserListRequest,
-    UserListReply, AdminFileChunk, AdjustBalanceRequest
+    UserListReply, AdminFileChunk, AdjustBalanceRequest, ProfileListRequest, ViolationListRequest
 } from '../proto/js/cms_pb'
-import { Empty, EntityType, User, AnchorLevel } from '../proto/js/usertype_pb'
+import { Empty, EntityType, User, AnchorLevel, ReviewStatus } from '../proto/js/usertype_pb'
 import { Admin, Guild } from '../proto/js/cmstype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
 import axios from "axios";
@@ -30,10 +30,13 @@ const deps = {
       UserListReply,
       AdminFileChunk,
       AdjustBalanceRequest,
+      ProfileListRequest,
+      ViolationListRequest,
       Empty,
       EntityType,
       User,
       AnchorLevel,
+      ReviewStatus,
       Admin,
       Guild,
       CmsClient: CmsSdkClient

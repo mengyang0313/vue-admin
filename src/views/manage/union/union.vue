@@ -5,19 +5,19 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
                 <el-row>
                     <el-col :span="8">
                         <el-form-item label="工会ID">
-                            <el-input v-model="listQuery.id" placeholder="工会ID"/>
+                            <el-input v-model="search.id" placeholder="工会ID"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="地区">
-                            <el-select v-model="listQuery.areaId" placeholder="请选择">
+                            <el-select v-model="search.areaId" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
                                            :label="item.label"
@@ -28,7 +28,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="状态">
-                            <el-select v-model="listQuery.enable" placeholder="请选择">
+                            <el-select v-model="search.enable" placeholder="请选择">
                                 <el-option v-for="item in boolDict"
                                            :key="item.value"
                                            :label="item.label"
@@ -81,7 +81,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 新增或编辑 -->
@@ -109,7 +109,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
@@ -126,7 +126,7 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.guild.getGuildList(this.listQuery, function (result){
+            this.$service.guild.getGuildList(this.search, function (result){
                 const list = result.getGuildsList();
                 const data = []
                 list.forEach((item, index)=>{
@@ -149,7 +149,7 @@ export default {
         },
         // 查询数据
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         // 弹框
@@ -160,7 +160,7 @@ export default {
             })
         },
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         initQuery() {
             return {

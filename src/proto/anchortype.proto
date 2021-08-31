@@ -106,40 +106,42 @@ message AnchorBasic {
 // 主播个人中心信息，一个主播可以有多套个人中心信息
 message AnchorProfile {
     uint32 id = 1;
+    // 区域id
+    uint32 area_id = 2;
     // 主播id
-    uint32 anchor_id = 2;
+    uint32 anchor_id = 3;
     // 父信息id，处于审核中的记录使用，审核通过之后会覆盖父信息
-    uint32 parent_id = 3;
+    uint32 parent_id = 4;
     // 审核状态
-    ReviewStatus status = 4;
+    ReviewStatus status = 5;
     // 语言
-    string lang = 5;
+    string lang = 6;
     // 性别
-    GenderType gender = 6;
+    GenderType gender = 7;
     // 昵称
-    string nickname = 7;
+    string nickname = 8;
     // 签名
-    string signature = 8;
+    string signature = 9;
     // 头像
-    string avatar = 9;
+    string avatar = 10;
     // 职业
-    OccupationType occupation = 10;
+    OccupationType occupation = 11;
     // 生日，unix时间戳
-    uint32 birthday = 11;
+    uint32 birthday = 12;
     // 标签
-    repeated string tags = 12;
+    repeated string tags = 13;
     // 语音问候
-    string voice_greeting = 13;
+    string voice_greeting = 14;
     // 每日经常在线起始时间，小时，0-23
-    uint32 online_start = 14;
+    uint32 online_start = 15;
     // 每日经常在线结束时间，小时，1-24
-    uint32 online_end = 15;
+    uint32 online_end = 16;
     // 相册文件id
-    repeated uint64 photo_ids = 16;
+    repeated uint64 photo_ids = 17;
     // 视频文件id
-    repeated uint64 video_ids = 17;
+    repeated uint64 video_ids = 18;
     // 审核不通过原因
-    string reject_reason = 18;
+    string reject_reason = 19;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;

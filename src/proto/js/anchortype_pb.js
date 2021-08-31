@@ -1714,7 +1714,7 @@ proto.pb.AnchorBasic.prototype.clearLivesList = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.pb.AnchorProfile.repeatedFields_ = [12,16,17,100,101];
+proto.pb.AnchorProfile.repeatedFields_ = [13,17,18,100,101];
 
 
 
@@ -1748,23 +1748,24 @@ proto.pb.AnchorProfile.prototype.toObject = function(opt_includeInstance) {
 proto.pb.AnchorProfile.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    anchorId: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    parentId: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    status: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    lang: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    gender: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    nickname: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    signature: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    avatar: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    occupation: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    birthday: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    tagsList: (f = jspb.Message.getRepeatedField(msg, 12)) == null ? undefined : f,
-    voiceGreeting: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    onlineStart: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    onlineEnd: jspb.Message.getFieldWithDefault(msg, 15, 0),
-    photoIdsList: (f = jspb.Message.getRepeatedField(msg, 16)) == null ? undefined : f,
-    videoIdsList: (f = jspb.Message.getRepeatedField(msg, 17)) == null ? undefined : f,
-    rejectReason: jspb.Message.getFieldWithDefault(msg, 18, ""),
+    areaId: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    anchorId: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    parentId: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    status: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    lang: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    gender: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    nickname: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    signature: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    occupation: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    birthday: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    tagsList: (f = jspb.Message.getRepeatedField(msg, 13)) == null ? undefined : f,
+    voiceGreeting: jspb.Message.getFieldWithDefault(msg, 14, ""),
+    onlineStart: jspb.Message.getFieldWithDefault(msg, 15, 0),
+    onlineEnd: jspb.Message.getFieldWithDefault(msg, 16, 0),
+    photoIdsList: (f = jspb.Message.getRepeatedField(msg, 17)) == null ? undefined : f,
+    videoIdsList: (f = jspb.Message.getRepeatedField(msg, 18)) == null ? undefined : f,
+    rejectReason: jspb.Message.getFieldWithDefault(msg, 19, ""),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 30, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 31, 0),
     photosList: jspb.Message.toObjectList(msg.getPhotosList(),
@@ -1814,73 +1815,77 @@ proto.pb.AnchorProfile.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAnchorId(value);
+      msg.setAreaId(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setParentId(value);
+      msg.setAnchorId(value);
       break;
     case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setParentId(value);
+      break;
+    case 5:
       var value = /** @type {!proto.pb.ReviewStatus} */ (reader.readEnum());
       msg.setStatus(value);
       break;
-    case 5:
+    case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setLang(value);
       break;
-    case 6:
+    case 7:
       var value = /** @type {!proto.pb.GenderType} */ (reader.readEnum());
       msg.setGender(value);
       break;
-    case 7:
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setNickname(value);
       break;
-    case 8:
+    case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setSignature(value);
       break;
-    case 9:
+    case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setAvatar(value);
       break;
-    case 10:
+    case 11:
       var value = /** @type {!proto.pb.OccupationType} */ (reader.readEnum());
       msg.setOccupation(value);
       break;
-    case 11:
+    case 12:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setBirthday(value);
       break;
-    case 12:
+    case 13:
       var value = /** @type {string} */ (reader.readString());
       msg.addTags(value);
       break;
-    case 13:
+    case 14:
       var value = /** @type {string} */ (reader.readString());
       msg.setVoiceGreeting(value);
       break;
-    case 14:
+    case 15:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setOnlineStart(value);
       break;
-    case 15:
+    case 16:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setOnlineEnd(value);
       break;
-    case 16:
+    case 17:
       var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint64() : [reader.readUint64()]);
       for (var i = 0; i < values.length; i++) {
         msg.addPhotoIds(values[i]);
       }
       break;
-    case 17:
+    case 18:
       var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint64() : [reader.readUint64()]);
       for (var i = 0; i < values.length; i++) {
         msg.addVideoIds(values[i]);
       }
       break;
-    case 18:
+    case 19:
       var value = /** @type {string} */ (reader.readString());
       msg.setRejectReason(value);
       break;
@@ -1942,122 +1947,129 @@ proto.pb.AnchorProfile.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getAnchorId();
+  f = message.getAreaId();
   if (f !== 0) {
     writer.writeUint32(
       2,
       f
     );
   }
-  f = message.getParentId();
+  f = message.getAnchorId();
   if (f !== 0) {
     writer.writeUint32(
       3,
       f
     );
   }
+  f = message.getParentId();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
+      f
+    );
+  }
   f = message.getStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      4,
+      5,
       f
     );
   }
   f = message.getLang();
   if (f.length > 0) {
     writer.writeString(
-      5,
+      6,
       f
     );
   }
   f = message.getGender();
   if (f !== 0.0) {
     writer.writeEnum(
-      6,
+      7,
       f
     );
   }
   f = message.getNickname();
   if (f.length > 0) {
     writer.writeString(
-      7,
+      8,
       f
     );
   }
   f = message.getSignature();
   if (f.length > 0) {
     writer.writeString(
-      8,
+      9,
       f
     );
   }
   f = message.getAvatar();
   if (f.length > 0) {
     writer.writeString(
-      9,
+      10,
       f
     );
   }
   f = message.getOccupation();
   if (f !== 0.0) {
     writer.writeEnum(
-      10,
+      11,
       f
     );
   }
   f = message.getBirthday();
   if (f !== 0) {
     writer.writeUint32(
-      11,
+      12,
       f
     );
   }
   f = message.getTagsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
-      12,
+      13,
       f
     );
   }
   f = message.getVoiceGreeting();
   if (f.length > 0) {
     writer.writeString(
-      13,
+      14,
       f
     );
   }
   f = message.getOnlineStart();
   if (f !== 0) {
     writer.writeUint32(
-      14,
+      15,
       f
     );
   }
   f = message.getOnlineEnd();
   if (f !== 0) {
     writer.writeUint32(
-      15,
+      16,
       f
     );
   }
   f = message.getPhotoIdsList();
   if (f.length > 0) {
     writer.writePackedUint64(
-      16,
+      17,
       f
     );
   }
   f = message.getVideoIdsList();
   if (f.length > 0) {
     writer.writePackedUint64(
-      17,
+      18,
       f
     );
   }
   f = message.getRejectReason();
   if (f.length > 0) {
     writer.writeString(
-      18,
+      19,
       f
     );
   }
@@ -2120,10 +2132,10 @@ proto.pb.AnchorProfile.prototype.setId = function(value) {
 
 
 /**
- * optional uint32 anchor_id = 2;
+ * optional uint32 area_id = 2;
  * @return {number}
  */
-proto.pb.AnchorProfile.prototype.getAnchorId = function() {
+proto.pb.AnchorProfile.prototype.getAreaId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -2132,16 +2144,16 @@ proto.pb.AnchorProfile.prototype.getAnchorId = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorProfile} returns this
  */
-proto.pb.AnchorProfile.prototype.setAnchorId = function(value) {
+proto.pb.AnchorProfile.prototype.setAreaId = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * optional uint32 parent_id = 3;
+ * optional uint32 anchor_id = 3;
  * @return {number}
  */
-proto.pb.AnchorProfile.prototype.getParentId = function() {
+proto.pb.AnchorProfile.prototype.getAnchorId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -2150,17 +2162,35 @@ proto.pb.AnchorProfile.prototype.getParentId = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorProfile} returns this
  */
-proto.pb.AnchorProfile.prototype.setParentId = function(value) {
+proto.pb.AnchorProfile.prototype.setAnchorId = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
- * optional ReviewStatus status = 4;
+ * optional uint32 parent_id = 4;
+ * @return {number}
+ */
+proto.pb.AnchorProfile.prototype.getParentId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AnchorProfile} returns this
+ */
+proto.pb.AnchorProfile.prototype.setParentId = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional ReviewStatus status = 5;
  * @return {!proto.pb.ReviewStatus}
  */
 proto.pb.AnchorProfile.prototype.getStatus = function() {
-  return /** @type {!proto.pb.ReviewStatus} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {!proto.pb.ReviewStatus} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
 
@@ -2169,16 +2199,16 @@ proto.pb.AnchorProfile.prototype.getStatus = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setStatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 4, value);
+  return jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 
 /**
- * optional string lang = 5;
+ * optional string lang = 6;
  * @return {string}
  */
 proto.pb.AnchorProfile.prototype.getLang = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
 
@@ -2187,16 +2217,16 @@ proto.pb.AnchorProfile.prototype.getLang = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setLang = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * optional GenderType gender = 6;
+ * optional GenderType gender = 7;
  * @return {!proto.pb.GenderType}
  */
 proto.pb.AnchorProfile.prototype.getGender = function() {
-  return /** @type {!proto.pb.GenderType} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+  return /** @type {!proto.pb.GenderType} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
 
@@ -2205,33 +2235,15 @@ proto.pb.AnchorProfile.prototype.getGender = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setGender = function(value) {
-  return jspb.Message.setProto3EnumField(this, 6, value);
+  return jspb.Message.setProto3EnumField(this, 7, value);
 };
 
 
 /**
- * optional string nickname = 7;
+ * optional string nickname = 8;
  * @return {string}
  */
 proto.pb.AnchorProfile.prototype.getNickname = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.pb.AnchorProfile} returns this
- */
-proto.pb.AnchorProfile.prototype.setNickname = function(value) {
-  return jspb.Message.setProto3StringField(this, 7, value);
-};
-
-
-/**
- * optional string signature = 8;
- * @return {string}
- */
-proto.pb.AnchorProfile.prototype.getSignature = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
@@ -2240,16 +2252,16 @@ proto.pb.AnchorProfile.prototype.getSignature = function() {
  * @param {string} value
  * @return {!proto.pb.AnchorProfile} returns this
  */
-proto.pb.AnchorProfile.prototype.setSignature = function(value) {
+proto.pb.AnchorProfile.prototype.setNickname = function(value) {
   return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
- * optional string avatar = 9;
+ * optional string signature = 9;
  * @return {string}
  */
-proto.pb.AnchorProfile.prototype.getAvatar = function() {
+proto.pb.AnchorProfile.prototype.getSignature = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
@@ -2258,17 +2270,35 @@ proto.pb.AnchorProfile.prototype.getAvatar = function() {
  * @param {string} value
  * @return {!proto.pb.AnchorProfile} returns this
  */
-proto.pb.AnchorProfile.prototype.setAvatar = function(value) {
+proto.pb.AnchorProfile.prototype.setSignature = function(value) {
   return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
 /**
- * optional OccupationType occupation = 10;
+ * optional string avatar = 10;
+ * @return {string}
+ */
+proto.pb.AnchorProfile.prototype.getAvatar = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.AnchorProfile} returns this
+ */
+proto.pb.AnchorProfile.prototype.setAvatar = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional OccupationType occupation = 11;
  * @return {!proto.pb.OccupationType}
  */
 proto.pb.AnchorProfile.prototype.getOccupation = function() {
-  return /** @type {!proto.pb.OccupationType} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {!proto.pb.OccupationType} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
 
@@ -2277,16 +2307,16 @@ proto.pb.AnchorProfile.prototype.getOccupation = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setOccupation = function(value) {
-  return jspb.Message.setProto3EnumField(this, 10, value);
+  return jspb.Message.setProto3EnumField(this, 11, value);
 };
 
 
 /**
- * optional uint32 birthday = 11;
+ * optional uint32 birthday = 12;
  * @return {number}
  */
 proto.pb.AnchorProfile.prototype.getBirthday = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
 
@@ -2295,16 +2325,16 @@ proto.pb.AnchorProfile.prototype.getBirthday = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setBirthday = function(value) {
-  return jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
 /**
- * repeated string tags = 12;
+ * repeated string tags = 13;
  * @return {!Array<string>}
  */
 proto.pb.AnchorProfile.prototype.getTagsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 12));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 13));
 };
 
 
@@ -2313,7 +2343,7 @@ proto.pb.AnchorProfile.prototype.getTagsList = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setTagsList = function(value) {
-  return jspb.Message.setField(this, 12, value || []);
+  return jspb.Message.setField(this, 13, value || []);
 };
 
 
@@ -2323,7 +2353,7 @@ proto.pb.AnchorProfile.prototype.setTagsList = function(value) {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.addTags = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 12, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 13, value, opt_index);
 };
 
 
@@ -2337,11 +2367,11 @@ proto.pb.AnchorProfile.prototype.clearTagsList = function() {
 
 
 /**
- * optional string voice_greeting = 13;
+ * optional string voice_greeting = 14;
  * @return {string}
  */
 proto.pb.AnchorProfile.prototype.getVoiceGreeting = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
 };
 
 
@@ -2350,33 +2380,15 @@ proto.pb.AnchorProfile.prototype.getVoiceGreeting = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setVoiceGreeting = function(value) {
-  return jspb.Message.setProto3StringField(this, 13, value);
+  return jspb.Message.setProto3StringField(this, 14, value);
 };
 
 
 /**
- * optional uint32 online_start = 14;
+ * optional uint32 online_start = 15;
  * @return {number}
  */
 proto.pb.AnchorProfile.prototype.getOnlineStart = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.pb.AnchorProfile} returns this
- */
-proto.pb.AnchorProfile.prototype.setOnlineStart = function(value) {
-  return jspb.Message.setProto3IntField(this, 14, value);
-};
-
-
-/**
- * optional uint32 online_end = 15;
- * @return {number}
- */
-proto.pb.AnchorProfile.prototype.getOnlineEnd = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
 };
 
@@ -2385,17 +2397,35 @@ proto.pb.AnchorProfile.prototype.getOnlineEnd = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorProfile} returns this
  */
-proto.pb.AnchorProfile.prototype.setOnlineEnd = function(value) {
+proto.pb.AnchorProfile.prototype.setOnlineStart = function(value) {
   return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
 /**
- * repeated uint64 photo_ids = 16;
+ * optional uint32 online_end = 16;
+ * @return {number}
+ */
+proto.pb.AnchorProfile.prototype.getOnlineEnd = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AnchorProfile} returns this
+ */
+proto.pb.AnchorProfile.prototype.setOnlineEnd = function(value) {
+  return jspb.Message.setProto3IntField(this, 16, value);
+};
+
+
+/**
+ * repeated uint64 photo_ids = 17;
  * @return {!Array<number>}
  */
 proto.pb.AnchorProfile.prototype.getPhotoIdsList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 16));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 17));
 };
 
 
@@ -2404,7 +2434,7 @@ proto.pb.AnchorProfile.prototype.getPhotoIdsList = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setPhotoIdsList = function(value) {
-  return jspb.Message.setField(this, 16, value || []);
+  return jspb.Message.setField(this, 17, value || []);
 };
 
 
@@ -2414,7 +2444,7 @@ proto.pb.AnchorProfile.prototype.setPhotoIdsList = function(value) {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.addPhotoIds = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 16, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 17, value, opt_index);
 };
 
 
@@ -2428,11 +2458,11 @@ proto.pb.AnchorProfile.prototype.clearPhotoIdsList = function() {
 
 
 /**
- * repeated uint64 video_ids = 17;
+ * repeated uint64 video_ids = 18;
  * @return {!Array<number>}
  */
 proto.pb.AnchorProfile.prototype.getVideoIdsList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 17));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 18));
 };
 
 
@@ -2441,7 +2471,7 @@ proto.pb.AnchorProfile.prototype.getVideoIdsList = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setVideoIdsList = function(value) {
-  return jspb.Message.setField(this, 17, value || []);
+  return jspb.Message.setField(this, 18, value || []);
 };
 
 
@@ -2451,7 +2481,7 @@ proto.pb.AnchorProfile.prototype.setVideoIdsList = function(value) {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.addVideoIds = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 17, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 18, value, opt_index);
 };
 
 
@@ -2465,11 +2495,11 @@ proto.pb.AnchorProfile.prototype.clearVideoIdsList = function() {
 
 
 /**
- * optional string reject_reason = 18;
+ * optional string reject_reason = 19;
  * @return {string}
  */
 proto.pb.AnchorProfile.prototype.getRejectReason = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 19, ""));
 };
 
 
@@ -2478,7 +2508,7 @@ proto.pb.AnchorProfile.prototype.getRejectReason = function() {
  * @return {!proto.pb.AnchorProfile} returns this
  */
 proto.pb.AnchorProfile.prototype.setRejectReason = function(value) {
-  return jspb.Message.setProto3StringField(this, 18, value);
+  return jspb.Message.setProto3StringField(this, 19, value);
 };
 
 

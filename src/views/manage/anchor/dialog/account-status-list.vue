@@ -23,7 +23,7 @@
                     <el-table-column prop="reason" label="原因" align="center"/>
                 </el-table>
                 <!-- 分页栏 -->
-                <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+                <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                             @pagination="fetchData"/>
             </el-card>
         </div>
@@ -42,7 +42,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: {},
+            search: {},
             // 数据总条数
             total: 0,
             dialogVisible: false
@@ -57,7 +57,7 @@ export default {
             this.listLoading = true
             let url = process.env.VUE_APP_JSON_URI + "/account-status-list.json"
             // 获取数据列表接口
-            getTableList(this.listQuery, url).then(res => {
+            getTableList(this.search, url).then(res => {
                 const data = res.data
                 if (data.code === 0) {
                     this.total = data.data.total

@@ -9,7 +9,7 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
@@ -17,7 +17,7 @@
                     <el-row>
                         <el-col :span="6">
                             <el-form-item label="地区">
-                                <el-select v-model="listQuery.area" placeholder="请选择">
+                                <el-select v-model="search.area" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -59,7 +59,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 编辑资料 -->
@@ -81,7 +81,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
@@ -97,7 +97,7 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.admin.getAdminList(this.listQuery, function (result){
+            this.$service.admin.getAdminList(this.search, function (result){
                 const list = result.getAdminsList();
                 const data = []
                 list.forEach((item, index)=>{
@@ -126,7 +126,7 @@ export default {
             })
         },
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         // 弹框
@@ -137,7 +137,7 @@ export default {
             })
         },
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         initQuery() {
             return {

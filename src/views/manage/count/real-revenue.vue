@@ -6,7 +6,7 @@
                     <el-form
                         ref="searchForm"
                         :inline="true"
-                        :model="listQuery"
+                        :model="search"
                         label-width="90px"
                         class="search-form"
                     >
@@ -14,7 +14,7 @@
                             <el-row>
                                 <el-col :span="6">
                                     <el-form-item label="地区">
-                                        <el-select v-model="listQuery.area" placeholder="请选择">
+                                        <el-select v-model="search.area" placeholder="请选择">
                                             <el-option v-for="item in areaData"
                                                        :key="item.value"
                                                        :label="item.label"
@@ -71,7 +71,7 @@ export default {
     components: {CountTo, ChartsBar, ChartsBarLine, ChartsLine},
     data() {
         return {
-            listQuery: {},
+            search: {},
             userData: {
                 title: '实时消耗',
                 legend: ['全部用户'],

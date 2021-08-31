@@ -5,7 +5,7 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
@@ -13,7 +13,7 @@
                     <el-row>
                         <el-col :span="16">
                             <el-form-item label="地区">
-                                <el-select v-model="listQuery.area" placeholder="请选择">
+                                <el-select v-model="search.area" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -28,13 +28,13 @@
                         <el-col :span="1">&nbsp;</el-col>
                         <el-col :span="6">
                             <el-form-item label="结算周期:">
-                                <el-date-picker v-model="listQuery.settleDate" type="date" placeholder="选择日期"
+                                <el-date-picker v-model="search.settleDate" type="date" placeholder="选择日期"
                                                 style="width: 100%;"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item label="工会">
-                                <el-select v-model="listQuery.app" placeholder="请选择">
+                                <el-select v-model="search.app" placeholder="请选择">
                                     <el-option v-for="item in apps"
                                                :key="item.value"
                                                :label="item.label"
@@ -45,7 +45,7 @@
                         </el-col>
                         <el-col :span="6">
                             <el-form-item label="主播ID">
-                                <el-input v-model="listQuery.uid" placeholder="主播ID"/>
+                                <el-input v-model="search.uid" placeholder="主播ID"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="5">
@@ -90,7 +90,7 @@
                 <el-table-column prop="createTime" label="注册日期" align="center" />
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
@@ -110,7 +110,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
@@ -130,7 +130,7 @@ export default {
             this.listLoading = true
             let url = process.env.VUE_APP_JSON_URI + "/settle.json"
             // 获取数据列表接口
-            getTableList(this.listQuery, url).then(res => {
+            getTableList(this.search, url).then(res => {
                 const data = res.data
                 if (data.code === 0) {
                     this.total = data.data.total
@@ -143,12 +143,12 @@ export default {
         },
         // 查询数据
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         //重置
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         initQuery() {
             return {

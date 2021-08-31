@@ -225,7 +225,7 @@ enum OnlineStatus {
 // 封禁类型
 enum BlockStatus {
     BlockUnknown = 0;
-    // 未封禁
+    // 不封禁
     BlockNone = 1;
     // 封禁账号
     BlockAccount = 2;
@@ -327,6 +327,8 @@ message User {
     string rc_token = 40;
     // 融云token过期时间
     uint32 rc_expire_at = 41;
+    // 安装id
+    uint32 install_id = 42;
 
     uint32 updated_at = 60;
     uint32 created_at = 61;
@@ -814,7 +816,7 @@ message BannerConfig {
 
 // 违规类型
 enum ViolationType {
-    ViolationUnknown = 0;
+    ViolationTypeUnknown = 0;
     // 诈骗
     ViolationFraud = 1;
     // 色情
@@ -825,36 +827,15 @@ enum ViolationType {
     ViolationOther = 4;
 }
 
-// 违规记录
-message ViolationRecord {
-    uint64 id = 1;
-    // 应用id
-    uint32 app_id = 2;
-    // 区域id
-    uint32 area_id = 3;
-    // 举报者类型，主播或用户
-    EntityType reporter_type = 4;
-    // 举报者id
-    uint32 reporter_id = 5;
-    // 被举报者类型，主播或用户
-    EntityType reported_type = 6;
-    // 被举报者id
-    uint32 reported_id = 7;
-    // 违规类型
-    ViolationType violation_type = 8;
-    // 举报信息
-    string report_message = 9;
-    // 处理状态
-    BlockStatus deal_status = 10;
-    // 处理信息
-    string deal_message = 11;
-    // 处理时间
-    uint32 deal_at = 12;
-    // 封禁时长，秒
-    uint32 block_duration = 13;
-
-    uint32 updated_at = 20;
-    uint32 created_at = 21;
+// 违规场景
+enum ViolationScene {
+    ViolationSceneUnknown = 0;
+    // 视频通话
+    ViolationCall = 1;
+    // 聊天
+    ViolationChat = 2;
+    // 主播资料
+    ViolationProfile = 3;
 }
 
 // 订阅期限
@@ -1076,7 +1057,7 @@ message Transaction {
 message FileChunk {
     // 偏移，必须连续
     uint32 offset = 1;
-    // 文件名，为空时自动生成
+    // 文件名
     string filename = 2;
     // 文件类型
     FileType type = 3;

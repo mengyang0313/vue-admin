@@ -1,6 +1,5 @@
 import {setToken, getToken} from '@/utils/cookie'
 import { error } from '@/utils/error'
-import {loginOut} from "@/api/login";
 
 export default class {
     constructor (deps) {
@@ -18,7 +17,7 @@ export default class {
         const req = new this.proto.UserListRequest
         req.setPageNo(param.page.currentPage)
         req.setPageSize(param.page.pageSize)
-        req.setUserId(param.id)
+        req.setUserId(param.userId)
         req.setAreaId(param.areaId)
         req.setNickname(param.nickname)
         req.setVipOnly(param.vipOnly)

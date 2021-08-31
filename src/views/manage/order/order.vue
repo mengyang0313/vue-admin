@@ -5,29 +5,29 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="用户ID">
-                            <el-input v-model="listQuery.uid" placeholder="用户ID"/>
+                            <el-input v-model="search.uid" placeholder="用户ID"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="订单号">
-                            <el-input v-model="listQuery.orderId" placeholder="订单号"/>
+                            <el-input v-model="search.orderId" placeholder="订单号"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="交易时间">
                             <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="listQuery.startTime" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.startTime" style="width: 100%;"></el-date-picker>
                             </el-col>
                             <el-col class="line" :span="1" align="center">-</el-col>
                             <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="listQuery.endTime" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.endTime" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                     </el-col>
@@ -35,7 +35,7 @@
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="APP">
-                            <el-select v-model="listQuery.app" placeholder="请选择">
+                            <el-select v-model="search.app" placeholder="请选择">
                                 <el-option v-for="item in apps"
                                            :key="item.value"
                                            :label="item.label"
@@ -46,7 +46,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="地区">
-                            <el-select v-model="listQuery.area" placeholder="请选择">
+                            <el-select v-model="search.area" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
                                            :label="item.label"
@@ -57,7 +57,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="订单状态">
-                            <el-select v-model="listQuery.orderStatus" placeholder="请选择">
+                            <el-select v-model="search.orderStatus" placeholder="请选择">
                                 <el-option v-for="item in orderStatus"
                                            :key="item.value"
                                            :label="item.label"
@@ -112,7 +112,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
@@ -130,7 +130,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
@@ -149,7 +149,7 @@ export default {
             this.listLoading = true
             let url = process.env.VUE_APP_JSON_URI + "/order.json"
             // 获取数据列表接口
-            getTableList(this.listQuery, url).then(res => {
+            getTableList(this.search, url).then(res => {
                 const data = res.data
                 if (data.code === 0) {
                     this.total = data.data.total
@@ -162,7 +162,7 @@ export default {
         },
         // 查询数据
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         toMakeOrder() {
@@ -171,7 +171,7 @@ export default {
         },
         //重置
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         initQuery() {
             return {

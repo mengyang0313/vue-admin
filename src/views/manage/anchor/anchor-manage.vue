@@ -5,29 +5,29 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="UID">
-                            <el-input v-model="listQuery.uid" placeholder="UID"/>
+                            <el-input v-model="search.uid" placeholder="UID"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="工会ID">
-                            <el-input v-model="listQuery.unionId" placeholder="工会ID"/>
+                            <el-input v-model="search.unionId" placeholder="工会ID"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="注册时间">
                             <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="listQuery.registeredTime1" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.registeredTime1" style="width: 100%;"></el-date-picker>
                             </el-col>
                             <el-col class="line" :span="1" align="center">-</el-col>
                             <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="listQuery.registeredTime2" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.registeredTime2" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                     </el-col>
@@ -35,7 +35,7 @@
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="主播等级">
-                            <el-select v-model="listQuery.level" placeholder="请选择">
+                            <el-select v-model="search.level" placeholder="请选择">
                                 <el-option v-for="item in anchorLevel"
                                            :key="item.value"
                                            :label="item.label"
@@ -46,7 +46,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="账户状态">
-                            <el-select v-model="listQuery.accountStatus" placeholder="请选择">
+                            <el-select v-model="search.accountStatus" placeholder="请选择">
                                 <el-option v-for="item in accountStatus"
                                            :key="item.value"
                                            :label="item.label"
@@ -57,7 +57,7 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="在线状态">
-                            <el-select v-model="listQuery.onlineStatus" placeholder="请选择">
+                            <el-select v-model="search.onlineStatus" placeholder="请选择">
                                 <el-option v-for="item in onlineStatus"
                                            :key="item.value"
                                            :label="item.label"
@@ -70,7 +70,7 @@
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="地区">
-                            <el-select v-model="listQuery.area" placeholder="请选择">
+                            <el-select v-model="search.area" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
                                            :label="item.label"
@@ -81,7 +81,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="接听率(日)">
-                            <el-input placeholder="请输入" v-model="listQuery.diamond">
+                            <el-input placeholder="请输入" v-model="search.diamond">
                                 <template slot="prepend">小余</template>
                             </el-input>
                         </el-form-item>
@@ -178,7 +178,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.page.currentPage" :limit.sync="listQuery.page.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 视频记录 弹出栏 -->
@@ -247,7 +247,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 表格数据数组
@@ -270,7 +270,7 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.anchor.getAnchorList(this.listQuery, function (result){
+            this.$service.anchor.getAnchorList(this.search, function (result){
                 const list = result.getAnchorsList()
                 const length = list.length;
                 const data = []
@@ -311,7 +311,7 @@ export default {
         },
         // 查询数据
         onSearch() {
-            this.listQuery.currentPage = 1
+            this.search.currentPage = 1
             this.fetchData()
         },
         // 弹框
@@ -369,7 +369,7 @@ export default {
         },
         //重置
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         initQuery() {
             return {

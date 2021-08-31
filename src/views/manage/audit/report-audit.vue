@@ -5,7 +5,7 @@
             <el-form
                 ref="searchForm"
                 :inline="true"
-                :model="listQuery"
+                :model="search"
                 label-width="90px"
                 class="search-form"
             >
@@ -20,7 +20,7 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="地区">
-                                <el-select v-model="listQuery.area" placeholder="请选择">
+                                <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -33,9 +33,9 @@
                     <el-divider></el-divider>
                     <el-row>
                         <el-col :span="8">
-                            <el-form-item label="举报方">
-                                <el-select v-model="listQuery.reportUserType" placeholder="请选择">
-                                    <el-option v-for="item in reportUserTypeData"
+                            <el-form-item label="举报方类型">
+                                <el-select v-model="search.reportedType" placeholder="请选择">
+                                    <el-option v-for="item in reportedTypes"
                                                :key="item.value"
                                                :label="item.label"
                                                :value="item.value">
@@ -45,7 +45,7 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="举报场景">
-                                <el-select v-model="listQuery.scenes" placeholder="请选择">
+                                <el-select v-model="search.scenes" placeholder="请选择">
                                     <el-option v-for="item in reportScenesData"
                                                :key="item.value"
                                                :label="item.label"
@@ -55,9 +55,9 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="审核状态">
-                                <el-select v-model="listQuery.status" placeholder="请选择">
-                                    <el-option v-for="item in reportAuditStatusData"
+                            <el-form-item label="举报时间">
+                                <el-select v-model="search.reportedTime" placeholder="请选择">
+                                    <el-option v-for="item in reportedTimes"
                                                :key="item.value"
                                                :label="item.label"
                                                :value="item.value">
@@ -69,19 +69,19 @@
                     <el-row>
                         <el-col :span="8">
                             <el-form-item label="举报方Id">
-                                <el-input v-model="listQuery.reportUid" placeholder="举报方Id"/>
+                                <el-input v-model="search.reporterId" placeholder="举报方Id"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10">
                             <el-form-item label="被举报方Id">
-                                <el-input v-model="listQuery.reportUid" placeholder="被举报方Id"/>
+                                <el-input v-model="search.reportedId" placeholder="被举报方Id"/>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="24" class="search-box">
                             <el-form-item>
-                                <el-button type="primary" size="small" style="width: 150px;">查询</el-button>
+                                <el-button  @click="onSubmit()" type="primary" size="small" style="width: 150px;">查询</el-button>
                                 <el-button @click="resetForm('searchForm')" size="small" style="width: 150px;margin-left: 250px">重置</el-button>
                             </el-form-item>
                         </el-col>
@@ -124,7 +124,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize"
+            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
@@ -133,7 +133,8 @@
 <script>
 import {getTableList} from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import { areaData, reportUserTypeData, reportScenesData, reportAuditStatusData } from '@/dict/index'
+import {getReportedTypes, getReportedTime, getAreas, handleReportedTime} from "@/utils/common";
+import { reportUserTypeData, reportScenesData } from '@/dict/index'
 
 export default {
     name: 'Table',
@@ -143,7 +144,7 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            listQuery: this.initQuery(),
+            search: this.initQuery(),
             // 数据总条数
             total: 0,
             // 表格数据数组
@@ -152,7 +153,9 @@ export default {
             multipleSelection: [],
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData,
+            areaData: getAreas(),
+            reportedTypes: getReportedTypes(),
+            reportedTimes: getReportedTime(),
             reportUserTypeData,
             reportScenesData
         }
@@ -163,24 +166,58 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
+            const $this = this
             this.listLoading = true
-            console.log(this.listQuery)
-            let url = process.env.VUE_APP_JSON_URI + "/report.json"
-            // 获取数据列表接口
-            getTableList(this.listQuery, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
-            })
+
+            this.handleReportedTime()
+            this.$service.audit.getViolationList(this.search, function (result){
+                const list = result.getProfilesList()
+                const length = list.length;
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "areaId" : item.getAreaId(),
+                        "guildId" : item.getGuildId(),
+                        "nickname" : item.getNickname(),
+                        "avatar" : item.getAvatar(),
+                        "videos" : item.getVideoIdsList(),
+                        "onlineStatus" : "在线状态",
+                        "reviewStatus" : "账户状态",
+                        "profileCount" : "资料数量",
+                        "tags" : item.getTags(),
+                        "occupation" : item.getOccupation(),
+                        "birthday" : item.getBirthday(),
+                        "voiceGreeting" : item.getVoiceGreeting(),
+                        "onlineStart" : item.getOnlineStart(),
+                        "onlineEnd" : item.getOnlineEnd(),
+                        "struct" : item
+                    }
+                    data.push(json)
+                })
+                $this.total = length
+                $this.tableData = data
+                $this.listLoading = false
+            });
+
+            // this.listLoading = true
+            // console.log(this.search)
+            // let url = process.env.VUE_APP_JSON_URI + "/report.json"
+            // // 获取数据列表接口
+            // getTableList(this.search, url).then(res => {
+            //     const data = res.data
+            //     if (data.code === 0) {
+            //         this.total = data.data.total
+            //         this.tableData = data.data.list
+            //         this.listLoading = false
+            //     }
+            // }).catch(() => {
+            //     this.listLoading = false
+            // })
         },
         // 查询数据
         onSubmit() {
-            this.listQuery.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
         // 多选操作
@@ -231,18 +268,43 @@ export default {
         },
         //重置
         resetForm() {
-            this.listQuery = this.initQuery();
+            this.search = this.initQuery();
         },
         initQuery() {
             return {
-                status: undefined,
+                areaId: undefined,
                 scenes: undefined,
-                reportUserType: undefined,
+                reportedType: 1,
                 reportUid: undefined,
-                currentPage: 1,
-                pageSize: 10
+                reportedTime: 1,
+                createdStart: undefined,
+                createdEnd: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
             }
         },
+        handleReportedTime(){
+            let rt = this.search.reportedTime;
+
+            let startTime1 = null;
+            let endTime1 = null;
+            let daySecond = 24 * 60 * 60;
+            let currentSecond = new Date(new Date().toLocaleDateString()).getTime() /1000;
+            if('1' === rt){
+                startTime1 = currentSecond; // 当天0点
+                endTime1 = currentSecond + daySecond -1;// 当天23:59
+            }else if('2' === rt){
+                startTime1 = currentSecond - daySecond * 3;
+                endTime1 = currentSecond + daySecond -1;// 当天23:59
+            }else if('3' === rt){
+                startTime1 = currentSecond - daySecond * 7;
+                endTime1 = currentSecond + daySecond -1;// 当天23:59
+            }
+            this.search.createdStart = startTime1;
+            this.search.createdEnd = endTime1;
+        }
     }
 }
 </script>

@@ -26,7 +26,7 @@
                     <el-form
                         ref="searchForm"
                         :inline="true"
-                        :model="listQuery"
+                        :model="search"
                         label-width="90px"
                         class="search-form"
                     >
@@ -34,7 +34,7 @@
                             <el-row>
                                 <el-col :span="6">
                                     <el-form-item label="地区">
-                                        <el-select v-model="listQuery.area" placeholder="请选择">
+                                        <el-select v-model="search.area" placeholder="请选择">
                                             <el-option v-for="item in areaData"
                                                        :key="item.value"
                                                        :label="item.label"
@@ -45,7 +45,7 @@
                                 </el-col>
                                 <el-col :span="6">
                                     <el-form-item label="产品" >
-                                        <el-select v-model="listQuery.area" placeholder="请选择">
+                                        <el-select v-model="search.area" placeholder="请选择">
                                             <el-option v-for="item in areaData"
                                                        :key="item.value"
                                                        :label="item.label"
@@ -56,7 +56,7 @@
                                 </el-col>
                                 <el-col :span="6">
                                     <el-form-item label="时间">
-                                        <el-select v-model="listQuery.area" placeholder="请选择">
+                                        <el-select v-model="search.area" placeholder="请选择">
                                             <el-option v-for="item in areaData"
                                                        :key="item.value"
                                                        :label="item.label"
@@ -131,7 +131,7 @@ export default {
     components: {CountTo, ChartsBar, ChartsBarLine, ChartsLine},
     data() {
         return {
-            listQuery: {},
+            search: {},
             cardInfoData: [
                 {title: '大盘实时收入', icon: 'vue-dsn-icon-dianji', count: 28102, color: '#2d8cf0'},
                 {title: '今日新增/活跃用户', icon: 'vue-dsn-icon-xinzeng', count: 15890,count2: 56250, color: '#19be6b'},
