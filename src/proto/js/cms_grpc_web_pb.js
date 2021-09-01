@@ -1120,6 +1120,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.updateAnchorBasic =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.AnchorFullRequest,
+ *   !proto.pb.cms.AnchorFullReply>}
+ */
+const methodDescriptor_CmsSdk_GetAnchorFull = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetAnchorFull',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.AnchorFullRequest,
+  proto.pb.cms.AnchorFullReply,
+  /**
+   * @param {!proto.pb.cms.AnchorFullRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AnchorFullReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.AnchorFullRequest,
+ *   !proto.pb.cms.AnchorFullReply>}
+ */
+const methodInfo_CmsSdk_GetAnchorFull = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.AnchorFullReply,
+  /**
+   * @param {!proto.pb.cms.AnchorFullRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AnchorFullReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.AnchorFullRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.AnchorFullReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.AnchorFullReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getAnchorFull =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAnchorFull',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAnchorFull,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.AnchorFullRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.AnchorFullReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getAnchorFull =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAnchorFull',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAnchorFull);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.ProfileListRequest,
  *   !proto.pb.cms.ProfileListReply>}
  */
@@ -1200,80 +1280,80 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getProfileList =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.pb.cms.AnchorFullRequest,
- *   !proto.pb.cms.AnchorFullReply>}
+ *   !proto.pb.cms.ProcessProfileRequest,
+ *   !proto.pb.AnchorProfile>}
  */
-const methodDescriptor_CmsSdk_GetAnchorFull = new grpc.web.MethodDescriptor(
-  '/pb.cms.CmsSdk/GetAnchorFull',
+const methodDescriptor_CmsSdk_ProcessProfile = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/ProcessProfile',
   grpc.web.MethodType.UNARY,
-  proto.pb.cms.AnchorFullRequest,
-  proto.pb.cms.AnchorFullReply,
+  proto.pb.cms.ProcessProfileRequest,
+  anchortype_pb.AnchorProfile,
   /**
-   * @param {!proto.pb.cms.AnchorFullRequest} request
+   * @param {!proto.pb.cms.ProcessProfileRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.pb.cms.AnchorFullReply.deserializeBinary
+  anchortype_pb.AnchorProfile.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.pb.cms.AnchorFullRequest,
- *   !proto.pb.cms.AnchorFullReply>}
+ *   !proto.pb.cms.ProcessProfileRequest,
+ *   !proto.pb.AnchorProfile>}
  */
-const methodInfo_CmsSdk_GetAnchorFull = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.pb.cms.AnchorFullReply,
+const methodInfo_CmsSdk_ProcessProfile = new grpc.web.AbstractClientBase.MethodInfo(
+  anchortype_pb.AnchorProfile,
   /**
-   * @param {!proto.pb.cms.AnchorFullRequest} request
+   * @param {!proto.pb.cms.ProcessProfileRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.pb.cms.AnchorFullReply.deserializeBinary
+  anchortype_pb.AnchorProfile.deserializeBinary
 );
 
 
 /**
- * @param {!proto.pb.cms.AnchorFullRequest} request The
+ * @param {!proto.pb.cms.ProcessProfileRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.pb.cms.AnchorFullReply)}
+ * @param {function(?grpc.web.Error, ?proto.pb.AnchorProfile)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.AnchorFullReply>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.AnchorProfile>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.pb.cms.CmsSdkClient.prototype.getAnchorFull =
+proto.pb.cms.CmsSdkClient.prototype.processProfile =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/pb.cms.CmsSdk/GetAnchorFull',
+      '/pb.cms.CmsSdk/ProcessProfile',
       request,
       metadata || {},
-      methodDescriptor_CmsSdk_GetAnchorFull,
+      methodDescriptor_CmsSdk_ProcessProfile,
       callback);
 };
 
 
 /**
- * @param {!proto.pb.cms.AnchorFullRequest} request The
+ * @param {!proto.pb.cms.ProcessProfileRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.pb.cms.AnchorFullReply>}
+ * @return {!Promise<!proto.pb.AnchorProfile>}
  *     Promise that resolves to the response
  */
-proto.pb.cms.CmsSdkPromiseClient.prototype.getAnchorFull =
+proto.pb.cms.CmsSdkPromiseClient.prototype.processProfile =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/pb.cms.CmsSdk/GetAnchorFull',
+      '/pb.cms.CmsSdk/ProcessProfile',
       request,
       metadata || {},
-      methodDescriptor_CmsSdk_GetAnchorFull);
+      methodDescriptor_CmsSdk_ProcessProfile);
 };
 
 
@@ -1360,16 +1440,16 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getViolationList =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.pb.ViolationRecord,
+ *   !proto.pb.cms.ProcessViolationRequest,
  *   !proto.pb.ViolationRecord>}
  */
 const methodDescriptor_CmsSdk_ProcessViolation = new grpc.web.MethodDescriptor(
   '/pb.cms.CmsSdk/ProcessViolation',
   grpc.web.MethodType.UNARY,
-  cmstype_pb.ViolationRecord,
+  proto.pb.cms.ProcessViolationRequest,
   cmstype_pb.ViolationRecord,
   /**
-   * @param {!proto.pb.ViolationRecord} request
+   * @param {!proto.pb.cms.ProcessViolationRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -1382,13 +1462,13 @@ const methodDescriptor_CmsSdk_ProcessViolation = new grpc.web.MethodDescriptor(
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.pb.ViolationRecord,
+ *   !proto.pb.cms.ProcessViolationRequest,
  *   !proto.pb.ViolationRecord>}
  */
 const methodInfo_CmsSdk_ProcessViolation = new grpc.web.AbstractClientBase.MethodInfo(
   cmstype_pb.ViolationRecord,
   /**
-   * @param {!proto.pb.ViolationRecord} request
+   * @param {!proto.pb.cms.ProcessViolationRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -1399,7 +1479,7 @@ const methodInfo_CmsSdk_ProcessViolation = new grpc.web.AbstractClientBase.Metho
 
 
 /**
- * @param {!proto.pb.ViolationRecord} request The
+ * @param {!proto.pb.cms.ProcessViolationRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
@@ -1420,7 +1500,7 @@ proto.pb.cms.CmsSdkClient.prototype.processViolation =
 
 
 /**
- * @param {!proto.pb.ViolationRecord} request The
+ * @param {!proto.pb.cms.ProcessViolationRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
@@ -1434,6 +1514,646 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.processViolation =
       request,
       metadata || {},
       methodDescriptor_CmsSdk_ProcessViolation);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.LiveListRequest,
+ *   !proto.pb.cms.LiveListReply>}
+ */
+const methodDescriptor_CmsSdk_GetLiveList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetLiveList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.LiveListRequest,
+  proto.pb.cms.LiveListReply,
+  /**
+   * @param {!proto.pb.cms.LiveListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.LiveListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.LiveListRequest,
+ *   !proto.pb.cms.LiveListReply>}
+ */
+const methodInfo_CmsSdk_GetLiveList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.LiveListReply,
+  /**
+   * @param {!proto.pb.cms.LiveListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.LiveListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.LiveListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.LiveListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.LiveListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getLiveList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetLiveList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetLiveList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.LiveListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.LiveListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getLiveList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetLiveList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetLiveList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.PayListRequest,
+ *   !proto.pb.cms.PayListReply>}
+ */
+const methodDescriptor_CmsSdk_GetPayList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetPayList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.PayListRequest,
+  proto.pb.cms.PayListReply,
+  /**
+   * @param {!proto.pb.cms.PayListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.PayListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.PayListRequest,
+ *   !proto.pb.cms.PayListReply>}
+ */
+const methodInfo_CmsSdk_GetPayList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.PayListReply,
+  /**
+   * @param {!proto.pb.cms.PayListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.PayListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.PayListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.PayListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.PayListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getPayList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetPayList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetPayList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.PayListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.PayListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getPayList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetPayList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetPayList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.RobotListRequest,
+ *   !proto.pb.cms.RobotListReply>}
+ */
+const methodDescriptor_CmsSdk_GetRobotList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetRobotList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.RobotListRequest,
+  proto.pb.cms.RobotListReply,
+  /**
+   * @param {!proto.pb.cms.RobotListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.RobotListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.RobotListRequest,
+ *   !proto.pb.cms.RobotListReply>}
+ */
+const methodInfo_CmsSdk_GetRobotList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.RobotListReply,
+  /**
+   * @param {!proto.pb.cms.RobotListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.RobotListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.RobotListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.RobotListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.RobotListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getRobotList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetRobotList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetRobotList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.RobotListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.RobotListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getRobotList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetRobotList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetRobotList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.AnchorProfile,
+ *   !proto.pb.AnchorProfile>}
+ */
+const methodDescriptor_CmsSdk_SaveRobot = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveRobot',
+  grpc.web.MethodType.UNARY,
+  anchortype_pb.AnchorProfile,
+  anchortype_pb.AnchorProfile,
+  /**
+   * @param {!proto.pb.AnchorProfile} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  anchortype_pb.AnchorProfile.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.AnchorProfile,
+ *   !proto.pb.AnchorProfile>}
+ */
+const methodInfo_CmsSdk_SaveRobot = new grpc.web.AbstractClientBase.MethodInfo(
+  anchortype_pb.AnchorProfile,
+  /**
+   * @param {!proto.pb.AnchorProfile} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  anchortype_pb.AnchorProfile.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.AnchorProfile} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.AnchorProfile)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.AnchorProfile>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.saveRobot =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveRobot',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveRobot,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.AnchorProfile} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.AnchorProfile>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveRobot =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveRobot',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveRobot);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.RobotMessageListRequest,
+ *   !proto.pb.cms.RobotMessageListReply>}
+ */
+const methodDescriptor_CmsSdk_GetRobotMessageList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetRobotMessageList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.RobotMessageListRequest,
+  proto.pb.cms.RobotMessageListReply,
+  /**
+   * @param {!proto.pb.cms.RobotMessageListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.RobotMessageListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.RobotMessageListRequest,
+ *   !proto.pb.cms.RobotMessageListReply>}
+ */
+const methodInfo_CmsSdk_GetRobotMessageList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.RobotMessageListReply,
+  /**
+   * @param {!proto.pb.cms.RobotMessageListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.RobotMessageListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.RobotMessageListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.RobotMessageListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.RobotMessageListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getRobotMessageList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetRobotMessageList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetRobotMessageList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.RobotMessageListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.RobotMessageListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getRobotMessageList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetRobotMessageList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetRobotMessageList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.RobotMessage,
+ *   !proto.pb.RobotMessage>}
+ */
+const methodDescriptor_CmsSdk_SaveRobotMessage = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveRobotMessage',
+  grpc.web.MethodType.UNARY,
+  cmstype_pb.RobotMessage,
+  cmstype_pb.RobotMessage,
+  /**
+   * @param {!proto.pb.RobotMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.RobotMessage.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.RobotMessage,
+ *   !proto.pb.RobotMessage>}
+ */
+const methodInfo_CmsSdk_SaveRobotMessage = new grpc.web.AbstractClientBase.MethodInfo(
+  cmstype_pb.RobotMessage,
+  /**
+   * @param {!proto.pb.RobotMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.RobotMessage.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.RobotMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.RobotMessage)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.RobotMessage>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.saveRobotMessage =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveRobotMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveRobotMessage,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.RobotMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.RobotMessage>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveRobotMessage =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveRobotMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveRobotMessage);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.AutoMessageListRequest,
+ *   !proto.pb.cms.AutoMessageListReply>}
+ */
+const methodDescriptor_CmsSdk_GetAutoMessageList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetAutoMessageList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.AutoMessageListRequest,
+  proto.pb.cms.AutoMessageListReply,
+  /**
+   * @param {!proto.pb.cms.AutoMessageListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AutoMessageListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.AutoMessageListRequest,
+ *   !proto.pb.cms.AutoMessageListReply>}
+ */
+const methodInfo_CmsSdk_GetAutoMessageList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.AutoMessageListReply,
+  /**
+   * @param {!proto.pb.cms.AutoMessageListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AutoMessageListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.AutoMessageListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.AutoMessageListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.AutoMessageListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getAutoMessageList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAutoMessageList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAutoMessageList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.AutoMessageListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.AutoMessageListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getAutoMessageList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAutoMessageList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAutoMessageList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.AutoMessage,
+ *   !proto.pb.AutoMessage>}
+ */
+const methodDescriptor_CmsSdk_SaveAutoMessage = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveAutoMessage',
+  grpc.web.MethodType.UNARY,
+  cmstype_pb.AutoMessage,
+  cmstype_pb.AutoMessage,
+  /**
+   * @param {!proto.pb.AutoMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.AutoMessage.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.AutoMessage,
+ *   !proto.pb.AutoMessage>}
+ */
+const methodInfo_CmsSdk_SaveAutoMessage = new grpc.web.AbstractClientBase.MethodInfo(
+  cmstype_pb.AutoMessage,
+  /**
+   * @param {!proto.pb.AutoMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.AutoMessage.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.AutoMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.AutoMessage)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.AutoMessage>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.saveAutoMessage =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveAutoMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveAutoMessage,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.AutoMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.AutoMessage>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveAutoMessage =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveAutoMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveAutoMessage);
 };
 
 

@@ -3,7 +3,8 @@ import {getToken, removeToken} from '@/utils/cookie'
 import { events } from '@/constants'
 import {
     AreaListReply, LoginRequest, AdminListReply, GuildListReply, AppListReply, AnchorListRequest, UserListRequest,
-    UserListReply, AdminFileChunk, AdjustBalanceRequest, ProfileListRequest, ViolationListRequest
+    UserListReply, AdminFileChunk, AdjustBalanceRequest, ProfileListRequest, ViolationListRequest, ProcessProfileRequest,
+    ProcessViolationRequest
 } from '../proto/js/cms_pb'
 import { Empty, EntityType, User, AnchorLevel, ReviewStatus } from '../proto/js/usertype_pb'
 import { Admin, Guild } from '../proto/js/cmstype_pb'
@@ -32,6 +33,8 @@ const deps = {
       AdjustBalanceRequest,
       ProfileListRequest,
       ViolationListRequest,
+      ProcessProfileRequest,
+      ProcessViolationRequest,
       Empty,
       EntityType,
       User,

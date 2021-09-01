@@ -47,7 +47,7 @@
                     <el-col :span="6">
                         <el-form-item label="账户状态">
                             <el-select v-model="search.accountStatus" placeholder="请选择">
-                                <el-option v-for="item in accountStatus"
+                                <el-option v-for="item in reviewStatus"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
@@ -224,7 +224,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import { anchorLevel, accountStatus, onlineStatus } from '@/dict/index'
-import {getAreas} from "@/utils/common";
+import {getAreas, getAnchorLevel, getOnlineStatus, getReviewStatus} from "@/utils/common";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
 import dataList from './dialog/dataInfo'
@@ -247,7 +247,20 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                uid: undefined,
+                nickname: undefined,
+                registeredTime1: undefined,
+                registeredTime2: undefined,
+                level: undefined,
+                accountStatus: undefined,
+                area: undefined,
+                onlineStatus: undefined,
+                page : {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 表格数据数组
@@ -257,9 +270,9 @@ export default {
             // 防止多次连续提交表单
             isSubmit: false,
             areaData: getAreas(),
-            anchorLevel,
-            accountStatus,
-            onlineStatus
+            anchorLevel: getAnchorLevel(),
+            reviewStatus: getReviewStatus(),
+            onlineStatus: getOnlineStatus()
         }
     },
     created() {
@@ -323,7 +336,6 @@ export default {
         },
         // 通过
         handlePassed(index, row) {
-            console.log(index, row)
             this.$confirm('是否通过?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -372,20 +384,7 @@ export default {
             this.search = this.initQuery();
         },
         initQuery() {
-            return {
-                uid: undefined,
-                nickname: undefined,
-                registeredTime1: undefined,
-                registeredTime2: undefined,
-                level: undefined,
-                accountStatus: undefined,
-                area: undefined,
-                onlineStatus: undefined,
-                page : {
-                    currentPage: 1,
-                    pageSize: 10
-                }
-            }
+            return
         }
     }
 }

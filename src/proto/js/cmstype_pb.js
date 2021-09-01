@@ -7908,11 +7908,12 @@ proto.pb.ViolationRecord.toObject = function(includeInstance, msg) {
     reportedType: jspb.Message.getFieldWithDefault(msg, 6, 0),
     reportedId: jspb.Message.getFieldWithDefault(msg, 7, 0),
     violationType: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    reportMessage: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    dealStatus: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    dealMessage: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    dealAt: jspb.Message.getFieldWithDefault(msg, 12, 0),
-    blockDuration: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    violationScene: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    reportMessage: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    dealStatus: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    dealMessage: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    dealAt: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    blockDuration: jspb.Message.getFieldWithDefault(msg, 14, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 20, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 21, 0)
   };
@@ -7984,22 +7985,26 @@ proto.pb.ViolationRecord.deserializeBinaryFromReader = function(msg, reader) {
       msg.setViolationType(value);
       break;
     case 9:
+      var value = /** @type {!proto.pb.ViolationScene} */ (reader.readEnum());
+      msg.setViolationScene(value);
+      break;
+    case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setReportMessage(value);
       break;
-    case 10:
+    case 11:
       var value = /** @type {!proto.pb.BlockStatus} */ (reader.readEnum());
       msg.setDealStatus(value);
       break;
-    case 11:
+    case 12:
       var value = /** @type {string} */ (reader.readString());
       msg.setDealMessage(value);
       break;
-    case 12:
+    case 13:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setDealAt(value);
       break;
-    case 13:
+    case 14:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setBlockDuration(value);
       break;
@@ -8096,38 +8101,45 @@ proto.pb.ViolationRecord.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getViolationScene();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      9,
+      f
+    );
+  }
   f = message.getReportMessage();
   if (f.length > 0) {
     writer.writeString(
-      9,
+      10,
       f
     );
   }
   f = message.getDealStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      10,
+      11,
       f
     );
   }
   f = message.getDealMessage();
   if (f.length > 0) {
     writer.writeString(
-      11,
+      12,
       f
     );
   }
   f = message.getDealAt();
   if (f !== 0) {
     writer.writeUint32(
-      12,
+      13,
       f
     );
   }
   f = message.getBlockDuration();
   if (f !== 0) {
     writer.writeUint32(
-      13,
+      14,
       f
     );
   }
@@ -8293,11 +8305,29 @@ proto.pb.ViolationRecord.prototype.setViolationType = function(value) {
 
 
 /**
- * optional string report_message = 9;
+ * optional ViolationScene violation_scene = 9;
+ * @return {!proto.pb.ViolationScene}
+ */
+proto.pb.ViolationRecord.prototype.getViolationScene = function() {
+  return /** @type {!proto.pb.ViolationScene} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/**
+ * @param {!proto.pb.ViolationScene} value
+ * @return {!proto.pb.ViolationRecord} returns this
+ */
+proto.pb.ViolationRecord.prototype.setViolationScene = function(value) {
+  return jspb.Message.setProto3EnumField(this, 9, value);
+};
+
+
+/**
+ * optional string report_message = 10;
  * @return {string}
  */
 proto.pb.ViolationRecord.prototype.getReportMessage = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
 };
 
 
@@ -8306,16 +8336,16 @@ proto.pb.ViolationRecord.prototype.getReportMessage = function() {
  * @return {!proto.pb.ViolationRecord} returns this
  */
 proto.pb.ViolationRecord.prototype.setReportMessage = function(value) {
-  return jspb.Message.setProto3StringField(this, 9, value);
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
 /**
- * optional BlockStatus deal_status = 10;
+ * optional BlockStatus deal_status = 11;
  * @return {!proto.pb.BlockStatus}
  */
 proto.pb.ViolationRecord.prototype.getDealStatus = function() {
-  return /** @type {!proto.pb.BlockStatus} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {!proto.pb.BlockStatus} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
 
@@ -8324,16 +8354,16 @@ proto.pb.ViolationRecord.prototype.getDealStatus = function() {
  * @return {!proto.pb.ViolationRecord} returns this
  */
 proto.pb.ViolationRecord.prototype.setDealStatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 10, value);
+  return jspb.Message.setProto3EnumField(this, 11, value);
 };
 
 
 /**
- * optional string deal_message = 11;
+ * optional string deal_message = 12;
  * @return {string}
  */
 proto.pb.ViolationRecord.prototype.getDealMessage = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
 };
 
 
@@ -8342,33 +8372,15 @@ proto.pb.ViolationRecord.prototype.getDealMessage = function() {
  * @return {!proto.pb.ViolationRecord} returns this
  */
 proto.pb.ViolationRecord.prototype.setDealMessage = function(value) {
-  return jspb.Message.setProto3StringField(this, 11, value);
+  return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
 /**
- * optional uint32 deal_at = 12;
+ * optional uint32 deal_at = 13;
  * @return {number}
  */
 proto.pb.ViolationRecord.prototype.getDealAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.pb.ViolationRecord} returns this
- */
-proto.pb.ViolationRecord.prototype.setDealAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 12, value);
-};
-
-
-/**
- * optional uint32 block_duration = 13;
- * @return {number}
- */
-proto.pb.ViolationRecord.prototype.getBlockDuration = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
 };
 
@@ -8377,8 +8389,26 @@ proto.pb.ViolationRecord.prototype.getBlockDuration = function() {
  * @param {number} value
  * @return {!proto.pb.ViolationRecord} returns this
  */
-proto.pb.ViolationRecord.prototype.setBlockDuration = function(value) {
+proto.pb.ViolationRecord.prototype.setDealAt = function(value) {
   return jspb.Message.setProto3IntField(this, 13, value);
+};
+
+
+/**
+ * optional uint32 block_duration = 14;
+ * @return {number}
+ */
+proto.pb.ViolationRecord.prototype.getBlockDuration = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.ViolationRecord} returns this
+ */
+proto.pb.ViolationRecord.prototype.setBlockDuration = function(value) {
+  return jspb.Message.setProto3IntField(this, 14, value);
 };
 
 

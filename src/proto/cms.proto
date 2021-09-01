@@ -59,12 +59,16 @@ service CmsSdk {
     rpc UpdateAnchorBasic (AnchorBasic) returns (AnchorBasic) {
     }
 
+    // 获取主播完整资料
+    rpc GetAnchorFull (AnchorFullRequest) returns (AnchorFullReply) {
+    }
+
     // 获取主播资料列表
     rpc GetProfileList (ProfileListRequest) returns (ProfileListReply) {
     }
 
-    // 获取主播完整资料
-    rpc GetAnchorFull (AnchorFullRequest) returns (AnchorFullReply) {
+    // 处理主播资料审核
+    rpc ProcessProfile (ProcessProfileRequest) returns (AnchorProfile) {
     }
 
     // 获取举报记录
@@ -72,7 +76,39 @@ service CmsSdk {
     }
 
     // 处理违规
-    rpc ProcessViolation (ViolationRecord) returns (ViolationRecord) {
+    rpc ProcessViolation (ProcessViolationRequest) returns (ViolationRecord) {
+    }
+
+    // 获取通话录制视频列表
+    rpc GetLiveList (LiveListRequest) returns (LiveListReply) {
+    }
+
+    // 获取支付订单列表
+    rpc GetPayList (PayListRequest) returns (PayListReply) {
+    }
+
+    // 获取机器人列表
+    rpc GetRobotList (RobotListRequest) returns (RobotListReply) {
+    }
+
+    // 保存机器人，禁用时把状态置为Paused，启用时把状态置为Approved，其他状态不适用
+    rpc SaveRobot (AnchorProfile) returns (AnchorProfile) {
+    }
+
+    // 获取机器人自动消息列表
+    rpc GetRobotMessageList (RobotMessageListRequest) returns (RobotMessageListReply) {
+    }
+
+    // 保存机器人消息，AIA消息
+    rpc SaveRobotMessage (RobotMessage) returns (RobotMessage) {
+    }
+
+    // 获取自动消息列表，AIB消息
+    rpc GetAutoMessageList (AutoMessageListRequest) returns (AutoMessageListReply) {
+    }
+
+    // 保存自动消息，AIB消息
+    rpc SaveAutoMessage (AutoMessage) returns (AutoMessage) {
     }
 
     // 上传文件
@@ -193,6 +229,15 @@ message AdjustBalanceReply {
     uint32 balance = 1;
 }
 
+message AnchorFullRequest {
+    uint32 anchor_id = 1;
+}
+
+message AnchorFullReply {
+    AnchorBasic basic = 1;
+    repeated AnchorProfile profiles = 2;
+}
+
 message ProfileListRequest {
     // 页号
     uint32 page_no = 1;
@@ -218,13 +263,11 @@ message ProfileListReply {
     uint32 total_count = 5;
 }
 
-message AnchorFullRequest {
-    uint32 anchor_id = 1;
-}
-
-message AnchorFullReply {
-    AnchorBasic basic = 1;
-    repeated AnchorProfile profiles = 2;
+message ProcessProfileRequest {
+    uint32 profile_id = 1;
+    ReviewStatus status = 2;
+    // 拒绝原因
+    string reason = 3;
 }
 
 message ViolationListRequest {
@@ -236,22 +279,154 @@ message ViolationListRequest {
     uint32 area_id = 3;
     // 处理状态，传空时查询未处理的举报
     repeated BlockStatus deal_status = 4;
+    // 举报场景
+    ViolationScene Scene = 5;
     // 举报人类型
-    EntityType reporter_type = 5;
+    EntityType reporter_type = 6;
     // 举报人id
-    uint32 reporter_id = 6;
+    uint32 reporter_id = 7;
     // 被举报人类型
-    EntityType reported_type = 7;
+    EntityType reported_type = 8;
     // 被举报人id
-    uint32 reported_id = 8;
+    uint32 reported_id = 9;
     // 创建起始时间
-    uint32 created_start = 9;
+    uint32 created_start = 10;
     // 创建结束时间
-    uint32 created_end = 10;
+    uint32 created_end = 11;
 }
 
 message ViolationListReply {
     repeated ViolationRecord records = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message ProcessViolationRequest {
+    uint32 violation_id = 1;
+    // 处理状态
+    BlockStatus deal_status = 2;
+    // 处理信息
+    string deal_message = 3;
+    // 封禁时长，秒
+    uint32 block_duration = 4;
+}
+
+message LiveListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 主播id
+    uint32 anchor_id = 4;
+    // 审核状态
+    ReviewStatus status = 5;
+    // 创建起始时间
+    uint32 created_start = 6;
+    // 创建结束时间
+    uint32 created_end = 7;
+}
+
+message LiveListReply {
+    repeated FileRecord records = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message PayListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 应用id
+    uint32 app_id = 4;
+    // 用户id
+    uint32 user_id = 5;
+    // 订单id
+    uint64 record_id = 6;
+    // 订单状态
+    PayStatus status = 7;
+    // 创建起始时间
+    uint32 created_start = 8;
+    // 创建结束时间
+    uint32 created_end = 9;
+}
+
+message PayListReply {
+    repeated PayRecord records = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message RobotListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 是否启用
+    bool enable = 4;
+    // 机器人id
+    uint32 robot_id = 5;
+}
+
+message RobotListReply {
+    repeated AnchorProfile robots = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message RobotMessageListRequest {
+    uint32 robot_id = 1;
+}
+
+message RobotMessageListReply {
+    repeated RobotMessage messages = 1;
+}
+
+message AutoMessageListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 是否启用
+    bool enable = 4;
+    // 场景动作
+    ActionType action = 5;
+}
+
+message AutoMessageListReply {
+    repeated AutoMessage messages = 1;
     // 页号
     uint32 page_no = 2;
     // 页面大小

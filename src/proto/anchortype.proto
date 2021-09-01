@@ -26,66 +26,70 @@ message AnchorBasic {
     ReviewStatus review_status = 9;
     // profile数量
     uint32 profile_count = 10;
+    // 活跃的profile数量
+    uint32 active_count = 11;
     // 等级
-    AnchorLevel level = 11;
+    AnchorLevel level = 12;
     // 首选语言，app展示语言
-    string lang = 12;
+    string lang = 13;
     // 支持的语言
-    repeated string langs = 13;
+    repeated string langs = 14;
     // 每分钟价格
-    uint32 price = 14;
+    uint32 price = 15;
     // 通话收入
-    uint32 call_income = 15;
+    uint32 call_income = 16;
     // 礼物收入
-    uint32 gift_income = 16;
+    uint32 gift_income = 17;
     // 用户充值分成
-    uint32 commission_income = 17;
+    uint32 commission_income = 18;
     // 当前余额
-    uint32 balance = 18;
+    uint32 balance = 19;
     // 已结算总收入
-    uint32 settled = 19;
+    uint32 settled = 20;
     // 粉丝数量
-    uint32 fans_count = 20;
+    uint32 fans_count = 21;
     // 通话视频id
-    repeated uint64 live_ids = 21;
+    repeated uint64 live_ids = 22;
     // 离线时间
-    uint32 offline_at = 22;
+    uint32 offline_at = 23;
     // 封禁状态
-    BlockStatus block_status = 23;
+    BlockStatus block_status = 24;
     // 上线ip
-    string online_ip = 24;
+    string online_ip = 25;
     // 经度
-    float longitude = 25;
+    float longitude = 26;
     // 纬度
-    float latitude = 26;
+    float latitude = 27;
     // 创建ip
-    string create_ip = 27;
+    string create_ip = 28;
     // 设备id
-    uint32 device_id = 28;
+    uint32 device_id = 29;
     // 网络类型
-    NetworkType network_type = 29;
+    NetworkType network_type = 30;
     // 开户行
-    string bank_name = 30;
+    string bank_name = 31;
     // 账户名
-    string account_name = 31;
+    string account_name = 32;
     // 银行账号
-    string bank_account = 32;
+    string bank_account = 33;
     // 邮箱
-    string email = 33;
+    string email = 34;
     // 备注
-    string note = 34;
+    string note = 35;
+    // 心跳时间
+    uint32 heartbeat_at = 36;
     // 登录后的访问token
-    string access_token = 35;
+    string access_token = 37;
     // 访问token过期时间
-    uint32 access_expire_at = 36;
+    uint32 access_expire_at = 38;
     // 声网信令token
-    string agora_rtm_token = 37;
+    string agora_rtm_token = 39;
     // 声网信令过期时间，unix时间戳，秒
-    uint32 agora_rtm_expire_at = 38;
+    uint32 agora_rtm_expire_at = 40;
     // 融云token
-    string rc_token = 39;
+    string rc_token = 41;
     // 融云token过期时间
-    uint32 rc_expire_at = 40;
+    uint32 rc_expire_at = 42;
 
     uint32 updated_at = 50;
     uint32 created_at = 51;
@@ -106,42 +110,44 @@ message AnchorBasic {
 // 主播个人中心信息，一个主播可以有多套个人中心信息
 message AnchorProfile {
     uint32 id = 1;
+    // 应用id
+    uint32 app_id = 2;
     // 区域id
-    uint32 area_id = 2;
+    uint32 area_id = 3;
     // 主播id
-    uint32 anchor_id = 3;
+    uint32 anchor_id = 4;
     // 父信息id，处于审核中的记录使用，审核通过之后会覆盖父信息
-    uint32 parent_id = 4;
+    uint32 parent_id = 5;
     // 审核状态
-    ReviewStatus status = 5;
+    ReviewStatus status = 6;
     // 语言
-    string lang = 6;
+    string lang = 7;
     // 性别
-    GenderType gender = 7;
+    GenderType gender = 8;
     // 昵称
-    string nickname = 8;
+    string nickname = 9;
     // 签名
-    string signature = 9;
+    string signature = 10;
     // 头像
-    string avatar = 10;
+    string avatar = 11;
     // 职业
-    OccupationType occupation = 11;
+    OccupationType occupation = 12;
     // 生日，unix时间戳
-    uint32 birthday = 12;
+    uint32 birthday = 13;
     // 标签
-    repeated string tags = 13;
+    repeated string tags = 14;
     // 语音问候
-    string voice_greeting = 14;
+    string voice_greeting = 15;
     // 每日经常在线起始时间，小时，0-23
-    uint32 online_start = 15;
+    uint32 online_start = 16;
     // 每日经常在线结束时间，小时，1-24
-    uint32 online_end = 16;
+    uint32 online_end = 17;
     // 相册文件id
-    repeated uint64 photo_ids = 17;
+    repeated uint64 photo_ids = 18;
     // 视频文件id
-    repeated uint64 video_ids = 18;
+    repeated uint64 video_ids = 19;
     // 审核不通过原因
-    string reject_reason = 19;
+    string reject_reason = 20;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;

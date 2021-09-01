@@ -341,7 +341,7 @@ enum ActionType {
     ActionTypeUnknown = 0;
     // 拒绝接听
     ActionRefuseCall = 1;
-    // 未界定
+    // 未接听
     ActionMissCall = 2;
     // 通话结束
     ActionEndCall = 3;
@@ -445,16 +445,18 @@ message ViolationRecord {
     uint32 reported_id = 7;
     // 违规类型
     ViolationType violation_type = 8;
+    // 违规场景
+    ViolationScene violation_scene = 9;
     // 举报信息
-    string report_message = 9;
+    string report_message = 10;
     // 处理状态
-    BlockStatus deal_status = 10;
+    BlockStatus deal_status = 11;
     // 处理信息
-    string deal_message = 11;
+    string deal_message = 12;
     // 处理时间
-    uint32 deal_at = 12;
+    uint32 deal_at = 13;
     // 封禁时长，秒
-    uint32 block_duration = 13;
+    uint32 block_duration = 14;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;

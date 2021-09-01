@@ -65,26 +65,40 @@
                         <imageShow :data="[scope.row.avatar]" :max-show="1"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="videos" label="录制视频" align="center" width="120">
+<!--                <el-table-column prop="videos" label="录制视频" align="center" width="120">-->
+<!--                    <template scope="scope">-->
+<!--                        <imageShow :data="[scope.row.videos]" :max-show="1"/>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
+<!--                <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">-->
+<!--                    <template slot-scope="scope">-->
+<!--                        <div slot="reference">-->
+<!--                            <el-tag size="medium">{{ scope.row.onlineStatus }}</el-tag>-->
+<!--                        </div>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
+                <el-table-column prop="reviewStatus" label="账户状态" align="center" width="120">
+                    <template slot-scope="scope">
+                        <div slot="reference">
+                            <div v-if="4 === scope.row.reviewStatus">
+                                <el-tag size="medium" type="warning">{{ scope.row.reviewStatusStr }}</el-tag>
+                            </div>
+                            <div v-else>
+                                <el-tag size="medium">{{ scope.row.reviewStatusStr }}</el-tag>
+                            </div>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="photoCount" label="相册文件" align="center" width="120" @click="toDialog('profileList', scope.row)">
+                    <template slot-scope="scope">
+                        {{ scope.row.photoCount }}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="videoCount" label="视频文件" align="center" width="120" >
                     <template scope="scope">
-                        <imageShow :data="[scope.row.videos]" :max-show="1"/>
+                        {{ scope.row.videoCount }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">
-                    <template slot-scope="scope">
-                        <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.onlineStatus }}</el-tag>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="accountStatus" label="账户状态" align="center" width="120">
-                    <template slot-scope="scope">
-                        <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.accountStatus }}</el-tag>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="profileCount" label="资料数量" align="center" width="120" />
                 <el-table-column prop="tags" label="标签" align="center" width="120" >
                     <template scope="scope">
                         <el-tag size="medium">{{ scope.row.tags }}</el-tag>
@@ -93,8 +107,8 @@
                 <el-table-column prop="occupation" label="职业" align="center" width="120" />
                 <el-table-column prop="birthday" label="生日" align="center" width="150" />
                 <el-table-column prop="voiceGreeting" label="语音问候" align="center" width="150" />
-                <el-table-column prop="onlineStart" label="每日经常在线起始时间" align="center" width="150" />
-                <el-table-column prop="onlineEnd" label="每日经常在线结束时间" align="center" width="200" />
+                <el-table-column prop="onlineStart" label="常在线起始时间" align="center" width="150" />
+                <el-table-column prop="onlineEnd" label="常在线结束时间" align="center" width="200" />
                 <el-table-column label="操作" align="center" width="150" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text"  @click="handlePassed(scope.$index, scope.row)">通过</el-button>
@@ -103,8 +117,9 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
+
         </el-card>
     </div>
 
@@ -113,7 +128,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import { getAreas, getReviewStatus } from "@/utils/common";
+import { getAreas, getReviewStatus } from "@/utils/common"
 
 export default {
     name: 'Table',
@@ -124,8 +139,8 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: undefined,
-                reviewStatus: undefined,
+                areaId: 1,
+                reviewStatus: '0',
                 page: {
                     currentPage: 1,
                     pageSize: 10
@@ -137,11 +152,8 @@ export default {
             tableData: [],
             // 多选数据暂存数组
             multipleSelection: [],
-            // 防止多次连续提交表单
-            isSubmit: false,
             areaData: getAreas(),
-            reviewStatus: getReviewStatus(),
-            showviewer: false
+            reviewStatus: getReviewStatus()
         }
     },
     created() {
@@ -154,20 +166,21 @@ export default {
             this.listLoading = true
             this.$service.audit.getProfileList(this.search, function (result){
                 const list = result.getProfilesList()
-                const length = list.length;
                 const data = []
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
                         "areaId" : item.getAreaId(),
-                        "guildId" : item.getGuildId(),
+                        "guildId" : "工会id",
                         "nickname" : item.getNickname(),
                         "avatar" : item.getAvatar(),
-                        "videos" : item.getVideoIdsList(),
+                        // "videos" : item.getVideoIdsList(),
                         "onlineStatus" : "在线状态",
-                        "reviewStatus" : "账户状态",
-                        "profileCount" : "资料数量",
-                        "tags" : item.getTags(),
+                        "reviewStatus" : item.getStatus(),
+                        "reviewStatusStr" : getReviewStatus(item.getStatus()),
+                        "photoCount" : item.getPhotoIdsList().length,
+                        "videoCount" : item.getVideoIdsList().length,
+                        "tags" : item.getTagsList(),
                         "occupation" : item.getOccupation(),
                         "birthday" : item.getBirthday(),
                         "voiceGreeting" : item.getVoiceGreeting(),
@@ -177,29 +190,14 @@ export default {
                     }
                     data.push(json)
                 })
-                $this.total = length
+                $this.total = result.getTotalCount()
                 $this.tableData = data
                 $this.listLoading = false
             });
-
-            // this.listLoading = true
-            // console.log(this.search)
-            // let url = process.env.VUE_APP_JSON_URI + "/anchor.json"
-            // // 获取数据列表接口
-            // getTableList(this.search, url).then(res => {
-            //     const data = res.data
-            //     if (data.code === 0) {
-            //         this.total = data.data.total
-            //         this.tableData = data.data.list
-            //         this.listLoading = false
-            //     }
-            // }).catch(() => {
-            //     this.listLoading = false
-            // })
         },
         // 查询数据
         onSubmit() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
         // 多选操作
@@ -208,40 +206,45 @@ export default {
         },
         // 通过
         handlePassed(index, row) {
-            console.log(index, row)
-            this.$confirm('是否通过?', '提示', {
+            const $this = this
+            this.$prompt('', '通过原因', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '通过!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                })
+            }).then(({ value }) => {
+                let param = {
+                    "profileId" : row.id,
+                    "status" : 5,
+                    "reason" : value
+                }
+                this.$service.audit.processProfile(param, function (result){
+                    result ? $this.$message.success("审核通过 !") : $this.$message.error("审核失败 !")
+                    this.fetchData()
+                });
             })
         },
         // 拒绝
         handleRefuse(index, row) {
-            console.log(index, row)
-            this.$confirm('是否拒绝?', '提示', {
+            const $this = this
+            this.$prompt('', '拒绝原因', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '已拒绝!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                })
+            }).then(({ value }) => {
+                let param = {
+                    "profileId" : row.id,
+                    "status" : 4,
+                    "reason" : value
+                }
+                this.$service.audit.processProfile(param, function (result){
+                    result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
+                    this.fetchData()
+                });
+            })
+        },
+        // 弹框
+        toDialog(component, row){
+            this.$refs[component].dialogVisible = true
+            this.$nextTick(()=>{
+                this.$refs[component].init(row);
             })
         },
         changeArea(){

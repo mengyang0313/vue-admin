@@ -19,7 +19,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="地区">
+                            <el-form-item label="地区" prop="areaId">
                                 <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
@@ -33,7 +33,7 @@
                     <el-divider></el-divider>
                     <el-row>
                         <el-col :span="8">
-                            <el-form-item label="举报方类型">
+                            <el-form-item label="举报方类型" prop="reportedType">
                                 <el-select v-model="search.reportedType" placeholder="请选择">
                                     <el-option v-for="item in reportedTypes"
                                                :key="item.value"
@@ -44,9 +44,9 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="举报场景">
-                                <el-select v-model="search.scenes" placeholder="请选择">
-                                    <el-option v-for="item in reportScenesData"
+                            <el-form-item label="举报场景" prop="scenes">
+                                <el-select v-model="search.scene" placeholder="请选择">
+                                    <el-option v-for="item in violationScenes"
                                                :key="item.value"
                                                :label="item.label"
                                                :value="item.value">
@@ -55,7 +55,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="举报时间">
+                            <el-form-item label="举报时间" prop="reportedTime">
                                 <el-select v-model="search.reportedTime" placeholder="请选择">
                                     <el-option v-for="item in reportedTimes"
                                                :key="item.value"
@@ -68,12 +68,12 @@
                     </el-row>
                     <el-row>
                         <el-col :span="8">
-                            <el-form-item label="举报方Id">
+                            <el-form-item label="举报方Id" prop="reporterId">
                                 <el-input v-model="search.reporterId" placeholder="举报方Id"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10">
-                            <el-form-item label="被举报方Id">
+                            <el-form-item label="被举报方Id" prop="reportedId">
                                 <el-input v-model="search.reportedId" placeholder="被举报方Id"/>
                             </el-form-item>
                         </el-col>
@@ -81,8 +81,8 @@
                     <el-row>
                         <el-col :span="24" class="search-box">
                             <el-form-item>
-                                <el-button  @click="onSubmit()" type="primary" size="small" style="width: 150px;">查询</el-button>
-                                <el-button @click="resetForm('searchForm')" size="small" style="width: 150px;margin-left: 250px">重置</el-button>
+                                <el-button @click="onSubmit" type="primary" size="small" style="width: 150px;">查询</el-button>
+                                <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重置</el-button>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -99,42 +99,41 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="reportId" label="举报Id" align="center" width="120" />
-                <el-table-column prop="area" label="地区" align="center" width="120" />
-                <el-table-column prop="reportUid" label="举报方Id" align="center" width="120"/>
-                <el-table-column prop="reason" label="举报原因" align="center" width="200"/>
-                <el-table-column prop="scenes" label="举报场景" align="center" width="100"/>
-                <el-table-column prop="status" label="审核状态" align="center" width="100"/>
-                <el-table-column prop="time" label="举报时间" align="center" width="150"/>
-                <el-table-column prop="reportId" label="对应聊天" align="center" width="150">
-                    <template slot-scope="scope">
-                        <a @click="hisVideo(scope.row)" style="color: #1E88C7">查看</a>
-                    </template>
+                <el-table-column prop="id" label="举报Id" align="center" width="120" />
+                <el-table-column prop="reporterId" label="举报方" align="center" width="120" />
+                <el-table-column prop="reportedId" label="被举报方" align="center" width="120" />
+                <el-table-column prop="violationType" label="举报类型" align="center" width="200"/>
+                <el-table-column prop="violationScene" label="举报场景" align="center" width="100"/>
+                <el-table-column prop="reportMessage" label="举报信息" align="center" width="150">
+<!--                    <template slot-scope="scope">-->
+<!--                        <a @click="hisVideo(scope.row)" style="color: #1E88C7">查看</a>-->
+<!--                    </template>-->
                 </el-table-column>
-                <el-table-column prop="reportId" label="对应视频" align="center" width="150">
-                    <template slot-scope="scope">
-                        <a @click="hisVideo(scope.row)" style="color: #1E88C7">查看</a>
-                    </template>
+                <el-table-column prop="createdAt" label="举报时间" align="center" width="150">
+<!--                    <template slot-scope="scope">-->
+<!--                        <a @click="hisVideo(scope.row)" style="color: #1E88C7">查看</a>-->
+<!--                    </template>-->
                 </el-table-column>
-                <el-table-column label="操作" align="center" width="200">
+                <el-table-column prop="dealStatus" label="处理状态" align="center" width="150"/>
+                <el-table-column prop="dealMessage" label="处理信息" align="center" width="150"/>
+                <el-table-column prop="dealAt" label="处理时间" align="center" width="150"/>
+                <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="primary" plain size="mini" :disabled="scope.row.forbid" @click="handlePassed(scope.$index, scope.row)">通过</el-button>
-                        <el-button type="success" plain size="mini" @click="handleRefuse(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="primary" plain size="mini" :disabled="scope.row.forbid" @click="processViolation(scope.row)">处理</el-button>
+                        <el-button type="success" plain size="mini" @click="processViolation(scope.row)">忽略</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
 </template>
 
 <script>
-import {getTableList} from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import {getReportedTypes, getReportedTime, getAreas, handleReportedTime} from "@/utils/common";
-import { reportUserTypeData, reportScenesData } from '@/dict/index'
+import { getReportedTypes, getReportedTime, getAreas, getViolationScene } from "@/utils/common";
 
 export default {
     name: 'Table',
@@ -144,20 +143,29 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                areaId: 1,
+                scene: '0',
+                reportedType: '1',
+                reportUid: undefined,
+                reportedTime: '1',
+                createdStart: undefined,
+                createdEnd: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 表格数据数组
             tableData: [],
             // 多选数据暂存数组
             multipleSelection: [],
-            // 防止多次连续提交表单
-            isSubmit: false,
             areaData: getAreas(),
             reportedTypes: getReportedTypes(),
             reportedTimes: getReportedTime(),
-            reportUserTypeData,
-            reportScenesData
+            violationScenes: getViolationScene()
         }
     },
     created() {
@@ -168,52 +176,29 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-
             this.handleReportedTime()
             this.$service.audit.getViolationList(this.search, function (result){
-                const list = result.getProfilesList()
-                const length = list.length;
+                const list = result.getRecordsList()
                 const data = []
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
-                        "areaId" : item.getAreaId(),
-                        "guildId" : item.getGuildId(),
-                        "nickname" : item.getNickname(),
-                        "avatar" : item.getAvatar(),
-                        "videos" : item.getVideoIdsList(),
-                        "onlineStatus" : "在线状态",
-                        "reviewStatus" : "账户状态",
-                        "profileCount" : "资料数量",
-                        "tags" : item.getTags(),
-                        "occupation" : item.getOccupation(),
-                        "birthday" : item.getBirthday(),
-                        "voiceGreeting" : item.getVoiceGreeting(),
-                        "onlineStart" : item.getOnlineStart(),
-                        "onlineEnd" : item.getOnlineEnd(),
-                        "struct" : item
+                        "reporterId" : item.getReporterId(),
+                        "reportedId" : item.getReportedId(),
+                        "violationType" : item.getViolationType(),
+                        "violationScene" : item.getViolationScene(),
+                        "reportMessage" : item.getReportMessage(),
+                        "createdAt" : item.getCreatedAt(),
+                        "dealStatus" : item.getDealStatus(),
+                        "dealMessage" : item.getDealMessage(),
+                        "dealAt" : item.getDealAt()
                     }
                     data.push(json)
                 })
-                $this.total = length
+                $this.total = result.getTotalCount()
                 $this.tableData = data
                 $this.listLoading = false
             });
-
-            // this.listLoading = true
-            // console.log(this.search)
-            // let url = process.env.VUE_APP_JSON_URI + "/report.json"
-            // // 获取数据列表接口
-            // getTableList(this.search, url).then(res => {
-            //     const data = res.data
-            //     if (data.code === 0) {
-            //         this.total = data.data.total
-            //         this.tableData = data.data.list
-            //         this.listLoading = false
-            //     }
-            // }).catch(() => {
-            //     this.listLoading = false
-            // })
         },
         // 查询数据
         onSubmit() {
@@ -226,70 +211,49 @@ export default {
         },
         // 通过
         handlePassed(index, row) {
-            console.log(index, row)
-            this.$confirm('是否通过?', '提示', {
+            const $this = this
+            this.$prompt('', '通过原因', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '通过!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                })
+            }).then(({ value }) => {
+                let param = {
+                    "profileId" : row.id,
+                    "status" : 5,
+                    "reason" : value
+                }
+                this.$service.audit.processViolation(param, function (result){
+                    result ? $this.$message.success("审核通过 !") : $this.$message.error("审核失败 !")
+                    this.fetchData()
+                });
             })
         },
         // 拒绝
         handleRefuse(index, row) {
-            console.log(index, row)
-            this.$confirm('是否拒绝?', '提示', {
+            const $this = this
+            this.$prompt('', '通过原因', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '已拒绝!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                })
+            }).then(({ value }) => {
+                let param = {
+                    "violationId" : row.id,
+                    "dealStatus" : 4,
+                    "dealMessage" : value
+                }
+                this.$service.audit.processViolation(param, function (result){
+                    result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
+                    this.fetchData()
+                });
             })
-        },
-        // 列表中婚姻状况栏，状态值改变时，调用
-        selectChange(row) {
-            // 此处添加后台接口，成功后调用fetchData方法更新列表
         },
         //重置
         resetForm() {
-            this.search = this.initQuery();
-        },
-        initQuery() {
-            return {
-                areaId: undefined,
-                scenes: undefined,
-                reportedType: 1,
-                reportUid: undefined,
-                reportedTime: 1,
-                createdStart: undefined,
-                createdEnd: undefined,
-                page: {
-                    currentPage: 1,
-                    pageSize: 10
-                }
-            }
+            this.$refs['searchForm'].resetFields()
         },
         handleReportedTime(){
             let rt = this.search.reportedTime;
 
-            let startTime1 = null;
-            let endTime1 = null;
+            let startTime1 = undefined;
+            let endTime1 = undefined;
             let daySecond = 24 * 60 * 60;
             let currentSecond = new Date(new Date().toLocaleDateString()).getTime() /1000;
             if('1' === rt){
