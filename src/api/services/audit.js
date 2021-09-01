@@ -100,4 +100,30 @@ export default class {
         })
     }
 
+
+
+    /**
+     * 待审核举报
+     */
+    async getLiveList (param, callback) {
+        const req = new this.proto.LiveListRequest()
+        req.setPageNo(param.page.currentPage)
+        req.setPageSize(param.page.pageSize)
+        req.setAreaId(param.areaId)
+        req.setAnchorId(param.anchorId)
+        req.setStatus(param.status)
+        req.setCreatedStart(param.createdStart)
+        req.setCreatedEnd(param.createdEnd)
+
+        const metadata = {'token': getToken()};
+        this.client.getLiveList(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
 }

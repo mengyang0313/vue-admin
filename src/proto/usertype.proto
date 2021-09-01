@@ -49,50 +49,28 @@ enum CurrencyType {
 // 职业类型
 enum OccupationType {
     OccupationUnknown = 0;
-    // 互联网
-    OccupationInternet = 1;
+    // IT/互联网/通信
+    OccupationIT = 1;
+    // 学生
+    OccupationStudent = 2;
+    // 文化/艺术
+    OccupationCulture = 3;
+    // 影视/娱乐
+    OccupationEntertainment = 4;
     // 金融
-    OccupationFinance = 2;
-    // 政府机构
-    OccupationGovernment = 3;
+    OccupationFinance = 5;
+    // 医药/健康
+    OccupationHealthy = 6;
+    // 工业/制造业
+    OccupationIndustry = 7;
+    // 媒体/公关
+    OccupationMedia = 8;
+    // 零售
+    OccupationRetail = 9;
     // 教育/科研
-    OccupationEducation = 4;
-    // 医疗
-    OccupationMedical = 5;
-    // 文化传媒
-    OccupationCulture = 6;
-    // 艺术/娱乐
-    OccupationArt = 7;
-    // 建筑
-    OccupationArchitecture = 8;
-    // 法律
-    OccupationLaw = 9;
-    // 工业制造
-    OccupationIndustry = 10;
-    // 服务行业
-    OccupationService = 11;
-    // 贸易/零售
-    OccupationTrading = 12;
-    // 酒店旅游
-    OccupationHotel = 13;
-    // 现代农业
-    OccupationAgriculture = 14;
-    // 在校学生
-    OccupationStudent = 15;
-    // 航空航天
-    OccupationAerospace = 16;
-    // 交通运输
-    OccupationTransport = 17;
-    // 餐饮
-    OccupationDining = 18;
-    // 体育
-    OccupationSports = 19;
-    // 公益
-    OccupationNonProfit = 20;
-    // 自由职业
-    OccupationFreelancer = 21;
+    OccupationEducation = 10;
     // 其他
-    OccupationOther = 22;
+    OccupationOther = 11;
 }
 
 // 认证类型
@@ -225,14 +203,16 @@ enum OnlineStatus {
 // 封禁类型
 enum BlockStatus {
     BlockUnknown = 0;
-    // 不封禁
+    // 不封禁，判断未违规
     BlockNone = 1;
+    // 发送警告
+    BlockWarning = 2;
     // 封禁账号
-    BlockAccount = 2;
+    BlockAccount = 3;
     // 封禁设备
-    BlockDevice = 3;
+    BlockDevice = 4;
     // 封禁所有，包括账号和设备
-    BlockAll = 4;
+    BlockAll = 5;
 }
 
 enum ToyaStatus {
@@ -311,24 +291,26 @@ message User {
     uint32 device_id = 32;
     // 网络类型
     NetworkType network_type = 33;
+    // 心跳时间
+    uint32 heartbeat_at = 34;
     // 登录后的访问token
-    string access_token = 34;
+    string access_token = 35;
     // 访问token过期时间
-    uint32 access_expire_at = 35;
+    uint32 access_expire_at = 36;
     // 封禁原因
-    string block_reason = 36;
+    string block_reason = 37;
     // 是否为匿名用户
-    bool anonymous = 37;
+    bool anonymous = 38;
     // 声网信令token
-    string agora_rtm_token = 38;
+    string agora_rtm_token = 39;
     // 声网信令过期时间，unix时间戳，秒
-    uint32 agora_rtm_expire_at = 39;
+    uint32 agora_rtm_expire_at = 40;
     // 融云token
-    string rc_token = 40;
+    string rc_token = 41;
     // 融云token过期时间
-    uint32 rc_expire_at = 41;
+    uint32 rc_expire_at = 42;
     // 安装id
-    uint32 install_id = 42;
+    uint32 install_id = 43;
 
     uint32 updated_at = 60;
     uint32 created_at = 61;
@@ -375,6 +357,8 @@ enum ReviewStatus {
     Rejected = 4;
     // 审核通过
     Approved = 5;
+    // 暂停
+    Paused = 6;
 }
 
 // 主播信息，客户端使用

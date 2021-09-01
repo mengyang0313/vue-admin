@@ -9,26 +9,40 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-col :span="16">
-                    <el-form-item label="待审核" size="medium">
-                        <el-button @click="onSubmit">待审核资料 (65)</el-button>
-                        <el-button @click="onSubmit">待审核视频 (65)</el-button>
-                        <el-button @click="onSubmit">待审核举报 (65)</el-button>
-                    </el-form-item>
-                </el-col>
-
-                <el-form-item label="地区">
-                    <el-select v-model="search.area" placeholder="请选择">
-                        <el-option v-for="item in areaData"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onSubmit">查询</el-button>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="待审核" size="medium">
+                            <el-button @click="onSubmit">待审核资料 (65)</el-button>
+                            <el-button @click="onSubmit">待审核视频 (65)</el-button>
+                            <el-button @click="onSubmit">待审核举报 (65)</el-button>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="5">
+                        <el-form-item label="审核状态">
+                            <el-select v-model="search.reviewStatus" placeholder="请选择" @change="changeArea">
+                                <el-option v-for="item in reviewStatus"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7">
+                        <el-form-item label="地区">
+                            <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
+                                <el-option v-for="item in areaData"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="onSubmit">查询</el-button>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
             </el-form>
             <!-- 表格栏 -->
             <el-table
@@ -41,19 +55,20 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="auchorId" label="主播id" align="center" width="120" />
-                <el-table-column prop="nickname" label="主播昵称" align="center" />
-                <el-table-column prop="photo" label="主播头像" align="center" width="300">
+                <el-table-column prop="ownerId" label="用户id" align="center" width="120" />
+                <el-table-column prop="ownerNickname" label="昵称" align="center" />
+                <el-table-column prop="ownerType" label="用户类型" align="center" />
+                <el-table-column prop="thumb" label="视频" align="center" width="300">
                     <template scope="scope">
-                        <el-image style="width: 50px; height: 50px" :src="scope.row.photo" contain></el-image>
+                        <el-image style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="video" label="视频" align="center" width="300">
+                <el-table-column prop="videos" label="已有视频" align="center" width="300">
                     <template scope="scope">
-                        <el-image style="width: 50px; height: 50px" :src="scope.row.video" title="查看全部"></el-image>
+                        <el-image style="width: 50px; height: 50px" :src="scope.row.videos" title="查看"></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="lastLoginTime" label="最近登录时间" align="center" width="150" />
+                <el-table-column prop="createdAt" label="录制时间" align="center" width="150" />
                 <el-table-column label="操作" align="center" width="200">
                     <template slot-scope="scope">
                         <el-button type="primary" plain size="mini" :disabled="scope.row.forbid" @click="handlePassed(scope.$index, scope.row)">通过</el-button>
@@ -62,16 +77,15 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
 </template>
 
 <script>
-import {getTableList} from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import { areaData } from '@/dict/index'
+import {getAreas, getReviewStatus} from "@/utils/common"
 
 export default {
     name: 'Table',
@@ -82,9 +96,12 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                area: undefined,
-                currentPage: 1,
-                pageSize: 10
+                area: 1,
+                status: 0,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
             },
             // 数据总条数
             total: 0,
@@ -94,7 +111,8 @@ export default {
             multipleSelection: [],
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData
+            areaData: getAreas(),
+            reviewStatus: getReviewStatus()
         }
     },
     created() {
@@ -103,20 +121,42 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
+
+            const $this = this
             this.listLoading = true
-            console.log(this.search)
-            let url = process.env.VUE_APP_JSON_URI + "/anchor.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
-            })
+            this.$service.audit.getLiveList(this.search, function (result){
+                const list = result.getRecordsList()
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "ownerId" : item.getOwnerId(),
+                        "ownerNickname" : "昵称",
+                        "ownerType" : item.getOwnerType(),
+                        "thumb" : item.getThumb(),
+                        "videos" : "查看",
+                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                    }
+                    data.push(json)
+                })
+                $this.total = result.getTotalCount()
+                $this.tableData = data
+                $this.listLoading = false
+            });
+            // this.listLoading = true
+            // console.log(this.search)
+            // let url = process.env.VUE_APP_JSON_URI + "/anchor.json"
+            // // 获取数据列表接口
+            // getTableList(this.search, url).then(res => {
+            //     const data = res.data
+            //     if (data.code === 0) {
+            //         this.total = data.data.total
+            //         this.tableData = data.data.list
+            //         this.listLoading = false
+            //     }
+            // }).catch(() => {
+            //     this.listLoading = false
+            // })
         },
         // 查询数据
         onSubmit() {

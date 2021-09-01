@@ -1571,15 +1571,16 @@ proto.pb.User.toObject = function(includeInstance, msg) {
     createIp: jspb.Message.getFieldWithDefault(msg, 31, ""),
     deviceId: jspb.Message.getFieldWithDefault(msg, 32, 0),
     networkType: jspb.Message.getFieldWithDefault(msg, 33, 0),
-    accessToken: jspb.Message.getFieldWithDefault(msg, 34, ""),
-    accessExpireAt: jspb.Message.getFieldWithDefault(msg, 35, 0),
-    blockReason: jspb.Message.getFieldWithDefault(msg, 36, ""),
-    anonymous: jspb.Message.getBooleanFieldWithDefault(msg, 37, false),
-    agoraRtmToken: jspb.Message.getFieldWithDefault(msg, 38, ""),
-    agoraRtmExpireAt: jspb.Message.getFieldWithDefault(msg, 39, 0),
-    rcToken: jspb.Message.getFieldWithDefault(msg, 40, ""),
-    rcExpireAt: jspb.Message.getFieldWithDefault(msg, 41, 0),
-    installId: jspb.Message.getFieldWithDefault(msg, 42, 0),
+    heartbeatAt: jspb.Message.getFieldWithDefault(msg, 34, 0),
+    accessToken: jspb.Message.getFieldWithDefault(msg, 35, ""),
+    accessExpireAt: jspb.Message.getFieldWithDefault(msg, 36, 0),
+    blockReason: jspb.Message.getFieldWithDefault(msg, 37, ""),
+    anonymous: jspb.Message.getBooleanFieldWithDefault(msg, 38, false),
+    agoraRtmToken: jspb.Message.getFieldWithDefault(msg, 39, ""),
+    agoraRtmExpireAt: jspb.Message.getFieldWithDefault(msg, 40, 0),
+    rcToken: jspb.Message.getFieldWithDefault(msg, 41, ""),
+    rcExpireAt: jspb.Message.getFieldWithDefault(msg, 42, 0),
+    installId: jspb.Message.getFieldWithDefault(msg, 43, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 60, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 61, 0),
     toyaId: jspb.Message.getFieldWithDefault(msg, 62, 0),
@@ -1758,38 +1759,42 @@ proto.pb.User.deserializeBinaryFromReader = function(msg, reader) {
       msg.setNetworkType(value);
       break;
     case 34:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setHeartbeatAt(value);
+      break;
+    case 35:
       var value = /** @type {string} */ (reader.readString());
       msg.setAccessToken(value);
       break;
-    case 35:
+    case 36:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setAccessExpireAt(value);
       break;
-    case 36:
+    case 37:
       var value = /** @type {string} */ (reader.readString());
       msg.setBlockReason(value);
       break;
-    case 37:
+    case 38:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setAnonymous(value);
       break;
-    case 38:
+    case 39:
       var value = /** @type {string} */ (reader.readString());
       msg.setAgoraRtmToken(value);
       break;
-    case 39:
+    case 40:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setAgoraRtmExpireAt(value);
       break;
-    case 40:
+    case 41:
       var value = /** @type {string} */ (reader.readString());
       msg.setRcToken(value);
       break;
-    case 41:
+    case 42:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setRcExpireAt(value);
       break;
-    case 42:
+    case 43:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setInstallId(value);
       break;
@@ -2086,66 +2091,73 @@ proto.pb.User.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getHeartbeatAt();
+  if (f !== 0) {
+    writer.writeUint32(
+      34,
+      f
+    );
+  }
   f = message.getAccessToken();
   if (f.length > 0) {
     writer.writeString(
-      34,
+      35,
       f
     );
   }
   f = message.getAccessExpireAt();
   if (f !== 0) {
     writer.writeUint32(
-      35,
+      36,
       f
     );
   }
   f = message.getBlockReason();
   if (f.length > 0) {
     writer.writeString(
-      36,
+      37,
       f
     );
   }
   f = message.getAnonymous();
   if (f) {
     writer.writeBool(
-      37,
+      38,
       f
     );
   }
   f = message.getAgoraRtmToken();
   if (f.length > 0) {
     writer.writeString(
-      38,
+      39,
       f
     );
   }
   f = message.getAgoraRtmExpireAt();
   if (f !== 0) {
     writer.writeUint32(
-      39,
+      40,
       f
     );
   }
   f = message.getRcToken();
   if (f.length > 0) {
     writer.writeString(
-      40,
+      41,
       f
     );
   }
   f = message.getRcExpireAt();
   if (f !== 0) {
     writer.writeUint32(
-      41,
+      42,
       f
     );
   }
   f = message.getInstallId();
   if (f !== 0) {
     writer.writeUint32(
-      42,
+      43,
       f
     );
   }
@@ -2804,11 +2816,29 @@ proto.pb.User.prototype.setNetworkType = function(value) {
 
 
 /**
- * optional string access_token = 34;
+ * optional uint32 heartbeat_at = 34;
+ * @return {number}
+ */
+proto.pb.User.prototype.getHeartbeatAt = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 34, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.User} returns this
+ */
+proto.pb.User.prototype.setHeartbeatAt = function(value) {
+  return jspb.Message.setProto3IntField(this, 34, value);
+};
+
+
+/**
+ * optional string access_token = 35;
  * @return {string}
  */
 proto.pb.User.prototype.getAccessToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 34, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 35, ""));
 };
 
 
@@ -2817,16 +2847,16 @@ proto.pb.User.prototype.getAccessToken = function() {
  * @return {!proto.pb.User} returns this
  */
 proto.pb.User.prototype.setAccessToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 34, value);
+  return jspb.Message.setProto3StringField(this, 35, value);
 };
 
 
 /**
- * optional uint32 access_expire_at = 35;
+ * optional uint32 access_expire_at = 36;
  * @return {number}
  */
 proto.pb.User.prototype.getAccessExpireAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 35, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 36, 0));
 };
 
 
@@ -2835,16 +2865,16 @@ proto.pb.User.prototype.getAccessExpireAt = function() {
  * @return {!proto.pb.User} returns this
  */
 proto.pb.User.prototype.setAccessExpireAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 35, value);
+  return jspb.Message.setProto3IntField(this, 36, value);
 };
 
 
 /**
- * optional string block_reason = 36;
+ * optional string block_reason = 37;
  * @return {string}
  */
 proto.pb.User.prototype.getBlockReason = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 36, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 37, ""));
 };
 
 
@@ -2853,16 +2883,16 @@ proto.pb.User.prototype.getBlockReason = function() {
  * @return {!proto.pb.User} returns this
  */
 proto.pb.User.prototype.setBlockReason = function(value) {
-  return jspb.Message.setProto3StringField(this, 36, value);
+  return jspb.Message.setProto3StringField(this, 37, value);
 };
 
 
 /**
- * optional bool anonymous = 37;
+ * optional bool anonymous = 38;
  * @return {boolean}
  */
 proto.pb.User.prototype.getAnonymous = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 37, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 38, false));
 };
 
 
@@ -2871,16 +2901,16 @@ proto.pb.User.prototype.getAnonymous = function() {
  * @return {!proto.pb.User} returns this
  */
 proto.pb.User.prototype.setAnonymous = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 37, value);
+  return jspb.Message.setProto3BooleanField(this, 38, value);
 };
 
 
 /**
- * optional string agora_rtm_token = 38;
+ * optional string agora_rtm_token = 39;
  * @return {string}
  */
 proto.pb.User.prototype.getAgoraRtmToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 38, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 39, ""));
 };
 
 
@@ -2889,16 +2919,16 @@ proto.pb.User.prototype.getAgoraRtmToken = function() {
  * @return {!proto.pb.User} returns this
  */
 proto.pb.User.prototype.setAgoraRtmToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 38, value);
+  return jspb.Message.setProto3StringField(this, 39, value);
 };
 
 
 /**
- * optional uint32 agora_rtm_expire_at = 39;
+ * optional uint32 agora_rtm_expire_at = 40;
  * @return {number}
  */
 proto.pb.User.prototype.getAgoraRtmExpireAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 39, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 40, 0));
 };
 
 
@@ -2907,16 +2937,16 @@ proto.pb.User.prototype.getAgoraRtmExpireAt = function() {
  * @return {!proto.pb.User} returns this
  */
 proto.pb.User.prototype.setAgoraRtmExpireAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 39, value);
+  return jspb.Message.setProto3IntField(this, 40, value);
 };
 
 
 /**
- * optional string rc_token = 40;
+ * optional string rc_token = 41;
  * @return {string}
  */
 proto.pb.User.prototype.getRcToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 40, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 41, ""));
 };
 
 
@@ -2925,33 +2955,15 @@ proto.pb.User.prototype.getRcToken = function() {
  * @return {!proto.pb.User} returns this
  */
 proto.pb.User.prototype.setRcToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 40, value);
+  return jspb.Message.setProto3StringField(this, 41, value);
 };
 
 
 /**
- * optional uint32 rc_expire_at = 41;
+ * optional uint32 rc_expire_at = 42;
  * @return {number}
  */
 proto.pb.User.prototype.getRcExpireAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 41, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.pb.User} returns this
- */
-proto.pb.User.prototype.setRcExpireAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 41, value);
-};
-
-
-/**
- * optional uint32 install_id = 42;
- * @return {number}
- */
-proto.pb.User.prototype.getInstallId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 42, 0));
 };
 
@@ -2960,8 +2972,26 @@ proto.pb.User.prototype.getInstallId = function() {
  * @param {number} value
  * @return {!proto.pb.User} returns this
  */
-proto.pb.User.prototype.setInstallId = function(value) {
+proto.pb.User.prototype.setRcExpireAt = function(value) {
   return jspb.Message.setProto3IntField(this, 42, value);
+};
+
+
+/**
+ * optional uint32 install_id = 43;
+ * @return {number}
+ */
+proto.pb.User.prototype.getInstallId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 43, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.User} returns this
+ */
+proto.pb.User.prototype.setInstallId = function(value) {
+  return jspb.Message.setProto3IntField(this, 43, value);
 };
 
 
@@ -14700,28 +14730,17 @@ proto.pb.CurrencyType = {
  */
 proto.pb.OccupationType = {
   OCCUPATIONUNKNOWN: 0,
-  OCCUPATIONINTERNET: 1,
-  OCCUPATIONFINANCE: 2,
-  OCCUPATIONGOVERNMENT: 3,
-  OCCUPATIONEDUCATION: 4,
-  OCCUPATIONMEDICAL: 5,
-  OCCUPATIONCULTURE: 6,
-  OCCUPATIONART: 7,
-  OCCUPATIONARCHITECTURE: 8,
-  OCCUPATIONLAW: 9,
-  OCCUPATIONINDUSTRY: 10,
-  OCCUPATIONSERVICE: 11,
-  OCCUPATIONTRADING: 12,
-  OCCUPATIONHOTEL: 13,
-  OCCUPATIONAGRICULTURE: 14,
-  OCCUPATIONSTUDENT: 15,
-  OCCUPATIONAEROSPACE: 16,
-  OCCUPATIONTRANSPORT: 17,
-  OCCUPATIONDINING: 18,
-  OCCUPATIONSPORTS: 19,
-  OCCUPATIONNONPROFIT: 20,
-  OCCUPATIONFREELANCER: 21,
-  OCCUPATIONOTHER: 22
+  OCCUPATIONIT: 1,
+  OCCUPATIONSTUDENT: 2,
+  OCCUPATIONCULTURE: 3,
+  OCCUPATIONENTERTAINMENT: 4,
+  OCCUPATIONFINANCE: 5,
+  OCCUPATIONHEALTHY: 6,
+  OCCUPATIONINDUSTRY: 7,
+  OCCUPATIONMEDIA: 8,
+  OCCUPATIONRETAIL: 9,
+  OCCUPATIONEDUCATION: 10,
+  OCCUPATIONOTHER: 11
 };
 
 /**
@@ -14795,9 +14814,10 @@ proto.pb.OnlineStatus = {
 proto.pb.BlockStatus = {
   BLOCKUNKNOWN: 0,
   BLOCKNONE: 1,
-  BLOCKACCOUNT: 2,
-  BLOCKDEVICE: 3,
-  BLOCKALL: 4
+  BLOCKWARNING: 2,
+  BLOCKACCOUNT: 3,
+  BLOCKDEVICE: 4,
+  BLOCKALL: 5
 };
 
 /**
@@ -14829,7 +14849,8 @@ proto.pb.ReviewStatus = {
   SUBMITTED: 2,
   INREVIEW: 3,
   REJECTED: 4,
-  APPROVED: 5
+  APPROVED: 5,
+  PAUSED: 6
 };
 
 /**

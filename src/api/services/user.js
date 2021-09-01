@@ -14,7 +14,7 @@ export default class {
      * @returns {Promise<void>}
      */
     async getUserList (param, callback) {
-        const req = new this.proto.UserListRequest
+        let req = new this.proto.UserListRequest();
         req.setPageNo(param.page.currentPage)
         req.setPageSize(param.page.pageSize)
         req.setUserId(param.userId)

@@ -111,7 +111,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.pb.AnchorBasic.repeatedFields_ = [14,22,100,101];
+proto.pb.AnchorBasic.repeatedFields_ = [14,23,100,101];
 
 
 
@@ -162,30 +162,31 @@ proto.pb.AnchorBasic.toObject = function(includeInstance, msg) {
     callIncome: jspb.Message.getFieldWithDefault(msg, 16, 0),
     giftIncome: jspb.Message.getFieldWithDefault(msg, 17, 0),
     commissionIncome: jspb.Message.getFieldWithDefault(msg, 18, 0),
-    balance: jspb.Message.getFieldWithDefault(msg, 19, 0),
-    settled: jspb.Message.getFieldWithDefault(msg, 20, 0),
-    fansCount: jspb.Message.getFieldWithDefault(msg, 21, 0),
-    liveIdsList: (f = jspb.Message.getRepeatedField(msg, 22)) == null ? undefined : f,
-    offlineAt: jspb.Message.getFieldWithDefault(msg, 23, 0),
-    blockStatus: jspb.Message.getFieldWithDefault(msg, 24, 0),
-    onlineIp: jspb.Message.getFieldWithDefault(msg, 25, ""),
-    longitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 26, 0.0),
-    latitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 27, 0.0),
-    createIp: jspb.Message.getFieldWithDefault(msg, 28, ""),
-    deviceId: jspb.Message.getFieldWithDefault(msg, 29, 0),
-    networkType: jspb.Message.getFieldWithDefault(msg, 30, 0),
-    bankName: jspb.Message.getFieldWithDefault(msg, 31, ""),
-    accountName: jspb.Message.getFieldWithDefault(msg, 32, ""),
-    bankAccount: jspb.Message.getFieldWithDefault(msg, 33, ""),
-    email: jspb.Message.getFieldWithDefault(msg, 34, ""),
-    note: jspb.Message.getFieldWithDefault(msg, 35, ""),
-    heartbeatAt: jspb.Message.getFieldWithDefault(msg, 36, 0),
-    accessToken: jspb.Message.getFieldWithDefault(msg, 37, ""),
-    accessExpireAt: jspb.Message.getFieldWithDefault(msg, 38, 0),
-    agoraRtmToken: jspb.Message.getFieldWithDefault(msg, 39, ""),
-    agoraRtmExpireAt: jspb.Message.getFieldWithDefault(msg, 40, 0),
-    rcToken: jspb.Message.getFieldWithDefault(msg, 41, ""),
-    rcExpireAt: jspb.Message.getFieldWithDefault(msg, 42, 0),
+    penalty: jspb.Message.getFieldWithDefault(msg, 19, 0),
+    balance: jspb.Message.getFieldWithDefault(msg, 20, 0),
+    settled: jspb.Message.getFieldWithDefault(msg, 21, 0),
+    fansCount: jspb.Message.getFieldWithDefault(msg, 22, 0),
+    liveIdsList: (f = jspb.Message.getRepeatedField(msg, 23)) == null ? undefined : f,
+    offlineAt: jspb.Message.getFieldWithDefault(msg, 24, 0),
+    blockStatus: jspb.Message.getFieldWithDefault(msg, 25, 0),
+    onlineIp: jspb.Message.getFieldWithDefault(msg, 26, ""),
+    longitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 27, 0.0),
+    latitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 28, 0.0),
+    createIp: jspb.Message.getFieldWithDefault(msg, 29, ""),
+    deviceId: jspb.Message.getFieldWithDefault(msg, 30, 0),
+    networkType: jspb.Message.getFieldWithDefault(msg, 31, 0),
+    bankName: jspb.Message.getFieldWithDefault(msg, 32, ""),
+    accountName: jspb.Message.getFieldWithDefault(msg, 33, ""),
+    bankAccount: jspb.Message.getFieldWithDefault(msg, 34, ""),
+    email: jspb.Message.getFieldWithDefault(msg, 35, ""),
+    note: jspb.Message.getFieldWithDefault(msg, 36, ""),
+    heartbeatAt: jspb.Message.getFieldWithDefault(msg, 37, 0),
+    accessToken: jspb.Message.getFieldWithDefault(msg, 38, ""),
+    accessExpireAt: jspb.Message.getFieldWithDefault(msg, 39, 0),
+    agoraRtmToken: jspb.Message.getFieldWithDefault(msg, 40, ""),
+    agoraRtmExpireAt: jspb.Message.getFieldWithDefault(msg, 41, 0),
+    rcToken: jspb.Message.getFieldWithDefault(msg, 42, ""),
+    rcExpireAt: jspb.Message.getFieldWithDefault(msg, 43, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 50, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 51, 0),
     toyaId: jspb.Message.getFieldWithDefault(msg, 52, 0),
@@ -305,99 +306,103 @@ proto.pb.AnchorBasic.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 19:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setBalance(value);
+      msg.setPenalty(value);
       break;
     case 20:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setSettled(value);
+      msg.setBalance(value);
       break;
     case 21:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setFansCount(value);
+      msg.setSettled(value);
       break;
     case 22:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setFansCount(value);
+      break;
+    case 23:
       var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint64() : [reader.readUint64()]);
       for (var i = 0; i < values.length; i++) {
         msg.addLiveIds(values[i]);
       }
       break;
-    case 23:
+    case 24:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setOfflineAt(value);
       break;
-    case 24:
+    case 25:
       var value = /** @type {!proto.pb.BlockStatus} */ (reader.readEnum());
       msg.setBlockStatus(value);
       break;
-    case 25:
+    case 26:
       var value = /** @type {string} */ (reader.readString());
       msg.setOnlineIp(value);
       break;
-    case 26:
+    case 27:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setLongitude(value);
       break;
-    case 27:
+    case 28:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setLatitude(value);
       break;
-    case 28:
+    case 29:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreateIp(value);
       break;
-    case 29:
+    case 30:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setDeviceId(value);
       break;
-    case 30:
+    case 31:
       var value = /** @type {!proto.pb.NetworkType} */ (reader.readEnum());
       msg.setNetworkType(value);
       break;
-    case 31:
+    case 32:
       var value = /** @type {string} */ (reader.readString());
       msg.setBankName(value);
       break;
-    case 32:
+    case 33:
       var value = /** @type {string} */ (reader.readString());
       msg.setAccountName(value);
       break;
-    case 33:
+    case 34:
       var value = /** @type {string} */ (reader.readString());
       msg.setBankAccount(value);
       break;
-    case 34:
+    case 35:
       var value = /** @type {string} */ (reader.readString());
       msg.setEmail(value);
       break;
-    case 35:
+    case 36:
       var value = /** @type {string} */ (reader.readString());
       msg.setNote(value);
       break;
-    case 36:
+    case 37:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setHeartbeatAt(value);
       break;
-    case 37:
+    case 38:
       var value = /** @type {string} */ (reader.readString());
       msg.setAccessToken(value);
       break;
-    case 38:
+    case 39:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setAccessExpireAt(value);
       break;
-    case 39:
+    case 40:
       var value = /** @type {string} */ (reader.readString());
       msg.setAgoraRtmToken(value);
       break;
-    case 40:
+    case 41:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setAgoraRtmExpireAt(value);
       break;
-    case 41:
+    case 42:
       var value = /** @type {string} */ (reader.readString());
       msg.setRcToken(value);
       break;
-    case 42:
+    case 43:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setRcExpireAt(value);
       break;
@@ -586,171 +591,178 @@ proto.pb.AnchorBasic.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getBalance();
+  f = message.getPenalty();
   if (f !== 0) {
     writer.writeUint32(
       19,
       f
     );
   }
-  f = message.getSettled();
+  f = message.getBalance();
   if (f !== 0) {
     writer.writeUint32(
       20,
       f
     );
   }
-  f = message.getFansCount();
+  f = message.getSettled();
   if (f !== 0) {
     writer.writeUint32(
       21,
       f
     );
   }
+  f = message.getFansCount();
+  if (f !== 0) {
+    writer.writeUint32(
+      22,
+      f
+    );
+  }
   f = message.getLiveIdsList();
   if (f.length > 0) {
     writer.writePackedUint64(
-      22,
+      23,
       f
     );
   }
   f = message.getOfflineAt();
   if (f !== 0) {
     writer.writeUint32(
-      23,
+      24,
       f
     );
   }
   f = message.getBlockStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      24,
+      25,
       f
     );
   }
   f = message.getOnlineIp();
   if (f.length > 0) {
     writer.writeString(
-      25,
+      26,
       f
     );
   }
   f = message.getLongitude();
   if (f !== 0.0) {
     writer.writeFloat(
-      26,
+      27,
       f
     );
   }
   f = message.getLatitude();
   if (f !== 0.0) {
     writer.writeFloat(
-      27,
+      28,
       f
     );
   }
   f = message.getCreateIp();
   if (f.length > 0) {
     writer.writeString(
-      28,
+      29,
       f
     );
   }
   f = message.getDeviceId();
   if (f !== 0) {
     writer.writeUint32(
-      29,
+      30,
       f
     );
   }
   f = message.getNetworkType();
   if (f !== 0.0) {
     writer.writeEnum(
-      30,
+      31,
       f
     );
   }
   f = message.getBankName();
   if (f.length > 0) {
     writer.writeString(
-      31,
+      32,
       f
     );
   }
   f = message.getAccountName();
   if (f.length > 0) {
     writer.writeString(
-      32,
+      33,
       f
     );
   }
   f = message.getBankAccount();
   if (f.length > 0) {
     writer.writeString(
-      33,
+      34,
       f
     );
   }
   f = message.getEmail();
   if (f.length > 0) {
     writer.writeString(
-      34,
+      35,
       f
     );
   }
   f = message.getNote();
   if (f.length > 0) {
     writer.writeString(
-      35,
+      36,
       f
     );
   }
   f = message.getHeartbeatAt();
   if (f !== 0) {
     writer.writeUint32(
-      36,
+      37,
       f
     );
   }
   f = message.getAccessToken();
   if (f.length > 0) {
     writer.writeString(
-      37,
+      38,
       f
     );
   }
   f = message.getAccessExpireAt();
   if (f !== 0) {
     writer.writeUint32(
-      38,
+      39,
       f
     );
   }
   f = message.getAgoraRtmToken();
   if (f.length > 0) {
     writer.writeString(
-      39,
+      40,
       f
     );
   }
   f = message.getAgoraRtmExpireAt();
   if (f !== 0) {
     writer.writeUint32(
-      40,
+      41,
       f
     );
   }
   f = message.getRcToken();
   if (f.length > 0) {
     writer.writeString(
-      41,
+      42,
       f
     );
   }
   f = message.getRcExpireAt();
   if (f !== 0) {
     writer.writeUint32(
-      42,
+      43,
       f
     );
   }
@@ -1152,10 +1164,10 @@ proto.pb.AnchorBasic.prototype.setCommissionIncome = function(value) {
 
 
 /**
- * optional uint32 balance = 19;
+ * optional uint32 penalty = 19;
  * @return {number}
  */
-proto.pb.AnchorBasic.prototype.getBalance = function() {
+proto.pb.AnchorBasic.prototype.getPenalty = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
 };
 
@@ -1164,16 +1176,16 @@ proto.pb.AnchorBasic.prototype.getBalance = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setBalance = function(value) {
+proto.pb.AnchorBasic.prototype.setPenalty = function(value) {
   return jspb.Message.setProto3IntField(this, 19, value);
 };
 
 
 /**
- * optional uint32 settled = 20;
+ * optional uint32 balance = 20;
  * @return {number}
  */
-proto.pb.AnchorBasic.prototype.getSettled = function() {
+proto.pb.AnchorBasic.prototype.getBalance = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 20, 0));
 };
 
@@ -1182,16 +1194,16 @@ proto.pb.AnchorBasic.prototype.getSettled = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setSettled = function(value) {
+proto.pb.AnchorBasic.prototype.setBalance = function(value) {
   return jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
 /**
- * optional uint32 fans_count = 21;
+ * optional uint32 settled = 21;
  * @return {number}
  */
-proto.pb.AnchorBasic.prototype.getFansCount = function() {
+proto.pb.AnchorBasic.prototype.getSettled = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 21, 0));
 };
 
@@ -1200,17 +1212,35 @@ proto.pb.AnchorBasic.prototype.getFansCount = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setFansCount = function(value) {
+proto.pb.AnchorBasic.prototype.setSettled = function(value) {
   return jspb.Message.setProto3IntField(this, 21, value);
 };
 
 
 /**
- * repeated uint64 live_ids = 22;
+ * optional uint32 fans_count = 22;
+ * @return {number}
+ */
+proto.pb.AnchorBasic.prototype.getFansCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AnchorBasic} returns this
+ */
+proto.pb.AnchorBasic.prototype.setFansCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 22, value);
+};
+
+
+/**
+ * repeated uint64 live_ids = 23;
  * @return {!Array<number>}
  */
 proto.pb.AnchorBasic.prototype.getLiveIdsList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 22));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 23));
 };
 
 
@@ -1219,7 +1249,7 @@ proto.pb.AnchorBasic.prototype.getLiveIdsList = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setLiveIdsList = function(value) {
-  return jspb.Message.setField(this, 22, value || []);
+  return jspb.Message.setField(this, 23, value || []);
 };
 
 
@@ -1229,7 +1259,7 @@ proto.pb.AnchorBasic.prototype.setLiveIdsList = function(value) {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.addLiveIds = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 22, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 23, value, opt_index);
 };
 
 
@@ -1243,11 +1273,11 @@ proto.pb.AnchorBasic.prototype.clearLiveIdsList = function() {
 
 
 /**
- * optional uint32 offline_at = 23;
+ * optional uint32 offline_at = 24;
  * @return {number}
  */
 proto.pb.AnchorBasic.prototype.getOfflineAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 23, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 24, 0));
 };
 
 
@@ -1256,16 +1286,16 @@ proto.pb.AnchorBasic.prototype.getOfflineAt = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setOfflineAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 23, value);
+  return jspb.Message.setProto3IntField(this, 24, value);
 };
 
 
 /**
- * optional BlockStatus block_status = 24;
+ * optional BlockStatus block_status = 25;
  * @return {!proto.pb.BlockStatus}
  */
 proto.pb.AnchorBasic.prototype.getBlockStatus = function() {
-  return /** @type {!proto.pb.BlockStatus} */ (jspb.Message.getFieldWithDefault(this, 24, 0));
+  return /** @type {!proto.pb.BlockStatus} */ (jspb.Message.getFieldWithDefault(this, 25, 0));
 };
 
 
@@ -1274,16 +1304,16 @@ proto.pb.AnchorBasic.prototype.getBlockStatus = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setBlockStatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 24, value);
+  return jspb.Message.setProto3EnumField(this, 25, value);
 };
 
 
 /**
- * optional string online_ip = 25;
+ * optional string online_ip = 26;
  * @return {string}
  */
 proto.pb.AnchorBasic.prototype.getOnlineIp = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 25, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 26, ""));
 };
 
 
@@ -1292,33 +1322,15 @@ proto.pb.AnchorBasic.prototype.getOnlineIp = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setOnlineIp = function(value) {
-  return jspb.Message.setProto3StringField(this, 25, value);
+  return jspb.Message.setProto3StringField(this, 26, value);
 };
 
 
 /**
- * optional float longitude = 26;
+ * optional float longitude = 27;
  * @return {number}
  */
 proto.pb.AnchorBasic.prototype.getLongitude = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 26, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.pb.AnchorBasic} returns this
- */
-proto.pb.AnchorBasic.prototype.setLongitude = function(value) {
-  return jspb.Message.setProto3FloatField(this, 26, value);
-};
-
-
-/**
- * optional float latitude = 27;
- * @return {number}
- */
-proto.pb.AnchorBasic.prototype.getLatitude = function() {
   return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 27, 0.0));
 };
 
@@ -1327,17 +1339,35 @@ proto.pb.AnchorBasic.prototype.getLatitude = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setLatitude = function(value) {
+proto.pb.AnchorBasic.prototype.setLongitude = function(value) {
   return jspb.Message.setProto3FloatField(this, 27, value);
 };
 
 
 /**
- * optional string create_ip = 28;
+ * optional float latitude = 28;
+ * @return {number}
+ */
+proto.pb.AnchorBasic.prototype.getLatitude = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 28, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AnchorBasic} returns this
+ */
+proto.pb.AnchorBasic.prototype.setLatitude = function(value) {
+  return jspb.Message.setProto3FloatField(this, 28, value);
+};
+
+
+/**
+ * optional string create_ip = 29;
  * @return {string}
  */
 proto.pb.AnchorBasic.prototype.getCreateIp = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 28, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 29, ""));
 };
 
 
@@ -1346,16 +1376,16 @@ proto.pb.AnchorBasic.prototype.getCreateIp = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setCreateIp = function(value) {
-  return jspb.Message.setProto3StringField(this, 28, value);
+  return jspb.Message.setProto3StringField(this, 29, value);
 };
 
 
 /**
- * optional uint32 device_id = 29;
+ * optional uint32 device_id = 30;
  * @return {number}
  */
 proto.pb.AnchorBasic.prototype.getDeviceId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 29, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 30, 0));
 };
 
 
@@ -1364,16 +1394,16 @@ proto.pb.AnchorBasic.prototype.getDeviceId = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setDeviceId = function(value) {
-  return jspb.Message.setProto3IntField(this, 29, value);
+  return jspb.Message.setProto3IntField(this, 30, value);
 };
 
 
 /**
- * optional NetworkType network_type = 30;
+ * optional NetworkType network_type = 31;
  * @return {!proto.pb.NetworkType}
  */
 proto.pb.AnchorBasic.prototype.getNetworkType = function() {
-  return /** @type {!proto.pb.NetworkType} */ (jspb.Message.getFieldWithDefault(this, 30, 0));
+  return /** @type {!proto.pb.NetworkType} */ (jspb.Message.getFieldWithDefault(this, 31, 0));
 };
 
 
@@ -1382,33 +1412,15 @@ proto.pb.AnchorBasic.prototype.getNetworkType = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setNetworkType = function(value) {
-  return jspb.Message.setProto3EnumField(this, 30, value);
+  return jspb.Message.setProto3EnumField(this, 31, value);
 };
 
 
 /**
- * optional string bank_name = 31;
+ * optional string bank_name = 32;
  * @return {string}
  */
 proto.pb.AnchorBasic.prototype.getBankName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 31, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.pb.AnchorBasic} returns this
- */
-proto.pb.AnchorBasic.prototype.setBankName = function(value) {
-  return jspb.Message.setProto3StringField(this, 31, value);
-};
-
-
-/**
- * optional string account_name = 32;
- * @return {string}
- */
-proto.pb.AnchorBasic.prototype.getAccountName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 32, ""));
 };
 
@@ -1417,16 +1429,16 @@ proto.pb.AnchorBasic.prototype.getAccountName = function() {
  * @param {string} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setAccountName = function(value) {
+proto.pb.AnchorBasic.prototype.setBankName = function(value) {
   return jspb.Message.setProto3StringField(this, 32, value);
 };
 
 
 /**
- * optional string bank_account = 33;
+ * optional string account_name = 33;
  * @return {string}
  */
-proto.pb.AnchorBasic.prototype.getBankAccount = function() {
+proto.pb.AnchorBasic.prototype.getAccountName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 33, ""));
 };
 
@@ -1435,16 +1447,16 @@ proto.pb.AnchorBasic.prototype.getBankAccount = function() {
  * @param {string} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setBankAccount = function(value) {
+proto.pb.AnchorBasic.prototype.setAccountName = function(value) {
   return jspb.Message.setProto3StringField(this, 33, value);
 };
 
 
 /**
- * optional string email = 34;
+ * optional string bank_account = 34;
  * @return {string}
  */
-proto.pb.AnchorBasic.prototype.getEmail = function() {
+proto.pb.AnchorBasic.prototype.getBankAccount = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 34, ""));
 };
 
@@ -1453,16 +1465,16 @@ proto.pb.AnchorBasic.prototype.getEmail = function() {
  * @param {string} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setEmail = function(value) {
+proto.pb.AnchorBasic.prototype.setBankAccount = function(value) {
   return jspb.Message.setProto3StringField(this, 34, value);
 };
 
 
 /**
- * optional string note = 35;
+ * optional string email = 35;
  * @return {string}
  */
-proto.pb.AnchorBasic.prototype.getNote = function() {
+proto.pb.AnchorBasic.prototype.getEmail = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 35, ""));
 };
 
@@ -1471,17 +1483,35 @@ proto.pb.AnchorBasic.prototype.getNote = function() {
  * @param {string} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setNote = function(value) {
+proto.pb.AnchorBasic.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 35, value);
 };
 
 
 /**
- * optional uint32 heartbeat_at = 36;
+ * optional string note = 36;
+ * @return {string}
+ */
+proto.pb.AnchorBasic.prototype.getNote = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 36, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.AnchorBasic} returns this
+ */
+proto.pb.AnchorBasic.prototype.setNote = function(value) {
+  return jspb.Message.setProto3StringField(this, 36, value);
+};
+
+
+/**
+ * optional uint32 heartbeat_at = 37;
  * @return {number}
  */
 proto.pb.AnchorBasic.prototype.getHeartbeatAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 36, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 37, 0));
 };
 
 
@@ -1490,16 +1520,16 @@ proto.pb.AnchorBasic.prototype.getHeartbeatAt = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setHeartbeatAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 36, value);
+  return jspb.Message.setProto3IntField(this, 37, value);
 };
 
 
 /**
- * optional string access_token = 37;
+ * optional string access_token = 38;
  * @return {string}
  */
 proto.pb.AnchorBasic.prototype.getAccessToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 37, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 38, ""));
 };
 
 
@@ -1508,16 +1538,16 @@ proto.pb.AnchorBasic.prototype.getAccessToken = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setAccessToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 37, value);
+  return jspb.Message.setProto3StringField(this, 38, value);
 };
 
 
 /**
- * optional uint32 access_expire_at = 38;
+ * optional uint32 access_expire_at = 39;
  * @return {number}
  */
 proto.pb.AnchorBasic.prototype.getAccessExpireAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 38, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 39, 0));
 };
 
 
@@ -1526,16 +1556,16 @@ proto.pb.AnchorBasic.prototype.getAccessExpireAt = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setAccessExpireAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 38, value);
+  return jspb.Message.setProto3IntField(this, 39, value);
 };
 
 
 /**
- * optional string agora_rtm_token = 39;
+ * optional string agora_rtm_token = 40;
  * @return {string}
  */
 proto.pb.AnchorBasic.prototype.getAgoraRtmToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 39, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 40, ""));
 };
 
 
@@ -1544,16 +1574,16 @@ proto.pb.AnchorBasic.prototype.getAgoraRtmToken = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setAgoraRtmToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 39, value);
+  return jspb.Message.setProto3StringField(this, 40, value);
 };
 
 
 /**
- * optional uint32 agora_rtm_expire_at = 40;
+ * optional uint32 agora_rtm_expire_at = 41;
  * @return {number}
  */
 proto.pb.AnchorBasic.prototype.getAgoraRtmExpireAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 40, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 41, 0));
 };
 
 
@@ -1562,16 +1592,16 @@ proto.pb.AnchorBasic.prototype.getAgoraRtmExpireAt = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setAgoraRtmExpireAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 40, value);
+  return jspb.Message.setProto3IntField(this, 41, value);
 };
 
 
 /**
- * optional string rc_token = 41;
+ * optional string rc_token = 42;
  * @return {string}
  */
 proto.pb.AnchorBasic.prototype.getRcToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 41, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 42, ""));
 };
 
 
@@ -1580,16 +1610,16 @@ proto.pb.AnchorBasic.prototype.getRcToken = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setRcToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 41, value);
+  return jspb.Message.setProto3StringField(this, 42, value);
 };
 
 
 /**
- * optional uint32 rc_expire_at = 42;
+ * optional uint32 rc_expire_at = 43;
  * @return {number}
  */
 proto.pb.AnchorBasic.prototype.getRcExpireAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 42, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 43, 0));
 };
 
 
@@ -1598,7 +1628,7 @@ proto.pb.AnchorBasic.prototype.getRcExpireAt = function() {
  * @return {!proto.pb.AnchorBasic} returns this
  */
 proto.pb.AnchorBasic.prototype.setRcExpireAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 42, value);
+  return jspb.Message.setProto3IntField(this, 43, value);
 };
 
 

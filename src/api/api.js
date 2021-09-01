@@ -4,7 +4,7 @@ import { events } from '@/constants'
 import {
     AreaListReply, LoginRequest, AdminListReply, GuildListReply, AppListReply, AnchorListRequest, UserListRequest,
     UserListReply, AdminFileChunk, AdjustBalanceRequest, ProfileListRequest, ViolationListRequest, ProcessProfileRequest,
-    ProcessViolationRequest
+    ProcessViolationRequest, LiveListRequest
 } from '../proto/js/cms_pb'
 import { Empty, EntityType, User, AnchorLevel, ReviewStatus } from '../proto/js/usertype_pb'
 import { Admin, Guild } from '../proto/js/cmstype_pb'
@@ -35,6 +35,7 @@ const deps = {
       ViolationListRequest,
       ProcessProfileRequest,
       ProcessViolationRequest,
+      LiveListRequest,
       Empty,
       EntityType,
       User,

@@ -1,0 +1,461 @@
+syntax = "proto3";
+
+package pb.anchor;
+
+import "anchortype.proto";
+import "usertype.proto";
+
+service AnchorSdk {
+    // 获取运营区域列表
+    rpc GetAreaList (Empty) returns (AreaListReply) {
+    }
+
+    // 登录
+    rpc Login (LoginRequest) returns (AnchorBasic) {
+    }
+
+    // 获取app配置信息，用户切换语言之后需要重新拉取
+    rpc GetConfig (ConfigRequest) returns (ConfigReply) {
+    }
+
+    // 获取礼物配置
+    rpc GetGiftConfig (GiftConfigRequest) returns (GiftConfigReply) {
+    }
+
+    // 获取封禁信息，封禁时长和理由
+    rpc GetBlockInfo (Empty) returns (BlockInfo) {
+    }
+
+    // 获取当前主播信息
+    rpc GetAnchorInfo (Empty) returns (AnchorBasic) {
+    }
+
+    // 修改主播信息
+    rpc UpdateAnchorInfo (AnchorBasic) returns (AnchorBasic) {
+    }
+
+    // 保存主播profile，id为0时创建，不为0时修改，提交审核时把状态置为审核中即可
+    rpc SaveProfile (AnchorProfile) returns (AnchorProfile) {
+    }
+
+    // 获取用户列表
+    rpc GetUserList (UserListRequest) returns (UserListReply) {
+    }
+
+    // 获取用户信息
+    rpc GetUserInfo (UserInfoRequest) returns (User) {
+    }
+
+    // 获取用户id列表，返回拉黑和关注的用户id列表
+    rpc GetUserIds (Empty) returns (UserIdsReply) {
+    }
+
+    // 变更用户关系，关注、取消关注、拉黑、取消拉黑操作
+    rpc ChangeUserRelation (UserRelationRequest) returns (Empty) {
+    }
+
+    // 获取排行榜
+    rpc GetRank (Empty) returns (GetRankReply) {
+    }
+
+    // 获取收入统计数据
+    rpc GetIncomeStat (IncomeStatRequest) returns (IncomeStatReply) {
+    }
+
+    // 获取礼物记录
+    rpc GetGiftRecord (GiftRecordRequest) returns (GiftRecordReply) {
+    }
+
+    // 获取收入记录
+    rpc GetIncomeRecord (IncomeRecordRequest) returns (IncomeRecordReply) {
+    }
+
+    // 获取结算记录
+    rpc GetSettleRecord (SettleRecordRequest) returns (SettleRecordReply) {
+    }
+
+    // 获取工作统计数据
+    rpc GetWorkStat (WorkStatRequest) returns (WorkStatReply) {
+    }
+
+    // 呼叫
+    rpc MakeCall (MakeCallRequest) returns (MakeCallReply) {
+    }
+
+    // 获取通话token
+    rpc FetchCall (FetchCallRequest) returns (FetchCallReply) {
+    }
+
+    // 挂断
+    rpc HangCall (HangCallRequest) returns (HangCallReply) {
+    }
+
+    // 更新呼叫信息，在接通之后立即调用，随后每隔60秒调用
+    rpc UpdateCall (UpdateCallRequest) returns (UpdateCallReply) {
+    }
+
+    // 长连接，用于心跳等
+    rpc Stream (stream StreamMessage) returns (stream StreamMessage) {
+    }
+
+    // 上传文件
+    rpc UploadFile (stream FileChunk) returns (FileRecord) {
+    }
+
+    // 保存媒体文件，用于兼容老客户端
+    rpc SaveMedia (SaveMediaRequest) returns (FileRecord) {
+    }
+}
+
+message AreaListReply {
+    repeated Area areas = 1;
+}
+
+message LoginRequest {
+    // 设备id
+    string device_id = 1;
+    // 设备型号
+    string device_brand = 2;
+    // 设备型号
+    string device_model = 3;
+    // 系统版本
+    string os_version = 4;
+    // 系统类型
+    OsType os_type = 5;
+    // 国家，iso代码
+    string country = 6;
+    // 语言，iso代码
+    string lang = 7;
+    // 认证方式
+    AuthType auth_type = 8;
+    // 认证的id，第三方登录的唯一id或用户名
+    string auth_id = 9;
+    // 认证的token，第三方登录的token或者密码
+    string auth_token = 10;
+    // 昵称
+    string nickname = 11;
+    // 性别
+    GenderType gender = 12;
+    // 头像
+    string avatar = 13;
+}
+
+message ConfigRequest {
+    // 经度
+    float longitude = 1;
+    // 纬度
+    float latitude = 2;
+    // 设备id
+    string device_id = 3;
+    // 网络类型
+    NetworkType network_type = 4;
+    // 版本
+    uint32 version = 5;
+}
+
+message ConfigReply {
+    // 礼物配置
+    repeated GiftConfig gift_configs = 1;
+    // banner配置
+    repeated BannerConfig banner_configs = 2;
+    // 声网app id
+    string agora_app_id = 3;
+    // 融云app key
+    string rc_app_key = 4;
+    // 提示升级
+    bool show_upgrade = 5;
+    // 强制升级
+    bool force_upgrade = 6;
+    // 升级包地址
+    string upgrade_url = 7;
+    // 本地化升级提示信息，客户端使用
+    string upgrade_tip = 8;
+    // 心跳间隔，秒
+    uint32 heartbeat_interval = 9;
+    // 免打扰时长，秒，开启免打扰经过该时长之后自动关闭
+    uint32 dnd_period = 10;
+    // 标签配置
+    repeated string tags = 11;
+}
+
+message GiftConfigRequest {
+    // 语言，iso代码，为空时使用用户设置的语言
+    string lang = 1;
+}
+
+message GiftConfigReply {
+    repeated GiftConfig gift_configs = 1;
+}
+
+message BlockInfo {
+    // 封禁状态
+    BlockStatus status = 1;
+    // 封禁理由
+    string reason = 2;
+    // 封禁时间
+    uint32 block_at = 3;
+    // 封禁时长，秒
+    uint32 block_duration = 4;
+}
+
+enum UserListType {
+    // 在线列表
+    UserListOnline = 0;
+    // 关注列表
+    UserListFollow = 1;
+    // 粉丝列表
+    UserListFans = 2;
+    // 消费排行
+    UserListExpense = 3;
+}
+
+message UserListRequest {
+    // 列表类型
+    UserListType type = 1;
+    // 请求数量
+    uint32 count = 2;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 3;
+}
+
+message UserListReply {
+    // 主播列表
+    repeated User users = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message UserInfoRequest {
+    uint32 user_id = 1;
+}
+
+message UserIdsReply {
+    // 关注列表
+    repeated uint32 follow_ids = 1;
+    // 拉黑列表
+    repeated uint32 block_ids = 2;
+}
+
+enum RelationOpType {
+    // 关注
+    RelationFollow = 0;
+    // 取消关注
+    RelationUnFollow = 1;
+    // 拉黑
+    RelationBlock = 2;
+    // 取消拉黑
+    RelationUnBlock = 3;
+}
+
+message UserRelationRequest {
+    // 操作类型
+    RelationOpType op_type = 1;
+    // 主播id
+    uint32 user_id = 2;
+}
+
+message RankInfo {
+    string nickname = 1;
+    string avatar = 2;
+    uint32 income = 3;
+}
+
+message GetRankReply {
+    repeated RankInfo daily = 1;
+    repeated RankInfo weekly = 2;
+}
+
+message IncomeStatRequest {
+    // 起始时间，unix时间戳，秒
+    uint32 start_at = 1;
+    // 结束时间，unix时间戳，秒
+    uint32 end_at = 2;
+}
+
+message IncomeStatReply {
+    // 通话收入
+    uint32 call_income = 1;
+    // 礼物收入
+    uint32 gift_income = 2;
+    // 用户充值佣金收入
+    uint32 commission_income = 3;
+}
+
+enum IncomeType {
+    // 通话收入
+    IncomeCall = 0;
+    // 礼物收入
+    IncomeGift = 1;
+    // 佣金收入
+    IncomeCommission = 2;
+    // 罚金
+    IncomePenalty = 3;
+}
+
+message GiftRecordRequest {
+    // 请求数量
+    uint32 count = 1;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 2;
+    // 记录id
+    uint64 record_id = 3;
+}
+
+message GiftRecordReply {
+    // 礼物列表
+    repeated GiftRecord records = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message IncomeRecord {
+    // 用户id
+    uint32 user_id = 1;
+    // 昵称
+    string nickname = 2;
+    // 头像
+    string avatar = 3;
+    // 数量
+    uint32 count = 4;
+    // 总金额
+    uint32 amount = 5;
+    // 通话方式
+    CallType call_type = 6;
+    // 通话时长
+    uint32 duration = 7;
+    // 描述
+    string desc = 8;
+    // 创建时间
+    uint32 created_at = 9;
+}
+
+message IncomeRecordRequest {
+    // 收入类型
+    IncomeType type = 1;
+    // 请求数量
+    uint32 count = 2;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 3;
+}
+
+message IncomeRecordReply {
+    // 收入列表
+    repeated IncomeRecord records = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message SettleRecordRequest {
+    // 请求数量
+    uint32 count = 1;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 2;
+}
+
+message SettleRecordReply {
+    // 收入列表
+    repeated SettleRecord records = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message WorkStatRequest {
+    // 起始时间，unix时间戳，秒
+    uint32 start_at = 1;
+    // 结束时间，unix时间戳，秒
+    uint32 end_at = 2;
+}
+
+message WorkStatReply {
+    // 在线时长
+    uint32 online_duration = 1;
+    // 通话次数
+    uint32 call_count = 2;
+    // 通话总时长
+    uint32 call_duration = 3;
+    // 接听率
+    float answer_rate = 4;
+    // 有效接听率
+    float effective_rate = 5;
+    // 用户评分
+    float user_score = 6;
+    // 礼物数量
+    uint32 gift_count = 7;
+}
+
+message MakeCallRequest {
+    // 用户id
+    uint32 user_id = 1;
+}
+
+message MakeCallReply {
+    // 通话id，同时作为声网频道id
+    uint64 call_id = 1;
+    // 每分钟价格
+    uint32 price = 2;
+    // 声网主叫token
+    string caller_token = 3;
+    // 声网被叫token
+    string callee_token = 4;
+}
+
+message FetchCallRequest {
+    // 通话id，同时作为声网频道id
+    uint64 call_id = 1;
+}
+
+message FetchCallReply {
+    string rtc_token = 1;
+}
+
+message HangCallRequest {
+    // 通话id，同时作为声网频道id
+    uint64 call_id = 1;
+    // 通话结束类型
+    HangType hang_type = 2;
+    // 客户端通话时长
+    uint32 call_duration = 3;
+}
+
+message HangCallReply {
+    // 通话id
+    uint64 call_id = 1;
+    // 通话消费
+    uint32 call_income = 2;
+    // 通话时长
+    uint32 call_duration = 3;
+    // 礼物消费
+    uint32 gift_income = 4;
+    // 礼物数量
+    uint32 gift_count = 5;
+}
+
+message UpdateCallRequest {
+    // 通话id
+    uint64 call_id = 1;
+    // 通话建立时间，unix时间戳，秒
+    uint32 connected_at = 2;
+}
+
+message UpdateCallReply {
+    // 当前通话时间
+    uint32 current_duration = 1;
+    // 根据可用余额计算的剩余时间
+    uint32 remain_duration = 2;
+    // 根据可用余额计算的断线时间点
+    uint32 disconnect_at = 3;
+}
+
+message SaveMediaRequest {
+    string path = 1;
+    FileType type = 2;
+    string thumb = 3;
+}

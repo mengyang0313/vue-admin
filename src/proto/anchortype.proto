@@ -42,54 +42,56 @@ message AnchorBasic {
     uint32 gift_income = 17;
     // 用户充值分成
     uint32 commission_income = 18;
+    // 罚金
+    uint32 penalty = 19;
     // 当前余额
-    uint32 balance = 19;
+    uint32 balance = 20;
     // 已结算总收入
-    uint32 settled = 20;
+    uint32 settled = 21;
     // 粉丝数量
-    uint32 fans_count = 21;
+    uint32 fans_count = 22;
     // 通话视频id
-    repeated uint64 live_ids = 22;
+    repeated uint64 live_ids = 23;
     // 离线时间
-    uint32 offline_at = 23;
+    uint32 offline_at = 24;
     // 封禁状态
-    BlockStatus block_status = 24;
+    BlockStatus block_status = 25;
     // 上线ip
-    string online_ip = 25;
+    string online_ip = 26;
     // 经度
-    float longitude = 26;
+    float longitude = 27;
     // 纬度
-    float latitude = 27;
+    float latitude = 28;
     // 创建ip
-    string create_ip = 28;
+    string create_ip = 29;
     // 设备id
-    uint32 device_id = 29;
+    uint32 device_id = 30;
     // 网络类型
-    NetworkType network_type = 30;
+    NetworkType network_type = 31;
     // 开户行
-    string bank_name = 31;
+    string bank_name = 32;
     // 账户名
-    string account_name = 32;
+    string account_name = 33;
     // 银行账号
-    string bank_account = 33;
+    string bank_account = 34;
     // 邮箱
-    string email = 34;
+    string email = 35;
     // 备注
-    string note = 35;
+    string note = 36;
     // 心跳时间
-    uint32 heartbeat_at = 36;
+    uint32 heartbeat_at = 37;
     // 登录后的访问token
-    string access_token = 37;
+    string access_token = 38;
     // 访问token过期时间
-    uint32 access_expire_at = 38;
+    uint32 access_expire_at = 39;
     // 声网信令token
-    string agora_rtm_token = 39;
+    string agora_rtm_token = 40;
     // 声网信令过期时间，unix时间戳，秒
-    uint32 agora_rtm_expire_at = 40;
+    uint32 agora_rtm_expire_at = 41;
     // 融云token
-    string rc_token = 41;
+    string rc_token = 42;
     // 融云token过期时间
-    uint32 rc_expire_at = 42;
+    uint32 rc_expire_at = 43;
 
     uint32 updated_at = 50;
     uint32 created_at = 51;
