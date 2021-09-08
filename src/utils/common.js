@@ -3,26 +3,30 @@ import {getToken, removeToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
 
 
+let areaArr = []
+let guildArr = []
+let appArr = []
 
 // 地区
 export function getAreas(){
     const empty = new Empty();
     const metadata = {'token': getToken()};
-    const areaArr = []
-    cmsService.getAreaList(empty, metadata, (err, resp) => {
-        if (!err) {
-            const list = resp.getAreasList()
-            list.forEach((item, index)=>{
-                const json = {
-                    value : item.getId(),
-                    label : item.getTitle(),
-                }
-                areaArr.push(json)
-            })
-        } else {
-            console.log(err)
-        }
-    })
+    if(areaArr.length === 0){
+        cmsService.getAreaList(empty, metadata, (err, resp) => {
+            if (!err) {
+                const list = resp.getAreasList()
+                list.forEach((item, index)=>{
+                    const json = {
+                        value : item.getId(),
+                        label : item.getTitle(),
+                    }
+                    areaArr.push(json)
+                })
+            } else {
+                console.log(err)
+            }
+        })
+    }
     return areaArr
 }
 
@@ -41,21 +45,22 @@ export function getArrName(arr, id){
 export function getGuildList() {
     const req = new Empty();
     const metadata = {'token': getToken()};
-    const guildArr = []
-    cmsService.getGuildList(req, metadata, (err, resp) => {
-        if (!err) {
-            const list = resp.getGuildsList();
-            list.forEach((item, index) => {
-                const json = {
-                    value: item.getId(),
-                    label: item.getName()
-                }
-                guildArr.push(json)
-            })
-        } else {
-            console.log(err)
-        }
-    })
+    if(areaArr.length === 0){
+        cmsService.getGuildList(req, metadata, (err, resp) => {
+            if (!err) {
+                const list = resp.getGuildsList();
+                list.forEach((item, index) => {
+                    const json = {
+                        value: item.getId(),
+                        label: item.getName()
+                    }
+                    guildArr.push(json)
+                })
+            } else {
+                console.log(err)
+            }
+        })
+    }
     return guildArr;
 }
 
@@ -64,24 +69,25 @@ export function getGuildList() {
 export function getAppList() {
     const req = new Empty();
     const metadata = {'token': getToken()};
-    const arr = []
-    cmsService.getAppList(req, metadata, (err, resp) => {
-        if (!err) {
-            const list = resp.getAppsList();
-            list.forEach((item, index) => {
-                //if(item.enable){
+    if(appArr.length === 0){
+        cmsService.getAppList(req, metadata, (err, resp) => {
+            if (!err) {
+                const list = resp.getAppsList();
+                list.forEach((item, index) => {
+                    //if(item.enable){
                     let json = {
                         value: item.getId(),
                         label: item.getTitle()
                     }
-                    arr.push(json)
-                //}
-            })
-        } else {
-            console.log(err)
-        }
-    })
-    return arr;
+                    appArr.push(json)
+                    //}
+                })
+            } else {
+                console.log(err)
+            }
+        })
+    }
+    return appArr;
 }
 
 
