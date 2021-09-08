@@ -168,7 +168,7 @@ import block from './dialog/block'
 import multiAccount from './dialog/multi-account'
 import recharge from './dialog/recharge'
 import updateUser from './dialog/updateUser'
-import { getAreas, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus } from "@/utils/common";
+import {getAreaList, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus, initData} from "@/utils/common";
 
 export default {
     components: { Pagination, imageShow, block, multiAccount, recharge, updateUser},
@@ -191,7 +191,7 @@ export default {
             },
             // 数据总条数
             total: 0,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             boolDict: getBool(),
             appList: getAppList()
         }

@@ -97,7 +97,7 @@
 import Pagination from '../../../components/Pagination'
 import edit from './dialog/edit'
 import close from './dialog/close'
-import {getAreas, getBool, getArrName} from "@/utils/common";
+import {getAreaList, getBool, getArrName} from "@/utils/common";
 
 
 
@@ -121,7 +121,7 @@ export default {
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData : getAreas(),
+            areaData : getAreaList(),
             boolDict : getBool()
         }
     },

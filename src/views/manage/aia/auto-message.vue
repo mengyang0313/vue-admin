@@ -98,7 +98,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import addAutoMessage from './dialog/add-auto-message'
-import { getBool, getAreas, getActionType } from "@/utils/common";
+import { getBool, getAreaList, getActionType } from "@/utils/common";
 
 export default {
     components: { Pagination, addAutoMessage},
@@ -120,7 +120,7 @@ export default {
             total: 0,
             // 多选数据暂存数组
             multipleSelection: [],
-            areaData: getAreas(),
+            areaData: getAreaList(),
             bools: getBool(),
             actionTypes: getActionType()
         }

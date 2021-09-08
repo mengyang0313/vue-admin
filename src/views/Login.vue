@@ -31,6 +31,7 @@
 
 <script>
 import Background from '../assets/img/login-background.jpg'
+import {initData} from "@/utils/common";
 
 export default {
     name: 'Login',
@@ -38,8 +39,8 @@ export default {
         return {
             Background,
             loginForm: {
-                email: 'admin',
-                password: 'admin123',
+                email: 'superadmin',
+                password: '123456',
                 rememberMe: true
             },
             loginRules: {
@@ -58,6 +59,9 @@ export default {
             immediate: true
         }
     },
+    created(){
+
+    },
     methods: {
         handleLogin() {
             this.$refs.loginForm.validate(valid => {
@@ -65,6 +69,7 @@ export default {
                 if (valid) {
                     console.log(this.$service)
                     this.$service.login.login(this.loginForm, function (token){
+                        initData()
                         appthis.$router.push({ path: appthis.redirect || '/' })
                     });
                     this.loading = false

@@ -133,7 +133,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import { getReportedTypes, getReportedTime, getAreas, getViolationScene } from "@/utils/common";
+import { getReportedTypes, getReportedTime, getAreaList, getViolationScene } from "@/utils/common";
 
 export default {
     name: 'Table',
@@ -162,7 +162,7 @@ export default {
             tableData: [],
             // 多选数据暂存数组
             multipleSelection: [],
-            areaData: getAreas(),
+            areaData: getAreaList(),
             reportedTypes: getReportedTypes(),
             reportedTimes: getReportedTime(),
             violationScenes: getViolationScene()

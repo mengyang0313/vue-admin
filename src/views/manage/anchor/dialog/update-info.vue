@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {getAnchorLevel, getAreas, getGuildList} from "@/utils/common";
+import {getAnchorLevel, getAreaList, getGuildList} from "@/utils/common";
 
 export default {
     data() {
@@ -68,7 +68,7 @@ export default {
                 level: '',
                 note: ''
             },
-            areaData: getAreas(),
+            areaData: getAreaList(),
             anchorLevel: getAnchorLevel(),
             guildList: getGuildList(),
             dialogVisible: false

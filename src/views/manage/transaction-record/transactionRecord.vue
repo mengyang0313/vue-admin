@@ -116,7 +116,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAreas, getArrName, getEntityType, getSourceType, getTraderType} from "@/utils/common";
+import {getAppList, getAreaList, getArrName, getEntityType, getSourceType, getTraderType} from "@/utils/common";
 
 export default {
     components: { Pagination },
@@ -142,7 +142,7 @@ export default {
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             appList: getAppList(),
             traderTypeList : getTraderType(),
             sourceTypeList : getSourceType(),

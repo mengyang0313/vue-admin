@@ -229,7 +229,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import {
-    getAreas,
+    getAreaList,
     getAnchorLevel,
     getOnlineStatus,
     getReviewStatus,
@@ -280,7 +280,7 @@ export default {
             multipleSelection: [],
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             guildList: getGuildList(),
             anchorLevel: getAnchorLevel(),
             reviewStatus: getReviewStatus(),

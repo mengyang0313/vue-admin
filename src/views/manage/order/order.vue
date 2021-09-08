@@ -122,7 +122,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import { apps, orderStatus } from '@/dict/index'
-import {getAreas, getPayStatus, getAppList, getArrName} from "@/utils/common";
+import {getAreaList, getPayStatus, getAppList, getArrName} from "@/utils/common";
 
 export default {
     components: { Pagination },
@@ -145,7 +145,7 @@ export default {
                 }
             },
             total: 0,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             appList: getAppList(),
             payStatus: getPayStatus()
         }

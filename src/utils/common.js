@@ -1,36 +1,98 @@
 import {Empty} from "@/proto/js/usertype_pb";
 import {getToken, removeToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
+import Cookies from "js-cookie";
 
 
-let areaArr = []
-let guildArr = []
-let appArr = []
+export async function initData() {
+    const areaArr = await getAreas()
+    sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
 
-// 地区
-export function getAreas(){
+    const guildArr = await getGuilds()
+    sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
+
+    const appArr = await getApps()
+    sessionStorage.setItem("appArr", JSON.stringify(appArr));
+}
+
+export const getAreas = () => new Promise((resolve, reject) => {
     const empty = new Empty();
     const metadata = {'token': getToken()};
-    if(areaArr.length === 0){
-        cmsService.getAreaList(empty, metadata, (err, resp) => {
-            if (!err) {
-                const arr = []
-                const list = resp.getAreasList()
-                list.forEach((item, index)=>{
-                    const json = {
-                        value : item.getId(),
-                        label : item.getTitle(),
-                    }
-                    arr.push(json)
-                })
-                areaArr = arr
-            } else {
-                console.log(err)
-            }
-        })
-    }
-    return areaArr
+    cmsService.getAreaList(empty, metadata, (err, resp) => {
+        if (!err) {
+            const arr = []
+            const list = resp.getAreasList()
+            list.forEach((item, index)=>{
+                const json = {
+                    value : item.getId(),
+                    label : item.getTitle(),
+                }
+                arr.push(json)
+            })
+            resolve(arr)
+        } else {
+            console.log(err)
+        }
+    })
+})
+export function getAreaList() {
+    let areaArr = sessionStorage.getItem("areaArr");
+    return JSON.parse(areaArr);
 }
+
+// 工会列表
+export const getGuilds = () => new Promise((resolve, reject) => {
+    const req = new Empty();
+    const metadata = {'token': getToken()};
+    cmsService.getGuildList(req, metadata, (err, resp) => {
+        if (!err) {
+            const arr = []
+            const list = resp.getGuildsList()
+            list.forEach((item, index)=>{
+                const json = {
+                    value : item.getId(),
+                    label : item.getName(),
+                }
+                arr.push(json)
+            })
+            resolve(arr)
+        } else {
+            console.log(err)
+        }
+    })
+})
+export function getGuildList() {
+    let guildArr = sessionStorage.getItem("guildArr");
+    return JSON.parse(guildArr);
+}
+
+
+// 应用列表
+export const getApps = () => new Promise((resolve, reject) => {
+    const req = new Empty();
+    const metadata = {'token': getToken()};
+    cmsService.getAppList(req, metadata, (err, resp) => {
+        if (!err) {
+            const arr = []
+            const list = resp.getAppsList()
+            list.forEach((item, index)=>{
+                const json = {
+                    value : item.getId(),
+                    label : item.getTitle(),
+                }
+                arr.push(json)
+            })
+            resolve(arr)
+        } else {
+            console.log(err)
+        }
+    })
+})
+export function getAppList() {
+    let appArr = sessionStorage.getItem("appArr");
+    return JSON.parse(appArr);
+}
+
 
 export function getArrName(arr, id){
     let label = ""
@@ -42,59 +104,6 @@ export function getArrName(arr, id){
     return label
 }
 
-
-// 工会列表
-export function getGuildList() {
-    const req = new Empty();
-    const metadata = {'token': getToken()};
-    if(guildArr.length === 0){
-        cmsService.getGuildList(req, metadata, (err, resp) => {
-            if (!err) {
-                const arr = []
-                const list = resp.getGuildsList();
-                list.forEach((item, index) => {
-                    const json = {
-                        value: item.getId(),
-                        label: item.getName()
-                    }
-                    arr.push(json)
-                })
-                guildArr = arr
-            } else {
-                console.log(err)
-            }
-        })
-    }
-    return guildArr;
-}
-
-
-// 应用列表
-export function getAppList() {
-    const req = new Empty();
-    const metadata = {'token': getToken()};
-    if(appArr.length === 0){
-        cmsService.getAppList(req, metadata, (err, resp) => {
-            if (!err) {
-                const arr = []
-                const list = resp.getAppsList();
-                list.forEach((item, index) => {
-                    //if(item.enable){
-                    let json = {
-                        value: item.getId(),
-                        label: item.getTitle()
-                    }
-                    arr.push(json)
-                    //}
-                })
-                appArr = arr
-            } else {
-                console.log(err)
-            }
-        })
-    }
-    return appArr;
-}
 
 
 

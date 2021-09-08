@@ -106,7 +106,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import editRobot from './dialog/edit-robot'
-import { getBool, getAreas , getArrName} from "@/utils/common";
+import { getBool, getAreaList , getArrName} from "@/utils/common";
 
 export default {
     components: { Pagination, editRobot},
@@ -128,7 +128,7 @@ export default {
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             bools: getBool()
         }
     },

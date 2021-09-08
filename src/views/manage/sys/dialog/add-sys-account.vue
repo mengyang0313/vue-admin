@@ -69,7 +69,7 @@ export default {
             value1: [1, 5],
             value2: [1, 5],
             dialogVisible: false,
-            areaData : getAreas(),
+            areaData : getAreaList(),
             rules: {
                 area: [
                     {required: true, message: '请选择', trigger: 'change'}

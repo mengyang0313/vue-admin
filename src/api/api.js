@@ -12,7 +12,7 @@ import { Empty, EntityType, User, AnchorLevel, ReviewStatus } from '../proto/js/
 import { Admin, Guild, RobotMessage, AutoMessage } from '../proto/js/cmstype_pb'
 import { AnchorProfile } from '../proto/js/anchortype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
-import { getAreas, getGuildList, getAppList } from "@/utils/common";
+import {getAreaList, getGuildList, getAppList, initData} from "@/utils/common";
 import axios from "axios";
 
 const getMetadata = () => {
@@ -84,11 +84,6 @@ const initService = () => {
         services[name] = new Service(deps)
     })
     Vue.prototype.$service = services
-
-    //初始化数据
-    let areaList = getAreas()
-    let appList = getAppList()
-    let guildList = getGuildList()
 }
 initService()
 export default initService

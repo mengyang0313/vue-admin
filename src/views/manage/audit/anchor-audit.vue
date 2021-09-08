@@ -128,7 +128,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import {getAreas, getOccupationType, getReviewStatus, getArrName} from "@/utils/common"
+import {getAreaList, getOccupationType, getReviewStatus, getArrName} from "@/utils/common"
 
 export default {
     name: 'Table',
@@ -152,7 +152,7 @@ export default {
             tableData: [],
             // 多选数据暂存数组
             multipleSelection: [],
-            areaData: getAreas(),
+            areaData: getAreaList(),
             reviewStatus: getReviewStatus(),
             occupationList: getOccupationType()
         }

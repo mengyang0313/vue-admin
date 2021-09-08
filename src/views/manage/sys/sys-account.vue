@@ -71,7 +71,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import addSysAccount from './dialog/add-sys-account'
-import {getAreas} from '@/utils/common'
+import {getAreaList} from '@/utils/common'
 
 
 export default {
@@ -86,7 +86,7 @@ export default {
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData : getAreas(),
+            areaData : getAreaList(),
         }
     },
     created() {

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {getAnchorLevel, getAreas, getGuildList} from "@/utils/common";
+import {getAnchorLevel, getAreaList, getGuildList} from "@/utils/common";
 
 export default {
     name: 'Form',
@@ -61,7 +61,7 @@ export default {
             uidDisabled: true,
             dialogVisible: false,
             anchorLevel: getAnchorLevel(),
-            areaData: getAreas(),
+            areaData: getAreaList(),
             guildList: getGuildList(),
             rules: {
                 anchorId: [

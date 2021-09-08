@@ -85,7 +85,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreas, getReviewStatus} from "@/utils/common"
+import {getAreaList, getReviewStatus} from "@/utils/common"
 import videoList from './dialog/video-list'
 
 export default {
@@ -112,7 +112,7 @@ export default {
             multipleSelection: [],
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             reviewStatus: getReviewStatus()
         }
     },

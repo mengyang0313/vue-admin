@@ -41,7 +41,7 @@
 <script>
 
 import { boolDict} from '@/dict/index'
-import {getAreas, getBool} from "@/utils/common";
+import {getAreaList, getBool} from "@/utils/common";
 
 export default {
     name: 'Form',
@@ -58,7 +58,7 @@ export default {
             title: '',
             dialogVisible: false,
             boolDict: getBool(),
-            areaData : getAreas(),
+            areaData : getAreaList(),
             rules: {
                 areaId: [
                     {required: true, message: '请选择', trigger: 'change'}

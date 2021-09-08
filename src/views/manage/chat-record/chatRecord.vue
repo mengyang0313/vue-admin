@@ -124,7 +124,7 @@
 import Pagination from '../../../components/Pagination'
 import conversation from './dialog/conversation'
 import { areaData, apps, msgTypes } from '@/dict/index'
-import {getAppList, getAreas, getMessageType, getArrName} from "@/utils/common";
+import {getAppList, getAreaList, getMessageType, getArrName} from "@/utils/common";
 
 export default {
     components: { Pagination, conversation },
@@ -152,7 +152,7 @@ export default {
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             appList: getAppList(),
             messageTypeList: getMessageType()
         }

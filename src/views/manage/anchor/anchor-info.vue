@@ -177,7 +177,7 @@ import {
     getReviewStatus,
     getArrName,
     getAppList,
-    getAreas,
+    getAreaList,
     getGuildList,
     getOnlineStatus,
     getBlockStatus
@@ -201,7 +201,7 @@ export default {
             activeIndex: '1',
             profilesTableData: {},
             appList: getAppList(),
-            areaList: getAreas(),
+            areaList: getAreaList(),
             guildList: getGuildList()
         }
     },

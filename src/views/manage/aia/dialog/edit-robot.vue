@@ -125,7 +125,7 @@
 
 <script>
 import { getToken } from "@/utils/cookie";
-import { getAreas, getOccupationType } from "@/utils/common";
+import { getAreaList, getOccupationType } from "@/utils/common";
 import axios from "axios";
 import ImgUpdate from '@/components/ImgUpdate'
 
@@ -156,7 +156,7 @@ export default {
             dialogImageUrl: '',
             dialogVisible: false,
             imgDialogVisible: false,
-            areaData: getAreas(),
+            areaData: getAreaList(),
             occupationTypes: getOccupationType(),
             avatarArr: [],
             rules: {
