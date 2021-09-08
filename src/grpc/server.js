@@ -1,5 +1,3 @@
-const host = 'http://localhost:10000'
-
 
 /**
  * 测试
@@ -15,4 +13,4 @@ const host = 'http://localhost:10000'
  * cms
  */
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
-export const cmsService = new CmsSdkClient(host, null, null)
+export const cmsService = new CmsSdkClient(process.env.VUE_APP_GRPC_PROXY_URI, null, null)
