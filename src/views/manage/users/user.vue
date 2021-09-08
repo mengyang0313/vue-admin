@@ -94,7 +94,19 @@
             >
                 <el-table-column prop="id" label="用户ID" align="center" width="120" />
                 <el-table-column prop="areaStr" label="地区" align="center" width="120" />
-                <el-table-column prop="appStr" label="APP" align="center" width="120" />
+                <el-table-column prop="appStr" label="APP" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else>
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="nickname" label="用户名" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
@@ -162,13 +174,14 @@
 </template>
 
 <script>
+import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import block from './dialog/block'
 import multiAccount from './dialog/multi-account'
 import recharge from './dialog/recharge'
 import updateUser from './dialog/updateUser'
-import {getAreaList, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus, initData} from "@/utils/common";
+import {getAreaList, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus, getAppName} from "@/utils/common";
 
 export default {
     components: { Pagination, imageShow, block, multiAccount, recharge, updateUser},
@@ -212,7 +225,7 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "appId" : item.getAppId(),
-                        "appStr" : getArrName($this.appList, item.getAppId()),
+                        "app" : getAppName($this.appList, item.getAppId()),
                         "nickname" : item.getNickname(),
                         "avatar"  : item.getAvatar(),
                         "onlineStatus" : item.getOnlineStatus(),

@@ -40,6 +40,13 @@
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
+                                    <span style="float: left">{{ item.label }}</span>
+                                    <span v-if="item.os === 1">
+                                        <i class="icon-android-fill" style="float: right"></i>
+                                    </span>
+                                    <span v-else>
+                                        <i class="icon-pingguo" style="float: right"></i>
+                                    </span>
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -87,7 +94,19 @@
             >
                 <el-table-column prop="id" label="订单ID" align="center" width="150" />
                 <el-table-column prop="payOrderId" label="渠道订单号" align="center" width="150" />
-                <el-table-column prop="appId" label="来源APP" align="center" width="80" />
+                <el-table-column prop="appId" label="来源APP" align="center" width="80">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else>
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="userId" label="用户ID" align="center" width="120"/>
                 <el-table-column prop="areaId" label="地区" align="center" width="80"/>
                 <el-table-column prop="country" label="国家" align="center" width="80"/>
@@ -120,9 +139,10 @@
 </template>
 
 <script>
+import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import { apps, orderStatus } from '@/dict/index'
-import {getAreaList, getPayStatus, getAppList, getArrName} from "@/utils/common";
+import {getAreaList, getPayStatus, getAppList, getArrName, getAppName} from "@/utils/common";
 
 export default {
     components: { Pagination },
@@ -165,7 +185,8 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "payOrderId" : item.getPayOrderId(),
-                        "appId" : getArrName($this.appList, item.getAppId()),
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appList, item.getAppId()),
                         "userId" : item.getUserId(),
                         "areaId" : getArrName($this.areaData, item.getAreaId()),
                         "country" : item.getCountry(),

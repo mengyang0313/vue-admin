@@ -10,31 +10,31 @@ import Layout from '../layout'
  * */
 
 export const asyncRoutes = [
-    {
-        path: '/',
-        name: 'Layout',
-        component: Layout,
-        children: [{
-            path: 'home',
-            name: 'Home',
-            component: () => import('../views/Home'),
-            meta: {
-                title: '首页',
-                icon: 'vue-dsn-icon-index',
-                fixed: true
-            }
-        }]
-    },
+    // {
+    //     path: '/',
+    //     name: 'Layout',
+    //     component: Layout,
+    //     children: [{
+    //         path: 'home',
+    //         name: 'Home',
+    //         component: () => import('../views/Home'),
+    //         meta: {
+    //             title: '首页',
+    //             icon: 'vue-dsn-icon-index',
+    //             fixed: true
+    //         }
+    //     }]
+    // },
     {
         path: '/home',
         name: 'Layout',
         component: Layout,
         children: [{
-            path: 'home2',
-            name: 'Home2',
+            path: 'home',
+            name: 'Home',
             component: () => import('../views/home/Home'),
             meta: {
-                title: '首页2',
+                title: '首页',
                 icon: 'vue-dsn-icon-index',
                 fixed: true
             }

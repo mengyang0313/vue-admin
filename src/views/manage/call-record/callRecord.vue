@@ -28,6 +28,13 @@
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
+                                    <span style="float: left">{{ item.label }}</span>
+                                    <span v-if="item.os === 1">
+                                        <i class="icon-android-fill" style="float: right"></i>
+                                    </span>
+                                    <span v-else>
+                                        <i class="icon-pingguo" style="float: right"></i>
+                                    </span>
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -119,10 +126,22 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="appStr" label="来源App" align="center" width="120" />
+                <el-table-column prop="app" label="来源App" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else>
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="userId" label="用户Id" align="center" width="120" />
                 <el-table-column prop="anchorId" label="主播Id" align="center" width="120" />
-                <el-table-column prop="areaId" label="地区" align="center" width="220"/>
+                <el-table-column prop="areaStr" label="地区" align="center" width="220"/>
                 <el-table-column prop="callType" label="通话发起类型" align="center" width="220">
                     <template scope="scope">
                         <div slot="reference">
@@ -148,8 +167,9 @@
 </template>
 
 <script>
+import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAppList, getHangType, getCallStatus, getCallType, getArrName} from "@/utils/common";
+import {getAreaList, getAppList, getHangType, getCallStatus, getCallType, getArrName, getAppName} from "@/utils/common";
 
 export default {
     components: { Pagination },
@@ -183,7 +203,7 @@ export default {
             appList: getAppList(),
             callTypeList : getCallType(),
             hangTypeList : getHangType(),
-            callStatusList : getCallStatus
+            callStatusList : getCallStatus()
         }
     },
     created() {
@@ -201,11 +221,12 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "appStr" : getArrName($this.appList, item.getAppId()),
+                        "app" : getAppName($this.appList, item.getAppId()),
                         "userId" : item.getUserId(),
                         "anchorId" : item.getAnchorId(),
                         "callType" : getCallType(item.getCallType()),
-                        "areaId" : getArrName($this.areaData, item.getAreaId()),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "hangType" : getHangType(item.getHangType()),
                         "duration" : item.getDuration(),
                         "income" : item.getIncome()

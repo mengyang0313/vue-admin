@@ -2,7 +2,7 @@
     <el-dialog title="帐号停用" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
-                <el-form-item label="用户Id：" prop="uid">
+                <el-form-item label="主播Id：" prop="uid">
                     <el-input v-model="form.uid" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
                 <el-form-item label="用户昵称" prop="nickname">
@@ -25,6 +25,7 @@
                         maxlength="50"
                         show-word-limit
                     />
+                    <i class="el-icon-"></i>
                 </el-form-item>
 
                 <el-form-item class="submit-box">

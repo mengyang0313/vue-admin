@@ -79,6 +79,7 @@ export const getApps = () => new Promise((resolve, reject) => {
                 const json = {
                     value : item.getId(),
                     label : item.getTitle(),
+                    os : item.getOsType()
                 }
                 arr.push(json)
             })
@@ -104,6 +105,18 @@ export function getArrName(arr, id){
     return label
 }
 
+
+export function getAppName(arr, id){
+    let label = ""
+    let os = 0
+    arr.forEach((item) => {
+        if(id.toString() === item.value.toString()){
+            label = item.label
+            os = item.os
+        }
+    })
+    return {label:label, os:os}
+}
 
 
 
@@ -169,6 +182,9 @@ export function getReviewStatus(key){
         }, {
             value: 5,
             label: '审核通过'
+        }, {
+            value: 6,
+            label: '停用'
         }]
     if(typeof(key) != "undefined"){
         let label = ""

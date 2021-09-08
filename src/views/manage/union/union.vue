@@ -27,14 +27,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item label="状态">
-                            <el-select v-model="search.enable" placeholder="请选择">
-                                <el-option v-for="item in boolDict"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
+                        <el-form-item label="是否启用">
+                            <el-switch v-model="search.enable"/>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -60,14 +54,14 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="id" label="工会ID" align="center" width="250" />
+                <el-table-column prop="id" label="工会ID" align="center" width="70" />
                 <el-table-column prop="name" label="工会名称" align="center" width="250" />
                 <el-table-column prop="areaStr" label="地区" align="center" width="120" />
                 <el-table-column prop="anchorCount" label="主播数" align="center" width="120"/>
                 <el-table-column prop="enable" label="状态" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.enable?"开启":"关闭" }}</el-tag>
+                            <el-switch v-model="scope.row.enable" disabled/>
                         </div>
                     </template>
                 </el-table-column>
@@ -111,7 +105,7 @@ export default {
             search: {
                 id: undefined,
                 areaData: undefined,
-                status: undefined,
+                enable: true,
                 page: {
                     currentPage: 1,
                     pageSize: 10

@@ -35,11 +35,18 @@
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="APP">
-                            <el-select v-model="search.app" placeholder="请选择">
+                            <el-select v-model="search.appId" placeholder="请选择">
                                 <el-option v-for="item in appList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
+                                    <span style="float: left">{{ item.label }}</span>
+                                    <span v-if="item.os === 1">
+                                        <i class="icon-android-fill" style="float: right"></i>
+                                    </span>
+                                    <span v-else>
+                                        <i class="icon-pingguo" style="float: right"></i>
+                                    </span>
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -90,7 +97,19 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="appStr" label="来源App" align="center" width="120" />
+                <el-table-column prop="app" label="来源App" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else>
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="userId" label="用户id" align="center" width="120" />
                 <el-table-column prop="directionStr" label="消息方向" align="center" width="120"/>
                 <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
@@ -121,10 +140,10 @@
 </template>
 
 <script>
+import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import conversation from './dialog/conversation'
-import { areaData, apps, msgTypes } from '@/dict/index'
-import {getAppList, getAreaList, getMessageType, getArrName} from "@/utils/common";
+import {getAppList, getAreaList, getMessageType, getArrName, getAppName} from "@/utils/common";
 
 export default {
     components: { Pagination, conversation },
@@ -172,7 +191,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "appStr" : getArrName($this.appList, item.getAppId()),
+                        "app" : getAppName($this.appList, item.getAppId()),
                         "userId" : item.getUserId(),
                         "direction" : item.getDirection(),
                         "directionStr" : item.getDirection() === 1 ? "<--" : "-->",

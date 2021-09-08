@@ -1,0 +1,23 @@
+{
+  "id": "2799036",
+  "name": "饿了",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15810",
+      "name": "苹果",
+      "font_class": "pingguo",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "9512491",
+      "name": "安卓",
+      "font_class": "android-fill",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}

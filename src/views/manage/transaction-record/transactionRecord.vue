@@ -28,6 +28,13 @@
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
+                                    <span style="float: left">{{ item.label }}</span>
+                                    <span v-if="item.os === 1">
+                                        <i class="icon-android-fill" style="float: right"></i>
+                                    </span>
+                                    <span v-else>
+                                        <i class="icon-pingguo" style="float: right"></i>
+                                    </span>
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -92,7 +99,19 @@
                 size="medium"
             >
                 <el-table-column prop="id" label="交易ID" align="center" width="220" />
-                <el-table-column prop="appId" label="来源App" align="center" width="120" />
+                <el-table-column prop="app" label="来源App" align="center" width="120" >
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else>
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="traderId" label="交易者id" align="center" width="120" />
                 <el-table-column prop="traderType" label="交易者类型" align="center" width="120" />
                 <el-table-column prop="sourceType" label="交易类型" align="center" width="120">
@@ -115,8 +134,9 @@
 </template>
 
 <script>
+import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAreaList, getArrName, getEntityType, getSourceType, getTraderType} from "@/utils/common";
+import {getAppList, getAreaList, getArrName, getAppName, getSourceType, getTraderType} from "@/utils/common";
 
 export default {
     components: { Pagination },
@@ -162,7 +182,8 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
-                        "appId" : getArrName($this.appList, item.getAppId()),
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appList, item.getAppId()),
                         "traderType" : getTraderType(item.getTraderType()),
                         "traderId" : item.getTraderId(),
                         "sourceType" : getSourceType(item.getSourceType()),

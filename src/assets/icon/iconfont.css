@@ -1,0 +1,45 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 2799036 */
+  src: url('iconfont.woff2?t=1631092641242') format('woff2'),
+       url('iconfont.woff?t=1631092641242') format('woff'),
+       url('iconfont.ttf?t=1631092641242') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-pingguo:before {
+  content: "\e695";
+}
+
+.icon-android-fill:before {
+  content: "\e60e";
+}
+
+
+/* 引入图标 */
+[class^="icon-pingguo"],
+[class*=" icon-pingguo"]
+{
+  font-family: "iconfont" !important;
+  font-size: 18px !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-android-fill"],
+[class*=" icon-android-fill"]
+{
+  font-family: "iconfont" !important;
+  font-size: 18px !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

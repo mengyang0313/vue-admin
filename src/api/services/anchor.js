@@ -56,6 +56,7 @@ export default class {
         req.setAreaId(param.areaId)
         req.setLevel(param.level)
         req.setNote(param.note)
+        req.setReviewStatus(param.reviewStatus)
 
         const metadata = {'token': getToken()};
         this.client.updateAnchorBasic(req, metadata, (err, resp) => {

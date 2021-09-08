@@ -115,7 +115,19 @@
                         </el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="appName" label="App" align="center" width="120" />
+                <el-table-column prop="app" label="App" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else>
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="areaName" label="地区" align="center" width="120" />
                 <el-table-column prop="country" label="国家" align="center" width="120" />
                 <el-table-column prop="guildName" label="工会" align="center" width="120" />
@@ -158,9 +170,8 @@
                 <el-table-column prop="commissionIncome" label="佣金收益" align="center" width="120" />
                 <el-table-column prop="adjustIncome" label="奖惩" align="center" width="120" />
                 <el-table-column prop="price" label="单价" align="center" width="120" />
-
-                <el-table-column prop="updatedAt" label="最近登录时间" align="center" width="150" />
-                <el-table-column prop="createdAt" label="注册时间" align="center" width="150" />
+                <el-table-column prop="updatedAt" label="最近登录时间" align="center" width="180" />
+                <el-table-column prop="createdAt" label="注册时间" align="center" width="180" />
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('updateInfo',scope.row)">更新</el-button>
@@ -175,7 +186,14 @@
                         <el-button type="text" @click="toDialog('multiAccount', scope.row)">多帐号</el-button>
                         <el-button type="text" @click="toDialog('migrate', scope.row)">帐号迁移</el-button>
                         <el-button type="text" @click="toDialog('merge', scope.row)">帐号合并</el-button>
-                        <el-button type="text" @click="toDialog('black', scope.row)">帐号停用</el-button>
+
+                        <span v-if="scope.row.reviewStatus === 5" style="padding-right:10px;padding-left:10px;">
+                            <el-button type="text" @click="stopAccount(scope.row)">停用</el-button>
+                        </span>
+                        <span v-else-if="scope.row.reviewStatus === 6">
+                            <el-button type="text" @click="recoveryAccount(scope.row)" style="padding-right:10px;padding-left:10px;">恢复</el-button>
+                        </span>
+
                     </template>
                 </el-table-column>
             </el-table>
@@ -216,9 +234,6 @@
             <!-- 帐号合并 弹出栏 -->
             <merge ref="merge" @fetchData="fetchData"/>
 
-            <!-- 帐号停用 弹出栏 -->
-            <black ref="black" @fetchData="fetchData"/>
-
             <!-- 主播信息 -->
             <anchorInfo ref="anchorInfo" @fetchData="fetchData"/>
             <router-view></router-view>
@@ -227,13 +242,14 @@
 </template>
 
 <script>
+import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import {
     getAreaList,
     getAnchorLevel,
     getOnlineStatus,
     getReviewStatus,
-    getGuildList, getArrName, getAppList, getBlockStatus
+    getGuildList, getArrName, getAppList, getBlockStatus, getAppName
 } from "@/utils/common";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
@@ -246,12 +262,11 @@ import incentive from './dialog/incentive'
 import multiAccount from './dialog/multi-account'
 import migrate from './dialog/migrate'
 import merge from './dialog/merge'
-import black from './dialog/black'
 import Child from './anchor-info';
 
 
 export default {
-    components: { Pagination, Child, videoList, accountStatusList, dataList, block, auth, bankInfo, updateInfo, incentive, multiAccount, migrate, merge, black},
+    components: { Pagination, Child, videoList, accountStatusList, dataList, block, auth, bankInfo, updateInfo, incentive, multiAccount, migrate, merge},
     data() {
         return {
             // 数据列表加载动画
@@ -304,7 +319,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "appName" : getArrName($this.appList, item.getAppId()),
+                        "app" : getAppName($this.appList, item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaName" : getArrName($this.areaData, item.getAreaId()),
                         "country" : item.getCountry(),
@@ -373,6 +388,38 @@ export default {
                     $this.fetchData()
                 } else {
                     $this.$message.error("解封失败!")
+                }
+            })
+        },
+        stopAccount(row){
+            let param = {
+                id : row.id,
+                reviewStatus : 6,
+                struct: row.struct
+            }
+            const $this = this
+            this.$service.anchor.updateAnchorBasic(param, function (result){
+                if (result) {
+                    $this.$message.success("停用成功!")
+                    $this.fetchData()
+                } else {
+                    $this.$message.error("停用失败!")
+                }
+            })
+        },
+        recoveryAccount(row){
+            let param = {
+                id : row.id,
+                reviewStatus : 6,
+                struct: row.struct
+            }
+            const $this = this
+            this.$service.anchor.updateAnchorBasic(param, function (result){
+                if (result) {
+                    $this.$message.success("恢复成功!")
+                    $this.fetchData()
+                } else {
+                    $this.$message.error("恢复失败!")
                 }
             })
         },

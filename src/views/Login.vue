@@ -59,18 +59,15 @@ export default {
             immediate: true
         }
     },
-    created(){
-
-    },
     methods: {
         handleLogin() {
             this.$refs.loginForm.validate(valid => {
-                const appthis = this
+                const $this = this
                 if (valid) {
                     console.log(this.$service)
                     this.$service.login.login(this.loginForm, function (token){
                         initData().then(function () {
-                            appthis.$router.push({ path: appthis.redirect || '/' })
+                            $this.$router.push({ path: $this.redirect || '/' })
                         })
                     });
                     this.loading = false
