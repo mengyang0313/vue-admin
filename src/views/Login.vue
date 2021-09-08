@@ -69,8 +69,9 @@ export default {
                 if (valid) {
                     console.log(this.$service)
                     this.$service.login.login(this.loginForm, function (token){
-                        initData()
-                        appthis.$router.push({ path: appthis.redirect || '/' })
+                        initData().then(function () {
+                            appthis.$router.push({ path: appthis.redirect || '/' })
+                        })
                     });
                     this.loading = false
                 }

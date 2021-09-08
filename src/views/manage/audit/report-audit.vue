@@ -10,15 +10,42 @@
                 class="search-form"
             >
                 <template>
+
                     <el-row>
-                        <el-col :span="16">
-                            <el-form-item label="待审核" size="medium">
-                                <el-button @click="onSubmit">待审核资料 (65)</el-button>
-                                <el-button @click="onSubmit">待审核视频 (65)</el-button>
-                                <el-button @click="onSubmit">待审核举报 (65)</el-button>
+                        <el-col :span="6">
+                            <el-form-item label="举报方类型" prop="reportedType">
+                                <el-select v-model="search.reportedType" placeholder="请选择">
+                                    <el-option v-for="item in reportedTypes"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="8">
+                        <el-col :span="6">
+                            <el-form-item label="举报场景" prop="scenes">
+                                <el-select v-model="search.scene" placeholder="请选择">
+                                    <el-option v-for="item in violationScenes"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item label="举报时间" prop="reportedTime">
+                                <el-select v-model="search.reportedTime" placeholder="请选择">
+                                    <el-option v-for="item in reportedTimes"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
                             <el-form-item label="地区" prop="areaId">
                                 <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaData"
@@ -30,53 +57,18 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-divider></el-divider>
                     <el-row>
-                        <el-col :span="8">
-                            <el-form-item label="举报方类型" prop="reportedType">
-                                <el-select v-model="search.reportedType" placeholder="请选择">
-                                    <el-option v-for="item in reportedTypes"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="8">
-                            <el-form-item label="举报场景" prop="scenes">
-                                <el-select v-model="search.scene" placeholder="请选择">
-                                    <el-option v-for="item in violationScenes"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="8">
-                            <el-form-item label="举报时间" prop="reportedTime">
-                                <el-select v-model="search.reportedTime" placeholder="请选择">
-                                    <el-option v-for="item in reportedTimes"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="8">
+                        <el-col :span="6">
                             <el-form-item label="举报方Id" prop="reporterId">
                                 <el-input v-model="search.reporterId" placeholder="举报方Id"/>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="10">
+                        <el-col :span="6">
                             <el-form-item label="被举报方Id" prop="reportedId">
                                 <el-input v-model="search.reportedId" placeholder="被举报方Id"/>
                             </el-form-item>
                         </el-col>
+
                     </el-row>
                     <el-row>
                         <el-col :span="24" class="search-box">

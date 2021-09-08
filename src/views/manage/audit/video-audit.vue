@@ -10,14 +10,12 @@
                 class="search-form"
             >
                 <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="待审核" size="medium">
-                            <el-button @click="onSubmit">待审核资料 (65)</el-button>
-                            <el-button @click="onSubmit">待审核视频 (65)</el-button>
-                            <el-button @click="onSubmit">待审核举报 (65)</el-button>
+                    <el-col :span="6">
+                        <el-form-item label="主播Id" prop="anchorId">
+                            <el-input v-model="search.anchorId" placeholder="主播Id"/>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="5">
+                    <el-col :span="6">
                         <el-form-item label="审核状态">
                             <el-select v-model="search.reviewStatus" placeholder="请选择" @change="changeArea">
                                 <el-option v-for="item in reviewStatus"
@@ -28,7 +26,7 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="7">
+                    <el-col :span="6">
                         <el-form-item label="地区">
                             <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
                                 <el-option v-for="item in areaData"

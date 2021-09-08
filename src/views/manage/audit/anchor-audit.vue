@@ -10,14 +10,12 @@
                 class="search-form"
             >
                 <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="待审核" size="medium">
-                            <el-button @click="onSubmit">待审核资料 (65)</el-button>
-                            <el-button @click="onSubmit">待审核视频 (65)</el-button>
-                            <el-button @click="onSubmit">待审核举报 (65)</el-button>
+                    <el-col :span="6">
+                        <el-form-item label="主播Id" prop="anchorId">
+                            <el-input v-model="search.anchorId" placeholder="主播Id"/>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="5">
+                    <el-col :span="6">
                         <el-form-item label="审核状态">
                             <el-select v-model="search.reviewStatus" placeholder="请选择" @change="changeArea">
                                 <el-option v-for="item in reviewStatus"
@@ -28,7 +26,7 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="7">
+                    <el-col :span="6">
                         <el-form-item label="地区">
                             <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
                                 <el-option v-for="item in areaData"
@@ -56,27 +54,14 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="id" label="主播id" align="center" width="120" />
-                <el-table-column prop="areaId" label="地区" align="center" width="120" />
-                <el-table-column prop="guildId" label="工会Id" align="center" width="120" />
+                <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
+                <el-table-column prop="areaStr" label="地区" align="center" width="120" />
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
                         <imageShow :data="[scope.row.avatar]" :max-show="1"/>
                     </template>
                 </el-table-column>
-<!--                <el-table-column prop="videos" label="录制视频" align="center" width="120">-->
-<!--                    <template scope="scope">-->
-<!--                        <imageShow :data="[scope.row.videos]" :max-show="1"/>-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
-<!--                <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">-->
-<!--                    <template slot-scope="scope">-->
-<!--                        <div slot="reference">-->
-<!--                            <el-tag size="medium">{{ scope.row.onlineStatus }}</el-tag>-->
-<!--                        </div>-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
                 <el-table-column prop="reviewStatus" label="账户状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
@@ -171,11 +156,11 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
+                        "anchorId" : item.getAnchorId(),
                         "areaId" : item.getAreaId(),
-                        "guildId" : "工会id",
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "nickname" : item.getNickname(),
                         "avatar" : item.getAvatar(),
-                        // "videos" : item.getVideoIdsList(),
                         "reviewStatus" : item.getStatus(),
                         "reviewStatusStr" : getReviewStatus(item.getStatus()),
                         "photoCount" : item.getPhotoIdsList().length,
