@@ -2,10 +2,10 @@
     <el-dialog title="认证主播" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
-                <el-form-item label="用户Id：" prop="uid">
+                <el-form-item label="用户Id：" prop="anchorId">
                     <el-input v-model="form.anchorId" placeholder="请输入" :disabled="uidDisabled"/>
                 </el-form-item>
-                <el-form-item label="主播地区" prop="area">
+                <el-form-item label="主播地区" prop="areaId">
                     <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option
                             v-for="item in areaData"
@@ -15,7 +15,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="主播等级：" prop="bool">
+                <el-form-item label="主播等级：" prop="level">
                     <el-select v-model="form.level" placeholder="请选择">
                         <el-option
                             v-for="item in anchorLevel"
@@ -25,7 +25,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="主播工会" prop="unionId">
+                <el-form-item label="主播工会" prop="guildId">
                     <el-select v-model="form.guildId" placeholder="请选择">
                         <el-option v-for="item in guildList"
                                    :key="item.value"

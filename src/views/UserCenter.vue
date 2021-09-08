@@ -6,32 +6,40 @@
             </div>
             <ul class="user-info">
                 <li>
-                    <label>用户名：</label>
-                    <span>{{ userInfo.username }}</span>
-                </li>
-                <li>
-                    <label>角色：</label>
-                    <span>{{ userInfo.roles }}</span>
-                </li>
-                <li>
-                    <label>昵称：</label>
-                    <span>{{ userInfo.nickname }}</span>
-                </li>
-                <li>
-                    <label>电话号码：</label>
-                    <span>{{ userInfo.phone }}</span>
-                </li>
-                <li>
-                    <label>邮箱：</label>
+                    <label>帐号：</label>
                     <span>{{ userInfo.email }}</span>
                 </li>
                 <li>
-                    <label>创建时间：</label>
-                    <span>{{ userInfo.createtime }}</span>
+                    <label>真实姓名：</label>
+                    <span>{{ userInfo.name }}</span>
                 </li>
                 <li>
-                    <label>更新时间：</label>
-                    <span>{{ userInfo.updatetime }}</span>
+                    <label>权限区域：</label>
+                    <span>{{ userInfo.areaIds }}</span>
+                </li>
+                <li>
+                    <label>权限应用：</label>
+                    <span>{{ userInfo.appIds }}</span>
+                </li>
+                <li>
+                    <label>权限模块：</label>
+                    <span>{{ userInfo.modules }}</span>
+                </li>
+                <li>
+                    <label>备注：</label>
+                    <span>{{ userInfo.note }}</span>
+                </li>
+                <li>
+                    <label>登陆时间：</label>
+                    <span>{{ userInfo.loginAt }}</span>
+                </li>
+                <li>
+                    <label>登陆IP：</label>
+                    <span>{{ userInfo.loginIp }}</span>
+                </li>
+                <li>
+                    <label>创建时间：</label>
+                    <span>{{ userInfo.createdAt }}</span>
                 </li>
             </ul>
         </el-card>
@@ -39,19 +47,32 @@
 </template>
 
 <script>
-import {getUserInfo} from '../api/login'
 
 export default {
     name: 'UserCenter',
     data() {
         return {
-            userInfo: {}
+            userInfo: {
+                email: undefined
+            }
         }
     },
     created() {
-        getUserInfo().then(res => {
+        const $this = this
+        this.$service.user.getAdminInfo({}, function (result){
+            $this.userInfo.email = result.getEmail()
+            $this.userInfo.name = result.getName()
+            $this.userInfo.note = result.getNote()
+            $this.userInfo.areaIds = result.getAreaIdsList()
+            $this.userInfo.appIds = result.getAppIdsList()
+            $this.userInfo.modules = result.getModulesList()
+            $this.userInfo.loginAt = result.getLoginAt()
+            $this.userInfo.loginIp = result.getLoginIp()
+            $this.userInfo.createdAt = result.getCreatedAt()
+        });
+        /*getUserInfo().then(res => {
             this.userInfo = res
-        })
+        })*/
     }
 }
 </script>

@@ -68,8 +68,8 @@
                                     <el-descriptions-item label="用户充值分成">
                                         {{ basic.commissionIncome }}
                                     </el-descriptions-item>
-                                    <el-descriptions-item label="罚金">
-                                        {{ basic.penalty }}
+                                    <el-descriptions-item label="奖惩">
+                                        {{ basic.adjustIncome }}
                                     </el-descriptions-item>
                                     <el-descriptions-item label="当前余额">
                                         {{ basic.balance }}
@@ -247,7 +247,7 @@ export default {
             this.basic.callIncome = basic.getCallIncome()
             this.basic.giftIncome = basic.getGiftIncome()
             this.basic.commissionIncome = basic.getCommissionIncome()
-            this.basic.penalty = basic.getPenalty()
+            this.basic.adjustIncome = basic.getAdjustIncome()
             this.basic.fansCount = basic.getFansCount()
             this.basic.liveIds = basic.getLiveIdsList()
             this.basic.offlineAt = basic.getOfflineAt()

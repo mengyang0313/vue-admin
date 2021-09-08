@@ -146,14 +146,6 @@ export const asyncRoutes = [
                 meta: {
                     title: '主播详情'
                 }
-            },
-            {
-                path: 'data-manage',
-                name: 'data-manage',
-                component: () => import('../views/manage/anchor/data-manage'),
-                meta: {
-                    title: '资料管理'
-                }
             }
         ]
     },

@@ -65,10 +65,14 @@ export default {
                 const $this = this
                 if (valid) {
                     console.log(this.$service)
-                    this.$service.login.login(this.loginForm, function (token){
-                        initData().then(function () {
-                            $this.$router.push({ path: $this.redirect || '/' })
-                        })
+                    this.$service.login.login(this.loginForm, function (bool){
+                        if(bool){
+                            initData().then(function () {
+                                $this.$router.push({ path: $this.redirect || '/' })
+                            })
+                        }else{
+                            $this.$message.error("登录失败!!!")
+                        }
                     });
                     this.loading = false
                 }

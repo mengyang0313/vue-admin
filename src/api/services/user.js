@@ -77,4 +77,18 @@ export default class {
         })
     }
 
+    // 获取当前管理员信息
+    async getAdminInfo (param, callback) {
+        const req = new this.proto.Empty();
+
+        const metadata = {'token': getToken()};
+        this.client.getAdminInfo(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
 }

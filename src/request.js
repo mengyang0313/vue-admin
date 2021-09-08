@@ -1,6 +1,7 @@
 import axois from 'axios'
 import {Message} from 'element-ui'
 import {getToken} from './utils/cookie'
+/*
 
 // 创建axios实例
 const service = axois.create({
@@ -52,3 +53,4 @@ service.interceptors.response.use(
 )
 
 export default service
+*/

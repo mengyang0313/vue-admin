@@ -1,4 +1,5 @@
 import {setToken, getToken} from '@/utils/cookie'
+import {loginOut} from "@/utils/error";
 
 export default class {
     constructor (deps) {
@@ -13,9 +14,9 @@ export default class {
         this.client.login(req, {}, (err, resp) => {
             if (!err) {
                 setToken(resp.getAccessToken())
-                callback(resp.getAccessToken())
+                callback(true)
             } else {
-                console.log(err)
+                callback(false)
             }
         })
     }
