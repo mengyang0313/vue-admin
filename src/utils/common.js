@@ -14,6 +14,7 @@ export function getAreas(){
     if(areaArr.length === 0){
         cmsService.getAreaList(empty, metadata, (err, resp) => {
             if (!err) {
+                areaArr = []
                 const list = resp.getAreasList()
                 list.forEach((item, index)=>{
                     const json = {
@@ -45,9 +46,10 @@ export function getArrName(arr, id){
 export function getGuildList() {
     const req = new Empty();
     const metadata = {'token': getToken()};
-    if(areaArr.length === 0){
+    if(guildArr.length === 0){
         cmsService.getGuildList(req, metadata, (err, resp) => {
             if (!err) {
+                guildArr = []
                 const list = resp.getGuildsList();
                 list.forEach((item, index) => {
                     const json = {
