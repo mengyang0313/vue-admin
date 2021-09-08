@@ -4,10 +4,13 @@ import { events } from '@/constants'
 import {
     AreaListReply, LoginRequest, AdminListReply, GuildListReply, AppListReply, AnchorListRequest, UserListRequest,
     UserListReply, AdminFileChunk, AdjustBalanceRequest, ProfileListRequest, ViolationListRequest, ProcessProfileRequest,
-    ProcessViolationRequest, LiveListRequest
+    ProcessViolationRequest, LiveListRequest, PayListRequest, RobotListRequest, RobotMessageListRequest, AutoMessageListRequest,
+    AnchorFullRequest, ChatMessageListRequest, CallListRequest, TransactionListRequest, AuthorizeAnchorRequest, BlockRequest, UnblockRequest,
+    MigrateRequest
 } from '../proto/js/cms_pb'
 import { Empty, EntityType, User, AnchorLevel, ReviewStatus } from '../proto/js/usertype_pb'
-import { Admin, Guild } from '../proto/js/cmstype_pb'
+import { Admin, Guild, RobotMessage, AutoMessage } from '../proto/js/cmstype_pb'
+import { AnchorProfile } from '../proto/js/anchortype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
 import axios from "axios";
 
@@ -36,6 +39,18 @@ const deps = {
       ProcessProfileRequest,
       ProcessViolationRequest,
       LiveListRequest,
+      PayListRequest,
+      RobotListRequest,
+      RobotMessageListRequest,
+      AutoMessageListRequest,
+      AnchorFullRequest,
+      ChatMessageListRequest,
+      CallListRequest,
+      TransactionListRequest,
+      AuthorizeAnchorRequest,
+      BlockRequest,
+      UnblockRequest,
+      MigrateRequest,
       Empty,
       EntityType,
       User,
@@ -43,6 +58,9 @@ const deps = {
       ReviewStatus,
       Admin,
       Guild,
+      RobotMessage,
+      AnchorProfile,
+      AutoMessage,
       CmsClient: CmsSdkClient
   }
 }

@@ -1,17 +1,17 @@
 <template>
-    <el-dialog title="帐号迁移" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="handleClose">
+    <el-dialog title="帐号迁移" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
-                <el-form-item label="当前ID：" prop="uid">
-                    <el-input v-model="form.uid" placeholder="请输入" :disabled="true"/>
+                <el-form-item label="源账号id" prop="srcId">
+                    <el-input v-model="form.srcId" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
-                <el-form-item label="目标ID" prop="targetUid">
-                    <el-input v-model="form.targetUid" placeholder="请输入" :disabled="true"/>
+                <el-form-item label="目的账号id" prop="dstId">
+                    <el-input v-model="form.dstId" placeholder="请输入"/>
                 </el-form-item>
 
                 <el-form-item class="submit-box">
-                    <el-button type="primary" @click="submitForm('form')" style="margin-right: 50px">提&nbsp;&nbsp;&nbsp;交</el-button>
-                    <el-button @click="resetForm('form')">重&nbsp;&nbsp;&nbsp;置</el-button>
+                    <el-button type="primary" @click="submitForm" style="margin-right: 50px">提&nbsp;&nbsp;&nbsp;交</el-button>
+                    <el-button @click="resetForm">重&nbsp;&nbsp;&nbsp;置</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -25,30 +25,40 @@ export default {
     data() {
         return {
             form: {
-                uid: '',
-                targetUid: ''
+                entityType: 2,
+                srcId: undefined,
+                dstId: undefined
             },
             dialogVisible: false
         }
     },
     methods: {
         init(row){
-            this.form.uid = row.anchorId
-            this.form.nickname = row.nickname
+            this.form.srcId = row.id
         },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
+        submitForm() {
+            const $this = this
+            this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    // 此处添加后端接口
-                    alert('提交成功!')
-                } else {
-                    console.log('提交失败!')
-                    return false
+                    this.form.dstId = parseInt(this.form.dstId)
+                    this.$service.anchor.migrate(this.form, function (result){
+                        if (result) {
+                            $this.$message.success("迁移成功!")
+                            $this.closeDialog()
+                        } else {
+                            $this.$message.error("迁移失败!")
+                        }
+                    })
                 }
             })
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
+        },
+        closeDialog() {
+            this.dialogVisible = false
+            this.resetForm()
+            this.$emit('fetchData');
         }
     }
 }

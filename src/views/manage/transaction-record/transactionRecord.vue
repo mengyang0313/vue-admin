@@ -11,42 +11,8 @@
             >
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="用户ID">
-                            <el-input v-model="search.uid" placeholder="用户ID"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="主播ID">
-                            <el-input v-model="search.anchorUid" placeholder="主播ID"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="交易时间">
-                            <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="search.registeredTime1" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                            <el-col class="line" :span="1" align="center">-</el-col>
-                            <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="search.registeredTime2" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="APP">
-                            <el-select v-model="search.app" placeholder="请选择">
-                                <el-option v-for="item in apps"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="地区">
-                            <el-select v-model="search.area" placeholder="请选择">
+                        <el-form-item label="地区" prop="areaId">
+                            <el-select v-model="search.areaId" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
                                            :label="item.label"
@@ -56,9 +22,49 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
+                        <el-form-item label="APP" prop="appId">
+                            <el-select v-model="search.appId" placeholder="请选择">
+                                <el-option v-for="item in appList"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="创建时间" prop="createdStart">
+                            <el-col :span="11">
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
+                            </el-col>
+                            <el-col class="line" :span="1" align="center">-</el-col>
+                            <el-col :span="10">
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
+                            </el-col>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="6">
+                        <el-form-item label="交易者id">
+                            <el-input v-model="search.traderId" placeholder="交易者id"/>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="交易者类型">
+                            <el-select v-model="search.traderType" placeholder="请选择">
+                                <el-option v-for="item in traderTypeList"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
                         <el-form-item label="交易类型">
-                            <el-select v-model="search.transactionType" placeholder="请选择">
-                                <el-option v-for="item in transactionType"
+                            <el-select v-model="search.sourceType" placeholder="请选择">
+                                <el-option v-for="item in sourceTypeList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
@@ -85,34 +91,32 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="transactionId" label="交易ID" align="center" width="220" />
-                <el-table-column prop="app" label="来源App" align="center" width="120" />
-                <el-table-column prop="fromUid" label="用户Id" align="center" width="120" />
-                <el-table-column prop="toUid" label="主播Id" align="center" width="120" />
-                <el-table-column prop="area" label="地区" align="center" width="220"/>
-                <el-table-column prop="transactionType" label="交易类型" align="center" width="120">
+                <el-table-column prop="id" label="交易ID" align="center" width="220" />
+                <el-table-column prop="appId" label="来源App" align="center" width="120" />
+                <el-table-column prop="traderId" label="交易者id" align="center" width="120" />
+                <el-table-column prop="traderType" label="交易者类型" align="center" width="120" />
+                <el-table-column prop="sourceType" label="交易类型" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.transactionType }}</el-tag>
+                            <el-tag size="medium">{{ scope.row.sourceType }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="amount" label="交易金额" align="center" width="220"/>
-                <el-table-column prop="time" label="交易时间" align="center"/>
-                <el-table-column prop="balance" label="主播余额" align="center"/>
-                <el-table-column prop="userBalance" label="用户余额" align="center"/>
+                <el-table-column prop="balance" label="交易后余额" align="center"/>
+                <el-table-column prop="desc" label="描述" align="center"/>
+                <el-table-column prop="createdAt" label="交易时间" align="center"/>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
 </template>
 
 <script>
-import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import { areaData, apps, transactionType } from '@/dict/index'
+import {getAppList, getAreas, getArrName, getEntityType, getSourceType, getTraderType} from "@/utils/common";
 
 export default {
     components: { Pagination },
@@ -121,14 +125,27 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                areaId: undefined,
+                appId: undefined,
+                traderType: 0,
+                traderId: undefined,
+                sourceType: 0,
+                createdStart: undefined,
+                createdEnd: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData,
-            apps,
-            transactionType
+            areaData: getAreas(),
+            appList: getAppList(),
+            traderTypeList : getTraderType(),
+            sourceTypeList : getSourceType(),
         }
     },
     created() {
@@ -137,41 +154,46 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
+            const $this = this
             this.listLoading = true
-            let url = process.env.VUE_APP_GRPC_PROXY_URI + "transactions.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
+            this.$service.transaction.getTransactionList(this.handleParam(), function (result){
+                const list = result.getTransactionsList();
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "appId" : getArrName($this.appList, item.getAppId()),
+                        "traderType" : getTraderType(item.getTraderType()),
+                        "traderId" : item.getTraderId(),
+                        "sourceType" : getSourceType(item.getSourceType()),
+                        "amount" : item.getAmount(),
+                        "balance" : item.getBalance(),
+                        "desc" : item.getDesc(),
+                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                    }
+                    data.push(json)
+                })
+                $this.total = result.getTotalCount()
+                $this.tableData = data
+                $this.listLoading = false
             })
         },
-        // 查询数据
+        handleParam(){
+            let param = this.search;
+            if (typeof(this.search.createdStart) != "undefined"){
+                param.createdStartUint = this.search.createdStart.getTime() / 1000
+            }
+            if (typeof(this.search.createdEnd) != "undefined"){
+                param.createdEndUint = this.search.createdEnd.getTime() / 1000
+            }
+            return param
+        },
         onSearch() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
-        //重置
         resetForm() {
-            this.search = this.initQuery();
-        },
-        initQuery() {
-            return {
-                uid: undefined,
-                anchorUid: undefined,
-                registeredTime1: undefined,
-                registeredTime2: undefined,
-                app: undefined,
-                area: undefined,
-                transactionType: undefined,
-                currentPage: 1,
-                pageSize: 10
-            }
+            this.$refs.searchForm.resetFields()
         }
     }
 }

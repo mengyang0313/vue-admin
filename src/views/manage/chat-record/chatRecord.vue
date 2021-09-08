@@ -11,23 +11,23 @@
             >
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="发送方Id">
-                            <el-input v-model="search.formUid" placeholder="发送方Id"/>
+                        <el-form-item label="用户Id">
+                            <el-input v-model="search.userId" placeholder="用户Id"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="接收方Id">
-                            <el-input v-model="search.toUid" placeholder="接收方Id"/>
+                        <el-form-item label="主播Id">
+                            <el-input v-model="search.anchorId" placeholder="主播Id"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="日期">
+                        <el-form-item label="发送时间">
                             <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="search.registeredTime1" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
                             </el-col>
                             <el-col class="line" :span="1" align="center">-</el-col>
                             <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="search.registeredTime2" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                     </el-col>
@@ -36,7 +36,7 @@
                     <el-col :span="6">
                         <el-form-item label="APP">
                             <el-select v-model="search.app" placeholder="请选择">
-                                <el-option v-for="item in apps"
+                                <el-option v-for="item in appList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
@@ -46,7 +46,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="地区">
-                            <el-select v-model="search.area" placeholder="请选择">
+                            <el-select v-model="search.areaId" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
                                            :label="item.label"
@@ -56,14 +56,14 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="内容">
-                            <el-input v-model="search.content" placeholder="内容"/>
+                        <el-form-item label="关键词">
+                            <el-input v-model="search.keyword" placeholder="关键词"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="消息类型">
-                            <el-select v-model="search.msgType" placeholder="请选择">
-                                <el-option v-for="item in msgTypes"
+                            <el-select v-model="search.type" placeholder="请选择">
+                                <el-option v-for="item in messageTypeList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
@@ -90,18 +90,19 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="app" label="来源App" align="center" width="120" />
-                <el-table-column prop="fromUid" label="发送方Id" align="center" width="120" />
-                <el-table-column prop="toUid" label="接收方Id" align="center" width="120" />
-                <el-table-column prop="msgType" label="消息类型" align="center" width="120">
+                <el-table-column prop="appStr" label="来源App" align="center" width="120" />
+                <el-table-column prop="userId" label="用户id" align="center" width="120" />
+                <el-table-column prop="directionStr" label="消息方向" align="center" width="120"/>
+                <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
+                <el-table-column prop="type" label="消息类型" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.msgType }}</el-tag>
+                            <el-tag size="medium">{{ scope.row.type }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="sendTime" label="发送时间" align="center" width="220"/>
-                <el-table-column prop="content" label="私信内容" align="center"  />
+                <el-table-column prop="text" label="私信内容" align="center"  />
+                <el-table-column prop="sendAt" label="发送时间" align="center" width="220"/>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('conversation',scope.row)">查看对话</el-button>
@@ -109,7 +110,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 对话 弹出栏 -->
@@ -120,10 +121,10 @@
 </template>
 
 <script>
-import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
 import conversation from './dialog/conversation'
 import { areaData, apps, msgTypes } from '@/dict/index'
+import {getAppList, getAreas, getMessageType, getArrName} from "@/utils/common";
 
 export default {
     components: { Pagination, conversation },
@@ -132,14 +133,28 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                areaId: undefined,
+                userId: undefined,
+                anchorId: undefined,
+                appId: undefined,
+                direction: 0,
+                type: undefined,
+                keyword: undefined,
+                createdStart: undefined,
+                createdEnd: undefined,
+                page:{
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData,
-            apps,
-            msgTypes
+            areaData: getAreas(),
+            appList: getAppList(),
+            messageTypeList: getMessageType()
         }
     },
     created() {
@@ -148,26 +163,46 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
+            const $this = this
             this.listLoading = true
-            let url = process.env.VUE_APP_JSON_URI + "/msgs.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
+            this.$service.chat.getChatMessageList(this.handleParam(), function (result){
+                const list = result.getMessagesList();
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "appId" : item.getAppId(),
+                        "appStr" : getArrName($this.appList, item.getAppId()),
+                        "userId" : item.getUserId(),
+                        "direction" : item.getDirection(),
+                        "directionStr" : item.getDirection() === 1 ? "<--" : "-->",
+                        "anchorId" : item.getAnchorId(),
+                        "type" : getMessageType(item.getType()),
+                        "text" : item.getText(),
+                        "uri" : item.getUri(),
+                        "sendAt" : new Date(item.getSendAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                    }
+                    data.push(json)
+                })
+                $this.total = result.getTotalCount()
+                $this.tableData = data
+                $this.listLoading = false
             })
         },
-        // 查询数据
+        handleParam(){
+            let param = this.search;
+            if (typeof(this.search.createdStart) != "undefined"){
+                param.createdStartUint = this.search.createdStart.getTime() / 1000
+            }
+            if (typeof(this.search.createdEnd) != "undefined"){
+                param.createdEndUint = this.search.createdEnd.getTime() / 1000
+            }
+            return param
+        },
         onSearch() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
-        // 弹框
         toDialog(component, row){
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
@@ -176,21 +211,7 @@ export default {
         },
         //重置
         resetForm() {
-            this.search = this.initQuery();
-        },
-        initQuery() {
-            return {
-                formUid: undefined,
-                toUid: undefined,
-                registeredTime1: undefined,
-                registeredTime2: undefined,
-                app: undefined,
-                content: undefined,
-                msgType: undefined,
-                area: undefined,
-                currentPage: 1,
-                pageSize: 10
-            }
+            this.$refs.searchForm.resetFields()
         }
     }
 }

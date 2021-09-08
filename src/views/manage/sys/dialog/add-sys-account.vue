@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="新增管理帐号" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="handleClose">
+    <el-dialog title="新增管理帐号" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="运营区域" prop="area" required>
@@ -101,17 +101,18 @@ export default {
                 if (valid) {
                     this.$service.admin.saveAdmin(this.form, function (result){
                         if (result) {
-                            alert("保存成功!")
-                            $this.close()
+                            $this.$message.success("保存成功!")
+                            $this.closeDialog()
                         } else {
-                            alert("保存失败!")
+                            $this.$message.error("保存失败!")
                         }
                     })
                 }
             })
         },
-        handleChange(value, direction, movedKeys) {
-            console.log(value, direction, movedKeys)
+        closeDialog() {
+            this.dialogVisible = false
+            this.$emit('fetchData');
         },
         resetForm(formName) {
             this.$refs[formName].resetFields()

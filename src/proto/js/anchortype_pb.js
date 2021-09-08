@@ -162,7 +162,7 @@ proto.pb.AnchorBasic.toObject = function(includeInstance, msg) {
     callIncome: jspb.Message.getFieldWithDefault(msg, 16, 0),
     giftIncome: jspb.Message.getFieldWithDefault(msg, 17, 0),
     commissionIncome: jspb.Message.getFieldWithDefault(msg, 18, 0),
-    penalty: jspb.Message.getFieldWithDefault(msg, 19, 0),
+    adjustIncome: jspb.Message.getFieldWithDefault(msg, 19, 0),
     balance: jspb.Message.getFieldWithDefault(msg, 20, 0),
     settled: jspb.Message.getFieldWithDefault(msg, 21, 0),
     fansCount: jspb.Message.getFieldWithDefault(msg, 22, 0),
@@ -306,7 +306,7 @@ proto.pb.AnchorBasic.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 19:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setPenalty(value);
+      msg.setAdjustIncome(value);
       break;
     case 20:
       var value = /** @type {number} */ (reader.readUint32());
@@ -591,7 +591,7 @@ proto.pb.AnchorBasic.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getPenalty();
+  f = message.getAdjustIncome();
   if (f !== 0) {
     writer.writeUint32(
       19,
@@ -1164,10 +1164,10 @@ proto.pb.AnchorBasic.prototype.setCommissionIncome = function(value) {
 
 
 /**
- * optional uint32 penalty = 19;
+ * optional uint32 adjust_income = 19;
  * @return {number}
  */
-proto.pb.AnchorBasic.prototype.getPenalty = function() {
+proto.pb.AnchorBasic.prototype.getAdjustIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
 };
 
@@ -1176,7 +1176,7 @@ proto.pb.AnchorBasic.prototype.getPenalty = function() {
  * @param {number} value
  * @return {!proto.pb.AnchorBasic} returns this
  */
-proto.pb.AnchorBasic.prototype.setPenalty = function(value) {
+proto.pb.AnchorBasic.prototype.setAdjustIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 19, value);
 };
 

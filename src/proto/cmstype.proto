@@ -124,9 +124,6 @@ message App {
     // 启用的区域
     repeated uint32 area_ids = 10;
 
-    // 是否为老toya应用
-    bool is_old = 100;
-
     uint32 updated_at = 20;
     uint32 created_at = 21;
 }
@@ -177,6 +174,12 @@ message RongcloudConfig {
     string old_domain = 6;
 }
 
+// 鉴黄配置
+message GreenConfig {
+    string key_id = 1;
+    string key_secret = 2;
+}
+
 // App区域配置信息，每个app的每个区域一个
 message AreaConfig {
     uint32 id = 1;
@@ -213,6 +216,8 @@ message AreaConfig {
     OssConfig oss_config = 21;
     // 融云配置
     RongcloudConfig rongcloud_config = 22;
+    // 鉴黄配置
+    GreenConfig green_config = 23;
 
     // TODO ai policy
     // 仅在服务端发起ai call
@@ -406,78 +411,208 @@ message AutoMessage {
 message ChatMessage {
     uint64 id = 1;
     uint32 area_id = 2;
+    uint32 app_id = 3;
     // 用户id
-    uint32 user_id = 3;
+    uint32 user_id = 4;
     // 主播id
-    uint32 anchor_id = 4;
+    uint32 anchor_id = 5;
     // 消息类型
     MessageType type = 6;
     // 消息方向
-    MessageDirection direction = 5;
+    MessageDirection direction = 7;
     // 消息内容
-    string text = 7;
+    string text = 8;
     // 图片、视频、语音消息链接
-    string uri = 8;
+    string uri = 9;
     // 缩略图
-    string thumb = 9;
+    string thumb = 10;
     // 语音或视频消息时长
-    uint32 duration = 10;
+    uint32 duration = 11;
     // 消息发送时间
-    uint32 send_at = 11;
+    uint32 send_at = 12;
 
     uint32 created_at = 21;
 }
 
-// 违规记录
-message ViolationRecord {
+// 调整记录，奖惩记录
+message AdjustRecord {
     uint64 id = 1;
     // 应用id
     uint32 app_id = 2;
     // 区域id
     uint32 area_id = 3;
-    // 举报者类型，主播或用户
-    EntityType reporter_type = 4;
-    // 举报者id
-    uint32 reporter_id = 5;
-    // 被举报者类型，主播或用户
-    EntityType reported_type = 6;
-    // 被举报者id
-    uint32 reported_id = 7;
-    // 违规类型
-    ViolationType violation_type = 8;
-    // 违规场景
-    ViolationScene violation_scene = 9;
-    // 举报信息
-    string report_message = 10;
-    // 处理状态
-    BlockStatus deal_status = 11;
-    // 处理信息
-    string deal_message = 12;
-    // 处理时间
-    uint32 deal_at = 13;
-    // 封禁时长，秒
-    uint32 block_duration = 14;
-
-    uint32 updated_at = 20;
-    uint32 created_at = 21;
-}
-
-// 罚金记录
-message PenaltyRecord {
-    uint64 id = 1;
-    // 应用id
-    uint32 app_id = 2;
-    // 区域id
-    uint32 area_id = 3;
-    // 主播id
-    uint32 anchor_id = 4;
-    // 罚款金额
-    uint32 amount = 5;
+    // 操作的管理员id
+    uint32 admin_id = 4;
+    // 实体类型，用户或主播
+    EntityType entity_type = 5;
+    // 实体id
+    uint32 entity_id = 6;
+    // 金额，正数为奖励，负数为处罚
+    int32 amount = 7;
     // 罚款理由
-    string reason = 6;
-    // 是否撤销处罚
-    bool revoke = 7;
+    string reason = 8;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;
+}
+
+enum StatInterval {
+    StatIntervalUnknown = 0;
+    // 每分钟
+    StatMin = 1;
+    // 每5分钟
+    StatMin5 = 2;
+    // 每小时
+    StatHourly = 3;
+    // 每天
+    StatDaily = 4;
+    // 每周
+    StatWeekly = 5;
+}
+
+// 区域统计数据
+message AreaStat {
+    uint64 id = 1;
+    uint32 area_id = 2;
+    // 起始时间
+    uint32 start_at = 3;
+    // 统计间隔
+    StatInterval interval = 4;
+    // 统计时间
+    uint32 stat_at = 5;
+    // 活跃用户数量
+    uint32 active_user = 6;
+    // 在线用户数量
+    uint32 online_user = 7;
+    // 新用户数量
+    uint32 new_user = 8;
+    // 付费用户数量
+    uint32 pay_user = 9;
+    // 活跃主播数量
+    uint32 active_anchor = 10;
+    // 空闲主播数量
+    uint32 idle_anchor = 11;
+    // 通话主播数量
+    uint32 busy_anchor = 12;
+    // 进行中通话数量
+    uint32 ongoing_call = 13;
+    // AI通话发起数量
+    uint32 ai_call = 14;
+    // 用户通话发起数量
+    uint32 user_call = 15;
+    // 主播通话发起数量
+    uint32 anchor_call = 16;
+    // 用户接听数量
+    uint32 user_answer = 17;
+    // 主播接听数量
+    uint32 anchor_answer = 18;
+    // 充值钻石数量
+    uint64 deposit = 19;
+    // 消耗钻石数量
+    uint64 expense = 20;
+    // 收入
+    uint32 income = 21;
+    // google支付数量
+    uint32 google_pay = 22;
+    // apple支付数量
+    uint32 apple_pay = 23;
+    // 三方支付数量
+    uint32 other_pay = 24;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+}
+
+// 主播统计数据
+message AnchorStat {
+    uint64 id = 1;
+    uint32 area_id = 2;
+    uint32 anchor_id = 3;
+    // 起始时间
+    uint32 start_at = 4;
+    // 统计间隔
+    StatInterval interval = 5;
+    // 统计时间
+    uint32 stat_at = 6;
+    // 在线时长
+    uint32 online_duration = 7;
+    // 来电数
+    uint32 in_call = 8;
+    // 呼出数
+    uint32 out_call = 9;
+    // 接听率
+    float answer_rate = 10;
+    // 有效接听率
+    float effect_answer_rate = 11;
+    // 平均通话时长
+    uint32 avg_duration = 12;
+    // 通话收入
+    uint32 call_income = 13;
+    // 礼物收入
+    uint32 gift_income = 14;
+    // 用户充值分成
+    uint32 commission_income = 15;
+    // 奖惩收入
+    uint32 adjust_income = 16;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+}
+
+// 用户统计数据
+message UserStat {
+    uint64 id = 1;
+    uint32 area_id = 2;
+    uint32 app_id = 3;
+    // 起始时间
+    uint32 start_at = 4;
+    // 统计间隔
+    StatInterval interval = 5;
+    // 统计时间
+    uint32 stat_at = 6;
+    // 总收入，单位为分
+    uint32 income = 7;
+    // 活跃用户
+    uint32 active_user = 8;
+    // 新增用户
+    uint32 new_user = 9;
+    // 充值用户数量
+    uint32 pay_user = 10;
+    // VIP购买数量
+    float vip_user= 11;
+    // 复购用户数量
+    uint32 repay_user = 12;
+    // 新用户收入
+    uint32 new_income = 13;
+    // 新用户充值数量
+    uint32 new_pay_user = 14;
+    // 通过话的新用户数量，免费钻石消耗人数
+    uint32 new_call_user = 15;
+    // 聊过天的新用户数量，免费消息消耗完人数
+    uint32 new_chat_user = 16;
+    // 通话数量
+    uint32 call = 17;
+    // 接通数量
+    uint32 answer = 18;
+    // 通话时长
+    uint64 duration = 19;
+    // AI通话数量
+    uint32 ai_call = 20;
+    // AI接通数量
+    uint32 ai_answer = 21;
+    // AI通话时长
+    uint64 ai_duration = 22;
+    // 总用户消耗
+    uint64 expense = 23;
+    // 新用户消耗
+    uint64 new_expense = 24;
+    // google支付订单数
+    uint32 google_pay = 25;
+    // apple支付订单数
+    uint32 apple_pay = 26;
+    // 三方支付订单数
+    uint32 other_pay = 27;
+
+    uint32 updated_at = 40;
+    uint32 created_at = 41;
 }

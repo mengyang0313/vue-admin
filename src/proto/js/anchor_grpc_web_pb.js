@@ -1838,6 +1838,86 @@ proto.pb.anchor.AnchorSdkPromiseClient.prototype.updateCall =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.anchor.SearchUserRequest,
+ *   !proto.pb.anchor.SearchUserReply>}
+ */
+const methodDescriptor_AnchorSdk_SearchUser = new grpc.web.MethodDescriptor(
+  '/pb.anchor.AnchorSdk/SearchUser',
+  grpc.web.MethodType.UNARY,
+  proto.pb.anchor.SearchUserRequest,
+  proto.pb.anchor.SearchUserReply,
+  /**
+   * @param {!proto.pb.anchor.SearchUserRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.anchor.SearchUserReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.anchor.SearchUserRequest,
+ *   !proto.pb.anchor.SearchUserReply>}
+ */
+const methodInfo_AnchorSdk_SearchUser = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.anchor.SearchUserReply,
+  /**
+   * @param {!proto.pb.anchor.SearchUserRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.anchor.SearchUserReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.anchor.SearchUserRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.anchor.SearchUserReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.anchor.SearchUserReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.anchor.AnchorSdkClient.prototype.searchUser =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.anchor.AnchorSdk/SearchUser',
+      request,
+      metadata || {},
+      methodDescriptor_AnchorSdk_SearchUser,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.anchor.SearchUserRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.anchor.SearchUserReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.anchor.AnchorSdkPromiseClient.prototype.searchUser =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.anchor.AnchorSdk/SearchUser',
+      request,
+      metadata || {},
+      methodDescriptor_AnchorSdk_SearchUser);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.anchor.SaveMediaRequest,
  *   !proto.pb.FileRecord>}
  */

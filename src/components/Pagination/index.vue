@@ -33,7 +33,7 @@ export default {
         },
         pageSizes: {
             type: Array,
-            default: () => [10, 15, 20, 50]
+            default: () => [5, 10, 15, 20, 50]
         },
         total: {
             type: Number,
@@ -65,6 +65,7 @@ export default {
     },
     methods: {
         handleSizeChange(val) {
+            this.$emit('changePageSize', {page: this.currentPage, limit: val})
             this.$emit('pagination', {page: this.currentPage, limit: val})
         },
         handleCurrentChange(val) {

@@ -93,39 +93,34 @@
                 size="medium"
             >
                 <el-table-column prop="id" label="用户ID" align="center" width="120" />
-                <el-table-column prop="areaId" label="地区" align="center" width="120" />
-                <el-table-column prop="appId" label="APP" align="center" width="120" />
+                <el-table-column prop="areaStr" label="地区" align="center" width="120" />
+                <el-table-column prop="appStr" label="APP" align="center" width="120" />
                 <el-table-column prop="nickname" label="用户名" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
                         <imageShow :data="[scope.row.avatar]" :max-show="1"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="dlfs" label="登录方式" align="center" width="120"/>
                 <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.onlineStatus }}</el-tag>
+                            <el-tag size="medium">{{ scope.row.onlineStatusStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="blockStatus" label="账户状态" align="center" width="120">
+                <el-table-column prop="blockStatusStr" label="封禁状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag @click="toDialog('accountStatusList',scope.row)" size="medium">{{ scope.row.accountStatus }}</el-tag>
+                            <el-tag @click="toDialog('accountStatusList',scope.row)" size="medium">{{ scope.row.blockStatusStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="vipEndAt" label="vip到期时间" align="center" width="120"/>
-                <el-table-column prop="vipCount" label="vip购买次数" align="center" width="150"/>
                 <el-table-column prop="expense" label="累计送礼" align="center" width="150"/>
                 <el-table-column prop="deposit" label="累计充值" align="center" width="150"/>
                 <el-table-column prop="balance" label="账户余额" align="center" width="250" />
-                <el-table-column prop="schyrq" label="上次活跃日期" align="center" width="150"/>
-                <el-table-column prop="scczrq" label="上次充值日期" align="center" width="150"/>
                 <el-table-column prop="createdAt" label="注册日期" align="center" width="150"/>
                 <el-table-column prop="osType" label="手机机型" align="center" width="120" />
-                <el-table-column prop="version" label="系统版本" align="center" width="120" />
                 <el-table-column prop="appVersion" label="app版本" align="center" width="120" />
                 <el-table-column prop="onlineIp" label="ip地址" align="center" width="180">
                     <template slot-scope="scope">
@@ -134,7 +129,12 @@
                 </el-table-column>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toDialog('ban',scope.row)">封禁</el-button>
+                        <span v-if="scope.row.blockStatus !== 3 && scope.row.blockStatus !== 4" style="padding-right:10px;padding-left:10px;">
+                            <el-button type="text" @click="toDialog('block',scope.row)">封禁</el-button>
+                        </span>
+                        <span v-else>
+                            <el-button type="text" @click="unblock(scope.row.id)" style="padding-right:10px;padding-left:10px;">解封</el-button>
+                        </span>
                         <el-button type="text" @click="toDialog('recharge',scope.row)">充值</el-button>
                         <el-button type="text" @click="toDialog('updateUser',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('multiAccount', scope.row)">多帐号查询</el-button>
@@ -143,10 +143,10 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 封禁设备 弹出栏 -->
-            <ban ref="ban"/>
+            <block ref="block"/>
 
             <!-- 多帐号查询 弹出栏 -->
             <multiAccount ref="multiAccount"/>
@@ -164,91 +164,18 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import ban from './dialog/ban'
+import block from './dialog/block'
 import multiAccount from './dialog/multi-account'
 import recharge from './dialog/recharge'
 import updateUser from './dialog/updateUser'
-import { areaData, boolDict } from '@/dict/index'
+import { getAreas, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus } from "@/utils/common";
 
 export default {
-    components: { Pagination, imageShow, ban, multiAccount, recharge, updateUser},
+    components: { Pagination, imageShow, block, multiAccount, recharge, updateUser},
     data() {
         return {
-            // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
-            search: this.initQuery(),
-            // 数据总条数
-            total: 0,
-            // 表格数据数组
-            tableData: [],
-            // 多选数据暂存数组
-            multipleSelection: [],
-            // 防止多次连续提交表单
-            isSubmit: false,
-            areaData,
-            boolDict
-        }
-    },
-    created() {
-        this.fetchData()
-    },
-    methods: {
-        // 获取数据列表
-        fetchData() {
-            const $this = this
-            this.listLoading = true
-            this.$service.user.getUserList(this.search, function (result){
-                const list = result.getUsersList()
-                const data = []
-                list.forEach((item, index)=>{
-                    const json = {
-                        "id" : item.getId(),
-                        "areaId" : item.getAreaId(),
-                        "appId" : item.getAppId(),
-                        "nickname" : item.getNickname(),
-                        "avatar"  : item.getAvatar(),
-                        "dlfs" : "登陆方式",
-                        "blockStatus" : item.getBlockStatus(),
-                        "onlineStatus" : item.getOnlineStatus(),
-                        "vipEndAt" : new Date(item.getVipEndAt()*1000).format('yyyy-MM-dd'),
-                        "vipCount" : 3,
-                        "expense" : item.getExpense(),
-                        "deposit" : item.getDeposit(),
-                        "balance" : item.getBalance(),
-                        "schyrq" : "上次活跃日期",
-                        "scczrq" : "上次充值日期",
-                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
-                        "osType" : item.getOsType(),
-                        "version" : "系统版本",
-                        "appVersion" : item.getVersion(),
-                        "onlineIp" : item.getOnlineIp(),
-                    }
-                    data.push(json)
-                })
-                $this.total = result.getTotalCount()
-                $this.tableData = data
-                $this.listLoading = false
-            });
-        },
-        // 查询数据
-        onSearch() {
-            this.search.page.currentPage = 1
-            this.fetchData()
-        },
-        // 弹框
-        toDialog(component, row){
-            this.$refs[component].dialogVisible = true
-            this.$nextTick(()=>{
-                this.$refs[component].init(row);
-            })
-        },
-        //重置
-        resetForm() {
-            this.$refs['searchForm'].resetFields()
-        },
-        initQuery() {
-            return {
+            search: {
                 userId: undefined,
                 nickname: undefined,
                 createdStart: undefined,
@@ -261,7 +188,93 @@ export default {
                     currentPage: 1,
                     pageSize: 10
                 }
+            },
+            // 数据总条数
+            total: 0,
+            areaData: getAreas(),
+            boolDict: getBool(),
+            appList: getAppList()
+        }
+    },
+    created() {
+        this.fetchData()
+    },
+    methods: {
+        fetchData() {
+            const $this = this
+            this.listLoading = true
+            this.$service.user.getUserList(this.handleParam(), function (result){
+                const list = result.getUsersList()
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
+                        "appId" : item.getAppId(),
+                        "appStr" : getArrName($this.appList, item.getAppId()),
+                        "nickname" : item.getNickname(),
+                        "avatar"  : item.getAvatar(),
+                        "onlineStatus" : item.getOnlineStatus(),
+                        "onlineStatusStr" : getOnlineStatus(item.getOnlineStatus()),
+                        "blockStatus" : item.getBlockStatus(),
+                        "blockStatusStr" : getBlockStatus(item.getBlockStatus()),
+                        "vipEndAt" : new Date(item.getVipEndAt() * 1000).format('yyyy-MM-dd'),
+                        "expense" : item.getExpense(),
+                        "deposit" : item.getDeposit(),
+                        "balance" : item.getBalance(),
+                        "createdAt" : new Date(item.getCreatedAt() * 1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "osType" : item.getOsType(),
+                        "appVersion" : item.getVersion(),
+                        "onlineIp" : item.getOnlineIp(),
+                    }
+                    data.push(json)
+                })
+                $this.total = result.getTotalCount()
+                $this.tableData = data
+                $this.listLoading = false
+            });
+        },
+        handleParam(){
+            let param = this.search;
+            if (typeof(this.search.createdStart) != "undefined"){
+                param.createdStartUint = this.search.createdStart.getTime() / 1000
             }
+            if (typeof(this.search.createdEnd) != "undefined"){
+                param.createdEndUint = this.search.createdEnd.getTime() / 1000
+            }
+            return param
+        },
+        onSearch() {
+            this.search.page.currentPage = 1
+            this.fetchData()
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
+        },
+        toDialog(component, row){
+            this.$refs[component].dialogVisible = true
+            this.$nextTick(()=>{
+                this.$refs[component].init(row);
+            })
+        },
+        unblock(entityId){
+            let param = {
+                entityId : entityId,
+                entityType : 1
+            }
+            const $this = this
+            this.$service.anchor.unblock(param, function (result){
+                if (result) {
+                    $this.$message.success("解封成功!")
+                    $this.fetchData()
+                } else {
+                    $this.$message.error("解封失败!")
+                }
+            })
+        },
+        resetForm() {
+            this.$refs.searchForm.resetFields()
         }
     }
 }

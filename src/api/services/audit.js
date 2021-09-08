@@ -103,7 +103,7 @@ export default class {
 
 
     /**
-     * 待审核举报
+     * 待审核视频
      */
     async getLiveList (param, callback) {
         const req = new this.proto.LiveListRequest()
@@ -111,7 +111,7 @@ export default class {
         req.setPageSize(param.page.pageSize)
         req.setAreaId(param.areaId)
         req.setAnchorId(param.anchorId)
-        req.setStatus(param.status)
+        req.setStatus(param.reviewStatus)
         req.setCreatedStart(param.createdStart)
         req.setCreatedEnd(param.createdEnd)
 

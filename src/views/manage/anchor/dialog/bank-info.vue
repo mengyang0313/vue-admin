@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="银行信息" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="handleClose">
+    <el-dialog title="银行信息" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="主播Id：" prop="uid">
@@ -62,8 +62,13 @@ export default {
                 }
             })
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
+        },
+        closeDialog() {
+            this.dialogVisible = false
+            this.resetForm()
+            this.$emit('fetchData');
         }
     }
 }

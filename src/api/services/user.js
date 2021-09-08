@@ -23,8 +23,8 @@ export default class {
         req.setVipOnly(param.vipOnly)
         req.setDepositOnly(param.depositOnly)
         req.setMinBalance(param.minBalance)
-        req.setCreatedStart(param.createdStart)
-        req.setCreatedEnd(param.createdEnd)
+        req.setCreatedStart(param.createdStartUint)
+        req.setCreatedEnd(param.createdEndUint)
 
         const metadata = {'token': getToken()};
         this.client.getUserList(req, metadata, (err, resp) => {

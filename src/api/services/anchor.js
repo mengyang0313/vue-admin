@@ -8,14 +8,8 @@ export default class {
     }
 
 
-    /**
-     * 查询主播列表
-     * @param page
-     * @param param
-     * @param callback
-     * @returns {Promise<void>}
-     */
-    async getAnchorList ( param, callback) {
+    // 查询主播列表
+    async getAnchorList (param, callback) {
         const req = new this.proto.AnchorListRequest()
         req.setPageNo(param.page.currentPage)
         req.setPageSize(param.page.pageSize)
@@ -24,8 +18,9 @@ export default class {
         req.setGuildId(param.guildId)
         req.setBlockStatus(param.blockStatus)
         req.setOnlineStatus(param.onlineStatus)
-        req.setCreatedStart(param.createdStart)
-        req.setCreatedEnd(param.createdEnd)
+        req.setReviewStatus(param.reviewStatus)
+        req.setCreatedStart(param.createdStartUint)
+        req.setCreatedEnd(param.createdEndUint)
 
         const metadata = {'token': getToken()};
         this.client.getAnchorList(req, metadata, (err, resp) => {
@@ -38,9 +33,22 @@ export default class {
     }
 
 
-    /**
-     * 更新主播基础信息
-     */
+    async getAnchorFull ( param, callback) {
+        const req = new this.proto.AnchorFullRequest()
+        req.setAnchorId(param.id)
+
+        const metadata = {'token': getToken()};
+        this.client.getAnchorFull(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+    // 更新主播基础信息
     async updateAnchorBasic (param, callback) {
         const req = param.struct
         req.setId(param.id)
@@ -58,4 +66,86 @@ export default class {
             }
         })
     }
+
+
+    // 认证主播
+    async authorizeAnchor (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.AuthorizeAnchorRequest()
+        }
+        req.setAnchorId(param.anchorId)
+        req.setAreaId(param.areaId)
+        req.setGuildId(param.guildId)
+
+        const metadata = {'token': getToken()};
+        this.client.authorizeAnchor(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                error(err)
+                callback(false)
+            }
+        })
+    }
+
+
+    // 封禁
+    async block (param, callback) {
+        let req = new this.proto.BlockRequest()
+        req.setEntityType(param.entityType)
+        req.setEntityId(param.entityId)
+        req.setBlockStatus(param.blockStatus)
+        req.setDuration(param.duration)
+        req.setReason(param.reason)
+
+        const metadata = {'token': getToken()};
+        this.client.block(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                error(err)
+                callback(false)
+            }
+        })
+    }
+
+
+    // 解封
+    async unblock (param, callback) {
+        let req = new this.proto.UnblockRequest()
+        req.setEntityType(param.entityType)
+        req.setEntityId(param.entityId)
+
+        const metadata = {'token': getToken()};
+        this.client.unblock(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                error(err)
+                callback(false)
+            }
+        })
+    }
+
+
+    // 账户迁移
+    async migrate (param, callback) {
+        let req = new this.proto.MigrateRequest()
+        req.setEntityType(param.entityType)
+        req.setSrcId(param.srcId)
+        req.setDstId(param.dstId)
+
+        const metadata = {'token': getToken()};
+        this.client.migrate(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                error(err)
+                callback(false)
+            }
+        })
+    }
+
+
 }

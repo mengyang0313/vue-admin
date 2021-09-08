@@ -236,14 +236,94 @@ proto.pb.user.UserSdkPromiseClient.prototype.login =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.Empty,
+ *   !proto.pb.user.BlockInfo>}
+ */
+const methodDescriptor_UserSdk_GetBlockInfo = new grpc.web.MethodDescriptor(
+  '/pb.user.UserSdk/GetBlockInfo',
+  grpc.web.MethodType.UNARY,
+  usertype_pb.Empty,
+  proto.pb.user.BlockInfo,
+  /**
+   * @param {!proto.pb.Empty} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.user.BlockInfo.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.Empty,
+ *   !proto.pb.user.BlockInfo>}
+ */
+const methodInfo_UserSdk_GetBlockInfo = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.user.BlockInfo,
+  /**
+   * @param {!proto.pb.Empty} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.user.BlockInfo.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.Empty} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.user.BlockInfo)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.user.BlockInfo>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.user.UserSdkClient.prototype.getBlockInfo =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.user.UserSdk/GetBlockInfo',
+      request,
+      metadata || {},
+      methodDescriptor_UserSdk_GetBlockInfo,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.Empty} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.user.BlockInfo>}
+ *     Promise that resolves to the response
+ */
+proto.pb.user.UserSdkPromiseClient.prototype.getBlockInfo =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.user.UserSdk/GetBlockInfo',
+      request,
+      metadata || {},
+      methodDescriptor_UserSdk_GetBlockInfo);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.user.BindAuthRequest,
- *   !proto.pb.User>}
+ *   !proto.pb.EntityAuth>}
  */
 const methodDescriptor_UserSdk_BindAuth = new grpc.web.MethodDescriptor(
   '/pb.user.UserSdk/BindAuth',
   grpc.web.MethodType.UNARY,
   proto.pb.user.BindAuthRequest,
-  usertype_pb.User,
+  usertype_pb.EntityAuth,
   /**
    * @param {!proto.pb.user.BindAuthRequest} request
    * @return {!Uint8Array}
@@ -251,7 +331,7 @@ const methodDescriptor_UserSdk_BindAuth = new grpc.web.MethodDescriptor(
   function(request) {
     return request.serializeBinary();
   },
-  usertype_pb.User.deserializeBinary
+  usertype_pb.EntityAuth.deserializeBinary
 );
 
 
@@ -259,10 +339,10 @@ const methodDescriptor_UserSdk_BindAuth = new grpc.web.MethodDescriptor(
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.pb.user.BindAuthRequest,
- *   !proto.pb.User>}
+ *   !proto.pb.EntityAuth>}
  */
 const methodInfo_UserSdk_BindAuth = new grpc.web.AbstractClientBase.MethodInfo(
-  usertype_pb.User,
+  usertype_pb.EntityAuth,
   /**
    * @param {!proto.pb.user.BindAuthRequest} request
    * @return {!Uint8Array}
@@ -270,7 +350,7 @@ const methodInfo_UserSdk_BindAuth = new grpc.web.AbstractClientBase.MethodInfo(
   function(request) {
     return request.serializeBinary();
   },
-  usertype_pb.User.deserializeBinary
+  usertype_pb.EntityAuth.deserializeBinary
 );
 
 
@@ -279,9 +359,9 @@ const methodInfo_UserSdk_BindAuth = new grpc.web.AbstractClientBase.MethodInfo(
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.pb.User)}
+ * @param {function(?grpc.web.Error, ?proto.pb.EntityAuth)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.pb.User>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.EntityAuth>|undefined}
  *     The XHR Node Readable Stream
  */
 proto.pb.user.UserSdkClient.prototype.bindAuth =
@@ -300,7 +380,7 @@ proto.pb.user.UserSdkClient.prototype.bindAuth =
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.pb.User>}
+ * @return {!Promise<!proto.pb.EntityAuth>}
  *     Promise that resolves to the response
  */
 proto.pb.user.UserSdkPromiseClient.prototype.bindAuth =
@@ -317,13 +397,13 @@ proto.pb.user.UserSdkPromiseClient.prototype.bindAuth =
  * @const
  * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.user.UnbindAuthRequest,
- *   !proto.pb.User>}
+ *   !proto.pb.Empty>}
  */
 const methodDescriptor_UserSdk_UnbindAuth = new grpc.web.MethodDescriptor(
   '/pb.user.UserSdk/UnbindAuth',
   grpc.web.MethodType.UNARY,
   proto.pb.user.UnbindAuthRequest,
-  usertype_pb.User,
+  usertype_pb.Empty,
   /**
    * @param {!proto.pb.user.UnbindAuthRequest} request
    * @return {!Uint8Array}
@@ -331,7 +411,7 @@ const methodDescriptor_UserSdk_UnbindAuth = new grpc.web.MethodDescriptor(
   function(request) {
     return request.serializeBinary();
   },
-  usertype_pb.User.deserializeBinary
+  usertype_pb.Empty.deserializeBinary
 );
 
 
@@ -339,10 +419,10 @@ const methodDescriptor_UserSdk_UnbindAuth = new grpc.web.MethodDescriptor(
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.pb.user.UnbindAuthRequest,
- *   !proto.pb.User>}
+ *   !proto.pb.Empty>}
  */
 const methodInfo_UserSdk_UnbindAuth = new grpc.web.AbstractClientBase.MethodInfo(
-  usertype_pb.User,
+  usertype_pb.Empty,
   /**
    * @param {!proto.pb.user.UnbindAuthRequest} request
    * @return {!Uint8Array}
@@ -350,7 +430,7 @@ const methodInfo_UserSdk_UnbindAuth = new grpc.web.AbstractClientBase.MethodInfo
   function(request) {
     return request.serializeBinary();
   },
-  usertype_pb.User.deserializeBinary
+  usertype_pb.Empty.deserializeBinary
 );
 
 
@@ -359,9 +439,9 @@ const methodInfo_UserSdk_UnbindAuth = new grpc.web.AbstractClientBase.MethodInfo
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.pb.User)}
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.pb.User>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
  *     The XHR Node Readable Stream
  */
 proto.pb.user.UserSdkClient.prototype.unbindAuth =
@@ -380,7 +460,7 @@ proto.pb.user.UserSdkClient.prototype.unbindAuth =
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.pb.User>}
+ * @return {!Promise<!proto.pb.Empty>}
  *     Promise that resolves to the response
  */
 proto.pb.user.UserSdkPromiseClient.prototype.unbindAuth =

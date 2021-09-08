@@ -104,7 +104,7 @@
                         <el-tag size="medium">{{ scope.row.tags }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="occupation" label="职业" align="center" width="120" />
+                <el-table-column prop="occupationStr" label="职业" align="center" width="120" />
                 <el-table-column prop="birthday" label="生日" align="center" width="150" />
                 <el-table-column prop="voiceGreeting" label="语音问候" align="center" width="150" />
                 <el-table-column prop="onlineStart" label="常在线起始时间" align="center" width="150" />
@@ -128,7 +128,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import { getAreas, getReviewStatus } from "@/utils/common"
+import {getAreas, getOccupationType, getReviewStatus, getArrName} from "@/utils/common"
 
 export default {
     name: 'Table',
@@ -140,7 +140,7 @@ export default {
             // 查询列表参数对象
             search: {
                 areaId: 1,
-                reviewStatus: '0',
+                reviewStatus: 0,
                 page: {
                     currentPage: 1,
                     pageSize: 10
@@ -153,7 +153,8 @@ export default {
             // 多选数据暂存数组
             multipleSelection: [],
             areaData: getAreas(),
-            reviewStatus: getReviewStatus()
+            reviewStatus: getReviewStatus(),
+            occupationList: getOccupationType()
         }
     },
     created() {
@@ -175,14 +176,14 @@ export default {
                         "nickname" : item.getNickname(),
                         "avatar" : item.getAvatar(),
                         // "videos" : item.getVideoIdsList(),
-                        "onlineStatus" : "在线状态",
                         "reviewStatus" : item.getStatus(),
                         "reviewStatusStr" : getReviewStatus(item.getStatus()),
                         "photoCount" : item.getPhotoIdsList().length,
                         "videoCount" : item.getVideoIdsList().length,
                         "tags" : item.getTagsList(),
                         "occupation" : item.getOccupation(),
-                        "birthday" : item.getBirthday(),
+                        "occupationStr" : getArrName($this.occupationList, item.getOccupation()),
+                        "birthday" : new Date(item.getBirthday()*1000).format('yyyy-MM-dd'),
                         "voiceGreeting" : item.getVoiceGreeting(),
                         "onlineStart" : item.getOnlineStart(),
                         "onlineEnd" : item.getOnlineEnd(),

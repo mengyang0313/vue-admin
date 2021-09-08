@@ -40,10 +40,7 @@ enum FileType {
     FileTypeUnknown = 0;
     FileImage = 1;
     FileVideo = 2;
-}
-
-enum CurrencyType {
-    USD = 0;
+    FileAudio = 3;
 }
 
 // 职业类型
@@ -119,6 +116,8 @@ enum EntityType {
     EntityOnlineRecord = 12;
     // 结算记录
     EntitySettleRecord = 13;
+    // 奖惩记录
+    EntityAdjustRecord = 14;
 }
 
 // 网络类型
@@ -178,10 +177,8 @@ message Device {
     OsType os_type = 6;
     // 是否封禁
     bool blocked = 7;
-    // 封禁原因
-    string reason = 8;
-    // 解封时间
-    uint32 release_at = 9;
+    // 违规记录
+    uint64 violation_id = 8;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;
@@ -209,10 +206,8 @@ enum BlockStatus {
     BlockWarning = 2;
     // 封禁账号
     BlockAccount = 3;
-    // 封禁设备
-    BlockDevice = 4;
     // 封禁所有，包括账号和设备
-    BlockAll = 5;
+    BlockAll = 4;
 }
 
 enum ToyaStatus {
@@ -279,20 +274,20 @@ message User {
     OccupationType occupation = 26;
     // 离线时间
     uint32 offline_at = 27;
-    // 上线ip
-    string online_ip = 28;
-    // 经度
-    float longitude = 29;
-    // 纬度
-    float latitude = 30;
-    // 创建ip
-    string create_ip = 31;
-    // 设备id
-    uint32 device_id = 32;
-    // 网络类型
-    NetworkType network_type = 33;
     // 心跳时间
-    uint32 heartbeat_at = 34;
+    uint32 heartbeat_at = 28;
+    // 上线ip
+    string online_ip = 29;
+    // 经度
+    float longitude = 30;
+    // 纬度
+    float latitude = 31;
+    // 创建ip
+    string create_ip = 32;
+    // 设备id
+    uint32 device_id = 33;
+    // 网络类型
+    NetworkType network_type = 34;
     // 登录后的访问token
     string access_token = 35;
     // 访问token过期时间
@@ -311,6 +306,8 @@ message User {
     uint32 rc_expire_at = 42;
     // 安装id
     uint32 install_id = 43;
+    // 问候语，老app使用
+    string greeting = 44;
 
     uint32 updated_at = 60;
     uint32 created_at = 61;
@@ -364,54 +361,60 @@ enum ReviewStatus {
 // 主播信息，客户端使用
 message AnchorInfo {
     uint32 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 版本
+    uint32 version = 3;
     // 个人信息id
-    uint32 profile_id = 2;
+    uint32 profile_id = 4;
     // 国家
-    string country = 3;
+    string country = 5;
     // 在线状态
-    OnlineStatus status = 4;
+    OnlineStatus status = 6;
     // 等级
-    AnchorLevel level = 5;
+    AnchorLevel level = 7;
     // 语言
-    string lang = 6;
+    string lang = 8;
     // 每分钟价格
-    uint32 price = 7;
+    uint32 price = 9;
     // 粉丝数量
-    uint32 fans_count = 8;
+    uint32 fans_count = 10;
     // 性别
-    GenderType gender = 9;
+    GenderType gender = 11;
     // 昵称
-    string nickname = 10;
+    string nickname = 12;
     // 签名
-    string signature = 11;
+    string signature = 13;
     // 头像
-    string avatar = 12;
+    string avatar = 14;
     // 职业
-    OccupationType occupation = 13;
+    OccupationType occupation = 15;
     // 生日，unix时间戳
-    uint32 birthday = 14;
+    uint32 birthday = 16;
     // 标签
-    repeated string tags = 15;
+    repeated string tags = 17;
     // 语音问候
-    string voice_greeting = 16;
+    string voice_greeting = 18;
     // 每日经常在线起始时间，小时，0-23
-    uint32 online_start = 17;
+    uint32 online_start = 19;
     // 每日经常在线结束时间，小时，1-24
-    uint32 online_end = 18;
+    uint32 online_end = 20;
     // 相册
-    repeated FileRecord photos = 19;
+    repeated FileRecord photos = 21;
     // 视频
-    repeated FileRecord videos = 20;
+    repeated FileRecord videos = 22;
     // 离线时间
-    uint32 offline_at = 21;
+    uint32 offline_at = 23;
+    // 心跳时间
+    uint32 heartbeat_at = 24;
     // 经度
-    float longitude = 22;
+    float longitude = 25;
     // 纬度
-    float latitude = 23;
+    float latitude = 26;
     // 在线视频
-    repeated FileRecord lives = 24;
+    repeated FileRecord lives = 27;
     // 关注状态
-    FollowStatus follow_status = 25;
+    FollowStatus follow_status = 28;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;
@@ -556,6 +559,14 @@ enum HangType {
     AgoraTimeout = 7;
     // 声网错误
     AgoraError = 8;
+}
+
+// 通话状态
+enum CallStatus {
+    CallStatusUnknown = 0;
+    CallWaiting = 1;
+    CallOngoing = 2;
+    CallEnd = 3;
 }
 
 // 录制状态
@@ -820,6 +831,42 @@ enum ViolationScene {
     ViolationChat = 2;
     // 主播资料
     ViolationProfile = 3;
+}
+
+// 违规记录
+message ViolationRecord {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 举报者类型，主播或用户
+    EntityType reporter_type = 4;
+    // 举报者id
+    uint32 reporter_id = 5;
+    // 被举报者类型，主播或用户
+    EntityType reported_type = 6;
+    // 被举报者id
+    uint32 reported_id = 7;
+    // 违规类型
+    ViolationType violation_type = 8;
+    // 违规场景
+    ViolationScene violation_scene = 9;
+    // 举报信息
+    string report_message = 10;
+    // 处理状态
+    BlockStatus deal_status = 11;
+    // 处理信息
+    string deal_message = 12;
+    // 处理时间
+    uint32 deal_at = 13;
+    // 封禁时长，秒
+    uint32 block_duration = 14;
+    // 是否取消处罚
+    bool revoked = 15;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
 }
 
 // 订阅期限

@@ -63,9 +63,9 @@
                         <el-image style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="videos" label="已有视频" align="center" width="300">
-                    <template scope="scope">
-                        <el-image style="width: 50px; height: 50px" :src="scope.row.videos" title="查看"></el-image>
+                <el-table-column prop="ownerId" label="已有视频" align="center" width="300">
+                    <template slot-scope="scope">
+                        <a @click="toDialog('videoList',scope.row)" style="color: #1E88C7">查看</a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="createdAt" label="录制时间" align="center" width="150" />
@@ -86,18 +86,19 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import {getAreas, getReviewStatus} from "@/utils/common"
+import videoList from './dialog/video-list'
 
 export default {
     name: 'Table',
-    components: {Pagination},
+    components: {Pagination, videoList},
     data() {
         return {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
             search: {
-                area: 1,
-                status: 0,
+                areaId: 1,
+                reviewStatus: 0,
                 page: {
                     currentPage: 1,
                     pageSize: 10
@@ -121,7 +122,6 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
-
             const $this = this
             this.listLoading = true
             this.$service.audit.getLiveList(this.search, function (result){
@@ -143,20 +143,6 @@ export default {
                 $this.tableData = data
                 $this.listLoading = false
             });
-            // this.listLoading = true
-            // console.log(this.search)
-            // let url = process.env.VUE_APP_JSON_URI + "/anchor.json"
-            // // 获取数据列表接口
-            // getTableList(this.search, url).then(res => {
-            //     const data = res.data
-            //     if (data.code === 0) {
-            //         this.total = data.data.total
-            //         this.tableData = data.data.list
-            //         this.listLoading = false
-            //     }
-            // }).catch(() => {
-            //     this.listLoading = false
-            // })
         },
         // 查询数据
         onSubmit() {
@@ -166,6 +152,13 @@ export default {
         // 多选操作
         handleSelectionChange(val) {
             this.multipleSelection = val
+        },
+        // 弹框
+        toDialog(component, row){
+            this.$refs[component].dialogVisible = true
+            this.$nextTick(()=>{
+                this.$refs[component].init(row);
+            })
         },
         // 通过
         handlePassed(index, row) {

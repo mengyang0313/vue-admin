@@ -122,7 +122,7 @@ export default {
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            activeIndex: '1',
+            activeIndex: 1,
             currentDate: {},
             overallData: {
                 title: '整体收入',

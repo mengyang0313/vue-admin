@@ -63,7 +63,7 @@
                         @pagination="fetchData"/>
 
             <!-- 编辑资料 -->
-            <addSysAccount ref="addSysAccount"/>
+            <addSysAccount ref="addSysAccount" @fetchData="fetchData"/>
         </el-card>
     </div>
 </template>

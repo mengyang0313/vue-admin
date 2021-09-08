@@ -27,14 +27,14 @@ export default class {
     }
 
     async saveGuild (param, callback) {
-        const req = new this.proto.Guild();
+        const req = param.struct;
         req.setId(param.id)
         req.setAreaId(param.areaId)
         req.setName(param.name)
         req.setEnable(param.enable)
         req.setNote(param.note)
 
-        const metadata = {'token': getToken()};
+        const metadata = {'token': getToken()}
         this.client.saveGuild(req, metadata, (err, resp) => {
             !err ? callback(true) : callback(false)
         })

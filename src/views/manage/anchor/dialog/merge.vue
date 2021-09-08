@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="将其他用户ID合并至此" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="handleClose">
+    <el-dialog title="将其他用户ID合并至此" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
                 <el-form-item label="当前ID：" prop="uid">
@@ -47,8 +47,13 @@ export default {
                 }
             })
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
+        },
+        closeDialog() {
+            this.dialogVisible = false
+            this.resetForm()
+            this.$emit('fetchData');
         }
     }
 }

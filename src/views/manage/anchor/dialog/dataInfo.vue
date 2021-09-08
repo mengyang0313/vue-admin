@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="资料详情" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="handleClose">
+    <el-dialog title="资料详情" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
                 <el-form-item label="ID：" prop="id">
@@ -90,8 +90,13 @@ export default {
                 }
             })
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
+        },
+        closeDialog() {
+            this.dialogVisible = false
+            this.resetForm()
+            this.$emit('fetchData');
         }
     }
 }

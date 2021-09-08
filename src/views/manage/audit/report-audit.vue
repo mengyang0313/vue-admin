@@ -145,10 +145,10 @@ export default {
             // 查询列表参数对象
             search: {
                 areaId: 1,
-                scene: '0',
-                reportedType: '1',
+                scene: 0,
+                reportedType: 1,
                 reportUid: undefined,
-                reportedTime: '1',
+                reportedTime: 1,
                 createdStart: undefined,
                 createdEnd: undefined,
                 page: {

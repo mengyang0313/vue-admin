@@ -41,8 +41,8 @@
                 <el-row>
                     <el-col :span="24" class="search-box">
                         <el-form-item>
-                            <el-button @click="onSearch('searchForm')" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
-                            <el-button @click="resetForm('searchForm')" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
+                            <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
+                            <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -62,7 +62,7 @@
             >
                 <el-table-column prop="id" label="工会ID" align="center" width="250" />
                 <el-table-column prop="name" label="工会名称" align="center" width="250" />
-                <el-table-column prop="areaId" label="地区" align="center" width="120" />
+                <el-table-column prop="areaStr" label="地区" align="center" width="120" />
                 <el-table-column prop="anchorCount" label="主播数" align="center" width="120"/>
                 <el-table-column prop="enable" label="状态" align="center" width="120">
                     <template scope="scope">
@@ -81,7 +81,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 新增或编辑 -->
@@ -95,27 +95,34 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import { boolDict } from '@/dict/index'
 import edit from './dialog/edit'
 import close from './dialog/close'
-import {getAreas} from "@/utils/common";
+import {getAreas, getBool, getArrName} from "@/utils/common";
 
 
 
 export default {
-    components: { Pagination, boolDict, edit, close },
+    components: { Pagination, edit, close },
     data() {
         return {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                id: undefined,
+                areaData: undefined,
+                status: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
             areaData : getAreas(),
-            boolDict
+            boolDict : getBool()
         }
     },
     created() {
@@ -133,12 +140,14 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "name" : item.getName(),
                         "inviteCode" : item.getInviteCode(),
                         "anchorCount" : item.getAnchorCount(),
                         "enable" : item.getEnable(),
                         "note" : item.getNote(),
-                        "createdAt" : new Date(item.getCreatedAt()).toLocaleString()
+                        "createdAt" : new Date(item.getCreatedAt()).toLocaleString(),
+                        "struct" : item
                     }
                     data.push(json)
                 })
@@ -147,12 +156,10 @@ export default {
                 $this.listLoading = false
             })
         },
-        // 查询数据
         onSearch() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
-        // 弹框
         toDialog(component, row){
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
@@ -160,18 +167,7 @@ export default {
             })
         },
         resetForm() {
-            this.search = this.initQuery();
-        },
-        initQuery() {
-            return {
-                id: undefined,
-                areaData: undefined,
-                status: undefined,
-                page: {
-                    pageSize: 0,
-
-                }
-            }
+            this.$refs.searchForm.resetFields()
         }
     }
 }

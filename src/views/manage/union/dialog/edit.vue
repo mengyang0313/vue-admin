@@ -9,21 +9,14 @@
                     <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option
                             v-for="item in areaData"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="工会状态：" prop="enable">
-                    <el-select v-model="form.enable" placeholder="请选择">
-                        <el-option
-                            v-for="item in boolDict"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <el-switch v-model="form.enable"></el-switch>
                 </el-form-item>
                 <el-form-item label="备注" prop="note">
                     <el-input
@@ -37,8 +30,8 @@
                 </el-form-item>
 
                 <el-form-item class="submit-box">
-                    <el-button type="primary" @click="submitForm('ruleForm')" style="margin-right: 50px">提&nbsp;&nbsp;&nbsp;交</el-button>
-                    <el-button @click="resetForm('ruleForm')">重&nbsp;&nbsp;&nbsp;置</el-button>
+                    <el-button type="primary" @click="submitForm" style="margin-right: 50px">提&nbsp;&nbsp;&nbsp;交</el-button>
+                    <el-button @click="resetForm">重&nbsp;&nbsp;&nbsp;置</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -48,7 +41,7 @@
 <script>
 
 import { boolDict} from '@/dict/index'
-import {getAreas} from "@/utils/common";
+import {getAreas, getBool} from "@/utils/common";
 
 export default {
     name: 'Form',
@@ -59,12 +52,12 @@ export default {
                 id:'',
                 areaId: '',
                 name: '',
-                enable: '',
+                enable: true,
                 note: ''
             },
             title: '',
             dialogVisible: false,
-            boolDict,
+            boolDict: getBool(),
             areaData : getAreas(),
             rules: {
                 areaId: [
@@ -89,7 +82,7 @@ export default {
         },
         submitForm(formName) {
             const $this = this
-            this.$refs[formName].validate((valid) => {
+            this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     this.$service.guild.saveGuild(this.form, function (result){
                         if (result) {
@@ -106,8 +99,8 @@ export default {
             this.dialogVisible = false
             this.$emit('fetchData');
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
         }
     }
 }

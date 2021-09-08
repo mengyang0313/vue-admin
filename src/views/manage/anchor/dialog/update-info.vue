@@ -93,12 +93,13 @@ export default {
                 }
             })
         },
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
+        },
         closeDialog() {
             this.dialogVisible = false
+            this.resetForm()
             this.$emit('fetchData');
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
         }
     }
 }

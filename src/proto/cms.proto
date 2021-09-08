@@ -59,6 +59,22 @@ service CmsSdk {
     rpc UpdateAnchorBasic (AnchorBasic) returns (AnchorBasic) {
     }
 
+    // 封禁用户或主播
+    rpc Block (BlockRequest) returns (Empty) {
+    }
+
+    // 解封用户或主播
+    rpc Unblock (UnblockRequest) returns (Empty) {
+    }
+
+    // 迁移账号
+    rpc Migrate (MigrateRequest) returns (Empty) {
+    }
+
+    // 认证主播
+    rpc AuthorizeAnchor (AuthorizeAnchorRequest) returns (Empty) {
+    }
+
     // 获取主播完整资料
     rpc GetAnchorFull (AnchorFullRequest) returns (AnchorFullReply) {
     }
@@ -111,7 +127,20 @@ service CmsSdk {
     rpc SaveAutoMessage (AutoMessage) returns (AutoMessage) {
     }
 
+    // 获取聊天记录列表
+    rpc GetChatMessageList (ChatMessageListRequest) returns (ChatMessageListReply) {
+    }
+
+    // 获取通话记录列表
+    rpc GetCallList (CallListRequest) returns (CallListReply) {
+    }
+
+    // 获取交易记录列表
+    rpc GetTransactionList (TransactionListRequest) returns (TransactionListReply) {
+    }
+
     // 上传文件
+    // 同时提供http multiple-form 上传接口  /file/upload  文件的key为file 需要设置http header token, area-id, file-type 返回值为JSON格式的FileRecord，
     rpc UploadFile (stream AdminFileChunk) returns (FileRecord) {
     }
 }
@@ -229,6 +258,44 @@ message AdjustBalanceReply {
     uint32 balance = 1;
 }
 
+message BlockRequest {
+    // 用户或主播
+    EntityType entity_type = 1;
+    // 用户或主播id
+    uint32 entity_id = 2;
+    // 封禁类型
+    BlockStatus block_status = 3;
+    // 封禁时长，秒
+    uint32 duration = 4;
+    // 封禁理由
+    string reason = 5;
+}
+
+message UnblockRequest {
+    // 用户或主播
+    EntityType entity_type = 1;
+    // 用户或主播id
+    uint32 entity_id = 2;
+}
+
+message MigrateRequest {
+    // 迁移的实体类型，用户或主播
+    EntityType entity_type = 1;
+    // 源账号id
+    uint32 src_id = 2;
+    // 目的账号id
+    uint32 dst_id = 3;
+}
+
+message AuthorizeAnchorRequest {
+    // 主播id
+    uint32 anchor_id = 1;
+    // 区域id
+    uint32 area_id = 2;
+    // 工会id
+    uint32 guild_id = 3;
+}
+
 message AnchorFullRequest {
     uint32 anchor_id = 1;
 }
@@ -308,7 +375,7 @@ message ViolationListReply {
 }
 
 message ProcessViolationRequest {
-    uint32 violation_id = 1;
+    uint64 violation_id = 1;
     // 处理状态
     BlockStatus deal_status = 2;
     // 处理信息
@@ -427,6 +494,117 @@ message AutoMessageListRequest {
 
 message AutoMessageListReply {
     repeated AutoMessage messages = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message ChatMessageListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 应用id
+    uint32 app_id = 4;
+    // 用户id
+    uint32 user_id = 5;
+    // 主播id
+    uint32 anchor_id = 6;
+    // 消息方向
+    MessageDirection direction = 7;
+    // 消息类型
+    MessageType type = 8;
+    // 关键词
+    string keyword = 9;
+    // 创建起始时间
+    uint32 created_start = 10;
+    // 创建结束时间
+    uint32 created_end = 11;
+}
+
+message ChatMessageListReply {
+    repeated ChatMessage messages = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message CallListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 应用id
+    uint32 app_id = 4;
+    // 用户id
+    uint32 user_id = 5;
+    // 主播id
+    uint32 anchor_id = 6;
+    // 发起方式
+    CallType call_type = 7;
+    // 挂断方式
+    HangType hang_type = 8;
+    // 通话状态
+    CallStatus status = 9;
+    // 最小时长
+    uint32 min_duration = 10;
+    // 最大时长
+    uint32 max_duration = 11;
+    // 创建起始时间
+    uint32 created_start = 12;
+    // 创建结束时间
+    uint32 created_end = 13;
+}
+
+message CallListReply {
+    repeated CallRecord calls = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message TransactionListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 应用id
+    uint32 app_id = 4;
+    // 交易者类型，只能为用户或主播
+    EntityType trader_type = 5;
+    // 交易者id
+    uint32 trader_id = 6;
+    // 交易实体类型，可以为礼物、通话、支付等
+    EntityType source_type = 7;
+    // 创建起始时间
+    uint32 created_start = 8;
+    // 创建结束时间
+    uint32 created_end = 9;
+}
+
+message TransactionListReply {
+    repeated Transaction transactions = 1;
     // 页号
     uint32 page_no = 2;
     // 页面大小

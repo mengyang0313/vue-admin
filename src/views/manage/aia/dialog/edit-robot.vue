@@ -1,33 +1,34 @@
 <template>
-    <el-dialog title="编辑资料" :visible.sync="dialogVisible" :modal-append-to-body="false" append-to-body width="50%" :before-close="handleClose">
+    <el-dialog :title="title" :visible.sync="dialogVisible" :modal-append-to-body="false" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
-                <el-form-item label="ID：" prop="robotId">
+                <el-form-item label="ID：" prop="anchorId" v-if="typeof(form.anchorId) == 0">
                     <el-input v-model="form.robotId" placeholder="请输入" />
                 </el-form-item>
                 <el-form-item label="昵称" prop="nickname">
                     <el-input v-model="form.nickname" placeholder="请输入" />
                 </el-form-item>
-                <el-form-item label="头像" prop="photo">
+                <el-form-item label="头像" prop="avatar">
                     <div class="img">
                         <el-upload
                             action=""
                             :limit="1"
-                            :on-preview="handlePictureCardPreview"
-                            :on-change="onUploadChange"
+                            :on-preview="previewAvatar"
+                            :on-change="successAvatar"
                             list-type="picture-card"
+                            :file-list="avatarArr"
                             :auto-upload="false"
                         >
                             <i class="el-icon-plus"></i>
                         </el-upload>
                         <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
-                            <img width="100%" :src="form.photo" alt />
+                            <img width="100%" :src="form.avatar" alt />
                         </el-dialog>
                     </div>
                     <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
                 </el-form-item>
-                <el-form-item label="国家" prop="country">
-                    <el-select v-model="form.area" placeholder="请选择">
+                <el-form-item label="国家" prop="areaId">
+                    <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -35,48 +36,87 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="出生日期" prop="birth">
-                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birth" style="width: 100%;"></el-date-picker>
+                <el-form-item label="出生日期" prop="birthday">
+                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birthday" style="width: 100%;"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="职业" prop="profession">
-                    <el-input v-model="form.profession" placeholder="请输入" />
+                <el-form-item label="职业" prop="occupation">
+                    <el-select v-model="form.occupation" placeholder="请选择">
+                        <el-option v-for="item in occupationTypes"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
-                <el-form-item label="经常在线" prop="online">
-                    <el-input v-model="form.online" placeholder="请输入" />
+                <el-form-item label="经常在线" prop="onlineStart">
+                    <el-time-select
+                        placeholder="起始时间"
+                        v-model="form.onlineStart"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '01:00',
+                          end: '23:00'
+                        }">
+                    </el-time-select>
+                    <el-time-select
+                        placeholder="结束时间"
+                        v-model="form.onlineEnd"
+                        :picker-options="{
+                          start: '01:00',
+                          step: '01:00',
+                          end: '24:00',
+                          minTime: form.onlineStart
+                        }">
+                    </el-time-select>
                 </el-form-item>
-                <el-form-item label="签名" prop="sign">
-                    <el-input v-model="form.sign" placeholder="请输入" />
+                <el-form-item label="签名" prop="signature">
+                    <el-input v-model="form.signature" placeholder="请输入" />
                 </el-form-item>
-                <el-form-item label="图片" prop="imgs">
-                    <el-row :gutter="20">
-                        <el-col :span="6">
-                            <el-image style="width: 100px; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" contain></el-image>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-image style="width: 100px; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" contain></el-image>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-image style="width: 100px; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" contain></el-image>
-                        </el-col>
-                    </el-row>
+                <el-form-item label="是否启用" prop="status">
+                    <el-switch v-model="form.status"/>
                 </el-form-item>
-                <el-form-item label="视频" prop="videos">
-                    <el-row :gutter="20">
-                        <el-col :span="6">
-                            <el-image style="width: 100px; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" contain></el-image>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-image style="width: 100px; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" contain></el-image>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-image style="width: 100px; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" contain></el-image>
-                        </el-col>
-                    </el-row>
+                <el-form-item label="图片" prop="photoIds">
+                    <div class="img">
+                        <el-upload
+                            action=""
+                            :limit="10"
+                            :on-preview="previewPhoto"
+                            :on-change="successPhoto"
+                            :on-remove="removePhoto"
+                            list-type="picture-card"
+                            :file-list="form.photoUris"
+                            :auto-upload="false"
+                        >
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
+                            <img width="100%" :src="form.video" alt />
+                        </el-dialog>
+                    </div>
+                </el-form-item>
+                <el-form-item label="视频" prop="videoIds">
+                    <div class="img">
+                        <el-upload
+                            action=""
+                            :limit="10"
+                            :on-preview="previewVideo"
+                            :on-change="successVideo"
+                            :on-remove="removeVideo"
+                            list-type="picture-card"
+                            :file-list="form.videoUris"
+                            :auto-upload="false"
+                        >
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
+                            <img width="100%" :src="form.video" alt />
+                        </el-dialog>
+                    </div>
                 </el-form-item>
 
                 <el-form-item class="submit-box">
-                    <el-button type="primary" @click="submitForm('form')" style="margin-right: 50px">确&nbsp;&nbsp;&nbsp;定</el-button>
-                    <el-button @click="resetForm('form')">重&nbsp;&nbsp;&nbsp;置</el-button>
+                    <el-button type="primary" @click="submitForm()" style="margin-right: 50px">确&nbsp;&nbsp;&nbsp;定</el-button>
+                    <el-button @click="resetForm()">重&nbsp;&nbsp;&nbsp;置</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -84,91 +124,171 @@
 </template>
 
 <script>
-import {AdminFileChunk} from "@/proto/js/cms_pb";
-import {getToken} from "@/utils/cookie";
-import {cmsService} from "@/grpc/server";
+import { getToken } from "@/utils/cookie";
+import { getAreas, getOccupationType } from "@/utils/common";
+import axios from "axios";
+import ImgUpdate from '@/components/ImgUpdate'
 
 export default {
+    components: { ImgUpdate },
     data() {
         return {
             form: {
-                robotId: '',
+                id: 0,
+                anchorId: 0,
                 nickname: '',
-                photo: '',
-                country: '',
-                birth: '',
-                profession: '',
-                online: '',
-                sign: '',
-                imgs: '',
-                videos: ''
+                avatar: '',
+                areaId: '',
+                birthday: '',
+                occupation: '',
+                onlineStart: '',
+                onlineEnd: '',
+                signature: '',
+                photoIds: [],
+                photos: [],
+                photoUris: [],
+                videoIds: [],
+                videos: [],
+                status: true,
+                struct: ''
             },
+            title: '新增机器人',
             dialogImageUrl: '',
             dialogVisible: false,
-            imgDialogVisible: false
+            imgDialogVisible: false,
+            areaData: getAreas(),
+            occupationTypes: getOccupationType(),
+            avatarArr: [],
+            rules: {
+                nickname: [
+                    {required: true, message: '内容不能为空', trigger: 'change'}
+                ],
+                areaId: [
+                    {required: true, message: '内容不能为空', trigger: 'blur'}
+                ]
+            }
         }
     },
     methods: {
-        handlePictureCardPreview(file) {
-            this.form.photo = file.url;
-            this.imgDialogVisible = true;
-        },
-        //上传成功
-        onUploadChange(file) {
-            alert(file)
-            const adminFileChunk = new AdminFileChunk();
-            adminFileChunk.setOffset(0)
-            adminFileChunk.setAreaId(1)
-            adminFileChunk.setType(file.raw.type)
-
-            const reader = new FileReader();
-            // 读取文件内容，结果用data:url的字符串形式表示
-            reader.readAsArrayBuffer(file.raw);
-            // reader.readAsDataURL(file.raw);
-            reader.onload = function(e) {
-                //这个是获取到byte数组
-                console.log(e.target.result);
-                //basedata是之前定义的变量
-                adminFileChunk.setContent(e.target.result);
-                console.log("二进制转化完成")
-
-                const metadata = {'token': getToken()};
-                cmsService.uploadFiles(adminFileChunk, metadata, (err, resp) => {
-                    if (!err) {
-                        alert("上传成功!")
-                        this.close()
-                    } else {
-                        console.log(err)
-                        alert("上传失败!")
-                    }
+        init(row){
+            if(typeof(row.anchorId) != "undefined"){
+                this.title = "编辑机器人"
+                this.form = row
+                this.form.birthday = row.birthday * 1000;
+                this.form.onlineStart = row.onlineStart + ":00";
+                this.form.onlineEnd = row.onlineEnd + ":00";
+                this.avatarArr.push({"url": row.avatar});
+                this.form.photoUris = []
+                this.form.photos.forEach((item) => {
+                    this.form.photoUris.push({name: item.getId(), url: item.getUri()})
+                })
+                this.form.videoUris = []
+                this.form.videos.forEach((item) => {
+                    this.form.videoUris.push({name: item.getId(), url: item.getUri()})
                 })
             }
         },
-        init(row){
-            this.form.robotId = row.robotId
-            this.form.nickname = row.nickname
-            this.form.photo = row.photo
-            this.form.country = row.country
-            this.form.birth = row.birth
-            this.form.profession = row.profession
-            this.form.online = row.online
-            this.form.sign = row.sign
-            this.form.imgs = row.imgs
-            this.form.videos = row.videos
-        },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
+        submitForm() {
+            const $this = this
+            this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    // 此处添加后端接口
-                    alert('提交成功!')
-                } else {
-                    console.log('提交失败!')
-                    return false
+                    let param = this.form;
+                    param.onlineStart = parseInt(this.form.onlineStart.split(":")[0])
+                    param.onlineEnd = parseInt(this.form.onlineEnd.split(":")[0])
+                    param.birthday = this.form.birthday / 1000
+                    param.status = this.form.status ? 5 : 6
+                    this.$service.robot.saveRobot(param, function (result){
+                        if (result) {
+                            $this.$message.success("保存成功!")
+                            $this.closeDialog()
+                        } else {
+                            $this.$message.error("保存失败!")
+                        }
+                    });
                 }
             })
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
+        resetForm() {
+            this.form.photoIds = [];
+            this.form.photos = [];
+            this.form.photoUris = [];
+            this.form.videoIds = [];
+            this.form.videos = [];
+            this.form.videoUris = [];
+            this.$refs.ruleForm.resetFields()
+        },
+        closeDialog() {
+            this.dialogVisible = false
+            this.avatarArr = []
+            this.resetForm()
+            this.$emit('fetchData');
+        },
+        previewAvatar(file) {
+            this.imgDialogVisible = true;
+        },
+        previewPhoto(file){
+            this.imgDialogVisible = true;
+        },
+        previewVideo(file){
+            this.imgDialogVisible = true;
+        },
+        successAvatar(file) {
+            const $this = this
+            this.imgUpload(file.raw, 1, function (data){
+                $this.form.avatar = data.uri
+            })
+        },
+        successPhoto(file) {
+            let $this = this
+            this.imgUpload(file.raw, 1, function (data){
+                $this.form.photoIds.push(data.id)
+            })
+        },
+        successVideo(file) {
+            const $this = this
+            this.imgUpload(file.raw, 2, function (data){
+                $this.form.videoIds.push(data.id)
+                $this.form.video = data.id
+            })
+        },
+        removePhoto(file, fileList){
+            let arr = this.form.photoIds
+            let val = file.name
+            for(let i = 0; i < arr.length; i++) {
+                if(arr[i] === val) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
+        },
+        removeVideo(file, fileList){
+            let arr = this.form.videoIds
+            let val = file.name
+            for(let i = 0; i < arr.length; i++) {
+                if(arr[i] === val) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
+        },
+        imgUpload(file, type, callback){
+            let headers = {
+                'Content-Type': 'multipart/form-data',
+                "token" : getToken(),
+                "area-id" : 1,
+                "file-type" : type
+            }
+            const formData = new FormData()
+            formData.append('file', file)
+            axios({
+                url: 'http://101.33.118.232:8101/file/upload',
+                method: 'post',
+                data: formData,
+                headers: headers
+            }).then(res => {
+                const data = res.data
+                callback(data)
+            })
         }
     }
 }

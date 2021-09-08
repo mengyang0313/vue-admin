@@ -94,6 +94,10 @@ service AnchorSdk {
     rpc UpdateCall (UpdateCallRequest) returns (UpdateCallReply) {
     }
 
+    // 搜索用户
+    rpc SearchUser (SearchUserRequest) returns (SearchUserReply) {
+    }
+
     // 长连接，用于心跳等
     rpc Stream (stream StreamMessage) returns (stream StreamMessage) {
     }
@@ -281,6 +285,8 @@ message IncomeStatReply {
     uint32 gift_income = 2;
     // 用户充值佣金收入
     uint32 commission_income = 3;
+    // 奖惩收入
+    int32 adjust_income = 4;
 }
 
 enum IncomeType {
@@ -290,8 +296,8 @@ enum IncomeType {
     IncomeGift = 1;
     // 佣金收入
     IncomeCommission = 2;
-    // 罚金
-    IncomePenalty = 3;
+    // 奖惩
+    IncomeAdjust = 3;
 }
 
 message GiftRecordRequest {
@@ -322,7 +328,7 @@ message IncomeRecord {
     // 数量
     uint32 count = 4;
     // 总金额
-    uint32 amount = 5;
+    int32 amount = 5;
     // 通话方式
     CallType call_type = 6;
     // 通话时长
@@ -452,6 +458,16 @@ message UpdateCallReply {
     uint32 remain_duration = 2;
     // 根据可用余额计算的断线时间点
     uint32 disconnect_at = 3;
+}
+
+message SearchUserRequest {
+    // 昵称或者用户id
+    string keyword = 1;
+}
+
+message SearchUserReply {
+    // 用户列表
+    repeated User users = 1;
 }
 
 message SaveMediaRequest {

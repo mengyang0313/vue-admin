@@ -11,42 +11,8 @@
             >
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="呼叫方ID">
-                            <el-input v-model="search.formUid" placeholder="呼叫方ID"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="被呼叫方ID">
-                            <el-input v-model="search.toUid" placeholder="被呼叫方ID"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="创建时间">
-                            <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="search.registeredTime1" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                            <el-col class="line" :span="1" align="center">-</el-col>
-                            <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="search.registeredTime2" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="APP">
-                            <el-select v-model="search.app" placeholder="请选择">
-                                <el-option v-for="item in apps"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="地区">
-                            <el-select v-model="search.area" placeholder="请选择">
+                        <el-form-item label="地区" prop="areaId">
+                            <el-select v-model="search.areaId" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
                                            :label="item.label"
@@ -56,9 +22,9 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="发起方式">
-                            <el-select v-model="search.callType" placeholder="请选择">
-                                <el-option v-for="item in callType"
+                        <el-form-item label="APP" prop="appId">
+                            <el-select v-model="search.appId" placeholder="请选择">
+                                <el-option v-for="item in appList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
@@ -66,10 +32,33 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="创建时间" prop="createdStart">
+                            <el-col :span="11">
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
+                            </el-col>
+                            <el-col class="line" :span="1" align="center">-</el-col>
+                            <el-col :span="10">
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
+                            </el-col>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
                     <el-col :span="6">
-                        <el-form-item label="状态">
-                            <el-select v-model="search.callStatus" placeholder="请选择">
-                                <el-option v-for="item in callStatus"
+                        <el-form-item label="用户id" prop="userId">
+                            <el-input v-model="search.userId" placeholder="用户id"/>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="主播id" prop="anchorId">
+                            <el-input v-model="search.anchorId" placeholder="主播id"/>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="发起方式" prop="callType">
+                            <el-select v-model="search.callType" placeholder="请选择">
+                                <el-option v-for="item in callTypeList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
@@ -80,22 +69,43 @@
                 </el-row>
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="挂断原因">
-                            <el-select v-model="search.stopReason" placeholder="请选择">
-                                <el-option v-for="item in stopReason"
+                        <el-form-item label="挂断方式" prop="hangType">
+                            <el-select v-model="search.hangType" placeholder="请选择">
+                                <el-option v-for="item in hangTypeList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
                                 </el-option>
                             </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="通话状态" prop="status">
+                            <el-select v-model="search.status" placeholder="请选择">
+                                <el-option v-for="item in callStatusList"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="最小时长" prop="minDuration">
+                            <el-input v-model="search.minDuration" placeholder="最小时长"/>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="最大时长" prop="maxDuration">
+                            <el-input v-model="search.maxDuration" placeholder="最大时长"/>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24" class="search-box">
                         <el-form-item>
-                            <el-button @click="onSearch('searchForm')" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
-                            <el-button @click="resetForm('searchForm')" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
+                            <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
+                            <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -109,34 +119,37 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="app" label="来源App" align="center" width="120" />
-                <el-table-column prop="fromUid" label="呼叫方ID" align="center" width="120" />
-                <el-table-column prop="toUid" label="被叫方ID" align="center" width="120" />
-                <el-table-column prop="area" label="地区" align="center" width="220"/>
-                <el-table-column prop="status" label="状态" align="center" width="120">
+                <el-table-column prop="appStr" label="来源App" align="center" width="120" />
+                <el-table-column prop="userId" label="用户Id" align="center" width="120" />
+                <el-table-column prop="anchorId" label="主播Id" align="center" width="120" />
+                <el-table-column prop="areaId" label="地区" align="center" width="220"/>
+                <el-table-column prop="callType" label="通话发起类型" align="center" width="220">
                     <template scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.status }}</el-tag>
+                            <el-tag size="medium">{{ scope.row.callType }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="callType" label="发起方式" align="center" width="220"/>
-                <el-table-column prop="stopReason" label="挂断原因" align="center"/>
-                <el-table-column prop="stopUid" label="挂断方" align="center"/>
-                <el-table-column prop="callDuration" label="通话时长" align="center"/>
-                <el-table-column prop="startTime" label="开始时间" align="center"/>
+                <el-table-column prop="hangType" label="通话结束类型" align="center" width="220">
+                    <template scope="scope">
+                        <div slot="reference">
+                            <el-tag size="medium">{{ scope.row.hangType }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="duration" label="通话时长" align="center"/>
+                <el-table-column prop="income" label="主播收益" align="center"/>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
 </template>
 
 <script>
-import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import { areaData, apps, callType, callStatus, stopReason } from '@/dict/index'
+import {getAreas, getAppList, getHangType, getCallStatus, getCallType, getArrName} from "@/utils/common";
 
 export default {
     components: { Pagination },
@@ -145,16 +158,32 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                areaId: undefined,
+                appId: undefined,
+                userId: undefined,
+                anchorId: undefined,
+                callType: 0,
+                hangType: undefined,
+                status: undefined,
+                minDuration: undefined,
+                maxDuration: undefined,
+                createdStart: undefined,
+                createdEnd: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData,
-            apps,
-            callType,
-            callStatus,
-            stopReason
+            areaData: getAreas(),
+            appList: getAppList(),
+            callTypeList : getCallType(),
+            hangTypeList : getHangType(),
+            callStatusList : getCallStatus
         }
     },
     created() {
@@ -163,43 +192,47 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
+            const $this = this
             this.listLoading = true
-            let url = process.env.VUE_APP_JSON_URI + "/call.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
+            this.$service.call.getCallList(this.handleParam(), function (result){
+                const list = result.getCallsList();
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "appId" : item.getAppId(),
+                        "appStr" : getArrName($this.appList, item.getAppId()),
+                        "userId" : item.getUserId(),
+                        "anchorId" : item.getAnchorId(),
+                        "callType" : getCallType(item.getCallType()),
+                        "areaId" : getArrName($this.areaData, item.getAreaId()),
+                        "hangType" : getHangType(item.getHangType()),
+                        "duration" : item.getDuration(),
+                        "income" : item.getIncome()
+                    }
+                    data.push(json)
+                })
+                $this.total = list.length
+                $this.tableData = data
+                $this.listLoading = false
             })
         },
-        // 查询数据
+        handleParam(){
+            let param = this.search;
+            if (typeof(this.search.createdStart) != "undefined"){
+                param.createdStartUint = this.search.createdStart.getTime() / 1000
+            }
+            if (typeof(this.search.createdEnd) != "undefined"){
+                param.createdEndUint = this.search.createdEnd.getTime() / 1000
+            }
+            return param
+        },
         onSearch() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
-        //重置
         resetForm() {
-            this.search = this.initQuery();
-        },
-        initQuery() {
-            return {
-                formUid: undefined,
-                toUid: undefined,
-                registeredTime1: undefined,
-                registeredTime2: undefined,
-                app: undefined,
-                area: undefined,
-                callType: undefined,
-                status: undefined,
-                stopReason: undefined,
-                currentPage: 1,
-                pageSize: 10
-            }
+            this.$refs.searchForm.resetFields()
         }
     }
 }

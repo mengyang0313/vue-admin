@@ -16,8 +16,8 @@
                 <template>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item label="地区">
-                                <el-select v-model="search.area" placeholder="请选择">
+                            <el-form-item label="地区" prop="areaId">
+                                <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -27,9 +27,9 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item label="状态" >
-                                <el-select v-model="search.area" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
+                            <el-form-item label="状态" prop="enable">
+                                <el-select v-model="search.enable" placeholder="请选择">
+                                    <el-option v-for="item in bools"
                                                :key="item.value"
                                                :label="item.label"
                                                :value="item.value">
@@ -38,15 +38,15 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item label="机器人ID">
-                                <el-input v-model="search.robotId" placeholder="机器人ID"/>
+                            <el-form-item label="机器人ID" prop="robotId">
+                                <el-input v-model="search.robotId" placeholder="机器人主播ID"/>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item>
-                                <el-button type="primary" @click="onSubmit">筛选</el-button>
+                                <el-button type="primary" @click="onSearch">筛选</el-button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <el-button type="danger" @click="onSubmit">重置</el-button>
+                                <el-button type="danger" @click="resetForm">重置</el-button>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -61,17 +61,17 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="robotId" label="机器人ID" align="center" width="200" />
+                <el-table-column prop="anchorId" label="机器人ID" align="center" width="200" />
                 <el-table-column prop="status" label="状态" align="center" width="150">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.forbid"/>
+                        <el-switch v-model="scope.row.status"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="country" label="国家" align="center" width="150" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="150" />
                 <el-table-column prop="nickname" label="昵称" align="center" width="300"/>
-                <el-table-column prop="photo" label="头像" align="center" width="150">
+                <el-table-column prop="avatar" label="头像" align="center" width="150">
                     <template scope="scope">
-                        <el-image style="width: 50px; height: 50px" :src="scope.row.photo" contain></el-image>
+                        <el-image style="width: 50px; height: 50px" :src="scope.row.avatar" contain></el-image>
                     </template>
                 </el-table-column>
                 <el-table-column prop="data" label="资料" align="center" width="150">
@@ -84,11 +84,11 @@
                         <a @click="toDialog('editRobot', scope.row)" style="color: #1E88C7">查看</a>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" align="center">
+                <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('editRobot', scope.row)">编辑资料</el-button>
                         <el-button type="text">
-                            <router-link :to="{path:'./edit-words',query: {robotId: scope.row.robotId, nickname: scope.row.nickname}}">编辑话术</router-link>
+                            <router-link :to="{path:'./robot-message',query: {robotId: scope.row.anchorId,nickname: scope.row.nickname}}">编辑话术</router-link>
                         </el-button>
                     </template>
                 </el-table-column>
@@ -98,31 +98,38 @@
                         @pagination="fetchData"/>
 
             <!-- 编辑资料 -->
-            <editRobot ref="editRobot"/>
+            <editRobot ref="editRobot" @fetchData="fetchData"/>
         </el-card>
     </div>
 </template>
 
 <script>
-import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
 import editRobot from './dialog/edit-robot'
-import { areaData, apps } from '@/dict/index'
+import { getBool, getAreas , getArrName} from "@/utils/common";
 
 export default {
-    components: { Pagination, apps, editRobot},
+    components: { Pagination, editRobot},
     data() {
         return {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                areaId: 1,
+                enable: true,
+                robotId: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData,
-            apps
+            areaData: getAreas(),
+            bools: getBool()
         }
     },
     created() {
@@ -131,44 +138,52 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
+            const $this = this
             this.listLoading = true
-            let url = process.env.VUE_APP_JSON_URI + "/robot.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
-            })
+            this.$service.robot.getRobotList(this.search, function (result){
+                const list = result.getRobotsList()
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "anchorId" : item.getAnchorId(),
+                        "status" : $this.handleStatus(item.getStatus()),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
+                        "nickname" : item.getNickname(),
+                        "avatar" : item.getAvatar(),
+                        "birthday" : item.getBirthday(),
+                        "occupation": item.getOccupation(),
+                        "onlineStart": item.getOnlineStart(),
+                        "onlineEnd": item.getOnlineEnd(),
+                        "signature": item.getSignature(),
+                        "photoIds": item.getPhotoIdsList(),
+                        "photos": item.getPhotosList(),
+                        "videoIds": item.getVideoIdsList(),
+                        "videos": item.getVideosList(),
+                        "struct" : item
+                    }
+                    data.push(json)
+                })
+                $this.total = result.getTotalCount()
+                $this.tableData = data
+                $this.listLoading = false
+            });
         },
-        // 查询数据
         onSearch() {
             this.search.currentPage = 1
             this.fetchData()
         },
-        // 弹框
         toDialog(component, row){
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
                 this.$refs[component].init(row)
             })
         },
-        //重置
-        resetForm() {
-            this.search = this.initQuery();
+        handleStatus(status){
+            return status === 5
         },
-        initQuery() {
-            return {
-                uid: undefined,
-                app: undefined,
-                robotId: undefined,
-                currentPage: 1,
-                pageSize: 10
-            }
+        resetForm() {
+            this.$refs.searchForm.resetFields()
         }
     }
 }

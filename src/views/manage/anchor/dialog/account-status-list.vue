@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="账户状态" :visible.sync="dialogVisible" append-to-body width="80%" :before-close="handleClose">
+    <el-dialog title="账户状态" :visible.sync="dialogVisible" append-to-body width="80%" :before-close="closeDialog">
         <div class="table-classic-wrapper">
             <el-card shadow="always">
                 <!-- 表格栏 -->
@@ -67,6 +67,14 @@ export default {
             }).catch(() => {
                 this.listLoading = false
             })
+        },
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
+        },
+        closeDialog() {
+            this.dialogVisible = false
+            this.resetForm()
+            this.$emit('fetchData');
         }
     }
 }

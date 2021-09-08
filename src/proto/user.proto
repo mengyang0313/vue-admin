@@ -16,12 +16,16 @@ service UserSdk {
     rpc Login (LoginRequest) returns (User) {
     }
 
+    // 获取封禁信息，封禁时长和理由
+    rpc GetBlockInfo (Empty) returns (BlockInfo) {
+    }
+
     // 绑定认证方式
-    rpc BindAuth (BindAuthRequest) returns (User) {
+    rpc BindAuth (BindAuthRequest) returns (EntityAuth) {
     }
 
     // 解绑认证方式
-    rpc UnbindAuth (UnbindAuthRequest) returns (User) {
+    rpc UnbindAuth (UnbindAuthRequest) returns (Empty) {
     }
 
     // 上报归因
@@ -172,6 +176,17 @@ message LoginRequest {
     GenderType gender = 12;
     // 头像
     string avatar = 13;
+}
+
+message BlockInfo {
+    // 封禁状态
+    BlockStatus status = 1;
+    // 封禁理由
+    string reason = 2;
+    // 封禁时间
+    uint32 block_at = 3;
+    // 封禁时长，秒
+    uint32 block_duration = 4;
 }
 
 message BindAuthRequest {

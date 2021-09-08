@@ -1120,6 +1120,326 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.updateAnchorBasic =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.BlockRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_Block = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/Block',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.BlockRequest,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.BlockRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.BlockRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_Block = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.BlockRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.BlockRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.block =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/Block',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_Block,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.BlockRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.block =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/Block',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_Block);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.UnblockRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_Unblock = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/Unblock',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.UnblockRequest,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.UnblockRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.UnblockRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_Unblock = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.UnblockRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.UnblockRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.unblock =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/Unblock',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_Unblock,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.UnblockRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.unblock =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/Unblock',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_Unblock);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.MigrateRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_Migrate = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/Migrate',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.MigrateRequest,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.MigrateRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.MigrateRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_Migrate = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.MigrateRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.MigrateRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.migrate =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/Migrate',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_Migrate,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.MigrateRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.migrate =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/Migrate',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_Migrate);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.AuthorizeAnchorRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_AuthorizeAnchor = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/AuthorizeAnchor',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.AuthorizeAnchorRequest,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.AuthorizeAnchorRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.AuthorizeAnchorRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_AuthorizeAnchor = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.AuthorizeAnchorRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.AuthorizeAnchorRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.authorizeAnchor =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/AuthorizeAnchor',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_AuthorizeAnchor,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.AuthorizeAnchorRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.authorizeAnchor =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/AuthorizeAnchor',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_AuthorizeAnchor);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.AnchorFullRequest,
  *   !proto.pb.cms.AnchorFullReply>}
  */
@@ -1447,7 +1767,7 @@ const methodDescriptor_CmsSdk_ProcessViolation = new grpc.web.MethodDescriptor(
   '/pb.cms.CmsSdk/ProcessViolation',
   grpc.web.MethodType.UNARY,
   proto.pb.cms.ProcessViolationRequest,
-  cmstype_pb.ViolationRecord,
+  usertype_pb.ViolationRecord,
   /**
    * @param {!proto.pb.cms.ProcessViolationRequest} request
    * @return {!Uint8Array}
@@ -1455,7 +1775,7 @@ const methodDescriptor_CmsSdk_ProcessViolation = new grpc.web.MethodDescriptor(
   function(request) {
     return request.serializeBinary();
   },
-  cmstype_pb.ViolationRecord.deserializeBinary
+  usertype_pb.ViolationRecord.deserializeBinary
 );
 
 
@@ -1466,7 +1786,7 @@ const methodDescriptor_CmsSdk_ProcessViolation = new grpc.web.MethodDescriptor(
  *   !proto.pb.ViolationRecord>}
  */
 const methodInfo_CmsSdk_ProcessViolation = new grpc.web.AbstractClientBase.MethodInfo(
-  cmstype_pb.ViolationRecord,
+  usertype_pb.ViolationRecord,
   /**
    * @param {!proto.pb.cms.ProcessViolationRequest} request
    * @return {!Uint8Array}
@@ -1474,7 +1794,7 @@ const methodInfo_CmsSdk_ProcessViolation = new grpc.web.AbstractClientBase.Metho
   function(request) {
     return request.serializeBinary();
   },
-  cmstype_pb.ViolationRecord.deserializeBinary
+  usertype_pb.ViolationRecord.deserializeBinary
 );
 
 
@@ -2154,6 +2474,246 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveAutoMessage =
       request,
       metadata || {},
       methodDescriptor_CmsSdk_SaveAutoMessage);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.ChatMessageListRequest,
+ *   !proto.pb.cms.ChatMessageListReply>}
+ */
+const methodDescriptor_CmsSdk_GetChatMessageList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetChatMessageList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.ChatMessageListRequest,
+  proto.pb.cms.ChatMessageListReply,
+  /**
+   * @param {!proto.pb.cms.ChatMessageListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.ChatMessageListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.ChatMessageListRequest,
+ *   !proto.pb.cms.ChatMessageListReply>}
+ */
+const methodInfo_CmsSdk_GetChatMessageList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.ChatMessageListReply,
+  /**
+   * @param {!proto.pb.cms.ChatMessageListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.ChatMessageListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.ChatMessageListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.ChatMessageListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.ChatMessageListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getChatMessageList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetChatMessageList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetChatMessageList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.ChatMessageListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.ChatMessageListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getChatMessageList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetChatMessageList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetChatMessageList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.CallListRequest,
+ *   !proto.pb.cms.CallListReply>}
+ */
+const methodDescriptor_CmsSdk_GetCallList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetCallList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.CallListRequest,
+  proto.pb.cms.CallListReply,
+  /**
+   * @param {!proto.pb.cms.CallListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.CallListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.CallListRequest,
+ *   !proto.pb.cms.CallListReply>}
+ */
+const methodInfo_CmsSdk_GetCallList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.CallListReply,
+  /**
+   * @param {!proto.pb.cms.CallListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.CallListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.CallListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.CallListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.CallListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getCallList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetCallList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetCallList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.CallListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.CallListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getCallList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetCallList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetCallList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.TransactionListRequest,
+ *   !proto.pb.cms.TransactionListReply>}
+ */
+const methodDescriptor_CmsSdk_GetTransactionList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetTransactionList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.TransactionListRequest,
+  proto.pb.cms.TransactionListReply,
+  /**
+   * @param {!proto.pb.cms.TransactionListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.TransactionListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.TransactionListRequest,
+ *   !proto.pb.cms.TransactionListReply>}
+ */
+const methodInfo_CmsSdk_GetTransactionList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.TransactionListReply,
+  /**
+   * @param {!proto.pb.cms.TransactionListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.TransactionListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.TransactionListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.TransactionListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.TransactionListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getTransactionList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetTransactionList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetTransactionList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.TransactionListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.TransactionListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getTransactionList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetTransactionList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetTransactionList);
 };
 
 

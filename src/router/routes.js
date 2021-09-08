@@ -139,6 +139,15 @@ export const asyncRoutes = [
                 }
             },
             {
+                path: 'anchor-info',
+                name: 'anchor-info',
+                hidden: true,
+                component: () => import('../views/manage/anchor/anchor-info'),
+                meta: {
+                    title: '主播详情'
+                }
+            },
+            {
                 path: 'data-manage',
                 name: 'data-manage',
                 component: () => import('../views/manage/anchor/data-manage'),
@@ -344,20 +353,20 @@ export const asyncRoutes = [
                 }
             },
             {
-                path: 'edit-words',
-                name: 'edit-words',
+                path: 'robot-message',
+                name: 'robot-message',
                 hidden: true,
-                component: () => import('../views/manage/aia/edit-words'),
+                component: () => import('../views/manage/aia/robot-message'),
                 meta: {
                     title: 'AIA编辑话术'
                 }
             },
             {
-                path: 'words-manage',
-                name: 'words-manage',
-                component: () => import('../views/manage/aia/words-manage'),
+                path: 'auto-message',
+                name: 'auto-message',
+                component: () => import('../views/manage/aia/auto-message'),
                 meta: {
-                    title: 'AIA场景话术管理'
+                    title: 'AIB场景话术管理'
                 }
             }
         ]

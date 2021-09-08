@@ -26,7 +26,7 @@ message AnchorBasic {
     ReviewStatus review_status = 9;
     // profile数量
     uint32 profile_count = 10;
-    // 活跃的profile数量
+    // 活跃的profile数量，审核通过的
     uint32 active_count = 11;
     // 等级
     AnchorLevel level = 12;
@@ -42,8 +42,8 @@ message AnchorBasic {
     uint32 gift_income = 17;
     // 用户充值分成
     uint32 commission_income = 18;
-    // 罚金
-    uint32 penalty = 19;
+    // 奖惩收入
+    uint32 adjust_income = 19;
     // 当前余额
     uint32 balance = 20;
     // 已结算总收入
