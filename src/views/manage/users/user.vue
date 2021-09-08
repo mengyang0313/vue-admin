@@ -116,14 +116,14 @@
                 <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.onlineStatusStr }}</el-tag>
+                            <el-tag size="medium" v-if="scope.row.onlineStatusStr!=''">{{ scope.row.onlineStatusStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="blockStatusStr" label="封禁状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag @click="toDialog('accountStatusList',scope.row)" size="medium">{{ scope.row.blockStatusStr }}</el-tag>
+                            <el-tag @click="toDialog('accountStatusList',scope.row)" v-if="scope.row.blockStatusStr!=''" size="medium">{{ scope.row.blockStatusStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>

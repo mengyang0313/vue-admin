@@ -84,11 +84,7 @@
                         {{ scope.row.videoCount }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="tags" label="标签" align="center" width="120" >
-                    <template scope="scope">
-                        <el-tag size="medium">{{ scope.row.tags }}</el-tag>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="tags" label="标签" align="center" width="120" />
                 <el-table-column prop="occupationStr" label="职业" align="center" width="120" />
                 <el-table-column prop="birthday" label="生日" align="center" width="150" />
                 <el-table-column prop="voiceGreeting" label="语音问候" align="center" width="150" />
@@ -165,7 +161,7 @@ export default {
                         "reviewStatusStr" : getReviewStatus(item.getStatus()),
                         "photoCount" : item.getPhotoIdsList().length,
                         "videoCount" : item.getVideoIdsList().length,
-                        "tags" : item.getTagsList(),
+                        "tags" : item.getTagsList().join(", "),
                         "occupation" : item.getOccupation(),
                         "occupationStr" : getArrName($this.occupationList, item.getOccupation()),
                         "birthday" : new Date(item.getBirthday()*1000).format('yyyy-MM-dd'),

@@ -151,6 +151,9 @@ export function getAnchorLevel(key){
     }]
     if(typeof(key) != "undefined"){
         let label = ""
+        if(key === 0){
+            return label
+        }
         arr.forEach((item) => {
             if(key.toString() === item.value.toString()){
                 label = item.label
@@ -252,6 +255,9 @@ export function getOnlineStatus(key){
 
     if(typeof(key) != "undefined"){
         let label = ""
+        if(key===0){
+            return label
+        }
         arr.forEach((item) => {
             if(key.toString() === item.value.toString()){
                 label = item.label
@@ -579,6 +585,9 @@ export function getHangType(key){
     }]
     if(typeof(key) != "undefined"){
         let label = ""
+        if(key===0){
+            return label
+        }
         arr.forEach((item) => {
             if(key.toString() === item.value.toString()){
                 label = item.label

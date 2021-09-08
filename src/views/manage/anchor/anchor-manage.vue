@@ -133,28 +133,28 @@
                 <el-table-column prop="guildName" label="工会" align="center" width="120" />
                 <el-table-column prop="level" label="主播等级" align="center" width="120">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.level }}</el-tag>
+                        <el-tag size="medium" v-if="scope.row.level!=''">{{ scope.row.level }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="fansCount" label="粉丝数量" align="center" width="120" />
                 <el-table-column prop="onlineStatusStr" label="在线状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.onlineStatusStr }}</el-tag>
+                            <el-tag size="medium" v-if="scope.row.onlineStatusStr!=''">{{ scope.row.onlineStatusStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="reviewStatusStr" label="账户状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag @click="toDialog('reviewStatus',scope.row)" size="medium">{{ scope.row.reviewStatusStr }}</el-tag>
+                            <el-tag @click="toDialog('reviewStatus',scope.row)" v-if="scope.row.reviewStatusStr!=''" size="medium">{{ scope.row.reviewStatusStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="blockStatusStr" label="封禁状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag @click="toDialog('blockStatus',scope.row)" size="medium">{{ scope.row.blockStatusStr }}</el-tag>
+                            <el-tag @click="toDialog('blockStatus',scope.row)" v-if="scope.row.blockStatusStr!=''" size="medium">{{ scope.row.blockStatusStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>

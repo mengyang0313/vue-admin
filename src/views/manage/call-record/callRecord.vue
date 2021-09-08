@@ -152,7 +152,7 @@
                 <el-table-column prop="hangType" label="通话结束类型" align="center" width="220">
                     <template scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.hangType }}</el-tag>
+                            <el-tag size="medium" v-if="scope.row.hangType!=''">{{ scope.row.hangType }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
