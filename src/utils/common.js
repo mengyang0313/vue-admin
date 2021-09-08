@@ -14,15 +14,16 @@ export function getAreas(){
     if(areaArr.length === 0){
         cmsService.getAreaList(empty, metadata, (err, resp) => {
             if (!err) {
-                areaArr = []
+                const arr = []
                 const list = resp.getAreasList()
                 list.forEach((item, index)=>{
                     const json = {
                         value : item.getId(),
                         label : item.getTitle(),
                     }
-                    areaArr.push(json)
+                    arr.push(json)
                 })
+                areaArr = arr
             } else {
                 console.log(err)
             }
@@ -49,15 +50,16 @@ export function getGuildList() {
     if(guildArr.length === 0){
         cmsService.getGuildList(req, metadata, (err, resp) => {
             if (!err) {
-                guildArr = []
+                const arr = []
                 const list = resp.getGuildsList();
                 list.forEach((item, index) => {
                     const json = {
                         value: item.getId(),
                         label: item.getName()
                     }
-                    guildArr.push(json)
+                    arr.push(json)
                 })
+                guildArr = arr
             } else {
                 console.log(err)
             }
@@ -74,6 +76,7 @@ export function getAppList() {
     if(appArr.length === 0){
         cmsService.getAppList(req, metadata, (err, resp) => {
             if (!err) {
+                const arr = []
                 const list = resp.getAppsList();
                 list.forEach((item, index) => {
                     //if(item.enable){
@@ -81,9 +84,10 @@ export function getAppList() {
                         value: item.getId(),
                         label: item.getTitle()
                     }
-                    appArr.push(json)
+                    arr.push(json)
                     //}
                 })
+                appArr = arr
             } else {
                 console.log(err)
             }
