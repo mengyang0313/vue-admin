@@ -5770,8 +5770,6 @@ proto.pb.user.UserListReply.deserializeBinaryFromReader = function(msg, reader) 
     if (reader.isEndGroup()) {
       break;
     }
-      console.log("msg:"+msg);
-      console.log("reader:"+reader);
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:

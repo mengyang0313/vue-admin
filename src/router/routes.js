@@ -146,6 +146,14 @@ export const asyncRoutes = [
                 meta: {
                     title: '主播详情'
                 }
+            },
+            {
+                path: 'demo',
+                name: 'demo',
+                component: () => import('../views/manage/anchor/demo'),
+                meta: {
+                    title: '测试'
+                }
             }
         ]
     },

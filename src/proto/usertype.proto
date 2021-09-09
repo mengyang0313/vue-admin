@@ -118,6 +118,8 @@ enum EntityType {
     EntitySettleRecord = 13;
     // 奖惩记录
     EntityAdjustRecord = 14;
+    // 朋友圈、信息流
+    EntityMoment = 15;
 }
 
 // 网络类型
@@ -511,20 +513,22 @@ message CheckinRecord {
     uint64 id = 1;
     // 应用id
     uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
     // 用户id
-    uint32 user_id = 3;
+    uint32 user_id = 4;
     // 连续签到天数
-    uint32 continuous_days = 4;
+    uint32 continuous_days = 5;
     // 奖励钻石数量
-    uint32 bonus = 5;
+    uint32 bonus = 6;
     // 奖励vip天数
-    uint32 vip_days = 6;
+    uint32 vip_days = 7;
     // 奖励匹配次数
-    uint32 matches = 7;
+    uint32 matches = 8;
     // 签到id
-    uint32 config_id = 8;
+    uint32 config_id = 9;
 
-    uint32 created_at = 10;
+    uint32 created_at = 20;
 }
 
 // 通话发起类型
@@ -703,24 +707,26 @@ message GiftRecord {
     uint64 id = 1;
     // 所属APP
     uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
     // 用户id
-    uint32 user_id = 3;
+    uint32 user_id = 4;
     // 主播id
-    uint32 anchor_id = 4;
+    uint32 anchor_id = 5;
     // 通话id，为0的时表示是通过聊天发送的礼物
-    uint64 call_id = 5;
+    uint64 call_id = 6;
     // 礼物id
-    uint32 gift_id = 6;
+    uint32 gift_id = 7;
     // 数量
-    uint32 quantity = 7;
+    uint32 quantity = 8;
     // 单价
-    uint32 price = 8;
+    uint32 price = 9;
     // 总价
-    uint32 total = 9;
+    uint32 total = 10;
     // 主播端收入
-    uint32 income = 10;
+    uint32 income = 11;
 
-    uint32 created_at = 21;
+    uint32 created_at = 20;
 }
 
 // VIP记录
@@ -728,20 +734,22 @@ message VipRecord {
     uint64 id = 1;
     // 所属APP
     uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
     // 用户id
-    uint32 user_id = 3;
+    uint32 user_id = 4;
     // vip配置id
-    uint32 vip_id = 4;
+    uint32 vip_id = 5;
     // 数量
-    uint32 quantity = 5;
+    uint32 quantity = 6;
     // 单价
-    uint32 price = 6;
+    uint32 price = 7;
     // 总天数
-    uint32 days = 7;
+    uint32 days = 8;
     // 总价
     uint32 total = 9;
 
-    uint32 created_at = 10;
+    uint32 created_at = 20;
 }
 
 // 商品
@@ -896,19 +904,21 @@ enum SubscriptionStatus {
 message Subscription {
     uint64 id = 1;
     uint32 app_id = 2;
-    uint32 user_id = 3;
-    OsType os_type = 4;
-    SubscriptionStatus status = 5;
-    SubscriptionPeriod period = 6;
-    string product_id = 7;
-    string original_order_id = 8;
-    string latest_order_id = 9;
-    uint32 renew_at = 10;
-    uint32 expire_at = 11;
-    uint32 cancel_at = 12;
-    uint32 revoke_at = 13;
-    uint32 grace_at = 14;
-    bool trial = 15;
+    uint32 area_id = 3;
+    uint32 user_id = 4;
+    OsType os_type = 5;
+    SubscriptionStatus status = 6;
+    SubscriptionPeriod period = 7;
+    string product_id = 8;
+    string original_order_id = 9;
+    string latest_order_id = 10;
+    uint32 renew_at = 11;
+    uint32 expire_at = 12;
+    uint32 cancel_at = 13;
+    uint32 revoke_at = 14;
+    uint32 grace_at = 15;
+    bool trial = 16;
+
     uint32 created_at = 20;
     uint32 updated_at = 21;
 }
@@ -1059,6 +1069,41 @@ message PayRecord {
 
     uint32 updated_at = 30;
     uint32 created_at = 31;
+}
+
+// 朋友圈
+message Moment {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 实体类型，主播或用户
+    EntityType entity_type = 4;
+    // 主播或用户id
+    uint32 entity_id = 5;
+    // 审核状态
+    ReviewStatus status = 6;
+    // 文本内容
+    string content = 7;
+    // 图片地址
+    repeated string images = 8;
+    // 视频地址
+    string video = 9;
+    // 视频截图
+    string thumb = 10;
+    // 点赞次数
+    uint32 likes = 11;
+    // 发布时间
+    uint32 publish_at = 12;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+
+    // 昵称
+    string nickname = 40;
+    // 头像
+    string avatar = 41;
 }
 
 // 交易记录

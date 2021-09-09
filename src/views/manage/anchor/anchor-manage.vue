@@ -1,6 +1,13 @@
 <template>
     <div class="table-classic-wrapper">
         <el-card shadow="always">
+
+
+
+            <!-- 操作栏 -->
+            <div class="control-btns">
+                <el-button type="primary" @click="toDialog('auth', '')">+ 认证主播</el-button>
+            </div>
             <!-- 查询栏 -->
             <el-form
                 ref="searchForm"
@@ -9,94 +16,80 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="主播Id" prop="anchorId">
-                            <el-input v-model="search.anchorId" placeholder="anchorId"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="工会" prop="guildId">
-                            <el-select v-model="search.guildId" placeholder="请选择">
-                                <el-option v-for="item in guildList"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="注册时间" prop="createdStart">
-                            <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                            <el-col class="line" :span="1" align="center">-</el-col>
-                            <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="封禁状态">
-                            <el-select v-model="search.blockStatus" placeholder="请选择">
-                                <el-option v-for="item in blockStatusList"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="审核状态" prop="reviewStatus">
-                            <el-select v-model="search.reviewStatus" placeholder="请选择">
-                                <el-option v-for="item in reviewStatus"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="在线状态">
-                            <el-select v-model="search.onlineStatus" placeholder="请选择">
-                                <el-option v-for="item in onlineStatus"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="地区">
-                            <el-select v-model="search.areaId" placeholder="请选择">
-                                <el-option v-for="item in areaData"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" class="search-box">
-                        <el-form-item>
-                            <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
-                            <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+                <el-form-item label="主播Id" prop="anchorId">
+                    <el-input v-model="search.anchorId" placeholder="anchorId"/>
+                </el-form-item>
+                <el-form-item label="工会" prop="guildId">
+                    <el-select v-model="search.guildId" placeholder="请选择">
+                        <el-option v-for="item in guildList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="地区" prop="areaId">
+                    <el-select v-model="search.areaId" placeholder="请选择">
+                        <el-option v-for="item in areaData"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="审核状态" prop="reviewStatus">
+                    <el-select v-model="search.reviewStatus" placeholder="请选择">
+                        <el-option v-for="item in reviewStatus"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
+                </el-form-item>
+                <el-collapse accordion @change="isCollapse = !isCollapse">
+                    <el-collapse-item>
+                        <template slot="title">
+                            {{isCollapse ? '展开' : '收起'}}
+                        </template>
+                        <div>
+                            <el-form-item label="封禁状态" prop="blockStatus">
+                                <el-select v-model="search.blockStatus" placeholder="请选择">
+                                    <el-option v-for="item in blockStatusList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+
+                            <el-form-item label="在线状态" prop="onlineStatus">
+                                <el-select v-model="search.onlineStatus" placeholder="请选择">
+                                    <el-option v-for="item in onlineStatus"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+
+                            <el-form-item label="注册时间" prop="createdStart">
+                                <el-col :span="11">
+                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
+                                </el-col>
+                                <el-col class="line" :span="1" align="center">-</el-col>
+                                <el-col :span="10">
+                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
+                                </el-col>
+                            </el-form-item>
+                        </div>
+                    </el-collapse-item>
+                </el-collapse>
             </el-form>
-            <!-- 操作栏 -->
-            <div class="control-btns">
-                <el-button type="primary" @click="toDialog('auth', '')">+ 认证主播</el-button>
-            </div>
+
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
@@ -294,7 +287,7 @@ export default {
             // 多选数据暂存数组
             multipleSelection: [],
             // 防止多次连续提交表单
-            isSubmit: false,
+            isCollapse: true,
             areaData: getAreaList(),
             guildList: getGuildList(),
             anchorLevel: getAnchorLevel(),
@@ -470,49 +463,71 @@ export default {
 </script>
 
 <style lang="less">
+.el-collapse-item__header {
+    border-top: 0px solid #eaeefb;
+    height: 34px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    margin-top: -130px;
+    color: #277cda;
+    z-index: 999;
+    float: right;
+}
+.el-collapse-item__wrap{
+    background-color: #f7f8fb;
+}
+.el-collapse{
+    border-top: 0px solid #EBEEF5;
+    border-bottom: 0px solid #EBEEF5;
+}
+.el-collapse-item__content {
+    padding-bottom: 5px;
+}
+
 .table-classic-wrapper {
-    .el-card {
-        min-height: 656px;
+.el-card {
+    min-height: 656px;
+}
+
+.control-btns {
+    margin-bottom: 20px;
+}
+
+.search-form {
+    padding-top: 18px;
+    margin-bottom: 15px;
+    background-color: #f7f8fb;
+}
+
+.el-table thead {
+    font-weight: 600;
+
+    th {
+        background-color: #f2f3f7;
+    }
+}
+
+.dialog-form {
+    .el-input {
+        width: 380px;
     }
 
-    .control-btns {
-        margin-bottom: 20px;
+    .footer-item {
+        margin-top: 50px;
+        text-align: right;
     }
-
-    .search-form {
-        padding-top: 18px;
-        margin-bottom: 15px;
-        background-color: #f7f8fb;
-    }
-
-    .el-table thead {
-        font-weight: 600;
-
-        th {
-            background-color: #f2f3f7;
-        }
-    }
-
-    .dialog-form {
-        .el-input {
-            width: 380px;
-        }
-
-        .footer-item {
-            margin-top: 50px;
-            text-align: right;
-        }
-    }
-    .el-divider--horizontal{
-        width: 95%;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-    .search-box {
-        margin-left: 0;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 20px
-    }
+}
+.el-divider--horizontal{
+    width: 95%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.search-box {
+    margin-left: 0;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px
+}
 }
 </style>
