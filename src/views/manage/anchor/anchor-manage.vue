@@ -2,8 +2,6 @@
     <div class="table-classic-wrapper">
         <el-card shadow="always">
 
-
-
             <!-- 操作栏 -->
             <div class="control-btns">
                 <el-button type="primary" @click="toDialog('auth', '')">+ 认证主播</el-button>
@@ -38,15 +36,6 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item label="审核状态" prop="reviewStatus">
-                    <el-select v-model="search.reviewStatus" placeholder="请选择">
-                        <el-option v-for="item in reviewStatus"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item>
                     <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
                 </el-form-item>
@@ -56,6 +45,15 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
+                            <el-form-item label="审核状态" prop="reviewStatus">
+                                <el-select v-model="search.reviewStatus" placeholder="请选择">
+                                    <el-option v-for="item in reviewStatus"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
                             <el-form-item label="封禁状态" prop="blockStatus">
                                 <el-select v-model="search.blockStatus" placeholder="请选择">
                                     <el-option v-for="item in blockStatusList"
