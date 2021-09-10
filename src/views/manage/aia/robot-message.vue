@@ -20,28 +20,24 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="robotId" label="机器人ID" align="center" width="150" />
-<!--                <el-table-column prop="photo" label="头像" align="center" width="150">-->
-<!--                    <template scope="scope">-->
-<!--                        <el-image style="width: 50px; height: 50px" :src="scope.row.photo" contain></el-image>-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
-                <el-table-column prop="type" label="类型" align="center" width="150"/>
+                <el-table-column prop="robotId" label="机器人ID" align="center" width="120" />
+
+                <el-table-column prop="type" label="类型" align="center" width="100"/>
                 <el-table-column prop="text" label="内容" align="center" width="350" />
                 <el-table-column prop="uri" label="连接" align="center" width="150">
                     <template slot-scope="scope">
                         <a :href="scope.row.url" style="color: #1E88C7">{{ scope.row.fileName }}</a>
                     </template>
                 </el-table-column>
-                <el-table-column prop="thumb" label="缩略图" align="center" width="150">
+                <el-table-column prop="thumb" label="图片" align="center" width="150">
                     <template slot-scope="scope">
-                        <el-image style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        <el-image v-if="scope.row.thumb!=''" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
                 <el-table-column prop="sort" label="排序" align="center" width="150"/>
                 <el-table-column prop="enable" label="状态" align="center">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.enable"/>
+                        <el-switch v-model="scope.row.enable" disabled/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="interval" label="间隔时间" align="center" width="150"/>
@@ -61,6 +57,7 @@
 import Pagination from '../../../components/Pagination'
 import addRobotMessage from './dialog/add-robot-message'
 import Hints from '../../../components/Hints'
+import {getActionType} from "@/utils/common";
 
 export default {
     name: 'Table',
@@ -105,7 +102,7 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "robotId" : item.getAnchorId(),
-                        "type" : item.getType(),
+                        "type" : getActionType(item.getType()),
                         "text" : item.getText(),
                         "uri" : item.getUri(),
                         "thumb" : item.getThumb(),

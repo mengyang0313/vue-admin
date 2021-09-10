@@ -1184,6 +1184,7 @@ message StreamMessage {
         StatusBody status = 5;
         AiCallBody call = 6;
         VirtualCallBody virtual = 7;
+        BalanceStatusBody balance = 8;
     }
 
     enum MessageType {
@@ -1201,6 +1202,8 @@ message StreamMessage {
         AiCall = 5;
         // 发起虚拟通话
         VirtualCall = 6;
+        // 余额状态
+        BalanceStatus = 7;
     }
 
     message SubscribeBody {
@@ -1233,6 +1236,17 @@ message StreamMessage {
         AnchorInfo anchor = 1;
         // 通话视频
         string video_url = 2;
+    }
+
+    message BalanceStatusBody {
+        // 当前余额
+        uint32 balance = 1;
+        // 当前通话时间
+        uint32 current_duration = 2;
+        // 根据可用余额计算的剩余时间
+        uint32 remain_duration = 3;
+        // 根据可用余额计算的断线时间点
+        uint32 disconnect_at = 4;
     }
 }
 

@@ -36,8 +36,8 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item>
-                    <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
+                <el-form-item style="padding-left: 20px">
+                    <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
                 </el-form-item>
                 <el-collapse accordion @change="isCollapse = !isCollapse">
                     <el-collapse-item>
@@ -106,7 +106,7 @@
                         </el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="app" label="App" align="center" width="120">
+                <el-table-column prop="app" label="App" align="center" width="150">
                     <template scope="scope">
                         <div slot="reference">
                             {{ scope.row.app.label }}
@@ -284,7 +284,6 @@ export default {
             tableData: [],
             // 多选数据暂存数组
             multipleSelection: [],
-            // 防止多次连续提交表单
             isCollapse: true,
             areaData: getAreaList(),
             guildList: getGuildList(),

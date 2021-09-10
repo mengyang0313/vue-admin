@@ -119,6 +119,14 @@ service CmsSdk {
     rpc SaveRobotMessage (RobotMessage) returns (RobotMessage) {
     }
 
+    // 获取朋友圈列表
+    rpc GetMomentList (MomentListRequest) returns (MomentListReply) {
+    }
+
+    // 保存朋友圈
+    rpc SaveMoment (Moment) returns (Moment) {
+    }
+
     // 获取自动消息列表，AIB消息
     rpc GetAutoMessageList (AutoMessageListRequest) returns (AutoMessageListReply) {
     }
@@ -477,6 +485,17 @@ message RobotMessageListRequest {
 
 message RobotMessageListReply {
     repeated RobotMessage messages = 1;
+}
+
+message MomentListRequest {
+    // 主播或用户
+    EntityType entity_type = 1;
+    // 主播或用户id
+    uint32 entity_id = 2;
+}
+
+message MomentListReply {
+    repeated Moment moments = 1;
 }
 
 message AutoMessageListRequest {

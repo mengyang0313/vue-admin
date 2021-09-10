@@ -109,8 +109,8 @@
                 </el-table-column>
                 <el-table-column prop="userId" label="用户ID" align="center" width="120"/>
                 <el-table-column prop="areaId" label="地区" align="center" width="80"/>
-                <el-table-column prop="country" label="国家" align="center" width="80"/>
-                <el-table-column prop="commodityId" label="商品名称" align="center" width="220"/>
+<!--                <el-table-column prop="country" label="国家" align="center" width="80"/>-->
+                <el-table-column prop="commodityId" label="商品名称" align="center" width="200"/>
                 <el-table-column prop="payPrice" label="本地价格" align="center" width="80"/>
                 <el-table-column prop="usdPrice" label="美元价格" align="center" width="80"/>
                 <el-table-column prop="payStatus" label="支付状态" align="center" width="80">
@@ -122,9 +122,9 @@
                 </el-table-column>
                 <el-table-column prop="payType" label="支付渠道" align="center" width="100"/>
                 <el-table-column prop="payChannel" label="支付小渠道" align="center" width="100"/>
-                <el-table-column prop="paidAt" label="支付时间" align="center" width="100"/>
+                <el-table-column prop="paidAt" label="支付时间" align="center" width="170"/>
                 <el-table-column prop="createdAt" label="创建时间" align="center" width="170"/>
-                <el-table-column label="操作" align="center" width="170">
+                <el-table-column label="操作" align="center" width="170" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toMakeOrder('dataInfo', scope.row)">补单</el-button>
                         <el-button type="text" @click="toRetreat(scope.$index, scope.row)">退单</el-button>
@@ -196,7 +196,7 @@ export default {
                         "payStatus" : getPayStatus(item.getPayStatus()),
                         "payType" : item.getPayType(),
                         "payChannel" : item.getPayChannel(),
-                        "paidAt" : item.getPaidAt(),
+                        "paidAt" : new Date(item.getPaidAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
                         "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
                     }
                     data.push(json)

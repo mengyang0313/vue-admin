@@ -6,9 +6,9 @@ import {
     UserListReply, AdminFileChunk, AdjustBalanceRequest, ProfileListRequest, ViolationListRequest, ProcessProfileRequest,
     ProcessViolationRequest, LiveListRequest, PayListRequest, RobotListRequest, RobotMessageListRequest, AutoMessageListRequest,
     AnchorFullRequest, ChatMessageListRequest, CallListRequest, TransactionListRequest, AuthorizeAnchorRequest, BlockRequest, UnblockRequest,
-    MigrateRequest
+    MigrateRequest, MomentListRequest
 } from '../proto/js/cms_pb'
-import { Empty, EntityType, User, AnchorLevel, ReviewStatus } from '../proto/js/usertype_pb'
+import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment } from '../proto/js/usertype_pb'
 import { Admin, Guild, RobotMessage, AutoMessage } from '../proto/js/cmstype_pb'
 import { AnchorProfile } from '../proto/js/anchortype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
@@ -52,11 +52,13 @@ const deps = {
       BlockRequest,
       UnblockRequest,
       MigrateRequest,
+      MomentListRequest,
       Empty,
       EntityType,
       User,
       AnchorLevel,
       ReviewStatus,
+      Moment,
       Admin,
       Guild,
       RobotMessage,

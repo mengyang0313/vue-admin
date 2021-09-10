@@ -114,4 +114,39 @@ export default class {
     }
 
 
+
+    // 获取朋友圈列表
+    async getMomentList (param, callback) {
+        const req = new this.proto.MomentListRequest()
+        req.setEntityId(param.entityId)
+        req.setEntityType(param.entityType)
+
+        const metadata = {'token': getToken()}
+        this.client.getMomentList(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+    async saveMoment (param, callback) {
+        const req = new this.proto.Moment()
+        req.setEntityId(param.entityId)
+        req.setEntityType(param.entityType)
+        req.setAppId(param.appId)
+        req.setAreaId(param.areaId)
+        req.setContent(param.content)
+        req.setStatus(param.status)
+        // req.setImagesList(param.images)
+        // req.setVideo(param.video)
+        req.setLikes(param.likes)
+
+        const metadata = {'token': getToken()};
+        this.client.saveAutoMessage(req, metadata, (err, resp) => {
+            !err ? callback(true) : callback(false)
+        })
+    }
 }

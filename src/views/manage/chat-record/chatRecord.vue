@@ -169,8 +169,6 @@ export default {
             },
             // 数据总条数
             total: 0,
-            // 防止多次连续提交表单
-            isSubmit: false,
             areaData: getAreaList(),
             appList: getAppList(),
             messageTypeList: getMessageType()

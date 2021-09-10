@@ -61,27 +61,29 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="anchorId" label="机器人ID" align="center" width="200" />
+                <el-table-column prop="anchorId" label="机器人ID" align="center" width="150" />
                 <el-table-column prop="status" label="状态" align="center" width="150">
                     <template slot-scope="scope">
                         <el-switch v-model="scope.row.status"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="150" />
-                <el-table-column prop="nickname" label="昵称" align="center" width="300"/>
+                <el-table-column prop="nickname" label="昵称" align="center" width="400"/>
                 <el-table-column prop="avatar" label="头像" align="center" width="150">
                     <template scope="scope">
                         <el-image style="width: 50px; height: 50px" :src="scope.row.avatar" contain></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="data" label="资料" align="center" width="150">
+                <el-table-column prop="data" label="动态" align="center" width="150">
                     <template slot-scope="scope">
-                        <a @click="toDialog('editRobot', scope.row)" style="color: #1E88C7">查看</a>
+                        <el-button type="text">
+                            <router-link :to="{path:'./robot-dynamic',query: {robotId: scope.row.anchorId,nickname: scope.row.nickname}}"> 查看 </router-link>
+                        </el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="words" label="话术" align="center" width="150">
+                <el-table-column prop="words" label="对话" align="center" width="150">
                     <template slot-scope="scope">
-                        <a @click="toDialog('editRobot', scope.row)" style="color: #1E88C7">查看</a>
+                        <a @click="toDialog('showDialog', scope.row.anchorId)" style="color: #1E88C7">查看</a>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
@@ -99,6 +101,9 @@
 
             <!-- 编辑资料 -->
             <editRobot ref="editRobot" @fetchData="fetchData"/>
+
+            <!-- 查看对话 -->
+            <showDialog ref="showDialog" @fetchData="fetchData"/>
         </el-card>
     </div>
 </template>
@@ -106,10 +111,11 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import editRobot from './dialog/edit-robot'
-import { getBool, getAreaList , getArrName} from "@/utils/common";
+import showDialog from './dialog/show-dialog'
+import { getBool, getAreaList, getArrName} from "@/utils/common";
 
 export default {
-    components: { Pagination, editRobot},
+    components: { Pagination, editRobot, showDialog},
     data() {
         return {
             // 数据列表加载动画

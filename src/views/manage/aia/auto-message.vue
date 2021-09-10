@@ -69,21 +69,34 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="id" label="话术ID" align="center" width="150"/>
-                <el-table-column prop="areaId" label="区域" align="center" width="150"/>
-                <el-table-column prop="action" label="场景标签" align="center" width="150">
+                <el-table-column prop="id" label="话术ID" align="center" width="80"/>
+                <el-table-column prop="areaId" label="区域" align="center" width="120"/>
+                <el-table-column prop="action" label="动作类型" align="center" width="150">
                     <template slot-scope="scope">
                         <div slot="reference">
                             <el-tag size="medium">{{ scope.row.action }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
+                <el-table-column prop="type" label="消息类型" align="center" width="150">
+                    <template slot-scope="scope">
+                        <div slot="reference">
+                            <el-tag size="medium">{{ scope.row.type }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="enable" label="状态" align="center" width="150">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.enable"/>
+                        <el-switch v-model="scope.row.enable" disabled/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="text" label="内容" align="center"/>
+                <el-table-column prop="uri" label="uri" align="center" width="150"/>
+                <el-table-column prop="thumb" label="图片" align="center" width="150">
+                    <template slot-scope="scope">
+                        <el-image v-if="scope.row.thumb!=''" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -98,7 +111,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import addAutoMessage from './dialog/add-auto-message'
-import { getBool, getAreaList, getActionType } from "@/utils/common";
+import {getBool, getAreaList, getActionType, getArrName, getMessageType} from "@/utils/common";
 
 export default {
     components: { Pagination, addAutoMessage},
@@ -143,10 +156,13 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
-                        "areaId" : item.getAreaId(),
-                        "action" : item.getAction(),
+                        "areaId" : getArrName($this.areaData, item.getAreaId()),
+                        "action" : getActionType(item.getAction()),
+                        "type" : getMessageType(item.getType()),
                         "text" : item.getText(),
-                        "enable" : item.getEnable()
+                        "enable" : item.getEnable(),
+                        "uri" : item.getUri(),
+                        "thumb" : item.getThumb()
                     }
                     data.push(json)
                 })

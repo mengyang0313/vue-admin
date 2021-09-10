@@ -2320,6 +2320,166 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveRobotMessage =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.MomentListRequest,
+ *   !proto.pb.cms.MomentListReply>}
+ */
+const methodDescriptor_CmsSdk_GetMomentList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetMomentList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.MomentListRequest,
+  proto.pb.cms.MomentListReply,
+  /**
+   * @param {!proto.pb.cms.MomentListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.MomentListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.MomentListRequest,
+ *   !proto.pb.cms.MomentListReply>}
+ */
+const methodInfo_CmsSdk_GetMomentList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.MomentListReply,
+  /**
+   * @param {!proto.pb.cms.MomentListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.MomentListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.MomentListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.MomentListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.MomentListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getMomentList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetMomentList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetMomentList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.MomentListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.MomentListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getMomentList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetMomentList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetMomentList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.Moment,
+ *   !proto.pb.Moment>}
+ */
+const methodDescriptor_CmsSdk_SaveMoment = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveMoment',
+  grpc.web.MethodType.UNARY,
+  usertype_pb.Moment,
+  usertype_pb.Moment,
+  /**
+   * @param {!proto.pb.Moment} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Moment.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.Moment,
+ *   !proto.pb.Moment>}
+ */
+const methodInfo_CmsSdk_SaveMoment = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Moment,
+  /**
+   * @param {!proto.pb.Moment} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Moment.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.Moment} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Moment)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Moment>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.saveMoment =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveMoment',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveMoment,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.Moment} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Moment>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveMoment =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveMoment',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveMoment);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.AutoMessageListRequest,
  *   !proto.pb.cms.AutoMessageListReply>}
  */

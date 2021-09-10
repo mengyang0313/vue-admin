@@ -16,17 +16,6 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="审核状态">
-                            <el-select v-model="search.reviewStatus" placeholder="请选择" @change="changeArea">
-                                <el-option v-for="item in reviewStatus"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
                         <el-form-item label="地区">
                             <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
                                 <el-option v-for="item in areaData"
@@ -121,7 +110,7 @@ export default {
             // 查询列表参数对象
             search: {
                 areaId: 1,
-                reviewStatus: 0,
+                reviewStatus: 3,
                 page: {
                     currentPage: 1,
                     pageSize: 10

@@ -494,29 +494,40 @@ export function getMessageType(key){
 
 
 // 动作类型
-export function getActionType(){
-    return [{
-        value: 0,
-        label: '全部'
-    },{
-        value: 1,
-        label: '拒绝接听'
-    }, {
-        value: 2,
-        label: '未接听'
-    }, {
-        value: 3,
-        label: '通话结束'
-    }, {
-        value: 4,
-        label: '关注'
-    }, {
-        value: 5,
-        label: '充值'
-    }, {
-        value: 6,
-        label: '发送礼物'
-    }]
+export function getActionType(key){
+    let arr =  [{
+            value: 0,
+            label: '全部'
+        },{
+            value: 1,
+            label: '拒绝接听'
+        }, {
+            value: 2,
+            label: '未接听'
+        }, {
+            value: 3,
+            label: '通话结束'
+        }, {
+            value: 4,
+            label: '关注'
+        }, {
+            value: 5,
+            label: '充值'
+        }, {
+            value: 6,
+            label: '发送礼物'
+        }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
 }
 
 

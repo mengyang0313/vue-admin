@@ -10,28 +10,28 @@ import Layout from '../layout'
  * */
 
 export const asyncRoutes = [
-    // {
-    //     path: '/',
-    //     name: 'Layout',
-    //     component: Layout,
-    //     children: [{
-    //         path: 'home',
-    //         name: 'Home',
-    //         component: () => import('../views/Home'),
-    //         meta: {
-    //             title: '首页',
-    //             icon: 'vue-dsn-icon-index',
-    //             fixed: true
-    //         }
-    //     }]
-    // },
     {
-        path: '/home',
+        path: '/',
         name: 'Layout',
         component: Layout,
         children: [{
             path: 'home',
             name: 'Home',
+            component: () => import('../views/Home'),
+            meta: {
+                title: '首页',
+                icon: 'vue-dsn-icon-index',
+                fixed: true
+            }
+        }]
+    },
+    {
+        path: '/home2',
+        name: 'Layout',
+        component: Layout,
+        children: [{
+            path: 'home2',
+            name: 'Home2',
             component: () => import('../views/home/Home'),
             meta: {
                 title: '首页',
@@ -145,14 +145,6 @@ export const asyncRoutes = [
                 component: () => import('../views/manage/anchor/anchor-info'),
                 meta: {
                     title: '主播详情'
-                }
-            },
-            {
-                path: 'demo',
-                name: 'demo',
-                component: () => import('../views/manage/anchor/demo'),
-                meta: {
-                    title: '测试'
                 }
             }
         ]
@@ -359,6 +351,15 @@ export const asyncRoutes = [
                 component: () => import('../views/manage/aia/robot-message'),
                 meta: {
                     title: 'AIA编辑话术'
+                }
+            },
+            {
+                path: 'robot-dynamic',
+                name: 'robot-dynamic',
+                hidden: true,
+                component: () => import('../views/manage/aia/robot-dynamic'),
+                meta: {
+                    title: '动态'
                 }
             },
             {
