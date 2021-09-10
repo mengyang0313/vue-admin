@@ -8,8 +8,6 @@
 export default {
     name: 'App'
 }
-let t =  window.devicePixelRatio;
-document.body.style.zoom = 1/ t;
 </script>
 
 <style lang="less">
