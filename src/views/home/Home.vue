@@ -31,46 +31,36 @@
                         class="search-form"
                     >
                         <template>
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item label="地区">
-                                        <el-select v-model="search.area" placeholder="请选择">
-                                            <el-option v-for="item in areaData"
-                                                       :key="item.value"
-                                                       :label="item.label"
-                                                       :value="item.value">
-                                            </el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="产品" >
-                                        <el-select v-model="search.area" placeholder="请选择">
-                                            <el-option v-for="item in areaData"
-                                                       :key="item.value"
-                                                       :label="item.label"
-                                                       :value="item.value">
-                                            </el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="时间">
-                                        <el-select v-model="search.area" placeholder="请选择">
-                                            <el-option v-for="item in areaData"
-                                                       :key="item.value"
-                                                       :label="item.label"
-                                                       :value="item.value">
-                                            </el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item>
-                                        <el-button type="danger" @click="onSubmit" icon="el-icon-refresh">刷 新</el-button>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
+                            <el-form-item label="地区">
+                                <el-select v-model="search.area" placeholder="请选择">
+                                    <el-option v-for="item in areaData"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="产品" >
+                                <el-select v-model="search.area" placeholder="请选择">
+                                    <el-option v-for="item in areaData"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="时间">
+                                <el-select v-model="search.area" placeholder="请选择">
+                                    <el-option v-for="item in areaData"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="danger" @click="onSubmit" icon="el-icon-refresh">刷 新</el-button>
+                        </el-form-item>
                         </template>
                     </el-form>
                 </el-card>
@@ -134,8 +124,8 @@ export default {
             search: {},
             cardInfoData: [
                 {title: '大盘实时收入', icon: 'vue-dsn-icon-dianji', count: 28102, color: '#2d8cf0'},
-                {title: '今日新增/活跃用户', icon: 'vue-dsn-icon-xinzeng', count: 15890,count2: 56250, color: '#19be6b'},
-                {title: '今日主播活跃/总数', icon: 'vue-dsn-icon-xinfeng', count: 248,count2: 18250, color: '#ff9900'},
+                {title: '新增/活跃用户', icon: 'vue-dsn-icon-xinzeng', count: 15890,count2: 56250, color: '#19be6b'},
+                {title: '主播活跃/总数', icon: 'vue-dsn-icon-xinfeng', count: 248,count2: 18250, color: '#ff9900'},
                 {title: '待审核内容', icon: 'vue-dsn-icon-dianzan', count: 2500, color: '#e46cbb'},
                 {title: '今日钻石消耗', icon: 'vue-dsn-icon-heart', count: 2304, color: '#9a66e4'}
             ],

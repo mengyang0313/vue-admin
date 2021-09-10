@@ -10,74 +10,60 @@
                 class="search-form"
             >
                 <template>
-
-                    <el-row>
-                        <el-col :span="6">
-                            <el-form-item label="举报方类型" prop="reportedType">
-                                <el-select v-model="search.reportedType" placeholder="请选择">
-                                    <el-option v-for="item in reportedTypes"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="举报场景" prop="scenes">
-                                <el-select v-model="search.scene" placeholder="请选择">
-                                    <el-option v-for="item in violationScenes"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="举报时间" prop="reportedTime">
-                                <el-select v-model="search.reportedTime" placeholder="请选择">
-                                    <el-option v-for="item in reportedTimes"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="地区" prop="areaId">
-                                <el-select v-model="search.areaId" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="6">
-                            <el-form-item label="举报方Id" prop="reporterId">
-                                <el-input v-model="search.reporterId" placeholder="举报方Id"/>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="被举报方Id" prop="reportedId">
-                                <el-input v-model="search.reportedId" placeholder="被举报方Id"/>
-                            </el-form-item>
-                        </el-col>
-
-                    </el-row>
-                    <el-row>
-                        <el-col :span="24" class="search-box">
-                            <el-form-item>
-                                <el-button @click="onSubmit" type="primary" size="small" style="width: 150px;">查询</el-button>
-                                <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重置</el-button>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                    <el-form-item label="举报方Id" prop="reporterId">
+                        <el-input v-model="search.reporterId" placeholder="举报方Id"/>
+                    </el-form-item>
+                    <el-form-item label="被举报方Id" prop="reportedId">
+                        <el-input v-model="search.reportedId" placeholder="被举报方Id"/>
+                    </el-form-item>
+                    <el-form-item label="举报方类型" prop="reportedType">
+                        <el-select v-model="search.reportedType" placeholder="请选择">
+                            <el-option v-for="item in reportedTypes"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item style="padding-left: 20px">
+                        <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
+                    </el-form-item>
+                    <el-collapse accordion @change="isCollapse = !isCollapse">
+                        <el-collapse-item>
+                            <template slot="title">
+                                {{isCollapse ? '展开' : '收起'}}
+                            </template>
+                            <div>
+                                <el-form-item label="举报场景" prop="scenes">
+                                    <el-select v-model="search.scene" placeholder="请选择">
+                                        <el-option v-for="item in violationScenes"
+                                                   :key="item.value"
+                                                   :label="item.label"
+                                                   :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="举报时间" prop="reportedTime">
+                                    <el-select v-model="search.reportedTime" placeholder="请选择">
+                                        <el-option v-for="item in reportedTimes"
+                                                   :key="item.value"
+                                                   :label="item.label"
+                                                   :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="地区" prop="areaId">
+                                    <el-select v-model="search.areaId" placeholder="请选择">
+                                        <el-option v-for="item in areaData"
+                                                   :key="item.value"
+                                                   :label="item.label"
+                                                   :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </div>
+                        </el-collapse-item>
+                    </el-collapse>
                 </template>
             </el-form>
             <!-- 表格栏 -->
@@ -150,10 +136,7 @@ export default {
             },
             // 数据总条数
             total: 0,
-            // 表格数据数组
-            tableData: [],
-            // 多选数据暂存数组
-            multipleSelection: [],
+            isCollapse: true,
             areaData: getAreaList(),
             reportedTypes: getReportedTypes(),
             reportedTimes: getReportedTime(),
@@ -266,6 +249,27 @@ export default {
 </script>
 
 <style lang="less">
+.el-collapse-item__header {
+    border-top: 0px solid #eaeefb;
+    height: 34px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    margin-top: -75px;
+    color: #277cda;
+    z-index: 999;
+    float: right;
+}
+.el-collapse-item__wrap{
+    background-color: #f7f8fb;
+}
+.el-collapse{
+    border-top: 0px solid #EBEEF5;
+    border-bottom: 0px solid #EBEEF5;
+}
+.el-collapse-item__content {
+    padding-bottom: 5px;
+}
 .table-classic-wrapper {
     .el-card {
         min-height: 656px;

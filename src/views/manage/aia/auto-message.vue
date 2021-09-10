@@ -15,47 +15,36 @@
                 class="search-form"
             >
                 <template>
-                    <el-row>
-                        <el-col :span="6">
-                            <el-form-item label="地区" prop="areaId">
-                                <el-select v-model="search.areaId" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="状态" prop="enable">
-                                <el-select v-model="search.enable" placeholder="请选择">
-                                    <el-option v-for="item in bools"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="场景标签" prop="action">
-                                <el-select v-model="search.action" placeholder="请选择">
-                                    <el-option v-for="item in actionTypes"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item>
-                                <el-button type="primary" @click="onSearch">筛选</el-button>
-                                <el-button type="danger" @click="resetForm">重置</el-button>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                    <el-form-item label="地区" prop="areaId">
+                        <el-select v-model="search.areaId" placeholder="请选择">
+                            <el-option v-for="item in areaData"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="状态" prop="enable">
+                        <el-select v-model="search.enable" placeholder="请选择">
+                            <el-option v-for="item in bools"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="场景标签" prop="action">
+                        <el-select v-model="search.action" placeholder="请选择">
+                            <el-option v-for="item in actionTypes"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="onSearch">筛选</el-button>
+                    </el-form-item>
                 </template>
             </el-form>
             <!-- 表格栏 -->

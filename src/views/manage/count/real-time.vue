@@ -10,26 +10,18 @@
                         label-width="90px"
                         class="search-form"
                     >
-                        <template>
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item label="地区">
-                                        <el-select v-model="search.area" placeholder="请选择">
-                                            <el-option v-for="item in areaData"
-                                                       :key="item.value"
-                                                       :label="item.label"
-                                                       :value="item.value">
-                                            </el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item>
-                                        <el-button type="danger" @click="onSubmit" icon="el-icon-refresh">刷 新</el-button>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                        </template>
+                        <el-form-item label="地区">
+                            <el-select v-model="search.area" placeholder="请选择">
+                                <el-option v-for="item in areaData"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="danger" @click="onSubmit" icon="el-icon-refresh">刷 新</el-button>
+                        </el-form-item>
                     </el-form>
                 </el-card>
             </el-col>

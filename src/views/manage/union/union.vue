@@ -9,37 +9,24 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-row>
-                    <el-col :span="8">
-                        <el-form-item label="工会ID">
-                            <el-input v-model="search.id" placeholder="工会ID"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-form-item label="地区">
-                            <el-select v-model="search.areaId" placeholder="请选择">
-                                <el-option v-for="item in areaData"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-form-item label="是否启用">
-                            <el-switch v-model="search.enable"/>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" class="search-box">
-                        <el-form-item>
-                            <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
-                            <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+                <el-form-item label="工会ID">
+                    <el-input v-model="search.id" placeholder="工会ID"/>
+                </el-form-item>
+                <el-form-item label="地区">
+                    <el-select v-model="search.areaId" placeholder="请选择">
+                        <el-option v-for="item in areaData"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="是否启用">
+                    <el-switch v-model="search.enable"/>
+                </el-form-item>
+                <el-form-item style="padding-left: 20px">
+                    <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
+                </el-form-item>
             </el-form>
             <!-- 操作栏 -->
             <div class="control-btns">

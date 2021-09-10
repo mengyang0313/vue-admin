@@ -14,42 +14,30 @@
                 class="search-form"
             >
                 <template>
-                    <el-row>
-                        <el-col :span="6">
-                            <el-form-item label="地区" prop="areaId">
-                                <el-select v-model="search.areaId" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="状态" prop="enable">
-                                <el-select v-model="search.enable" placeholder="请选择">
-                                    <el-option v-for="item in bools"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="机器人ID" prop="robotId">
-                                <el-input v-model="search.robotId" placeholder="机器人主播ID"/>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item>
-                                <el-button type="primary" @click="onSearch">筛选</el-button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <el-button type="danger" @click="resetForm">重置</el-button>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                    <el-form-item label="地区" prop="areaId">
+                        <el-select v-model="search.areaId" placeholder="请选择">
+                            <el-option v-for="item in areaData"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="状态" prop="enable">
+                        <el-select v-model="search.enable" placeholder="请选择">
+                            <el-option v-for="item in bools"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="机器人ID" prop="robotId">
+                        <el-input v-model="search.robotId" placeholder="机器人主播ID"/>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="onSearch">筛选</el-button>
+                    </el-form-item>
                 </template>
             </el-form>
             <!-- 表格栏 -->

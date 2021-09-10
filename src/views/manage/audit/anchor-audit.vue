@@ -9,27 +9,21 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="主播Id" prop="anchorId">
-                            <el-input v-model="search.anchorId" placeholder="主播Id"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="地区">
-                            <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
-                                <el-option v-for="item in areaData"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="onSubmit">查询</el-button>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+                <el-form-item label="主播Id" prop="anchorId">
+                    <el-input v-model="search.anchorId" placeholder="主播Id"/>
+                </el-form-item>
+                <el-form-item label="地区">
+                    <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
+                        <el-option v-for="item in areaData"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit">查询</el-button>
+                </el-form-item>
             </el-form>
 
             <!-- 表格栏 -->

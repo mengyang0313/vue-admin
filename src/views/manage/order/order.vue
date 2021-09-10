@@ -9,79 +9,67 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="用户ID" prop="userId">
-                            <el-input v-model="search.userId" placeholder="用户ID"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="订单号" prop="recordId">
-                            <el-input v-model="search.recordId" placeholder="订单号"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="交易时间" prop="createdStart">
-                            <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                            <el-col class="line" :span="1" align="center">-</el-col>
-                            <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="APP" prop="appId">
-                            <el-select v-model="search.appId" placeholder="请选择">
-                                <el-option v-for="item in appList"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                    <span style="float: left">{{ item.label }}</span>
-                                    <span v-if="item.os === 1">
-                                        <i class="icon-android-fill" style="float: right"></i>
-                                    </span>
-                                    <span v-else>
-                                        <i class="icon-pingguo" style="float: right"></i>
-                                    </span>
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="地区" prop="areaId">
-                            <el-select v-model="search.areaId" placeholder="请选择">
-                                <el-option v-for="item in areaData"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="订单状态" prop="payStatus">
-                            <el-select v-model="search.payStatus" placeholder="请选择">
-                                <el-option v-for="item in payStatus"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" class="search-box">
-                        <el-form-item>
-                            <el-button @click="onSearch" type="primary" size="small" style="width: 150px;">查&nbsp;&nbsp;&nbsp;&nbsp;询</el-button>
-                            <el-button @click="resetForm" size="small" style="width: 150px;margin-left: 250px">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+                <el-form-item label="用户ID" prop="userId">
+                    <el-input v-model="search.userId" placeholder="用户ID"/>
+                </el-form-item>
+                <el-form-item label="订单号" prop="recordId">
+                    <el-input v-model="search.recordId" placeholder="订单号"/>
+                </el-form-item>
+                <el-form-item label="订单状态" prop="payStatus">
+                    <el-select v-model="search.payStatus" placeholder="请选择">
+                        <el-option v-for="item in payStatus"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item style="padding-left: 20px">
+                    <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
+                </el-form-item>
+                <el-collapse accordion @change="isCollapse = !isCollapse">
+                    <el-collapse-item>
+                        <template slot="title">
+                            {{isCollapse ? '展开' : '收起'}}
+                        </template>
+                        <div>
+                            <el-form-item label="交易时间" prop="createdStart">
+                                <el-col :span="11">
+                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
+                                </el-col>
+                                <el-col class="line" :span="1" align="center">-</el-col>
+                                <el-col :span="10">
+                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item label="APP" prop="appId">
+                                <el-select v-model="search.appId" placeholder="请选择">
+                                    <el-option v-for="item in appList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                        <span style="float: left">{{ item.label }}</span>
+                                        <span v-if="item.os === 1">
+                                <i class="icon-android-fill" style="float: right"></i>
+                            </span>
+                                        <span v-else>
+                                <i class="icon-pingguo" style="float: right"></i>
+                            </span>
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="地区" prop="areaId">
+                                <el-select v-model="search.areaId" placeholder="请选择">
+                                    <el-option v-for="item in areaData"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </div>
+                    </el-collapse-item>
+                </el-collapse>
             </el-form>
             <!-- 表格栏 -->
             <el-table
@@ -165,6 +153,7 @@ export default {
                 }
             },
             total: 0,
+            isCollapse: true,
             areaData: getAreaList(),
             appList: getAppList(),
             payStatus: getPayStatus()
@@ -228,6 +217,27 @@ export default {
 </script>
 
 <style lang="less">
+.el-collapse-item__header {
+    border-top: 0px solid #eaeefb;
+    height: 34px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    margin-top: -75px;
+    color: #277cda;
+    z-index: 999;
+    float: right;
+}
+.el-collapse-item__wrap{
+    background-color: #f7f8fb;
+}
+.el-collapse{
+    border-top: 0px solid #EBEEF5;
+    border-bottom: 0px solid #EBEEF5;
+}
+.el-collapse-item__content {
+    padding-bottom: 5px;
+}
 .table-classic-wrapper {
     .el-card {
         min-height: 656px;

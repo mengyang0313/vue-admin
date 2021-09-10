@@ -161,7 +161,7 @@
 </template>
 
 <script>
-import "@/assets/icon/iconfont.css"
+
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import block from './dialog/block'

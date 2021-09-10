@@ -10,41 +10,30 @@
                 class="search-form"
             >
                 <template>
-                    <el-row>
-                        <el-col :span="6">
-                            <el-form-item label="UID">
-                                <el-input v-model="search.robotId" placeholder="UID"/>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="主播等级">
-                                <el-select v-model="search.area" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="地区">
-                                <el-select v-model="search.area" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item>
-                                <el-button type="primary" @click="onSubmit">查  询</el-button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                    <el-form-item label="UID">
+                        <el-input v-model="search.robotId" placeholder="UID"/>
+                    </el-form-item>
+                    <el-form-item label="主播等级">
+                        <el-select v-model="search.area" placeholder="请选择">
+                            <el-option v-for="item in areaData"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="地区">
+                        <el-select v-model="search.area" placeholder="请选择">
+                            <el-option v-for="item in areaData"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">查  询</el-button>
+                    </el-form-item>
                 </template>
             </el-form>
 
