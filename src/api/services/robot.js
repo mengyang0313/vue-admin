@@ -140,12 +140,13 @@ export default class {
         req.setAreaId(param.areaId)
         req.setContent(param.content)
         req.setStatus(param.status)
+        req.setPublishAt(param.publishAt)
         // req.setImagesList(param.images)
         // req.setVideo(param.video)
         req.setLikes(param.likes)
 
         const metadata = {'token': getToken()};
-        this.client.saveAutoMessage(req, metadata, (err, resp) => {
+        this.client.saveMoment(req, metadata, (err, resp) => {
             !err ? callback(true) : callback(false)
         })
     }

@@ -25,7 +25,7 @@
                 <el-table-column prop="areaStr" label="地区" align="center" width="80" />
                 <el-table-column prop="status" label="审核状态" align="center" width="150">
                     <template slot-scope="scope">
-                        <a :href="scope.row.url" style="color: #1E88C7">{{ scope.row.status }}</a>
+                        <el-tag size="medium">{{ scope.row.status }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="content" label="内容" align="center" width="350" />
@@ -35,11 +35,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="likes" label="点赞次数" align="center" width="150"/>
-                <el-table-column prop="publishAt" label="发布时间" align="center">
-                    <template slot-scope="scope">
-                        <el-switch v-model="scope.row.publishAt" disabled/>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="publishAt" label="发布时间" align="center"/>
             </el-table>
             <!-- 分页栏
             <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
@@ -55,6 +51,7 @@
 import Pagination from '../../../components/Pagination'
 import addRobotDynamic from './dialog/add-robot-dynamic'
 import Hints from '../../../components/Hints'
+import {getArrName, getAreaList, getAppList, getReviewStatus} from "@/utils/common";
 
 
 export default {
@@ -73,14 +70,12 @@ export default {
                     pageSize: 10
                 }
             },
-            // 数据总条数
             total: 0,
-            // 表格数据数组
             tableData: [],
-            // 多选数据暂存数组
             multipleSelection: [],
-            // 新增/编辑 弹出框显示/隐藏
             formVisible: false,
+            areaList: getAreaList(),
+            appList: getAppList()
         }
     },
     created() {
@@ -100,16 +95,18 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
+                        "appStr" : getArrName($this.appList, item.getAreaId()),
                         "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "entityType" : item.getEntityType(),
                         "entityId" : item.getEntityId(),
-                        "status" : item.getStatus(),
+                        "status" : getReviewStatus(item.getStatus()),
                         "content" : item.getContent(),
                         "images": item.getImagesList(),
                         "video": item.getVideo(),
                         "thumb": item.getThumb(),
                         "likes": item.getLikes(),
-                        "publishAt": item.getPublishAt(),
+                        "publishAt": new Date(item.getPublishAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
                         "nickname": item.getNickname(),
                         "avatar": item.getAvatar()
                     }

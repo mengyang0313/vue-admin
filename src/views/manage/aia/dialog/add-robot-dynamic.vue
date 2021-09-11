@@ -33,8 +33,44 @@
                         show-word-limit
                     />
                 </el-form-item>
-                <el-form-item label="图片" prop="images"></el-form-item>
-                <el-form-item label="视频" prop="video"></el-form-item>
+                <el-form-item label="图片" prop="photoIds">
+                    <div class="img">
+                        <el-upload
+                            action=""
+                            :limit="10"
+                            :on-preview="previewPhoto"
+                            :on-change="successPhoto"
+                            :on-remove="removePhoto"
+                            list-type="picture-card"
+                            :file-list="form.photoUris"
+                            :auto-upload="false"
+                        >
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
+                            <img width="100%" :src="form.video" alt />
+                        </el-dialog>
+                    </div>
+                </el-form-item>
+                <el-form-item label="视频" prop="videoIds">
+                    <div class="img">
+                        <el-upload
+                            action=""
+                            :limit="10"
+                            :on-preview="previewVideo"
+                            :on-change="successVideo"
+                            :on-remove="removeVideo"
+                            list-type="picture-card"
+                            :file-list="form.videoUris"
+                            :auto-upload="false"
+                        >
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
+                            <img width="100%" :src="form.video" alt />
+                        </el-dialog>
+                    </div>
+                </el-form-item>
                 <el-form-item label="点赞次数" prop="likes">
                     <el-input-number v-model="form.likes" :min="1"></el-input-number>
                 </el-form-item>
@@ -58,6 +94,8 @@
 
 <script>
 import { getMessageType, getAreaList, getAppList } from "@/utils/common";
+import {getToken} from "@/utils/cookie";
+import axios from "axios";
 
 export default {
     data() {
@@ -72,7 +110,7 @@ export default {
                 images: '',
                 video: '',
                 likes: 10,
-                publishAtTime:0
+                publishAtTime:undefined
             },
             dialogVisible: false,
             messageTypes : getMessageType(),
@@ -89,7 +127,7 @@ export default {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     let param = this.form;
-                    param.publishAt = param.publishAtTime.getTime() * 1000
+                    param.publishAt = param.publishAtTime.getTime() /1000
                     this.$service.robot.saveMoment(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
@@ -108,6 +146,73 @@ export default {
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
+        },
+        previewAvatar(file) {
+            this.imgDialogVisible = true;
+        },
+        previewPhoto(file){
+            this.imgDialogVisible = true;
+        },
+        previewVideo(file){
+            this.imgDialogVisible = true;
+        },
+        successAvatar(file) {
+            const $this = this
+            this.imgUpload(file.raw, 1, function (data){
+                $this.form.avatar = data.uri
+            })
+        },
+        successPhoto(file) {
+            let $this = this
+            this.imgUpload(file.raw, 1, function (data){
+                $this.form.photoIds.push(data.id)
+            })
+        },
+        successVideo(file) {
+            const $this = this
+            this.imgUpload(file.raw, 2, function (data){
+                $this.form.videoIds.push(data.id)
+                $this.form.video = data.id
+            })
+        },
+        removePhoto(file, fileList){
+            let arr = this.form.photoIds
+            let val = file.name
+            for(let i = 0; i < arr.length; i++) {
+                if(arr[i] === val) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
+        },
+        removeVideo(file, fileList){
+            let arr = this.form.videoIds
+            let val = file.name
+            for(let i = 0; i < arr.length; i++) {
+                if(arr[i] === val) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
+        },
+        imgUpload(file, type, callback){
+            let headers = {
+                'Content-Type': 'multipart/form-data',
+                "token" : getToken(),
+                "area-id" : 1,
+                "file-type" : type
+            }
+            const formData = new FormData()
+            formData.append('file', file)
+            axios({
+                url: 'http://101.33.118.232:8101/file/upload',
+                method: 'post',
+                data: formData,
+                headers: headers
+            }).then(res => {
+                const data = res.data
+                callback(data)
+            })
         }
     }
 }

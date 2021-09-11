@@ -52,16 +52,16 @@
                 <el-table-column prop="anchorId" label="机器人ID" align="center" width="150" />
                 <el-table-column prop="status" label="状态" align="center" width="150">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.status"/>
+                        <el-switch v-model="scope.row.status" disabled/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="150" />
-                <el-table-column prop="nickname" label="昵称" align="center" width="400"/>
                 <el-table-column prop="avatar" label="头像" align="center" width="150">
                     <template scope="scope">
                         <el-image style="width: 50px; height: 50px" :src="scope.row.avatar" contain></el-image>
                     </template>
                 </el-table-column>
+                <el-table-column prop="nickname" label="昵称" align="center" width="400"/>
                 <el-table-column prop="data" label="动态" align="center" width="150">
                     <template slot-scope="scope">
                         <el-button type="text">

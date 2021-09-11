@@ -147,6 +147,22 @@ service CmsSdk {
     rpc GetTransactionList (TransactionListRequest) returns (TransactionListReply) {
     }
 
+    // 生成预结算记录
+    rpc CreateSettleRecord (CreateSettleRequest) returns (Empty) {
+    }
+
+    // 提交符合条件的结算记录，扣除主播余额
+    rpc SubmitSettleRecord (SubmitSettleRequest) returns (Empty) {
+    }
+
+    // 查询结算记录生成或提交进度，生成和提交结算记录同一个区域同时只能进行一个，不能并发
+    rpc QuerySettleProgress (SettleProgressRequest) returns (SettleProgressReply) {
+    }
+
+    // 获取结算记录，不分页
+    rpc GetSettleList (SettleListRequest) returns (SettleListReply) {
+    }
+
     // 上传文件
     // 同时提供http multiple-form 上传接口  /file/upload  文件的key为file 需要设置http header token, area-id, file-type 返回值为JSON格式的FileRecord，
     rpc UploadFile (stream AdminFileChunk) returns (FileRecord) {
@@ -632,6 +648,49 @@ message TransactionListReply {
     uint32 total_page = 4;
     // 总记录数
     uint32 total_count = 5;
+}
+
+message CreateSettleRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 结算时间
+    uint32 settle_at = 2;
+    // 最小余额，低于该余额不结算
+    uint32 min_balance = 3;
+}
+
+message SubmitSettleRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 结算记录
+    repeated SettleRecord records = 2;
+}
+
+message SettleProgressRequest {
+    // 区域id
+    uint32 area_id = 1;
+}
+
+message SettleProgressReply {
+    // 结算进度，10000表示100%
+    uint32 progress = 1;
+}
+
+message SettleListRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 工会id
+    uint32 guild_id = 2;
+    // 主播id
+    uint32 anchor_id = 3;
+    // 结算时间
+    uint32 settle_at = 4;
+    // 结算状态
+    SettleStatus status = 5;
+}
+
+message SettleListReply {
+    repeated SettleRecord records = 1;
 }
 
 message AdminFileChunk {

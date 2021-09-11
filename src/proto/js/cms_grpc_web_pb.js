@@ -2877,5 +2877,325 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getTransactionList =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.CreateSettleRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_CreateSettleRecord = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/CreateSettleRecord',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.CreateSettleRequest,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.CreateSettleRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.CreateSettleRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_CreateSettleRecord = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.CreateSettleRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.CreateSettleRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.createSettleRecord =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/CreateSettleRecord',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_CreateSettleRecord,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.CreateSettleRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.createSettleRecord =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/CreateSettleRecord',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_CreateSettleRecord);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.SubmitSettleRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_SubmitSettleRecord = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SubmitSettleRecord',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.SubmitSettleRequest,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.SubmitSettleRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.SubmitSettleRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_SubmitSettleRecord = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.SubmitSettleRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.SubmitSettleRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.submitSettleRecord =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SubmitSettleRecord',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SubmitSettleRecord,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.SubmitSettleRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.submitSettleRecord =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SubmitSettleRecord',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SubmitSettleRecord);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.SettleProgressRequest,
+ *   !proto.pb.cms.SettleProgressReply>}
+ */
+const methodDescriptor_CmsSdk_QuerySettleProgress = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/QuerySettleProgress',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.SettleProgressRequest,
+  proto.pb.cms.SettleProgressReply,
+  /**
+   * @param {!proto.pb.cms.SettleProgressRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.SettleProgressReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.SettleProgressRequest,
+ *   !proto.pb.cms.SettleProgressReply>}
+ */
+const methodInfo_CmsSdk_QuerySettleProgress = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.SettleProgressReply,
+  /**
+   * @param {!proto.pb.cms.SettleProgressRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.SettleProgressReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.SettleProgressRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.SettleProgressReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.SettleProgressReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.querySettleProgress =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/QuerySettleProgress',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_QuerySettleProgress,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.SettleProgressRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.SettleProgressReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.querySettleProgress =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/QuerySettleProgress',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_QuerySettleProgress);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.SettleListRequest,
+ *   !proto.pb.cms.SettleListReply>}
+ */
+const methodDescriptor_CmsSdk_GetSettleList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetSettleList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.SettleListRequest,
+  proto.pb.cms.SettleListReply,
+  /**
+   * @param {!proto.pb.cms.SettleListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.SettleListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.SettleListRequest,
+ *   !proto.pb.cms.SettleListReply>}
+ */
+const methodInfo_CmsSdk_GetSettleList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.SettleListReply,
+  /**
+   * @param {!proto.pb.cms.SettleListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.SettleListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.SettleListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.SettleListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.SettleListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getSettleList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetSettleList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetSettleList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.SettleListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.SettleListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getSettleList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetSettleList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetSettleList);
+};
+
+
 module.exports = proto.pb.cms;
 

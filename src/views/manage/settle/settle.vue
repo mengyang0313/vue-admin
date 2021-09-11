@@ -1,6 +1,13 @@
 <template>
     <div class="table-classic-wrapper">
         <el-card shadow="always">
+            <!-- 操作栏 -->
+            <div class="control-btns">
+                <el-button type="success" @click="toDialog('createSettleSearch', '')" icon="el-icon-refresh">生成预结算记录</el-button>
+                <el-button type="primary" @click="submitSettleRecord" icon="el-icon-check" :loading="submitLoading">确认结算</el-button>
+                <el-button type="primary" @click="handleImport">导入数据</el-button>
+                <el-button type="primary" @click="exportVisible = true">导出数据</el-button>
+            </div>
             <!-- 查询栏 -->
             <el-form
                 ref="searchForm"
@@ -9,51 +16,38 @@
                 label-width="90px"
                 class="search-form"
             >
-                <template>
-                    <el-row>
-                        <el-col :span="16">
-                            <el-form-item label="地区">
-                                <el-select v-model="search.area" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-divider></el-divider>
-                    <el-row>
-                        <el-col :span="1">&nbsp;</el-col>
-                        <el-col :span="4">
-                            <el-form-item label="当前待结算日期:" label-width="320">
-                                2021-07-20
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="工会">
-                                <el-select v-model="search.app" placeholder="请选择">
-                                    <el-option v-for="item in apps"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="主播ID">
-                                <el-input v-model="search.uid" placeholder="用户ID"/>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="7">
-                            <el-form-item>
-                                <el-button type="primary" @click="onSubmit">筛&nbsp;&nbsp;&nbsp;&nbsp;选</el-button>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </template>
+                <el-form-item label="日期:">
+                    <el-date-picker
+                        v-model="search.date"
+                        type="date"
+                        placeholder="选择日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="地区">
+                    <el-select v-model="search.area" placeholder="请选择">
+                        <el-option v-for="item in areaData"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="工会">
+                    <el-select v-model="search.app" placeholder="请选择">
+                        <el-option v-for="item in apps"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="主播ID">
+                    <el-input v-model="search.uid" placeholder="用户ID"/>
+                </el-form-item>
+
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit">筛&nbsp;&nbsp;&nbsp;&nbsp;选</el-button>
+                </el-form-item>
             </el-form>
             <!-- 表格栏 -->
             <el-table
@@ -82,67 +76,94 @@
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
+
+            <!-- 充值 弹出栏 -->
+            <createSettleSearch ref="createSettleSearch" @fetchData="fetchData"/>
         </el-card>
     </div>
 </template>
 
 <script>
-import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import { areaData, apps, orderStatus } from '@/dict/index'
+import createSettleSearch from './dialog/CreateSettleSearch'
+import {getAreaList, getArrName } from "@/utils/common";
+
+
 
 export default {
-    components: { Pagination, apps },
+    components: { Pagination, createSettleSearch },
     data() {
         return {
-            // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
-            search: this.initQuery(),
-            // 数据总条数
+            search: {
+                areaId: 1,
+                guildId: undefined,
+                anchorId: undefined,
+                settleAt: undefined,
+                status: undefined
+            },
             total: 0,
-            // 防止多次连续提交表单
-            isSubmit: false,
-            areaData,
-            apps
+            submitLoading: false,
+            areaList: getAreaList()
         }
     },
     created() {
-        this.fetchData()
     },
     methods: {
-        // 获取数据列表
         fetchData() {
+            const $this = this
             this.listLoading = true
-            let url = process.env.VUE_APP_JSON_URI + "/settle.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
-            })
+            this.$service.settle.getSettleList(this.search(), function (result){
+                const list = result.getUsersList()
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appList, item.getAppId()),
+                        "nickname" : item.getNickname(),
+                        "avatar"  : item.getAvatar(),
+                        "onlineStatus" : item.getOnlineStatus(),
+                        "onlineStatusStr" : getOnlineStatus(item.getOnlineStatus()),
+                        "blockStatus" : item.getBlockStatus(),
+                        "blockStatusStr" : getBlockStatus(item.getBlockStatus()),
+                        "vipEndAt" : new Date(item.getVipEndAt() * 1000).format('yyyy-MM-dd'),
+                        "expense" : item.getExpense(),
+                        "deposit" : item.getDeposit(),
+                        "balance" : item.getBalance(),
+                        "createdAt" : new Date(item.getCreatedAt() * 1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "osType" : item.getOsType(),
+                        "appVersion" : item.getVersion(),
+                        "onlineIp" : item.getOnlineIp(),
+                    }
+                    data.push(json)
+                })
+                $this.total = result.getTotalCount()
+                $this.tableData = data
+                $this.listLoading = false
+            });
         },
-        // 查询数据
         onSearch() {
-            this.search.currentPage = 1
             this.fetchData()
         },
-        //重置
         resetForm() {
-            this.search = this.initQuery();
+            this.$refs.searchForm.resetFields()
         },
-        initQuery() {
-            return {
-                uid: undefined,
-                app: undefined,
-                currentPage: 1,
-                pageSize: 10
-            }
+        toDialog(component, row){
+            this.$refs[component].dialogVisible = true
+            this.$nextTick(()=>{
+                this.$refs[component].init(row);
+            })
+        },
+        // 生成预结算记录
+        createSettleRecord(){
+
+        },
+        // 确认结算
+        submitSettleRecord(){
+            this.submitLoading = true
         }
     }
 }

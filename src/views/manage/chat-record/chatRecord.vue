@@ -110,7 +110,7 @@
                 <el-table-column prop="sendAt" label="发送时间" align="center" width="220"/>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toDialog('conversation',scope.row)">查看对话</el-button>
+                        <el-button type="text" @click="toDialog('showDialog',scope.row)">查看对话</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -119,7 +119,7 @@
                         @pagination="fetchData"/>
 
             <!-- 对话 弹出栏 -->
-            <conversation ref="conversation"/>
+            <showDialog ref="showDialog"/>
 
         </el-card>
     </div>
@@ -128,11 +128,11 @@
 <script>
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import conversation from './dialog/conversation'
-import {getAppList, getAreaList, getMessageType, getArrName, getAppName} from "@/utils/common";
+import showDialog from './dialog/show-dialog'
+import {getAppList, getAreaList, getMessageType, getAppName} from "@/utils/common";
 
 export default {
-    components: { Pagination, conversation },
+    components: { Pagination, showDialog },
     data() {
         return {
             // 数据列表加载动画
