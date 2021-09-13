@@ -782,3 +782,36 @@ export function getSourceType(key){
         return arr
     }
 }
+
+
+
+// 结算状态
+export function getSettleStatus(key){
+    let arr = [{
+        value: 0,
+        label: '全部'
+    }, {
+        value: 1,
+        label: '预结算'
+    }, {
+        value: 2,
+        label: '已剔除'
+    }, {
+        value: 3,
+        label: '结算完成'
+    }, {
+        value: 4,
+        label: '撤销结算'
+    }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
+}

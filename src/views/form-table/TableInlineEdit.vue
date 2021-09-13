@@ -65,8 +65,9 @@ export default {
         // 获取数据列表
         fetchData() {
             this.listLoading = true
+            let url = "https://cdn.jsdelivr.net/gh/baimingxuan/media-store/mock-data/table-list.json";
             // 获取数据列表接口
-            getTableList(this.search).then(res => {
+            getTableList(this.search, url).then(res => {
                 const data = res.data
                 if (data.code === 0) {
                     this.tableList = data.data.list.map(item => {

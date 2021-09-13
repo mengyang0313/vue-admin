@@ -17,9 +17,10 @@ export default class {
         const metadata = {'token': getToken()}
         this.client.createSettleRecord(req, metadata, (err, resp) => {
             if (!err) {
-                callback(resp)
+                callback(true)
             } else {
                 error(err)
+                callback(false)
             }
         })
     }
@@ -34,9 +35,10 @@ export default class {
         const metadata = {'token': getToken()}
         this.client.submitSettleRecord(req, metadata, (err, resp) => {
             if (!err) {
-                callback(resp)
+                callback(true)
             } else {
                 error(err)
+                callback(false)
             }
         })
     }

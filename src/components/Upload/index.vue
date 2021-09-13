@@ -44,6 +44,7 @@ export default {
             }
         },
         uploadError(res, file) {
+            console.log(res)
             this.$emit('on-error')
         }
     }

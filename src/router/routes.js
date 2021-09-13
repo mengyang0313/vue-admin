@@ -289,22 +289,22 @@ export const asyncRoutes = [
                     title: '结算历史'
                 }
             },
-            {
-                path: 'in-settle',
-                name: 'in-settle',
-                component: () => import('../views/manage/settle/in-settle'),
-                meta: {
-                    title: '印尼结算'
-                }
-            },
-            {
-                path: 'in-settle-history',
-                name: 'in-settle-history',
-                component: () => import('../views/manage/settle/in-settle-history'),
-                meta: {
-                    title: '印尼结算历史'
-                }
-            }
+            // {
+            //     path: 'in-settle',
+            //     name: 'in-settle',
+            //     component: () => import('../views/manage/settle/in-settle'),
+            //     meta: {
+            //         title: '印尼结算'
+            //     }
+            // },
+            // {
+            //     path: 'in-settle-history',
+            //     name: 'in-settle-history',
+            //     component: () => import('../views/manage/settle/in-settle-history'),
+            //     meta: {
+            //         title: '印尼结算历史'
+            //     }
+            // }
         ]
     },
     {
