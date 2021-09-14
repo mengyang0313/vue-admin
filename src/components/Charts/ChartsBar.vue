@@ -8,10 +8,6 @@ import echarts from 'echarts'
 export default {
     name: 'ChartsBar',
     props: {
-        title: {
-            type: String,
-            default: ''
-        },
         data: {
             type: Object,
             default: () => {
@@ -34,12 +30,16 @@ export default {
             this.dom.resize()
         },
         drawing() {
-            const xAxisData = Object.keys(this.data)
-            const seriesData = Object.values(this.data)
+            const title = this.data.title
+            const legendData = this.data.legend
+            const xAxisData = this.data.data.map(item => item.title)
+            const seriesData1 = this.data.data.map(item => item.val1)
+            const seriesData2 = this.data.data.map(item => item.val2)
+            const seriesData3 = this.data.data.map(item => item.val3)
             const options = {
                 // 标题
                 title: {
-                    text: this.title,
+                    text: title,
                     top: 15
                 },
                 // 工具提示
@@ -57,6 +57,10 @@ export default {
                         restore: {show: true},
                         saveAsImage: {show: true}
                     }
+                },
+                legend: {
+                    top: 5,
+                    data: legendData
                 },
                 grid: {
                     left: '3%',
@@ -86,22 +90,44 @@ export default {
                 // 类型配置
                 series: [
                     {
-                        name: '直接访问',
-                        // 类型配置
+                        name: legendData[0],
                         type: 'bar',
+                        stack: 'total',
+                        color: '#2d8cf0',
                         barWidth: '40%',
-                        // 数据配置
-                        data: seriesData,
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    show: true,
-                                    fontSize: 14,
-                                    position: 'top',
-                                    formatter: '{c}'
-                                }
-                            }
-                        }
+                        label: {
+                            show: true
+                        },
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: seriesData1
+                    },
+                    {
+                        name: legendData[1],
+                        type: 'bar',
+                        stack: 'total',
+                        color: '#19be6b',
+                        label: {
+                            show: true
+                        },
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: seriesData2
+                    },
+                    {
+                        name: legendData[2],
+                        type: 'bar',
+                        stack: 'total',
+                        color: '#ff9900',
+                        label: {
+                            show: true
+                        },
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: seriesData3
                     }
                 ]
             }

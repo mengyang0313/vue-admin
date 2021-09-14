@@ -193,7 +193,7 @@ message AreaConfig {
     uint32 deposit_commission = 5;
     // 用户赠送的钻石或积分消费分成比例，百分位，如果取值为10，表示分成10%
     uint32 reward_commission = 6;
-    // 通话价格
+    // 默认通话价格
     uint32 call_price = 7;
     // 免费消息数量
     uint32 free_message_count = 8;
@@ -494,30 +494,34 @@ message AreaStat {
     uint32 idle_anchor = 11;
     // 通话主播数量
     uint32 busy_anchor = 12;
-    // 进行中通话数量
-    uint32 ongoing_call = 13;
+    // AI发起进行中通话数量
+    uint32 ai_calling = 13;
+    // 用户发起进行中通话数量
+    uint32 user_calling = 14;
+    // 主播发起进行中通话数量
+    uint32 anchor_calling = 15;
     // AI通话发起数量
-    uint32 ai_call = 14;
+    uint32 ai_call = 16;
     // 用户通话发起数量
-    uint32 user_call = 15;
+    uint32 user_call = 17;
     // 主播通话发起数量
-    uint32 anchor_call = 16;
+    uint32 anchor_call = 18;
     // 用户接听数量
-    uint32 user_answer = 17;
+    uint32 user_answer = 19;
     // 主播接听数量
-    uint32 anchor_answer = 18;
+    uint32 anchor_answer = 20;
     // 充值钻石数量
-    uint64 deposit = 19;
+    uint64 deposit = 21;
     // 消耗钻石数量
-    uint64 expense = 20;
+    uint64 expense = 22;
     // 收入
-    uint32 income = 21;
-    // google支付数量
-    uint32 google_pay = 22;
-    // apple支付数量
-    uint32 apple_pay = 23;
-    // 三方支付数量
-    uint32 other_pay = 24;
+    uint32 income = 23;
+    // google支付金额
+    uint32 google_pay = 24;
+    // apple支付金额
+    uint32 apple_pay = 25;
+    // 三方支付金额
+    uint32 other_pay = 26;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;
@@ -540,20 +544,22 @@ message AnchorStat {
     uint32 in_call = 8;
     // 呼出数
     uint32 out_call = 9;
-    // 接听率
-    float answer_rate = 10;
-    // 有效接听率
-    float effect_answer_rate = 11;
+    // 接听数
+    uint32 answer = 10;
+    // 通话时间30s以上数量
+    uint32 answer_30 = 11;
+    // 通话时间50s以上数量
+    uint32 answer_50 = 12;
     // 平均通话时长
-    uint32 avg_duration = 12;
+    uint32 avg_duration = 13;
     // 通话收入
-    uint32 call_income = 13;
+    uint32 call_income = 14;
     // 礼物收入
-    uint32 gift_income = 14;
+    uint32 gift_income = 15;
     // 用户充值分成
-    uint32 commission_income = 15;
+    uint32 commission_income = 16;
     // 奖惩收入
-    uint32 adjust_income = 16;
+    uint32 adjust_income = 17;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;

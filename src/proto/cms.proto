@@ -19,6 +19,18 @@ service CmsSdk {
     rpc GetAdminInfo (Empty) returns (Admin) {
     }
 
+    // 获取总体实时数据
+    rpc GetOverview (OverviewRequest) returns (OverviewReply) {
+    }
+
+    // 获取首页统计数据
+    rpc GetHomeStat (HomeStatRequest) returns (HomeStatReply) {
+    }
+
+    // 获取区域统计数据
+    rpc GetAreaStat (AreaStatRequest) returns (AreaStatReply) {
+    }
+
     // 保存管理员，id为0时创建
     rpc SaveAdmin (Admin) returns (Admin) {
     }
@@ -176,6 +188,83 @@ message AreaListReply {
 message LoginRequest {
     string email = 1;
     string password = 2;
+}
+
+message OverviewRequest {
+    uint32 area_id = 1;
+    uint32 start_at = 2;
+    uint32 end_at = 3;
+}
+
+message OverviewReply {
+    // 总收入
+    uint32 income = 1;
+    // 总订单数
+    uint32 pay_count = 2;
+    // 新增用户
+    uint32 new_user = 3;
+    // 活跃用户
+    uint32 active_user = 4;
+    // 通话主播
+    uint32 busy_anchor = 5;
+    // 在线主播
+    uint32 online_anchor = 6;
+    // 待审核主播
+    uint32 review_anchor = 7;
+    // 待审核profile
+    uint32 review_profile = 8;
+    // 待审核视频
+    uint32 review_video = 9;
+    // 新充值钻石
+    uint64 new_amount = 10;
+    // 消费钻石
+    uint64 expense_amount = 11;
+    // 总余额
+    uint64 total_amount = 12;
+}
+
+message HomeStatRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 开始时间
+    uint32 start_at = 2;
+    // 结束时间，为0时表示到当前时间
+    uint32 end_at = 3;
+}
+
+message AppStat {
+    // 应用id
+    uint32 app_id = 1;
+    // 系统类型
+    OsType os_type = 2;
+    // 应用名称
+    string name = 3;
+    // 新增收入
+    uint32 new_income = 4;
+    // 总收入
+    uint32 total_income = 5;
+    // 新增用户
+    uint32 new_user = 6;
+    // google收入
+    uint32 google_income = 7;
+    // 苹果收入
+    uint32 apple_income = 8;
+    // 其他收入
+    uint32 other_income = 9;
+}
+
+message HomeStatReply {
+    // 应用统计数据
+    repeated AppStat stats = 1;
+    // 每小时活跃数据
+    repeated uint32 hourly_actives = 2;
+}
+
+message AreaStatRequest {
+}
+
+message AreaStatReply {
+
 }
 
 message AdminListReply {

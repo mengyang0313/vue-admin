@@ -6,7 +6,8 @@ import {
     UserListReply, AdminFileChunk, AdjustBalanceRequest, ProfileListRequest, ViolationListRequest, ProcessProfileRequest,
     ProcessViolationRequest, LiveListRequest, PayListRequest, RobotListRequest, RobotMessageListRequest, AutoMessageListRequest,
     AnchorFullRequest, ChatMessageListRequest, CallListRequest, TransactionListRequest, AuthorizeAnchorRequest, BlockRequest, UnblockRequest,
-    MigrateRequest, MomentListRequest, CreateSettleRequest, SubmitSettleRequest, SettleProgressRequest, SettleListRequest
+    MigrateRequest, MomentListRequest, CreateSettleRequest, SubmitSettleRequest, SettleProgressRequest, SettleListRequest, OverviewRequest,
+    HomeStatRequest
 } from '../proto/js/cms_pb'
 import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment } from '../proto/js/usertype_pb'
 import { Admin, Guild, RobotMessage, AutoMessage } from '../proto/js/cmstype_pb'
@@ -57,6 +58,8 @@ const deps = {
       SubmitSettleRequest,
       SettleProgressRequest,
       SettleListRequest,
+      OverviewRequest,
+      HomeStatRequest,
       Empty,
       EntityType,
       User,

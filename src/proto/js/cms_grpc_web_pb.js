@@ -320,6 +320,246 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getAdminInfo =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.OverviewRequest,
+ *   !proto.pb.cms.OverviewReply>}
+ */
+const methodDescriptor_CmsSdk_GetOverview = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetOverview',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.OverviewRequest,
+  proto.pb.cms.OverviewReply,
+  /**
+   * @param {!proto.pb.cms.OverviewRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.OverviewReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.OverviewRequest,
+ *   !proto.pb.cms.OverviewReply>}
+ */
+const methodInfo_CmsSdk_GetOverview = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.OverviewReply,
+  /**
+   * @param {!proto.pb.cms.OverviewRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.OverviewReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.OverviewRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.OverviewReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.OverviewReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getOverview =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetOverview',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetOverview,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.OverviewRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.OverviewReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getOverview =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetOverview',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetOverview);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.HomeStatRequest,
+ *   !proto.pb.cms.HomeStatReply>}
+ */
+const methodDescriptor_CmsSdk_GetHomeStat = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetHomeStat',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.HomeStatRequest,
+  proto.pb.cms.HomeStatReply,
+  /**
+   * @param {!proto.pb.cms.HomeStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.HomeStatReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.HomeStatRequest,
+ *   !proto.pb.cms.HomeStatReply>}
+ */
+const methodInfo_CmsSdk_GetHomeStat = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.HomeStatReply,
+  /**
+   * @param {!proto.pb.cms.HomeStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.HomeStatReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.HomeStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.HomeStatReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.HomeStatReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getHomeStat =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetHomeStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetHomeStat,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.HomeStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.HomeStatReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getHomeStat =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetHomeStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetHomeStat);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.AreaStatRequest,
+ *   !proto.pb.cms.AreaStatReply>}
+ */
+const methodDescriptor_CmsSdk_GetAreaStat = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetAreaStat',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.AreaStatRequest,
+  proto.pb.cms.AreaStatReply,
+  /**
+   * @param {!proto.pb.cms.AreaStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AreaStatReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.AreaStatRequest,
+ *   !proto.pb.cms.AreaStatReply>}
+ */
+const methodInfo_CmsSdk_GetAreaStat = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.AreaStatReply,
+  /**
+   * @param {!proto.pb.cms.AreaStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AreaStatReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.AreaStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.AreaStatReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.AreaStatReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getAreaStat =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAreaStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAreaStat,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.AreaStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.AreaStatReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getAreaStat =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAreaStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAreaStat);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.Admin,
  *   !proto.pb.Admin>}
  */
