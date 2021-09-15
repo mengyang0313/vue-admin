@@ -1,7 +1,7 @@
 <template>
     <el-dialog title="帐号迁移" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
+            <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="源账号id" prop="srcId">
                     <el-input v-model="form.srcId" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
@@ -29,7 +29,12 @@ export default {
                 srcId: undefined,
                 dstId: undefined
             },
-            dialogVisible: false
+            dialogVisible: false,
+            rules: {
+                dstId: [
+                    {required: true, message: '内容不能为空', trigger: 'change'}
+                ]
+            }
         }
     },
     methods: {

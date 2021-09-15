@@ -100,7 +100,7 @@
             </el-col>
         </el-row>
 
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
             <el-menu-item index="1">主播资料</el-menu-item>
             <el-menu-item index="2">通话记录</el-menu-item>
             <el-menu-item index="3">订单信息</el-menu-item>
@@ -279,7 +279,7 @@ export default {
                     "reviewStatusStr" : getReviewStatus(item.getStatus()),
                     "photoCount" : item.getPhotoIdsList().length,
                     "videoCount" : item.getVideoIdsList().length,
-                    "tags" : item.getTagsList(),
+                    "tags" : item.getTagsList().join(", "),
                     "occupation" : item.getOccupation(),
                     "birthday" : item.getBirthday(),
                     "voiceGreeting" : item.getVoiceGreeting(),

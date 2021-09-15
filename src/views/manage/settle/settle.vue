@@ -237,11 +237,7 @@ export default {
         },
         // 生成预结算记录
         createSettleRecord(param){
-            if(this.querySettleProgress(param)){
-                this.search.areaId = param.areaId
-                this.search.settleAtTime = param.settleAt
-                this.fetchData()
-            }
+            this.querySettleProgress(param)
         },
         // 确认结算
         submitSettleRecord(){
@@ -249,7 +245,7 @@ export default {
             let param = {
                 areaId : this.search.areaId,
                 records: this.records,
-                settleAt: this.search.settleAtTime
+                settleAtTime: this.search.settleAtTime
             }
             param.records.forEach(item => {
                 if(1 === item.getStatus()){
@@ -258,10 +254,7 @@ export default {
             })
             this.$service.settle.submitSettleRecord(param, function (result){
                 if(result){
-                    if($this.querySettleProgress(param.areaId)){
-                        this.search.status = 1
-                        this.fetchData()
-                    }
+                    $this.querySettleProgress(param)
                 }else{
                     $this.$message.error("结算失败!")
                 }
@@ -290,7 +283,7 @@ export default {
                         }, 1000);
 
                         $this.search.areaId = param.areaId
-                        $this.search.settleAtTime = param.settleAt
+                        $this.search.settleAtTime = param.settleAtTime
                         $this.fetchData()
                         return true
                     }else{

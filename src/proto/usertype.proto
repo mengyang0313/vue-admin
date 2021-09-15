@@ -118,8 +118,12 @@ enum EntityType {
     EntitySettleRecord = 13;
     // 奖惩记录
     EntityAdjustRecord = 14;
+    // 文件检录
+    EntityFileRecord = 15;
     // 朋友圈、信息流
-    EntityMoment = 15;
+    EntityMoment = 16;
+    // 点赞记录
+    EntityLikeRecord = 17;
 }
 
 // 网络类型
@@ -1144,7 +1148,7 @@ message FileChunk {
 // 文件记录
 message FileRecord {
     uint64 id = 1;
-    // 应用id，对于主播为空
+    // 应用id
     uint32 app_id = 2;
     // 区域id
     uint32 area_id = 3;
@@ -1165,7 +1169,29 @@ message FileRecord {
     // 截图，视频有效
     string thumb = 11;
     // 点赞次数
-    uint32 like_count = 12;
+    uint32 likes = 12;
+
+    uint32 updated_at = 20;
+    uint32 created_at = 21;
+}
+
+// 点赞记录
+message LikeRecord {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 点赞人类型
+    EntityType liker_type = 4;
+    // 点赞人id
+    uint32 liker_id = 5;
+    // 被点赞类型
+    EntityType liked_type = 6;
+    // 被点赞id
+    uint64 liked_id = 7;
+    // 点赞次数
+    uint32 count = 8;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;

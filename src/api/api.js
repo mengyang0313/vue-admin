@@ -7,7 +7,7 @@ import {
     ProcessViolationRequest, LiveListRequest, PayListRequest, RobotListRequest, RobotMessageListRequest, AutoMessageListRequest,
     AnchorFullRequest, ChatMessageListRequest, CallListRequest, TransactionListRequest, AuthorizeAnchorRequest, BlockRequest, UnblockRequest,
     MigrateRequest, MomentListRequest, CreateSettleRequest, SubmitSettleRequest, SettleProgressRequest, SettleListRequest, OverviewRequest,
-    HomeStatRequest
+    HomeStatRequest, AreaStatRequest
 } from '../proto/js/cms_pb'
 import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment } from '../proto/js/usertype_pb'
 import { Admin, Guild, RobotMessage, AutoMessage } from '../proto/js/cmstype_pb'
@@ -60,6 +60,7 @@ const deps = {
       SettleListRequest,
       OverviewRequest,
       HomeStatRequest,
+      AreaStatRequest,
       Empty,
       EntityType,
       User,

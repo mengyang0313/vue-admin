@@ -15,16 +15,16 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="主播等级：" prop="level">
-                    <el-select v-model="form.level" placeholder="请选择">
-                        <el-option
-                            v-for="item in anchorLevel"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item label="主播等级：" prop="level">-->
+<!--                    <el-select v-model="form.level" placeholder="请选择">-->
+<!--                        <el-option-->
+<!--                            v-for="item in anchorLevel"-->
+<!--                            :key="item.value"-->
+<!--                            :label="item.label"-->
+<!--                            :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item label="主播工会" prop="guildId">
                     <el-select v-model="form.guildId" placeholder="请选择">
                         <el-option v-for="item in guildList"

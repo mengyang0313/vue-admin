@@ -113,16 +113,18 @@ message App {
     bool enable = 4;
     // 应用名称
     string title = 5;
+    // 是否为主播端
+    bool is_anchor = 6;
     // 包名
-    string bundle_id = 6;
+    string bundle_id = 7;
     // google play CredentialFile，apple store IAP Secret
-    string store_cred = 7;
+    string store_cred = 8;
     // api地址
-    string api_addr = 8;
+    string api_addr = 9;
     // 备注
-    string note = 9;
+    string note = 10;
     // 启用的区域
-    repeated uint32 area_ids = 10;
+    repeated uint32 area_ids = 11;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;
@@ -240,7 +242,6 @@ message PayConfig {
     string app_secret = 6;
     string redirect_url = 8;
     string callback_url = 10;
-    // permax order prefix
     string extra1 = 11;
     string extra2 = 12;
     string extra3 = 13;
@@ -550,8 +551,8 @@ message AnchorStat {
     uint32 answer_30 = 11;
     // 通话时间50s以上数量
     uint32 answer_50 = 12;
-    // 平均通话时长
-    uint32 avg_duration = 13;
+    // 通话时长
+    uint32 duration = 13;
     // 通话收入
     uint32 call_income = 14;
     // 礼物收入
@@ -559,7 +560,11 @@ message AnchorStat {
     // 用户充值分成
     uint32 commission_income = 16;
     // 奖惩收入
-    uint32 adjust_income = 17;
+    int32 adjust_income = 17;
+    // 消耗贡献
+    uint32 expense = 18;
+    // 充值贡献
+    uint32 income = 19;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;
@@ -568,7 +573,9 @@ message AnchorStat {
 // 用户统计数据
 message UserStat {
     uint64 id = 1;
+    // 区域id
     uint32 area_id = 2;
+    // 应用id
     uint32 app_id = 3;
     // 起始时间
     uint32 start_at = 4;
@@ -585,7 +592,7 @@ message UserStat {
     // 充值用户数量
     uint32 pay_user = 10;
     // VIP购买数量
-    float vip_user= 11;
+    float vip_user = 11;
     // 复购用户数量
     uint32 repay_user = 12;
     // 新用户收入

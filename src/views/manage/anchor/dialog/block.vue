@@ -6,7 +6,7 @@
                     <el-input v-model="form.entityId" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
                 <el-form-item label="封禁类型" prop="blockStatus">
-                    <el-select v-model="form.blockStatus" placeholder="请选择">
+                    <el-select v-model="form.blockStatus" placeholder="请选择" @change="changeBlockStatus">
                         <el-option
                             v-for="item in blockStatusList"
                             :key="item.value"
@@ -15,7 +15,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="封禁时常" prop="duration">
+                <el-form-item label="封禁时常" prop="duration" :hidden="isHidden">
                     <el-select v-model="form.duration" placeholder="请选择">
                         <el-option
                             v-for="item in blockTimeList"
@@ -61,6 +61,7 @@ export default {
                 struct: ''
             },
             dialogVisible: false,
+            isHidden: false,
             blockStatusList: getBlockStatus(),
             blockTimeList: getBlockTime(),
             rules: {
@@ -80,6 +81,7 @@ export default {
         init(row){
             this.form.entityId = row.id
             this.form.struct = row.struct
+            this.changeBlockStatus(row.struct)
         },
         submitForm() {
             const $this = this
@@ -95,6 +97,13 @@ export default {
                     })
                 }
             })
+        },
+        changeBlockStatus(val){
+            if(val === 2){
+                this.isHidden = true
+            }else{
+                this.isHidden = false
+            }
         },
         resetForm() {
             this.$refs.ruleForm.resetFields()

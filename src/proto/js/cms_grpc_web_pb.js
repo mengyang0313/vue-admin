@@ -560,6 +560,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getAreaStat =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.AnchorStatRequest,
+ *   !proto.pb.cms.AnchorStatReply>}
+ */
+const methodDescriptor_CmsSdk_GetAnchorStat = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetAnchorStat',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.AnchorStatRequest,
+  proto.pb.cms.AnchorStatReply,
+  /**
+   * @param {!proto.pb.cms.AnchorStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AnchorStatReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.AnchorStatRequest,
+ *   !proto.pb.cms.AnchorStatReply>}
+ */
+const methodInfo_CmsSdk_GetAnchorStat = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.AnchorStatReply,
+  /**
+   * @param {!proto.pb.cms.AnchorStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AnchorStatReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.AnchorStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.AnchorStatReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.AnchorStatReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getAnchorStat =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAnchorStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAnchorStat,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.AnchorStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.AnchorStatReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getAnchorStat =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAnchorStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAnchorStat);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.Admin,
  *   !proto.pb.Admin>}
  */

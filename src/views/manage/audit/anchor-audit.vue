@@ -42,7 +42,7 @@
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
-                        <imageShow :data="[scope.row.avatar]" :max-show="1"/>
+                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="reviewStatus" label="账户状态" align="center" width="120">
@@ -172,7 +172,7 @@ export default {
         // 通过
         handlePassed(index, row) {
             const $this = this
-            this.$prompt('', '通过原因', {
+            this.$confirm('是否通过', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
             }).then(({ value }) => {
@@ -183,7 +183,7 @@ export default {
                 }
                 this.$service.audit.processProfile(param, function (result){
                     result ? $this.$message.success("审核通过 !") : $this.$message.error("审核失败 !")
-                    this.fetchData()
+                    $this.fetchData()
                 });
             })
         },
@@ -201,7 +201,7 @@ export default {
                 }
                 this.$service.audit.processProfile(param, function (result){
                     result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
-                    this.fetchData()
+                    $this.fetchData()
                 });
             })
         },

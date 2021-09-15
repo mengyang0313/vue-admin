@@ -127,7 +127,7 @@ export default {
                         "anchorCount" : item.getAnchorCount(),
                         "enable" : item.getEnable(),
                         "note" : item.getNote(),
-                        "createdAt" : new Date(item.getCreatedAt()).toLocaleString(),
+                        "createdAt" : new Date(item.getCreatedAt() * 1000).format('yyyy-MM-dd hh:mm:ss'),
                         "struct" : item
                     }
                     data.push(json)

@@ -15,7 +15,7 @@
                 class="search-form"
             >
                 <el-form-item label="主播Id" prop="anchorId">
-                    <el-input v-model="search.anchorId" placeholder="anchorId"/>
+                    <el-input v-model="search.anchorId" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="工会" prop="guildId">
                     <el-select v-model="search.guildId" placeholder="请选择">
@@ -124,7 +124,7 @@
                 <el-table-column prop="guildName" label="工会" align="center" width="120" />
                 <el-table-column prop="level" label="主播等级" align="center" width="120">
                     <template slot-scope="scope">
-                        <el-tag size="medium" v-if="scope.row.level!=''">{{ scope.row.level }}</el-tag>
+                        <el-tag size="medium" v-if="scope.row.levelStr!=''">{{ scope.row.levelStr }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="fansCount" label="粉丝数量" align="center" width="120" />
@@ -323,7 +323,8 @@ export default {
                         "blockStatusStr" : getBlockStatus(item.getBlockStatus()),
                         "profileCount" : item.getProfileCount(),
                         "activeCount" : item.getActiveCount(),
-                        "level" : getAnchorLevel(item.getLevel()),
+                        "level" : item.getLevel(),
+                        "levelStr" : getAnchorLevel(item.getLevel()),
                         "fansCount" : item.getFansCount(),
                         "balance" : item.getBalance(),
                         "settled" : item.getSettled(),

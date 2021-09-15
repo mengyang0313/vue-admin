@@ -1,7 +1,7 @@
 <template>
     <el-dialog title="充值" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="form" :model="form" :rules="rules" label-width="150px" class="form-list">
+            <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="用户Id：" prop="uid">
                     <el-input v-model="form.id" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
@@ -12,7 +12,7 @@
                     <el-input-number v-model="form.amount"></el-input-number>
                     <div class="imgSpan2">正数为增加，负数为扣除</div>
                 </el-form-item>
-                <el-form-item label="是否发生系统通知" prop="sendNotify">
+                <el-form-item label="是否通知" prop="sendNotify">
                     <el-switch v-model="form.sendNotify"/>
                 </el-form-item>
                 <el-form-item label="备注" prop="desc">
@@ -36,10 +36,9 @@
 </template>
 
 <script>
-import { banLevel } from '@/dict/index'
 
 export default {
-    components: { banLevel },
+    components: {  },
     data() {
         return {
             form: {
@@ -49,7 +48,6 @@ export default {
                 sendNotify: false,
                 desc: '线下充值'
             },
-            banLevel,
             dialogVisible: false,
             rules: {
                 amount: [
@@ -63,9 +61,9 @@ export default {
             this.form.id = row.id
             this.form.nickname = row.nickname
         },
-        submitForm(formName) {
+        submitForm() {
             const $this = this
-            this.$refs[formName].validate((valid) => {
+            this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     this.$service.user.adjustBalance(this.form, function (result){
                         if (result) {
@@ -80,10 +78,11 @@ export default {
         },
         closeDialog() {
             this.dialogVisible = false
-            this.$emit('fetchData');
+            this.resetForm()
+            this.$emit('fetchData')
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
         }
     }
 }
@@ -93,7 +92,6 @@ export default {
 .form-list-wrapper {
     .el-card {
     }
-
     .form-list {
         width: 80%;
         margin: 0 auto;

@@ -52,7 +52,7 @@
                                 </el-date-picker>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="danger" @click="onSubmit" icon="el-icon-refresh">刷 新</el-button>
+                                <el-button type="danger" @click="onSearch" icon="el-icon-refresh">刷 新</el-button>
                         </el-form-item>
                         </template>
                     </el-form>
@@ -127,8 +127,8 @@ export default {
                 title: '新增收入',
                 legend: ['新增收入'],
                 data: [
-                    {title: 'Mon', val1: 782},
-                    {title: 'Tue', val1: 382},
+                    {title: 'Mon-apple',val1: 782},
+                    {title: 'Tue-android', val1: 382},
                     {title: 'Wed', val1: 482},
                     {title: 'Thu', val1: 582},
                     {title: 'Fri', val1: 982},
@@ -153,8 +153,8 @@ export default {
                 title: '新增用户',
                 legend: ['新增用户'],
                 data: [
-                    {title: 'Mon', val1: 782},
-                    {title: 'Tue', val1: 382},
+                    {title: 'Mon(apple)', val1: 782},
+                    {title: 'Tue(android)', val1: 382},
                     {title: 'Wed', val1: 482},
                     {title: 'Thu', val1: 582},
                     {title: 'Fri', val1: 982},
@@ -169,15 +169,6 @@ export default {
                 values: [
                     [120, 132, 101, 134, 90, 230, 210]
                 ]
-            },
-            userData: {
-                Mon: 782,
-                Tue: 925,
-                Wed: 1196,
-                Thu: 812,
-                Fri: 328,
-                Sat: 222,
-                Sun: 1080
             },
             channelData: {
                 title: '充值渠道',
@@ -199,9 +190,14 @@ export default {
         this.initData()
     },
     methods: {
+        onSearch() {
+            this.initCard()
+            this.initData()
+        },
         initCard(){
             const $this = this
-            this.$service.home.getOverview(this.search, function (result){
+            this.cardInfoData = []
+            this.$service.home.getOverview(this.handleSearch(), function (result){
                 let inc = {
                     title: '大盘实时收入', num: 2, count: result.getIncome(), count2: result.getPayCount()
                 }
@@ -226,81 +222,68 @@ export default {
         },
         initData(){
             const $this = this
-            this.$service.home.getHomeStat(this.search, function (result){
-                let appStatArr = result.getStatsList()
-                appStatArr.forEach(item => {
+            this.$service.home.getHomeStat(this.handleSearch(), function (result){
+                let activeList = result.getHourlyActivesList()
+                let statList = result.getStatsList()
+                statList.forEach(item => {
                     $this.handleNewIncomeData(item);
                     $this.handleTotalIncomeData(item);
                     $this.handleUserData(item);
                     $this.handleChannelData(item);
                 })
+                $this.handleActiveData(activeList)
             });
         },
-        handleNewIncomeData(appStat){
+        handleSearch(){
+            let date = this.search.date
+            this.search.startAt = this.startUnix(date)
+            this.search.endAt = this.endUnix(date)
+            return this.search
+        },
+        handleNewIncomeData(item){
             let json = {
-                    title: appStat.getName(),
-                    val1: appStat.getNewIncome()
+                    title: item.getName(),
+                    val1: item.getNewIncome()
                 }
             this.incomeData.data.push(json)
         },
-        handleTotalIncomeData(appStat){
+        handleTotalIncomeData(item){
             let json = {
-                    title: appStat.getName(),
-                    val1: appStat.getTotalIncome()
+                    title: item.getName(),
+                    val1: item.getTotalIncome()
                 }
             this.totalDate.data.push(json)
         },
-        handleUserData(activeArr){
+        handleUserData(item){
+            let json = {
+                title: item.getName(),
+                val1: item.getNewUser()
+            }
+            this.totalDate.data.push(json)
+        },
+        handleActiveData(statList){
             let data = []
-            activeArr.forEach((item, index) => {
+            statList.forEach((item, index) => {
                 this.activeData.keys.push(index + ":00")
                 data.push(item)
             })
             this.activeData.data.push(data)
         },
-        handleActiveData(appStat){
-            let json = {
-                    title: appStat.getName(),
-                    val1: appStat.getNewUser()
-                }
-            this.totalDate.data.push(json)
-        },
-        handleChannelData(appStat){
+        handleChannelData(item){
             let json =  {
-                    title: appStat.getName(),
-                    val1: appStat.getGoogleIncome(),
-                    val2: appStat.getAppleIncome(),
-                    val3: appStat.getOtherIncome()
+                    title: item.getName(),
+                    val1: item.getGoogleIncome(),
+                    val2: item.getAppleIncome(),
+                    val3: item.getOtherIncome()
                 }
             this.channelData.data.push(json)
+        },
+        startUnix($date) {
+            return new Date($date.toLocaleDateString()).getTime() / 1000
+        },
+        endUnix($date) {
+            return this.startUnix($date) + 24 * 60 * 60 - 1
         }
-
-        // incomeData: {
-        //     title: '新增收入',
-        //     legend: ['钻石收益', 'vip收益', '全部收入', '新增付费率'],
-        //     data: [
-        //         {title: 'Mon', val1: 782, val2: 82, val3: 18.2, val4: 8.2},
-        //         {title: 'Tue', val1: 382, val2: 82, val3: 1.2, val4: 11.2},
-        //         {title: 'Wed', val1: 482, val2: 82, val3: 5.2, val4: 11.2},
-        //         {title: 'Thu', val1: 582, val2: 82, val3: 21.2, val4: 9.2},
-        //         {title: 'Fri', val1: 982, val2: 82, val3: 2.2, val4: 5.2},
-        //         {title: 'Sat', val1: 382, val2: 82, val3: 32.2, val4: 6.2},
-        //         {title: 'Sun', val1: 282, val2: 82, val3: 5.2, val4: 9.2},
-        //     ]
-        // },
-        // totalDate: {
-        //     title: '全部收入',
-        //     legend: ['充钻收入', 'vip收益', '全部收入', '新增付费率'],
-        //     data: [
-        //         {title: 'Mon', val1: 782, val2: 82, val3: 18.2, val4: 8.2},
-        //         {title: 'Tue', val1: 382, val2: 82, val3: 1.2, val4: 11.2},
-        //         {title: 'Wed', val1: 482, val2: 82, val3: 5.2, val4: 11.2},
-        //         {title: 'Thu', val1: 582, val2: 82, val3: 21.2, val4: 9.2},
-        //         {title: 'Fri', val1: 982, val2: 82, val3: 2.2, val4: 5.2},
-        //         {title: 'Sat', val1: 382, val2: 82, val3: 32.2, val4: 6.2},
-        //         {title: 'Sun', val1: 282, val2: 82, val3: 5.2, val4: 9.2},
-        //     ]
-        // },
     }
 }
 </script>

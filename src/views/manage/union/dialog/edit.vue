@@ -97,6 +97,7 @@ export default {
         },
         closeDialog() {
             this.dialogVisible = false
+            this.resetForm()
             this.$emit('fetchData');
         },
         resetForm() {

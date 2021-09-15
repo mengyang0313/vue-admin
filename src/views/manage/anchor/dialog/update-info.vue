@@ -1,13 +1,13 @@
 <template>
     <el-dialog title="更新信息" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="form" :model="form" label-width="150px" class="form-list">
+            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
                 <el-form-item label="主播ID：" prop="anchorId">
                     <el-input v-model="form.id" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
-                <el-form-item label="主播昵称：" prop="nickname">
+<!--                <el-form-item label="主播昵称：" prop="nickname">
                     <el-input v-model="form.nickname" placeholder="请输入" :disabled="true"/>
-                </el-form-item>
+                </el-form-item>-->
                 <el-form-item label="主播地区" prop="areaId">
                     <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option v-for="item in areaData"
@@ -60,14 +60,7 @@ import {getAnchorLevel, getAreaList, getGuildList} from "@/utils/common";
 export default {
     data() {
         return {
-            form: {
-                id: '',
-                nickname: '',
-                guildId: '',
-                areaId: '',
-                level: '',
-                note: ''
-            },
+            form: {},
             areaData: getAreaList(),
             anchorLevel: getAnchorLevel(),
             guildList: getGuildList(),
@@ -78,9 +71,9 @@ export default {
         init(row){
             this.form = row
         },
-        submitForm(formName) {
+        submitForm() {
             const $this = this
-            this.$refs[formName].validate((valid) => {
+            this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     this.$service.anchor.updateAnchorBasic(this.form, function (result){
                         if (result) {

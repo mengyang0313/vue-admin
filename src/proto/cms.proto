@@ -31,6 +31,9 @@ service CmsSdk {
     rpc GetAreaStat (AreaStatRequest) returns (AreaStatReply) {
     }
 
+    // 获取主播统计数据
+    rpc GetAnchorStat (AnchorStatRequest) returns (AnchorStatReply) {}
+
     // 保存管理员，id为0时创建
     rpc SaveAdmin (Admin) returns (Admin) {
     }
@@ -235,22 +238,18 @@ message HomeStatRequest {
 message AppStat {
     // 应用id
     uint32 app_id = 1;
-    // 系统类型
-    OsType os_type = 2;
-    // 应用名称
-    string name = 3;
     // 新增收入
-    uint32 new_income = 4;
+    uint32 new_income = 2;
     // 总收入
-    uint32 total_income = 5;
+    uint32 total_income = 3;
     // 新增用户
-    uint32 new_user = 6;
+    uint32 new_user = 4;
     // google收入
-    uint32 google_income = 7;
+    uint32 google_income = 5;
     // 苹果收入
-    uint32 apple_income = 8;
+    uint32 apple_income = 6;
     // 其他收入
-    uint32 other_income = 9;
+    uint32 other_income = 7;
 }
 
 message HomeStatReply {
@@ -261,10 +260,43 @@ message HomeStatReply {
 }
 
 message AreaStatRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 开始时间
+    uint32 start_at = 2;
+    // 结束时间，为0时表示到当前时间
+    uint32 end_at = 3;
 }
 
 message AreaStatReply {
+    repeated AreaStat stats = 1;
+}
 
+message AnchorStatRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 主播等级
+    AnchorLevel level = 4;
+    // 主播id
+    uint32 anchor_id = 5;
+    // 统计时间
+    uint32 stat_at = 6;
+}
+
+message AnchorStatReply {
+    repeated AnchorStat stats = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
 }
 
 message AdminListReply {

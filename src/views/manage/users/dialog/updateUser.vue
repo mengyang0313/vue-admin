@@ -9,7 +9,7 @@
                     <el-input v-model="form.nickname" placeholder="请输入" :disabled="true"/>
                 </el-form-item>
                 <el-form-item label="vip到期时间" prop="vipEndAt">
-                    <el-date-picker type="date" placeholder="开始时间" v-model="form.vipEndAt" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="vip到期时间" v-model="form.vipEndAt" style="width: 100%;"></el-date-picker>
                 </el-form-item>
 
                 <el-form-item class="submit-box">

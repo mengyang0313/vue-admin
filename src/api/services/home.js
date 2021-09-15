@@ -44,14 +44,14 @@ export default class {
 
 
     // 图形统计数据
-    async getHomeStat (param, callback) {
-        let req = new this.proto.HomeStatRequest();
+    async getAreaStat (param, callback) {
+        let req = new this.proto.AreaStatRequest();
         req.setAreaId(param.areaId)
         req.setStartAt(param.startAt)
         req.setEndAt(param.endAt)
 
         const metadata = {'token': getToken()};
-        this.client.getHomeStat(req, metadata, (err, resp) => {
+        this.client.getAreaStat(req, metadata, (err, resp) => {
             if (!err) {
                 callback(resp)
             } else {

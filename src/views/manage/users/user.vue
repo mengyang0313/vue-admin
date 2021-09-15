@@ -97,7 +97,8 @@
                 <el-table-column prop="nickname" label="用户名" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
-                        <imageShow :data="[scope.row.avatar]" :max-show="1"/>
+                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
+<!--                        <imageShow :data="[scope.row.avatar]" :max-show="1"/>-->
                     </template>
                 </el-table-column>
                 <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">
