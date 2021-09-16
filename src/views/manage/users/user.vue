@@ -15,7 +15,7 @@
                 <el-form-item label="用户名" prop="nickname">
                     <el-input v-model="search.nickname" placeholder="用户名"/>
                 </el-form-item>
-                <el-form-item label="地区" prop="areaId">
+                <el-form-item label="区域" prop="areaId">
                     <el-select v-model="search.areaId" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
@@ -80,7 +80,7 @@
                 size="medium"
             >
                 <el-table-column prop="id" label="用户ID" align="center" width="120" />
-                <el-table-column prop="areaStr" label="地区" align="center" width="120" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
                 <el-table-column prop="appStr" label="APP" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">

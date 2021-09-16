@@ -5,7 +5,7 @@
                 <el-form-item label="工会名称：" prop="name">
                     <el-input v-model="form.name" placeholder="请输入" />
                 </el-form-item>
-                <el-form-item label="工会地区" prop="areaId">
+                <el-form-item label="工会区域" prop="areaId">
                     <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option
                             v-for="item in areaData"

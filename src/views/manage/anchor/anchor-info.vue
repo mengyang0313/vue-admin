@@ -22,7 +22,7 @@
                                     <el-descriptions-item label="工会">
                                         {{ basic.guildId }}
                                     </el-descriptions-item>
-                                    <el-descriptions-item label="地区">
+                                    <el-descriptions-item label="区域">
                                         {{ basic.areaId }}
                                     </el-descriptions-item>
                                     <el-descriptions-item label="是否为机器人">
@@ -118,7 +118,7 @@
             >
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="id" label="主播id" align="center" width="120" />
-                <el-table-column prop="areaId" label="地区" align="center" width="120" />
+                <el-table-column prop="areaId" label="区域" align="center" width="120" />
                 <el-table-column prop="guildId" label="工会Id" align="center" width="120" />
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">

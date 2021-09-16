@@ -12,7 +12,7 @@
                 <template>
                     <el-row>
                         <el-col :span="16">
-                            <el-form-item label="地区">
+                            <el-form-item label="区域">
                                 <el-select v-model="search.area" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
@@ -39,7 +39,7 @@
                 size="medium"
             >
                 <el-table-column prop="pushId" label="推送ID" align="center" width="150"/>
-                <el-table-column prop="area" label="推送地区" align="center" width="120"/>
+                <el-table-column prop="area" label="推送区域" align="center" width="120"/>
                 <el-table-column prop="app" label="目标APP" align="center" width="120"/>
                 <el-table-column prop="title" label="推送标题" align="center" width="280"/>
                 <el-table-column prop="content" label="推送内容" align="center" width="500"/>

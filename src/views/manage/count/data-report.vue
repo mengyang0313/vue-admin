@@ -10,7 +10,7 @@
                         label-width="90px"
                         class="search-form"
                     >
-                        <el-form-item label="地区">
+                        <el-form-item label="区域">
                             <el-select v-model="search.area" placeholder="请选择">
                                 <el-option v-for="item in areaData"
                                            :key="item.value"
@@ -76,7 +76,7 @@
         >
             <el-table-column prop="uid" label="日期" align="center" width="150" />
             <el-table-column prop="nickname" label="产品" align="center" width="200" />
-            <el-table-column prop="unionname" label="地区" align="center" width="220" />
+            <el-table-column prop="unionname" label="区域" align="center" width="220" />
             <el-table-column prop="balance" label="活跃用户" align="center" width="120"/>
             <el-table-column prop="settle" label="整体收入" align="center" width="120"/>
             <el-table-column prop="call" label="整体付费率" align="center" width="120"/>

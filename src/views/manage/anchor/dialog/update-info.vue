@@ -8,7 +8,7 @@
 <!--                <el-form-item label="主播昵称：" prop="nickname">
                     <el-input v-model="form.nickname" placeholder="请输入" :disabled="true"/>
                 </el-form-item>-->
-                <el-form-item label="主播地区" prop="areaId">
+                <el-form-item label="主播区域" prop="areaId">
                     <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"

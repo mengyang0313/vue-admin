@@ -16,7 +16,7 @@
                 <template>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item label="地区">
+                            <el-form-item label="区域">
                                 <el-select v-model="search.area" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"

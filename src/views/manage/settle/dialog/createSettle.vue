@@ -7,7 +7,7 @@
             :rules="rules"
             label-width="100px"
         >
-            <el-form-item label="地区" prop="areaId">
+            <el-form-item label="区域" prop="areaId">
                 <el-select v-model="search.areaId" placeholder="请选择">
                     <el-option v-for="item in areaList"
                                :key="item.value"

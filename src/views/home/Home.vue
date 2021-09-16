@@ -35,7 +35,7 @@
                         class="search-form"
                     >
                         <template>
-                            <el-form-item label="地区">
+                            <el-form-item label="区域">
                                 <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaList"
                                                :key="item.value"

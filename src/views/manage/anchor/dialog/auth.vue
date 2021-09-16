@@ -5,7 +5,7 @@
                 <el-form-item label="用户Id：" prop="anchorId">
                     <el-input v-model="form.anchorId" placeholder="请输入" :disabled="uidDisabled"/>
                 </el-form-item>
-                <el-form-item label="主播地区" prop="areaId">
+                <el-form-item label="主播区域" prop="areaId">
                     <el-select v-model="form.areaId" placeholder="请选择">
                         <el-option
                             v-for="item in areaData"

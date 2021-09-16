@@ -39,7 +39,7 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
-                            <el-form-item label="地区" prop="areaId">
+                            <el-form-item label="区域" prop="areaId">
                                 <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"

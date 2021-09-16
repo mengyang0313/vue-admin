@@ -41,7 +41,7 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
-                            <el-form-item label="地区" prop="areaId">
+                            <el-form-item label="区域" prop="areaId">
                                 <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
@@ -121,7 +121,7 @@
                 </el-table-column>
                 <el-table-column prop="userId" label="用户Id" align="center" width="120" />
                 <el-table-column prop="anchorId" label="主播Id" align="center" width="120" />
-                <el-table-column prop="areaStr" label="地区" align="center" width="220"/>
+                <el-table-column prop="areaStr" label="区域" align="center" width="220"/>
                 <el-table-column prop="callType" label="通话发起类型" align="center" width="220">
                     <template scope="scope">
                         <div slot="reference">

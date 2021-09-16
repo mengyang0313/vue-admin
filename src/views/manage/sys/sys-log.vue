@@ -48,7 +48,7 @@
                 <el-table-column prop="uid" label="uid" align="center" width="200" />
                 <el-table-column prop="optName" label="操作名称" align="center" width="350"/>
                 <el-table-column prop="opt" label="操作内容" align="center"  />
-                <el-table-column prop="area" label="地区" align="center" width="150"/>
+                <el-table-column prop="area" label="区域" align="center" width="150"/>
                 <el-table-column prop="sysAccount" label="管理员帐号" align="center" width="200"/>
             </el-table>
             <!-- 分页栏 -->

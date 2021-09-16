@@ -26,7 +26,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="appStr" label="app" align="center" width="80" />
-                <el-table-column prop="areaStr" label="地区" align="center" width="80" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="80" />
                 <el-table-column prop="status" label="审核状态" align="center" width="150">
                     <template slot-scope="scope">
                         <el-tag size="medium">{{ scope.row.status }}</el-tag>

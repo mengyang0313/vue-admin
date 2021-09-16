@@ -58,7 +58,7 @@
                                     </el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="地区" prop="areaId">
+                            <el-form-item label="区域" prop="areaId">
                                 <el-select v-model="search.areaId" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
@@ -96,7 +96,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="userId" label="用户ID" align="center" width="120"/>
-                <el-table-column prop="areaId" label="地区" align="center" width="80"/>
+                <el-table-column prop="areaId" label="区域" align="center" width="80"/>
 <!--                <el-table-column prop="country" label="国家" align="center" width="80"/>-->
                 <el-table-column prop="commodityId" label="商品名称" align="center" width="200"/>
                 <el-table-column prop="payPrice" label="本地价格" align="center" width="80"/>

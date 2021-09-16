@@ -4,7 +4,7 @@
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
                 <el-form-item label="运营区域" prop="areaId">
                     <el-select v-model="form.areaId" placeholder="请选择">
-                        <el-option v-for="item in areaData"
+                        <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import {getActionType, getAreas} from "@/utils/common";
+import {getActionType, getAreaList} from "@/utils/common";
 
 export default {
     data() {
@@ -56,7 +56,7 @@ export default {
                 enable: false
             },
             dialogVisible: false,
-            areaData: getAreaList(),
+            areaList: getAreaList(),
             actionTypes: getActionType(),
 
         }

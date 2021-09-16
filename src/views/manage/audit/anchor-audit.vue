@@ -12,7 +12,7 @@
                 <el-form-item label="主播Id" prop="anchorId">
                     <el-input v-model="search.anchorId" placeholder="主播Id"/>
                 </el-form-item>
-                <el-form-item label="地区">
+                <el-form-item label="区域">
                     <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
@@ -38,7 +38,7 @@
             >
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
-                <el-table-column prop="areaStr" label="地区" align="center" width="120" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">

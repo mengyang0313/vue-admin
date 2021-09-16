@@ -12,7 +12,7 @@
                 <el-form-item label="工会ID">
                     <el-input v-model="search.id" placeholder="工会ID"/>
                 </el-form-item>
-                <el-form-item label="地区">
+                <el-form-item label="区域">
                     <el-select v-model="search.areaId" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
@@ -43,7 +43,7 @@
             >
                 <el-table-column prop="id" label="工会ID" align="center" width="70" />
                 <el-table-column prop="name" label="工会名称" align="center" width="250" />
-                <el-table-column prop="areaStr" label="地区" align="center" width="120" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
                 <el-table-column prop="anchorCount" label="主播数" align="center" width="120"/>
                 <el-table-column prop="enable" label="状态" align="center" width="120">
                     <template scope="scope">

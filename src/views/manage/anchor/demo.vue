@@ -124,7 +124,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="areaName" label="地区" align="center" width="120" />
+                <el-table-column prop="areaName" label="区域" align="center" width="120" />
                 <el-table-column prop="country" label="国家" align="center" width="120" />
                 <el-table-column prop="guildName" label="工会" align="center" width="120" />
                 <el-table-column prop="level" label="主播等级" align="center" width="120">
