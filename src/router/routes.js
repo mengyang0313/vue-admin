@@ -291,25 +291,25 @@ export const asyncRoutes = [
             }
         ]
     },
-    {
-        path: '/push-msg',
-        name: 'push-msg',
-        component: Layout,
-        redirect: '/form-table/table-classic',
-        meta: {
-            icon: 'vue-dsn-icon-biaoge'
-        },
-        children: [
-            {
-                path: 'push-msg',
-                name: 'push-msg',
-                component: () => import('../views/manage/push-msg/push-msg'),
-                meta: {
-                    title: '消息推送'
-                }
-            }
-        ]
-    },
+    // {
+    //     path: '/push-msg',
+    //     name: 'push-msg',
+    //     component: Layout,
+    //     redirect: '/form-table/table-classic',
+    //     meta: {
+    //         icon: 'vue-dsn-icon-biaoge'
+    //     },
+    //     children: [
+    //         {
+    //             path: 'push-msg',
+    //             name: 'push-msg',
+    //             component: () => import('../views/manage/push-msg/push-msg'),
+    //             meta: {
+    //                 title: '消息推送'
+    //             }
+    //         }
+    //     ]
+    // },
     {
         path: '/aia',
         name: 'aia',
@@ -356,50 +356,50 @@ export const asyncRoutes = [
             }
         ]
     },
-    {
-        path: '/app',
-        name: 'app',
-        component: Layout,
-        redirect: '/form-table/table-classic',
-        meta: {
-            title: '应用配置',
-            icon: 'vue-dsn-icon-biaoge'
-        },
-        children: [
-            {
-                path: 'banner',
-                name: 'banner',
-                component: () => import('../views/manage/app/banner'),
-                meta: {
-                    title: 'Banner配置'
-                }
-            },
-            {
-                path: 'signin',
-                name: 'signin',
-                component: () => import('../views/manage/app/signin'),
-                meta: {
-                    title: '签到配置'
-                }
-            },
-            {
-                path: 'pay',
-                name: 'pay',
-                component: () => import('../views/manage/app/pay'),
-                meta: {
-                    title: '支付配置'
-                }
-            },
-            {
-                path: 'goods',
-                name: 'goods',
-                component: () => import('../views/manage/app/goods'),
-                meta: {
-                    title: '商品配置'
-                }
-            }
-        ]
-    },
+    // {
+    //     path: '/app',
+    //     name: 'app',
+    //     component: Layout,
+    //     redirect: '/form-table/table-classic',
+    //     meta: {
+    //         title: '应用配置',
+    //         icon: 'vue-dsn-icon-biaoge'
+    //     },
+    //     children: [
+    //         {
+    //             path: 'banner',
+    //             name: 'banner',
+    //             component: () => import('../views/manage/app/banner'),
+    //             meta: {
+    //                 title: 'Banner配置'
+    //             }
+    //         },
+    //         {
+    //             path: 'signin',
+    //             name: 'signin',
+    //             component: () => import('../views/manage/app/signin'),
+    //             meta: {
+    //                 title: '签到配置'
+    //             }
+    //         },
+    //         {
+    //             path: 'pay',
+    //             name: 'pay',
+    //             component: () => import('../views/manage/app/pay'),
+    //             meta: {
+    //                 title: '支付配置'
+    //             }
+    //         },
+    //         {
+    //             path: 'goods',
+    //             name: 'goods',
+    //             component: () => import('../views/manage/app/goods'),
+    //             meta: {
+    //                 title: '商品配置'
+    //             }
+    //         }
+    //     ]
+    // },
     {
         path: '/sys',
         name: 'sys',

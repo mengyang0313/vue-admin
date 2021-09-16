@@ -39,7 +39,6 @@
                 size="medium"
             >
                 <el-table-column prop="id" label="编号" align="center" width="50"/>
-                <el-table-column prop="area_ids" label="地区" align="center" width="150"/>
                 <el-table-column prop="email" label="邮箱" align="center" width="300"/>
                 <el-table-column prop="name" label="真实姓名" align="center" width="200"/>
                 <el-table-column prop="photo" label="权限" align="center" width="250">
@@ -59,7 +58,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
 
             <!-- 编辑资料 -->
@@ -81,7 +80,15 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
+            search: {
+                uid: undefined,
+                app: undefined,
+                robotId: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             // 数据总条数
             total: 0,
             // 防止多次连续提交表单
@@ -137,16 +144,7 @@ export default {
             })
         },
         resetForm() {
-            this.search = this.initQuery();
-        },
-        initQuery() {
-            return {
-                uid: undefined,
-                app: undefined,
-                robotId: undefined,
-                currentPage: 1,
-                pageSize: 10
-            }
+            this.$refs.searchForm.resetFields()
         }
     }
 }

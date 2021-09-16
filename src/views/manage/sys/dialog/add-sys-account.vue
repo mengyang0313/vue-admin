@@ -2,15 +2,15 @@
     <el-dialog title="新增管理帐号" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
-                <el-form-item label="运营区域" prop="area" required>
-                    <el-select v-model="form.area" placeholder="请选择">
-                        <el-option v-for="item in areaData"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item label="运营区域" prop="areaId">-->
+<!--                    <el-select v-model="form.areaId" placeholder="请选择">-->
+<!--                        <el-option v-for="item in areaData"-->
+<!--                                   :key="item.value"-->
+<!--                                   :label="item.label"-->
+<!--                                   :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item label="账户名：" prop="email">
                     <el-input v-model="form.email" maxlength="15" show-word-limit placeholder="请输入"/>
                 </el-form-item>
@@ -42,7 +42,7 @@
 
 <script>
 
-import {getAreas} from '@/utils/common'
+import {getAreaList} from '@/utils/common'
 
 export default {
     data() {
@@ -60,7 +60,7 @@ export default {
             data: baseData(),
             form: {
                 id: '',
-                area: '',
+                areaId: '',
                 email: '',
                 password: '',
                 name: '',
@@ -71,8 +71,8 @@ export default {
             dialogVisible: false,
             areaData : getAreaList(),
             rules: {
-                area: [
-                    {required: true, message: '请选择', trigger: 'change'}
+                areaId: [
+                    {required: true, message: '请选择', trigger: 'blur'}
                 ],
                 email: [
                     {required: true, message: '内容不能为空', trigger: 'blur'}
@@ -90,7 +90,7 @@ export default {
     },
     methods: {
         init(row){
-            this.form.area = row.area_ids
+            this.form.areaId = row.areaId
             this.form.email = row.email
             this.form.password = row.password
             this.form.name = row.name
@@ -110,16 +110,13 @@ export default {
                 }
             })
         },
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
+        },
         closeDialog() {
             this.dialogVisible = false
+            this.resetForm()
             this.$emit('fetchData');
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields()
-        },
-        close(){
-            this.dialogVisible = false
-            this.$refs.dialogForm.resetFields()
         }
     }
 }
