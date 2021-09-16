@@ -43,7 +43,7 @@ export default class {
     }
 
 
-    // 图形统计数据
+    // 实时通话/实时营收
     async getAreaStat (param, callback) {
         let req = new this.proto.AreaStatRequest();
         req.setAreaId(param.areaId)
@@ -52,6 +52,26 @@ export default class {
 
         const metadata = {'token': getToken()};
         this.client.getAreaStat(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+    // 主播统计
+    async getAnchorStat (param, callback) {
+        let req = new this.proto.AnchorStatRequest();
+        req.setPageNo(param.page.currentPage)
+        req.setPageSize(param.page.pageSize)
+        req.setAreaId(param.areaId)
+        req.setLevel(param.level)
+        req.setAnchorId(param.anchorId)
+        req.setStatAt(param.statAt)
+
+        const metadata = {'token': getToken()};
+        this.client.getAnchorStat(req, metadata, (err, resp) => {
             if (!err) {
                 callback(resp)
             } else {

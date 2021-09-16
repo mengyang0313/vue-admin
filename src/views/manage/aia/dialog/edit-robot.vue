@@ -21,7 +21,7 @@
                         >
                             <i class="el-icon-plus"></i>
                         </el-upload>
-                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
+                        <el-dialog :visible.sync="avatarDialog" :modal-append-to-body="true" append-to-body>
                             <img width="100%" :src="form.avatar" alt />
                         </el-dialog>
                     </div>
@@ -89,7 +89,7 @@
                         >
                             <i class="el-icon-plus"></i>
                         </el-upload>
-                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
+                        <el-dialog :visible.sync="photoDialog" :modal-append-to-body="true" append-to-body>
                             <img width="100%" :src="form.video" alt />
                         </el-dialog>
                     </div>
@@ -108,7 +108,7 @@
                         >
                             <i class="el-icon-plus"></i>
                         </el-upload>
-                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
+                        <el-dialog :visible.sync="videoDialog" :modal-append-to-body="true" append-to-body>
                             <img width="100%" :src="form.video" alt />
                         </el-dialog>
                     </div>
@@ -155,7 +155,9 @@ export default {
             title: '新增机器人',
             dialogImageUrl: '',
             dialogVisible: false,
-            imgDialogVisible: false,
+            avatarDialog: false,
+            photoDialog: false,
+            videoDialog: false,
             areaData: getAreaList(),
             occupationTypes: getOccupationType(),
             avatarArr: [],
@@ -224,13 +226,13 @@ export default {
             this.$emit('fetchData');
         },
         previewAvatar(file) {
-            this.imgDialogVisible = true;
+            this.avatarDialog = true;
         },
         previewPhoto(file){
-            this.imgDialogVisible = true;
+            this.photoDialog = true;
         },
         previewVideo(file){
-            this.imgDialogVisible = true;
+            this.videoDialog = true;
         },
         successAvatar(file) {
             const $this = this

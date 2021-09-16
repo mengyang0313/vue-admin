@@ -1,5 +1,5 @@
 <template>
-    <div class="home-wrapper">
+    <div class="home-wrapper" v-loading="listLoading">
         <div class="date-row">
             <div v-for="(item, index) in cardInfoData" :key="index" class="data-col">
                 <el-card shadow="always" :body-style="{padding: '0px'}">
@@ -63,7 +63,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBarLine :data="incomeData" class="data-chart"/>
+                    <ChartsBarLine :data="incomeData" v-if="incomeData.data" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -71,7 +71,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBarLine :data="totalDate" class="data-chart"/>
+                    <ChartsBarLine :data="totalDate" v-if="totalDate.data" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -79,7 +79,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBar title="新增用户" :data="userDate" class="data-chart"/>
+                    <ChartsBar title="新增用户" :data="userDate" v-if="userDate.data" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -87,7 +87,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="activeData" class="data-chart"/>
+                    <ChartsLine :data="activeData" v-if="activeData.data" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -96,7 +96,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBar title="充值渠道" :data="channelData" class="data-chart"/>
+                    <ChartsBar title="充值渠道" :data="channelData" v-if="channelData.data" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -108,13 +108,14 @@ import CountTo from 'vue-count-to'
 import ChartsBarLine from '../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../components/Charts/ChartsBar'
 import ChartsLine from '../../components/Charts/ChartsLine'
-import {getAreaList} from "@/utils/common"
+import {getAreaList, getAppList, getAppName} from "@/utils/common"
 
 export default {
     name: 'Home',
     components: {CountTo, ChartsBar, ChartsBarLine, ChartsLine},
     data() {
         return {
+            listLoading: false,
             search: {
                 areaId: 1,
                 date: new Date(new Date().format('yyyy-MM-dd')),
@@ -122,45 +123,22 @@ export default {
                 endAt: undefined
             },
             areaList: getAreaList(),
+            appList: getAppList(),
             cardInfoData: [],
             incomeData: {
                 title: '新增收入',
                 legend: ['新增收入'],
-                data: [
-                    {title: 'Mon-apple',val1: 782},
-                    {title: 'Tue-android', val1: 382},
-                    {title: 'Wed', val1: 482},
-                    {title: 'Thu', val1: 582},
-                    {title: 'Fri', val1: 982},
-                    {title: 'Sat', val1: 382},
-                    {title: 'Sun', val1: 282}
-                ]
+                data: undefined
             },
             totalDate: {
                 title: '全部收入',
                 legend: ['总收入'],
-                data: [
-                    {title: 'Mon', val1: 782},
-                    {title: 'Tue', val1: 382},
-                    {title: 'Wed', val1: 482},
-                    {title: 'Thu', val1: 582},
-                    {title: 'Fri', val1: 982},
-                    {title: 'Sat', val1: 382},
-                    {title: 'Sun', val1: 282}
-                ]
+                data: undefined
             },
             userDate: {
                 title: '新增用户',
                 legend: ['新增用户'],
-                data: [
-                    {title: 'Mon(apple)', val1: 782},
-                    {title: 'Tue(android)', val1: 382},
-                    {title: 'Wed', val1: 482},
-                    {title: 'Thu', val1: 582},
-                    {title: 'Fri', val1: 982},
-                    {title: 'Sat', val1: 382},
-                    {title: 'Sun', val1: 282}
-                ]
+                data: undefined
             },
             activeData: {
                 title: '活跃用户',
@@ -173,15 +151,7 @@ export default {
             channelData: {
                 title: '充值渠道',
                 legend: ['google', 'apple', '其他'],
-                data: [
-                    {title: 'Mon', val1: 782, val2: 100, val3: 200},
-                    {title: 'Tue', val1: 382, val2: 100, val3: 200},
-                    {title: 'Wed', val1: 482, val2: 100, val3: 200},
-                    {title: 'Thu', val1: 582, val2: 100, val3: 200},
-                    {title: 'Fri', val1: 982, val2: 100, val3: 200},
-                    {title: 'Sat', val1: 382, val2: 100, val3: 200},
-                    {title: 'Sun', val1: 282, val2: 100, val3: 200},
-                ]
+                data: undefined
             }
         }
     },
@@ -191,10 +161,12 @@ export default {
     },
     methods: {
         onSearch() {
+            this.listLoading = true
             this.initCard()
             this.initData()
         },
         initCard(){
+
             const $this = this
             this.cardInfoData = []
             this.$service.home.getOverview(this.handleSearch(), function (result){
@@ -219,20 +191,55 @@ export default {
                 $this.cardInfoData.push(review)
                 $this.cardInfoData.push(amount)
             });
+
+
         },
         initData(){
             const $this = this
             this.$service.home.getHomeStat(this.handleSearch(), function (result){
-                let activeList = result.getHourlyActivesList()
                 let statList = result.getStatsList()
+
+                let newArr = []
+                let totalArr = []
+                let userArr = []
+                let channelArr = []
                 statList.forEach(item => {
-                    $this.handleNewIncomeData(item);
-                    $this.handleTotalIncomeData(item);
-                    $this.handleUserData(item);
-                    $this.handleChannelData(item);
+                    let app = getAppName($this.appList, item.getAppId())
+                    let osStr = app.os === 1 ? "🤖" : "";
+                    let title = app.label + osStr
+
+                    newArr.push({
+                        title: title,
+                        val1: item.getNewIncome()
+                    })
+
+                    totalArr.push({
+                        title: title,
+                        val1: item.getTotalIncome()
+                    })
+
+                    userArr.push({
+                        title: title,
+                        val1: item.getNewUser()
+                    })
+
+                    channelArr.push({
+                        title: title,
+                        val1: item.getGoogleIncome(),
+                        val2: item.getAppleIncome(),
+                        val3: item.getOtherIncome()
+                    })
                 })
+                $this.incomeData.data = newArr
+                $this.totalDate.data = totalArr
+                $this.userDate.data = userArr
+                $this.channelData.data = channelArr
+
+                let activeList = result.getHourlyActivesList()
                 $this.handleActiveData(activeList)
+                $this.listLoading = false
             });
+
         },
         handleSearch(){
             let date = this.search.date
@@ -240,43 +247,13 @@ export default {
             this.search.endAt = this.endUnix(date)
             return this.search
         },
-        handleNewIncomeData(item){
-            let json = {
-                    title: item.getName(),
-                    val1: item.getNewIncome()
-                }
-            this.incomeData.data.push(json)
-        },
-        handleTotalIncomeData(item){
-            let json = {
-                    title: item.getName(),
-                    val1: item.getTotalIncome()
-                }
-            this.totalDate.data.push(json)
-        },
-        handleUserData(item){
-            let json = {
-                title: item.getName(),
-                val1: item.getNewUser()
-            }
-            this.totalDate.data.push(json)
-        },
         handleActiveData(statList){
             let data = []
             statList.forEach((item, index) => {
                 this.activeData.keys.push(index + ":00")
                 data.push(item)
             })
-            this.activeData.data.push(data)
-        },
-        handleChannelData(item){
-            let json =  {
-                    title: item.getName(),
-                    val1: item.getGoogleIncome(),
-                    val2: item.getAppleIncome(),
-                    val3: item.getOtherIncome()
-                }
-            this.channelData.data.push(json)
+            this.activeData.values.push(data)
         },
         startUnix($date) {
             return new Date($date.toLocaleDateString()).getTime() / 1000

@@ -30,6 +30,7 @@ export default {
             this.dom.resize()
         },
         drawing() {
+            console.log("组件......")
             const title = this.data.title
             const legendData = this.data.legend
             const xAxisData = this.data.data.map(item => item.title)

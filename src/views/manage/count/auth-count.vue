@@ -10,12 +10,12 @@
                 class="search-form"
             >
                 <template>
-                    <el-form-item label="UID">
-                        <el-input v-model="search.robotId" placeholder="UID"/>
+                    <el-form-item label="主播Id">
+                        <el-input v-model="search.anchorId" placeholder="主播Id"/>
                     </el-form-item>
                     <el-form-item label="主播等级">
-                        <el-select v-model="search.area" placeholder="请选择">
-                            <el-option v-for="item in areaData"
+                        <el-select v-model="search.level" placeholder="请选择">
+                            <el-option v-for="item in levelList"
                                        :key="item.value"
                                        :label="item.label"
                                        :value="item.value">
@@ -23,16 +23,23 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="地区">
-                        <el-select v-model="search.area" placeholder="请选择">
-                            <el-option v-for="item in areaData"
+                        <el-select v-model="search.areaId" placeholder="请选择">
+                            <el-option v-for="item in areaList"
                                        :key="item.value"
                                        :label="item.label"
                                        :value="item.value">
                             </el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="日期" prop="settleAt">
+                        <el-date-picker
+                            v-model="search.settleAtTime"
+                            type="date"
+                            placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查  询</el-button>
+                        <el-button type="primary" @click="onSearch">查  询</el-button>
                     </el-form-item>
                 </template>
             </el-form>
@@ -51,40 +58,54 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="uid" label="主播ID" align="center" width="200" />
-                <el-table-column prop="optName" label="昵称" align="center" width="350"/>
-                <el-table-column prop="opt" label="在线状态" align="center"  />
-                <el-table-column prop="area" label="今日在线时长" align="center" width="150"/>
-                <el-table-column prop="sysAccount" label="管理员帐号" align="center" width="200"/>
+                <el-table-column prop="anchorId" label="主播ID" align="center" />
+                <el-table-column prop="startAt" label="统计时间" align="center"/>
+                <el-table-column prop="onlineDuration" label="在线时长" align="center"/>
+                <el-table-column prop="inCall" label="来电数" align="center"  />
+                <el-table-column prop="outCall" label="呼出数" align="center"/>
+                <el-table-column prop="answer" label="接听数" align="center/>
+                <el-table-column prop="answer30" label="通话时间30s" align="center"/>
+                <el-table-column prop="answer50" label="通话时间50s" align="center"/>
+                <el-table-column prop="duration" label="通话时长" align="center"/>
+                <el-table-column prop="callIncome" label="通话收入" align="center"/>
+                <el-table-column prop="giftIncome" label="礼物收入" align="center"/>
+                <el-table-column prop="commissionIncome" label="用户充值分成" align="center"/>
+                <el-table-column prop="adjustIncome" label="奖惩收入" align="center"/>
+                <el-table-column prop="expense" label="消耗贡献" align="center"/>
+                <el-table-column prop="income" label="充值贡献" align="center"/>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
         </el-card>
     </div>
 </template>
 
 <script>
-import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import { areaData, apps } from '@/dict/index'
+import {getAreaList, getAnchorLevel, getArrName } from "@/utils/common";
 
 
 export default {
-    components: { Pagination, apps},
+    components: { Pagination },
     data() {
         return {
-            // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
-            search: this.initQuery(),
-            // 数据总条数
+            search: {
+                areaId: undefined,
+                level: undefined,
+                anchorId: undefined,
+                settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             total: 0,
-            // 防止多次连续提交表单
             isSubmit: false,
             activeIndex: 1,
-            areaData,
-            apps
+            areaList: getAreaList(),
+            levelList: getAnchorLevel()
         }
     },
     created() {
@@ -93,33 +114,56 @@ export default {
     methods: {
         // 获取数据列表
         fetchData() {
+            const $this = this
             this.listLoading = true
-            let url = process.env.VUE_APP_JSON_URI + "/sys-log.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
-            })
+            this.$service.home.getAnchorStat(this.handleParam(), function (result){
+                const list = result.getStatsList()
+                const data = []
+                list.forEach((item, index) => {
+                    const json = {
+                        "id" : item.getId(),
+                        "startAt" : new Date(item.getStartAt() * 1000).format('yyyy-MM-dd'),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaList, item.getAreaId()),
+                        "anchorId" : item.getAnchorId(),
+                        "onlineDuration" : item.getOnlineDuration(),
+                        "inCall" : item.getInCall(),
+                        "outCall" : item.getOutCall(),
+                        "answer" : item.getAnswer(),
+                        "answer30" : item.getAnswer30(),
+                        "answer50" : item.getAnswer50(),
+                        "duration" : item.getDuration(),
+                        "callIncome" : item.getCallIncome(),
+                        "giftIncome" : item.getGiftIncome(),
+                        "commissionIncome" : item.getCommissionIncome(),
+                        "adjustIncome" : item.getAdjustIncome(),
+                        "expense" : item.getExpense(),
+                        "income" : item.getIncome()
+                    }
+                    data.push(json)
+                })
+                $this.total = result.getTotalCount()
+                $this.tableData = data
+                $this.listLoading = false
+            });
         },
-        // 查询数据
+        handleParam(){
+            let param = this.search;
+            if (typeof(this.search.settleAtTime) != "undefined"){
+                param.statAt = this.search.settleAtTime.getTime() / 1000
+            }
+            return param
+        },
         onSearch() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
-        // 弹框
         toDialog(component, row){
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
                 this.$refs[component].init(row)
             })
         },
-        //重置
         resetForm() {
             this.search = this.initQuery();
         },
@@ -129,15 +173,6 @@ export default {
                     break;
                 case '2':
                     break;
-            }
-        },
-        initQuery() {
-            return {
-                uid: undefined,
-                app: undefined,
-                robotId: undefined,
-                currentPage: 1,
-                pageSize: 10
             }
         }
     }

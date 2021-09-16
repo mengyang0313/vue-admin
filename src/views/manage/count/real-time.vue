@@ -29,7 +29,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="userData" class="data-chart"/>
+                    <ChartsLine :data="userData" v-if="userData.values" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -37,7 +37,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="callingData" class="data-chart"/>
+                    <ChartsLine :data="callingData" v-if="callingData.values" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -45,7 +45,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="callData" class="data-chart"/>
+                    <ChartsLine :data="callData" v-if="callData.values" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -72,35 +72,19 @@ export default {
                 title: '实时用户',
                 legend: ['在线用户', '新用户', '付费用户', '空闲主播', '通话主播'],
                 keys: [],
-                values: [
-                    // [820, 932, 901, 934, 1290, 1330, 1320, 1520, 820, 750]
-                    // [120, 132, 101, 134, 90, 230, 210, 250, 280, 320],
-                    // [350, 232, 201, 154, 190, 330, 410, 310, 210, 150],
-                    // [120, 132, 150, 334, 390, 330, 320, 250, 280, 290],
-                    // [90, 120, 150, 210, 220, 190, 170, 180, 190, 111],
-                ]
+                values: undefined
             },
             callingData: {
                 title: '实时通话',
                 legend: ['AIB发起', '用户发起', '主播发起'],
                 keys: [],
-                values: [
-                    // [20, 32, 91, 34, 90, 130, 20, 50, 80, 70],
-                    // [20, 32, 11, 14, 9, 20, 10, 50, 20, 30],
-                    // [50, 32, 21, 54, 90, 30, 40, 30, 10, 50],
-                    // [20, 32, 15, 34, 30, 30, 30, 20, 80, 90],
-                ]
+                values: undefined
             },
             callData: {
                 title: '实时呼叫',
                 legend: ['整体呼叫', 'AIB呼叫', '用户呼叫', '主播呼叫'],
                 keys: [],
-                values: [
-                    // [20, 32, 91, 34, 90, 130, 20, 50, 80, 70],
-                    // [20, 32, 11, 14, 9, 20, 10, 50, 20, 30],
-                    // [50, 32, 21, 54, 90, 30, 40, 30, 10, 50],
-                    // [20, 32, 15, 34, 30, 30, 30, 20, 80, 90],
-                ]
+                values: undefined
             }
         }
     },
@@ -119,10 +103,13 @@ export default {
             this.$service.home.getAreaStat(this.search, function (result){
                 let statList = result.getStatsList()
                 $this.handleUserData(statList)
+                $this.handleCallingData(statList)
+                $this.handleCallData(statList)
             });
         },
         handleUserData(statList){
             let keys = []
+            let values = []
             let onlineUser = []
             let newUser = []
             let payUser = []
@@ -137,15 +124,19 @@ export default {
                 idleAnchor.push(item.getIdleAnchor())
                 busyAnchor.push(item.getBusyAnchor())
             })
+
+            values.push(onlineUser)
+            values.push(newUser)
+            values.push(payUser)
+            values.push(idleAnchor)
+            values.push(busyAnchor)
+
             this.userData.keys = keys
-            this.userData.values.push(onlineUser)
-            this.userData.values.push(newUser)
-            this.userData.values.push(payUser)
-            this.userData.values.push(idleAnchor)
-            this.userData.values.push(busyAnchor)
+            this.userData.values = values
         },
         handleCallingData(statList){
             let keys = []
+            let values = []
             let aiCalling = []
             let userCalling = []
             let anchorCalling = []
@@ -156,13 +147,16 @@ export default {
                 userCalling.push(item.getUserCalling())
                 anchorCalling.push(item.getAnchorCalling())
             })
+            values.push(aiCalling)
+            values.push(userCalling)
+            values.push(anchorCalling)
+
             this.callingData.keys = keys
-            this.callingData.values.push(aiCalling)
-            this.callingData.values.push(userCalling)
-            this.callingData.values.push(anchorCalling)
+            this.callingData.values = values
         },
         handleCallData(statList){
             let keys = []
+            let values = []
             let aiCall = []
             let userCall = []
             let anchorCall = []
@@ -173,10 +167,12 @@ export default {
                 userCall.push(item.getUserCall())
                 anchorCall.push(item.getAnchorCall())
             })
+            values.push(aiCall)
+            values.push(userCall)
+            values.push(anchorCall)
+
             this.callData.keys = keys
-            this.callData.values.push(aiCall)
-            this.callData.values.push(userCall)
-            this.callData.values.push(anchorCall)
+            this.callData.values = values
         },
         startUnix($date) {
             return new Date($date.toLocaleDateString()).getTime() / 1000

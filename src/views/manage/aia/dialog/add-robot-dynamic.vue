@@ -48,7 +48,7 @@
                             <i class="el-icon-plus"></i>
                         </el-upload>
                         <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
-                            <img width="100%" :src="form.video" alt />
+                            <img width="100%" :src="form.images" alt />
                         </el-dialog>
                     </div>
                 </el-form-item>
@@ -113,6 +113,7 @@ export default {
                 publishAtTime:undefined
             },
             dialogVisible: false,
+            imgDialogVisible: false,
             messageTypes : getMessageType(),
             areaList: getAreaList(),
             appList: getAppList()

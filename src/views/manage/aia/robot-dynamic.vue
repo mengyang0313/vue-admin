@@ -83,9 +83,16 @@ export default {
         }
     },
     created() {
-        this.search.entityId = this.$route.query.robotId
-        this.search.nickname = this.$route.query.nickname
-        this.fetchData()
+    },
+    watch: {
+        $route: {
+            handler(newName, oldName) {
+                this.search.entityId = this.$route.query.robotId
+                this.search.nickname = this.$route.query.nickname
+                this.fetchData()
+            },
+            deep: true
+        }
     },
     methods: {
         // 获取数据列表

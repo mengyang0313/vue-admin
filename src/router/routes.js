@@ -288,23 +288,7 @@ export const asyncRoutes = [
                 meta: {
                     title: '结算历史'
                 }
-            },
-            // {
-            //     path: 'in-settle',
-            //     name: 'in-settle',
-            //     component: () => import('../views/manage/settle/in-settle'),
-            //     meta: {
-            //         title: '印尼结算'
-            //     }
-            // },
-            // {
-            //     path: 'in-settle-history',
-            //     name: 'in-settle-history',
-            //     component: () => import('../views/manage/settle/in-settle-history'),
-            //     meta: {
-            //         title: '印尼结算历史'
-            //     }
-            // }
+            }
         ]
     },
     {
@@ -368,6 +352,50 @@ export const asyncRoutes = [
                 component: () => import('../views/manage/aia/auto-message'),
                 meta: {
                     title: 'AIB场景话术管理'
+                }
+            }
+        ]
+    },
+    {
+        path: '/app',
+        name: 'app',
+        component: Layout,
+        redirect: '/form-table/table-classic',
+        meta: {
+            title: '应用配置',
+            icon: 'vue-dsn-icon-biaoge'
+        },
+        children: [
+            {
+                path: 'banner',
+                name: 'banner',
+                component: () => import('../views/manage/app/banner'),
+                meta: {
+                    title: 'Banner配置'
+                }
+            },
+            {
+                path: 'signin',
+                name: 'signin',
+                component: () => import('../views/manage/app/signin'),
+                meta: {
+                    title: '签到配置'
+                }
+            },
+            {
+                path: 'pay',
+                name: 'pay',
+                component: () => import('../views/manage/app/pay'),
+                meta: {
+                    title: '支付配置'
+                }
+            },
+            {
+                path: 'goods',
+                name: 'goods',
+                component: () => import('../views/manage/app/goods'),
+                meta: {
+                    title: '商品配置'
                 }
             }
         ]
