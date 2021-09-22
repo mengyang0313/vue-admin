@@ -4466,7 +4466,7 @@ proto.pb.AreaConfig.toObject = function(includeInstance, msg) {
     freeMessageCount: jspb.Message.getFieldWithDefault(msg, 8, 0),
     newUserReward: jspb.Message.getFieldWithDefault(msg, 9, 0),
     heartbeatInterval: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    payChannelIdsList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
+    payTypesList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
     cdn: jspb.Message.getFieldWithDefault(msg, 12, ""),
     dndPeriod: jspb.Message.getFieldWithDefault(msg, 13, 0),
     tagsList: (f = jspb.Message.getRepeatedField(msg, 14)) == null ? undefined : f,
@@ -4553,9 +4553,9 @@ proto.pb.AreaConfig.deserializeBinaryFromReader = function(msg, reader) {
       msg.setHeartbeatInterval(value);
       break;
     case 11:
-      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
+      var values = /** @type {!Array<!proto.pb.PayType>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
       for (var i = 0; i < values.length; i++) {
-        msg.addPayChannelIds(values[i]);
+        msg.addPayTypes(values[i]);
       }
       break;
     case 12:
@@ -4697,9 +4697,9 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getPayChannelIdsList();
+  f = message.getPayTypesList();
   if (f.length > 0) {
-    writer.writePackedUint32(
+    writer.writePackedEnum(
       11,
       f
     );
@@ -4955,29 +4955,29 @@ proto.pb.AreaConfig.prototype.setHeartbeatInterval = function(value) {
 
 
 /**
- * repeated uint32 pay_channel_ids = 11;
- * @return {!Array<number>}
+ * repeated PayType pay_types = 11;
+ * @return {!Array<!proto.pb.PayType>}
  */
-proto.pb.AreaConfig.prototype.getPayChannelIdsList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 11));
+proto.pb.AreaConfig.prototype.getPayTypesList = function() {
+  return /** @type {!Array<!proto.pb.PayType>} */ (jspb.Message.getRepeatedField(this, 11));
 };
 
 
 /**
- * @param {!Array<number>} value
+ * @param {!Array<!proto.pb.PayType>} value
  * @return {!proto.pb.AreaConfig} returns this
  */
-proto.pb.AreaConfig.prototype.setPayChannelIdsList = function(value) {
+proto.pb.AreaConfig.prototype.setPayTypesList = function(value) {
   return jspb.Message.setField(this, 11, value || []);
 };
 
 
 /**
- * @param {number} value
+ * @param {!proto.pb.PayType} value
  * @param {number=} opt_index
  * @return {!proto.pb.AreaConfig} returns this
  */
-proto.pb.AreaConfig.prototype.addPayChannelIds = function(value, opt_index) {
+proto.pb.AreaConfig.prototype.addPayTypes = function(value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 11, value, opt_index);
 };
 
@@ -4986,8 +4986,8 @@ proto.pb.AreaConfig.prototype.addPayChannelIds = function(value, opt_index) {
  * Clears the list making it empty but non-null.
  * @return {!proto.pb.AreaConfig} returns this
  */
-proto.pb.AreaConfig.prototype.clearPayChannelIdsList = function() {
-  return this.setPayChannelIdsList([]);
+proto.pb.AreaConfig.prototype.clearPayTypesList = function() {
+  return this.setPayTypesList([]);
 };
 
 

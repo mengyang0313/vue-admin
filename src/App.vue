@@ -14,4 +14,5 @@ export default {
 @import "assets/less/index.less";
 @import "assets/less/reset";
 @import "assets/icon/iconfont.css";
+@import "assets/icon-admin/iconfont.css";
 </style>

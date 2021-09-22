@@ -35,7 +35,7 @@ export const asyncRoutes = [
             component: () => import('../views/home/Home'),
             meta: {
                 title: '首页',
-                icon: 'vue-dsn-icon-index',
+                icon: 'iconfont icon-shouye',
                 fixed: true
             }
         }]
@@ -47,7 +47,7 @@ export const asyncRoutes = [
         redirect: '/form-table/table-classic',
         meta: {
             title: '数据统计',
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-shujutongji'
         },
         children: [
             {
@@ -91,7 +91,7 @@ export const asyncRoutes = [
         redirect: '/form-table/table-classic',
         meta: {
             title: '审核任务',
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-shenherenwu'
         },
         children: [
             {
@@ -127,7 +127,7 @@ export const asyncRoutes = [
         redirect: '/form-table/table-classic',
         meta: {
             title: '主播管理',
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-zhuboguanli'
         },
         children: [
             {
@@ -155,7 +155,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/form-table/table-classic',
         meta: {
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-yonghuguanli'
         },
         children: [
             {
@@ -174,7 +174,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/form-table/table-classic',
         meta: {
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-liaotianjilu'
         },
         children: [
             {
@@ -193,7 +193,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/form-table/table-classic',
         meta: {
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-tonghuajilu'
         },
         children: [
             {
@@ -212,7 +212,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/form-table/table-classic',
         meta: {
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont vue-dsn-icon-biaoge'
         },
         children: [
             {
@@ -231,7 +231,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/form-table/table-classic',
         meta: {
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-dingdanguanli'
         },
         children: [
             {
@@ -250,7 +250,7 @@ export const asyncRoutes = [
         component: Layout,
         redirect: '/form-table/table-classic',
         meta: {
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-gonghuiguanli'
         },
         children: [
             {
@@ -270,7 +270,7 @@ export const asyncRoutes = [
         redirect: '/form-table/table-classic',
         meta: {
             title: '结算管理',
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-jiesuanxitong'
         },
         children: [
             {
@@ -317,7 +317,7 @@ export const asyncRoutes = [
         redirect: '/form-table/table-classic',
         meta: {
             title: 'AI管理',
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-aiguanli'
         },
         children: [
             {
@@ -356,50 +356,50 @@ export const asyncRoutes = [
             }
         ]
     },
-    // {
-    //     path: '/app',
-    //     name: 'app',
-    //     component: Layout,
-    //     redirect: '/form-table/table-classic',
-    //     meta: {
-    //         title: '应用配置',
-    //         icon: 'vue-dsn-icon-biaoge'
-    //     },
-    //     children: [
-    //         {
-    //             path: 'banner',
-    //             name: 'banner',
-    //             component: () => import('../views/manage/app/banner'),
-    //             meta: {
-    //                 title: 'Banner配置'
-    //             }
-    //         },
-    //         {
-    //             path: 'signin',
-    //             name: 'signin',
-    //             component: () => import('../views/manage/app/signin'),
-    //             meta: {
-    //                 title: '签到配置'
-    //             }
-    //         },
-    //         {
-    //             path: 'pay',
-    //             name: 'pay',
-    //             component: () => import('../views/manage/app/pay'),
-    //             meta: {
-    //                 title: '支付配置'
-    //             }
-    //         },
-    //         {
-    //             path: 'goods',
-    //             name: 'goods',
-    //             component: () => import('../views/manage/app/goods'),
-    //             meta: {
-    //                 title: '商品配置'
-    //             }
-    //         }
-    //     ]
-    // },
+    {
+        path: '/config',
+        name: 'config',
+        component: Layout,
+        redirect: '/form-table/table-classic',
+        meta: {
+            title: '应用配置',
+            icon: 'iconfont icon-xtsz'
+        },
+        children: [
+            {
+                path: 'area',
+                name: 'area',
+                component: () => import('../views/manage/config/area'),
+                meta: {
+                    title: '区域配置'
+                }
+            },
+            {
+                path: 'pay',
+                name: 'pay',
+                component: () => import('../views/manage/config/pay'),
+                meta: {
+                    title: '支付管理'
+                }
+            },
+            {
+                path: 'country',
+                name: 'country',
+                component: () => import('../views/manage/config/country'),
+                meta: {
+                    title: '国家管理'
+                }
+            },
+            {
+                path: 'app',
+                name: 'app',
+                component: () => import('../views/manage/config/app'),
+                meta: {
+                    title: '应用管理'
+                }
+            }
+        ]
+    },
     {
         path: '/sys',
         name: 'sys',
@@ -407,7 +407,7 @@ export const asyncRoutes = [
         redirect: '/form-table/table-classic',
         meta: {
             title: '系统设置',
-            icon: 'vue-dsn-icon-biaoge'
+            icon: 'iconfont icon-xtsz'
         },
         children: [
             {

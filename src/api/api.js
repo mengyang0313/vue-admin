@@ -7,10 +7,10 @@ import {
     ProcessViolationRequest, LiveListRequest, PayListRequest, RobotListRequest, RobotMessageListRequest, AutoMessageListRequest,
     AnchorFullRequest, ChatMessageListRequest, CallListRequest, TransactionListRequest, AuthorizeAnchorRequest, BlockRequest, UnblockRequest,
     MigrateRequest, MomentListRequest, CreateSettleRequest, SubmitSettleRequest, SettleProgressRequest, SettleListRequest, OverviewRequest,
-    HomeStatRequest, AreaStatRequest, AnchorStatRequest
+    HomeStatRequest, AreaStatRequest, AnchorStatRequest, AreaConfigListRequest, PayChannelListRequest, CountryConfigListRequest
 } from '../proto/js/cms_pb'
-import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment } from '../proto/js/usertype_pb'
-import { Admin, Guild, RobotMessage, AutoMessage } from '../proto/js/cmstype_pb'
+import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment, PayChannel, Approximation, CountryConfig, OsType} from '../proto/js/usertype_pb'
+import { Admin, Guild, RobotMessage, AutoMessage, App} from '../proto/js/cmstype_pb'
 import { AnchorProfile } from '../proto/js/anchortype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
 import {getAreaList, getGuildList, getAppList, initData} from "@/utils/common";
@@ -62,6 +62,13 @@ const deps = {
       HomeStatRequest,
       AreaStatRequest,
       AnchorStatRequest,
+      AreaConfigListRequest,
+      PayChannelListRequest,
+      CountryConfigListRequest,
+      PayChannel,
+      Approximation,
+      CountryConfig,
+      OsType,
       Empty,
       EntityType,
       User,
@@ -71,6 +78,7 @@ const deps = {
       Admin,
       Guild,
       RobotMessage,
+      App,
       AnchorProfile,
       AutoMessage,
       CmsClient: CmsSdkClient

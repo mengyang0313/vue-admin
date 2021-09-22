@@ -759,7 +759,7 @@ message VipRecord {
 // 商品
 message Commodity {
     uint32 id = 1;
-    // 应用id，为0的时候表示区域全局配置
+    // 应用id
     uint32 app_id = 2;
     // 区域id
     uint32 area_id = 3;
@@ -934,7 +934,7 @@ message Approximation {
     // 上限，开区间，不包括该值
     uint32 high_value = 2;
     // 目标值，在上下限区间范围内的值都近似取值为目标值
-    uint32 target_value = 3;
+    uint32 D = 3;
 }
 
 // 支付方式
@@ -970,8 +970,8 @@ message CountryConfig {
     float exchange_rate = 9;
     // 近似值配置
     repeated Approximation approximations = 10;
-    // 启用的支付方式
-    repeated PayType pay_types = 11;
+    // 启用的支付渠道id
+    repeated uint32 pay_channel_ids = 11;
     // 排序
     uint32 sort = 12;
 
@@ -1004,6 +1004,8 @@ message PayChannel {
     uint32 discount = 10;
     // 排序
     uint32 sort = 11;
+    // 备注
+    string note = 12;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;
@@ -1191,7 +1193,7 @@ message LikeRecord {
     // 被点赞id
     uint64 liked_id = 7;
     // 点赞次数
-    uint32 count = 8;
+    int32 count = 8;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;

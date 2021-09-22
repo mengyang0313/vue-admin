@@ -1,0 +1,100 @@
+{
+  "id": "2819428",
+  "name": "后台管理",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "24414108",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "24414109",
+      "name": "工会管理",
+      "font_class": "gonghuiguanli",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "24414110",
+      "name": "交易记录",
+      "font_class": "jiaoyijilu",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "24414111",
+      "name": "数据统计",
+      "font_class": "shujutongji",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "24414112",
+      "name": "订单管理",
+      "font_class": "dingdanguanli",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "24414113",
+      "name": "聊天记录",
+      "font_class": "liaotianjilu",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "24414114",
+      "name": "通话记录",
+      "font_class": "tonghuajilu",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "24414115",
+      "name": "ai管理",
+      "font_class": "aiguanli",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "24414116",
+      "name": "结算系统",
+      "font_class": "jiesuanxitong",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "24414117",
+      "name": "系统设置",
+      "font_class": "xtsz",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
+      "icon_id": "24414118",
+      "name": "主播管理",
+      "font_class": "zhuboguanli",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "24414119",
+      "name": "用户管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "24414120",
+      "name": "审核任务",
+      "font_class": "shenherenwu",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    }
+  ]
+}

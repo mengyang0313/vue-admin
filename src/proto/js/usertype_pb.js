@@ -11100,7 +11100,7 @@ proto.pb.CountryConfig.toObject = function(includeInstance, msg) {
     exchangeRate: jspb.Message.getFloatingPointFieldWithDefault(msg, 9, 0.0),
     approximationsList: jspb.Message.toObjectList(msg.getApproximationsList(),
     proto.pb.Approximation.toObject, includeInstance),
-    payTypesList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
+    payChannelIdsList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
     sort: jspb.Message.getFieldWithDefault(msg, 12, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 20, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 21, 0),
@@ -11184,9 +11184,9 @@ proto.pb.CountryConfig.deserializeBinaryFromReader = function(msg, reader) {
       msg.addApproximations(value);
       break;
     case 11:
-      var values = /** @type {!Array<!proto.pb.PayType>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
       for (var i = 0; i < values.length; i++) {
-        msg.addPayTypes(values[i]);
+        msg.addPayChannelIds(values[i]);
       }
       break;
     case 12:
@@ -11306,9 +11306,9 @@ proto.pb.CountryConfig.serializeBinaryToWriter = function(message, writer) {
       proto.pb.Approximation.serializeBinaryToWriter
     );
   }
-  f = message.getPayTypesList();
+  f = message.getPayChannelIdsList();
   if (f.length > 0) {
-    writer.writePackedEnum(
+    writer.writePackedUint32(
       11,
       f
     );
@@ -11546,29 +11546,29 @@ proto.pb.CountryConfig.prototype.clearApproximationsList = function() {
 
 
 /**
- * repeated PayType pay_types = 11;
- * @return {!Array<!proto.pb.PayType>}
+ * repeated uint32 pay_channel_ids = 11;
+ * @return {!Array<number>}
  */
-proto.pb.CountryConfig.prototype.getPayTypesList = function() {
-  return /** @type {!Array<!proto.pb.PayType>} */ (jspb.Message.getRepeatedField(this, 11));
+proto.pb.CountryConfig.prototype.getPayChannelIdsList = function() {
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 11));
 };
 
 
 /**
- * @param {!Array<!proto.pb.PayType>} value
+ * @param {!Array<number>} value
  * @return {!proto.pb.CountryConfig} returns this
  */
-proto.pb.CountryConfig.prototype.setPayTypesList = function(value) {
+proto.pb.CountryConfig.prototype.setPayChannelIdsList = function(value) {
   return jspb.Message.setField(this, 11, value || []);
 };
 
 
 /**
- * @param {!proto.pb.PayType} value
+ * @param {number} value
  * @param {number=} opt_index
  * @return {!proto.pb.CountryConfig} returns this
  */
-proto.pb.CountryConfig.prototype.addPayTypes = function(value, opt_index) {
+proto.pb.CountryConfig.prototype.addPayChannelIds = function(value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 11, value, opt_index);
 };
 
@@ -11577,8 +11577,8 @@ proto.pb.CountryConfig.prototype.addPayTypes = function(value, opt_index) {
  * Clears the list making it empty but non-null.
  * @return {!proto.pb.CountryConfig} returns this
  */
-proto.pb.CountryConfig.prototype.clearPayTypesList = function() {
-  return this.setPayTypesList([]);
+proto.pb.CountryConfig.prototype.clearPayChannelIdsList = function() {
+  return this.setPayChannelIdsList([]);
 };
 
 
@@ -11724,6 +11724,7 @@ proto.pb.PayChannel.toObject = function(includeInstance, msg) {
     enable: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     discount: jspb.Message.getFieldWithDefault(msg, 10, 0),
     sort: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    note: jspb.Message.getFieldWithDefault(msg, 12, ""),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 20, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 21, 0),
     commoditiesList: jspb.Message.toObjectList(msg.getCommoditiesList(),
@@ -11807,6 +11808,10 @@ proto.pb.PayChannel.deserializeBinaryFromReader = function(msg, reader) {
     case 11:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setSort(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNote(value);
       break;
     case 20:
       var value = /** @type {number} */ (reader.readUint32());
@@ -11924,6 +11929,13 @@ proto.pb.PayChannel.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint32(
       11,
+      f
+    );
+  }
+  f = message.getNote();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
       f
     );
   }
@@ -12147,6 +12159,24 @@ proto.pb.PayChannel.prototype.getSort = function() {
  */
 proto.pb.PayChannel.prototype.setSort = function(value) {
   return jspb.Message.setProto3IntField(this, 11, value);
+};
+
+
+/**
+ * optional string note = 12;
+ * @return {string}
+ */
+proto.pb.PayChannel.prototype.getNote = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.PayChannel} returns this
+ */
+proto.pb.PayChannel.prototype.setNote = function(value) {
+  return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
@@ -14891,7 +14921,7 @@ proto.pb.LikeRecord.deserializeBinaryFromReader = function(msg, reader) {
       msg.setLikedId(value);
       break;
     case 8:
-      var value = /** @type {number} */ (reader.readUint32());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setCount(value);
       break;
     case 20:
@@ -14982,7 +15012,7 @@ proto.pb.LikeRecord.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getCount();
   if (f !== 0) {
-    writer.writeUint32(
+    writer.writeInt32(
       8,
       f
     );
@@ -15131,7 +15161,7 @@ proto.pb.LikeRecord.prototype.setLikedId = function(value) {
 
 
 /**
- * optional uint32 count = 8;
+ * optional int32 count = 8;
  * @return {number}
  */
 proto.pb.LikeRecord.prototype.getCount = function() {

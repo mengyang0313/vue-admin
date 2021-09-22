@@ -32,7 +32,8 @@ service CmsSdk {
     }
 
     // 获取主播统计数据
-    rpc GetAnchorStat (AnchorStatRequest) returns (AnchorStatReply) {}
+    rpc GetAnchorStat (AnchorStatRequest) returns (AnchorStatReply) {
+    }
 
     // 保存管理员，id为0时创建
     rpc SaveAdmin (Admin) returns (Admin) {
@@ -48,10 +49,6 @@ service CmsSdk {
 
     // 获取工会列表，不分页
     rpc GetGuildList (Empty) returns (GuildListReply) {
-    }
-
-    // 获取应用列表，不分页
-    rpc GetAppList (Empty) returns (AppListReply) {
     }
 
     // 获取主播列表
@@ -176,6 +173,46 @@ service CmsSdk {
 
     // 获取结算记录，不分页
     rpc GetSettleList (SettleListRequest) returns (SettleListReply) {
+    }
+
+    // 获取应用列表，不分页
+    rpc GetAppList (AppListRequest) returns (AppListReply) {
+    }
+
+    // 保存app，id不为0时创建
+    rpc SaveApp (App) returns (App) {
+    }
+
+    // 获取区域配置，不分页
+    rpc GetAreaConfigList (AreaConfigListRequest) returns (AreaConfigListReply) {
+    }
+
+    // 保存区域配置，id不为0时创建
+    rpc SaveAreaConfig (AreaConfig) returns (AreaConfig) {
+    }
+
+    // 获取国家配置，不分页
+    rpc GetCountryConfigList (CountryConfigListRequest) returns (CountryConfigListReply) {
+    }
+
+    // 保存国家配置，id不为0时创建
+    rpc SaveCountryConfig (CountryConfig) returns (CountryConfig) {
+    }
+
+    // 获取支付渠道配置，不分页
+    rpc GetPayChannelList (PayChannelListRequest) returns (PayChannelListReply) {
+    }
+
+    // 保存支付渠道配置，id不为0时创建
+    rpc SavePayChannel (PayChannel) returns (PayChannel) {
+    }
+
+    // 获取商品配置，不分页
+    rpc GetCommodityList (CommodityListRequest) returns (CommodityListReply) {
+    }
+
+    // 保存商品配置，id不为0时创建
+    rpc SaveCommodity (Commodity) returns (Commodity) {
     }
 
     // 上传文件
@@ -305,10 +342,6 @@ message AdminListReply {
 
 message GuildListReply {
     repeated Guild guilds = 1;
-}
-
-message AppListReply {
-    repeated App apps = 1;
 }
 
 message AnchorListRequest {
@@ -812,6 +845,59 @@ message SettleListRequest {
 
 message SettleListReply {
     repeated SettleRecord records = 1;
+}
+
+message AppListRequest {
+    // 区域id
+    uint32 area_id = 1;
+}
+
+message AppListReply {
+    repeated App apps = 1;
+}
+
+message AreaConfigListRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 应用id
+    uint32 app_id = 2;
+}
+
+message AreaConfigListReply {
+    repeated AreaConfig configs = 1;
+}
+
+message CountryConfigListRequest {
+    // 区域id
+    uint32 area_id = 1;
+}
+
+message CountryConfigListReply {
+    repeated CountryConfig configs = 1;
+}
+
+message PayChannelListRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 支付方式
+    PayType pay_type = 2;
+}
+
+message PayChannelListReply {
+    repeated PayChannel channels = 1;
+}
+
+message CommodityListRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 是否为订阅
+    bool is_subscription = 3;
+}
+
+message CommodityListReply {
+    repeated Commodity commodities = 1;
 }
 
 message AdminFileChunk {

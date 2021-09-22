@@ -203,8 +203,8 @@ message AreaConfig {
     uint32 new_user_reward = 9;
     // 心跳间隔，秒
     uint32 heartbeat_interval = 10;
-    // 启用的支付渠道id
-    repeated uint32 pay_channel_ids = 11;
+    // 启用的支付方式
+    repeated PayType pay_types = 11;
     // cdn域名
     string cdn = 12;
     // 免打扰时长，秒

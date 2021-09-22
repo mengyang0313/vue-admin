@@ -1,7 +1,9 @@
 import {Empty} from "@/proto/js/usertype_pb";
+import {PayChannelListRequest} from "@/proto/js/cms_pb";
 import {getToken, removeToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
 import Cookies from "js-cookie";
+import {error} from "@/utils/error";
 
 
 export async function initData() {
@@ -13,6 +15,9 @@ export async function initData() {
 
     const appArr = await getApps()
     sessionStorage.setItem("appArr", JSON.stringify(appArr));
+
+    const payChannelArr = await getPayChannel()
+    sessionStorage.setItem("payChannelArr", JSON.stringify(payChannelArr));
 }
 
 export const getAreas = () => new Promise((resolve, reject) => {
@@ -92,6 +97,43 @@ export const getApps = () => new Promise((resolve, reject) => {
 export function getAppList() {
     let appArr = sessionStorage.getItem("appArr");
     return JSON.parse(appArr);
+}
+
+
+
+// 支付渠道
+export const getPayChannel = () => new Promise((resolve, reject) => {
+    const req = new PayChannelListRequest();
+    const metadata = {'token': getToken()};
+    cmsService.getPayChannelList(req, metadata, (err, resp) => {
+        if (!err) {
+            const arr = []
+            const list = resp.getChannelsList()
+            list.forEach((item, index)=>{
+                const json = {
+                    value : item.getId(),
+                    label : item.getName(),
+                    icon : item.getIcon(),
+                    areaId : item.getAreaId()
+                }
+                arr.push(json)
+            })
+            resolve(arr)
+        } else {
+            console.log(err)
+        }
+    })
+})
+export function getPayChannelList(areaId) {
+    let str = sessionStorage.getItem("payChannelArr");
+    let appArr = JSON.parse(str);
+    let result = []
+    appArr.forEach(item => {
+        if(item.areaId === areaId){
+            result.push(item)
+        }
+    })
+    return result;
 }
 
 
@@ -815,3 +857,70 @@ export function getSettleStatus(key){
         return arr
     }
 }
+
+
+
+// 支付方式
+export function getPayType(key){
+    let arr = [{
+        value: 0,
+        label: '全部'
+    }, {
+        value: 1,
+        label: 'Google'
+    }, {
+        value: 2,
+        label: 'Apple'
+    }, {
+        value: 3,
+        label: 'Xendit'
+    }, {
+        value: 4,
+        label: 'PayerMax'
+    }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
+}
+
+
+
+// 系统类型
+export function getOsType(key){
+    let arr = [{
+        value: 0,
+        label: '全部'
+    }, {
+        value: 1,
+        label: 'Android'
+    }, {
+        value: 2,
+        label: 'Ios'
+    }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
+}
+
