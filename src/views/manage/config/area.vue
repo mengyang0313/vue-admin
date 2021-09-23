@@ -44,7 +44,6 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="id" label="用户ID" align="center" width="120" />
                 <el-table-column prop="areaStr" label="区域" align="center" width="120" />
 <!--                <el-table-column prop="app" label="APP" align="center" width="120">-->
 <!--                    <template scope="scope">-->

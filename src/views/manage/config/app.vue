@@ -67,8 +67,9 @@
                 <el-table-column prop="note" label="备注" align="center" width="120" />
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
-<!--                        <el-button type="text" @click="toDialog('addPay',scope.row)">区域配置</el-button>-->
-                        <el-button type="text" @click="toDialog('delPay',scope.row)">商品配置</el-button>
+                        <el-button type="text">
+                            <router-link :to="{path:'./app-commodity-config',query: {appId: scope.row.id,appname: scope.row.app.label}}">商品配置</router-link>
+                        </el-button>
                         <el-button type="text" @click="toDialog('addApp',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('delPay',scope.row)">删除</el-button>
                     </template>

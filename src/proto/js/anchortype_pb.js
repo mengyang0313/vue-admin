@@ -197,7 +197,9 @@ proto.pb.AnchorBasic.toObject = function(includeInstance, msg) {
     profilesList: jspb.Message.toObjectList(msg.getProfilesList(),
     proto.pb.AnchorProfile.toObject, includeInstance),
     livesList: jspb.Message.toObjectList(msg.getLivesList(),
-    usertype_pb.FileRecord.toObject, includeInstance)
+    usertype_pb.FileRecord.toObject, includeInstance),
+    localCurrency: jspb.Message.getFieldWithDefault(msg, 102, ""),
+    localBalance: jspb.Message.getFieldWithDefault(msg, 103, 0)
   };
 
   if (includeInstance) {
@@ -441,6 +443,14 @@ proto.pb.AnchorBasic.deserializeBinaryFromReader = function(msg, reader) {
       var value = new usertype_pb.FileRecord;
       reader.readMessage(value,usertype_pb.FileRecord.deserializeBinaryFromReader);
       msg.addLives(value);
+      break;
+    case 102:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLocalCurrency(value);
+      break;
+    case 103:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setLocalBalance(value);
       break;
     default:
       reader.skipField();
@@ -828,6 +838,20 @@ proto.pb.AnchorBasic.serializeBinaryToWriter = function(message, writer) {
       101,
       f,
       usertype_pb.FileRecord.serializeBinaryToWriter
+    );
+  }
+  f = message.getLocalCurrency();
+  if (f.length > 0) {
+    writer.writeString(
+      102,
+      f
+    );
+  }
+  f = message.getLocalBalance();
+  if (f !== 0) {
+    writer.writeUint64(
+      103,
+      f
     );
   }
 };
@@ -1829,6 +1853,42 @@ proto.pb.AnchorBasic.prototype.clearLivesList = function() {
 };
 
 
+/**
+ * optional string local_currency = 102;
+ * @return {string}
+ */
+proto.pb.AnchorBasic.prototype.getLocalCurrency = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 102, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.AnchorBasic} returns this
+ */
+proto.pb.AnchorBasic.prototype.setLocalCurrency = function(value) {
+  return jspb.Message.setProto3StringField(this, 102, value);
+};
+
+
+/**
+ * optional uint64 local_balance = 103;
+ * @return {number}
+ */
+proto.pb.AnchorBasic.prototype.getLocalBalance = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 103, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AnchorBasic} returns this
+ */
+proto.pb.AnchorBasic.prototype.setLocalBalance = function(value) {
+  return jspb.Message.setProto3IntField(this, 103, value);
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -1893,8 +1953,7 @@ proto.pb.AnchorProfile.toObject = function(includeInstance, msg) {
     photosList: jspb.Message.toObjectList(msg.getPhotosList(),
     usertype_pb.FileRecord.toObject, includeInstance),
     videosList: jspb.Message.toObjectList(msg.getVideosList(),
-    usertype_pb.FileRecord.toObject, includeInstance),
-    isOld: jspb.Message.getBooleanFieldWithDefault(msg, 200, false)
+    usertype_pb.FileRecord.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -2032,10 +2091,6 @@ proto.pb.AnchorProfile.deserializeBinaryFromReader = function(msg, reader) {
       var value = new usertype_pb.FileRecord;
       reader.readMessage(value,usertype_pb.FileRecord.deserializeBinaryFromReader);
       msg.addVideos(value);
-      break;
-    case 200:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setIsOld(value);
       break;
     default:
       reader.skipField();
@@ -2234,13 +2289,6 @@ proto.pb.AnchorProfile.serializeBinaryToWriter = function(message, writer) {
       101,
       f,
       usertype_pb.FileRecord.serializeBinaryToWriter
-    );
-  }
-  f = message.getIsOld();
-  if (f) {
-    writer.writeBool(
-      200,
-      f
     );
   }
 };
@@ -2772,24 +2820,6 @@ proto.pb.AnchorProfile.prototype.addVideos = function(opt_value, opt_index) {
  */
 proto.pb.AnchorProfile.prototype.clearVideosList = function() {
   return this.setVideosList([]);
-};
-
-
-/**
- * optional bool is_old = 200;
- * @return {boolean}
- */
-proto.pb.AnchorProfile.prototype.getIsOld = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 200, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.pb.AnchorProfile} returns this
- */
-proto.pb.AnchorProfile.prototype.setIsOld = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 200, value);
 };
 
 

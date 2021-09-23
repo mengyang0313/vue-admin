@@ -105,10 +105,14 @@ message AnchorBasic {
     // toya同步状态
     ToyaStatus toya_status = 64;
 
-
     repeated AnchorProfile profiles = 100;
     // 通话视频
     repeated FileRecord lives = 101;
+
+    // 本地货币类型
+    string local_currency = 102;
+    // 转化成本地货币余额，单位为分
+    uint64 local_balance = 103;
 }
 
 // 主播个人中心信息，一个主播可以有多套个人中心信息
@@ -160,9 +164,6 @@ message AnchorProfile {
     repeated FileRecord photos = 100;
     // 视频文件
     repeated FileRecord videos = 101;
-
-    // 是否为老主播，仅为兼容老主播端，后续会删除
-    bool is_old = 200;
 }
 
 // 在线记录

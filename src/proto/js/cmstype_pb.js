@@ -4470,6 +4470,7 @@ proto.pb.AreaConfig.toObject = function(includeInstance, msg) {
     cdn: jspb.Message.getFieldWithDefault(msg, 12, ""),
     dndPeriod: jspb.Message.getFieldWithDefault(msg, 13, 0),
     tagsList: (f = jspb.Message.getRepeatedField(msg, 14)) == null ? undefined : f,
+    anchorExchangeRate: jspb.Message.getFloatingPointFieldWithDefault(msg, 15, 0.0),
     agoraConfig: (f = msg.getAgoraConfig()) && proto.pb.AgoraConfig.toObject(includeInstance, f),
     ossConfig: (f = msg.getOssConfig()) && proto.pb.OssConfig.toObject(includeInstance, f),
     rongcloudConfig: (f = msg.getRongcloudConfig()) && proto.pb.RongcloudConfig.toObject(includeInstance, f),
@@ -4569,6 +4570,10 @@ proto.pb.AreaConfig.deserializeBinaryFromReader = function(msg, reader) {
     case 14:
       var value = /** @type {string} */ (reader.readString());
       msg.addTags(value);
+      break;
+    case 15:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setAnchorExchangeRate(value);
       break;
     case 20:
       var value = new proto.pb.AgoraConfig;
@@ -4722,6 +4727,13 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeRepeatedString(
       14,
+      f
+    );
+  }
+  f = message.getAnchorExchangeRate();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      15,
       f
     );
   }
@@ -5061,6 +5073,24 @@ proto.pb.AreaConfig.prototype.addTags = function(value, opt_index) {
  */
 proto.pb.AreaConfig.prototype.clearTagsList = function() {
   return this.setTagsList([]);
+};
+
+
+/**
+ * optional float anchor_exchange_rate = 15;
+ * @return {number}
+ */
+proto.pb.AreaConfig.prototype.getAnchorExchangeRate = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 15, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AreaConfig} returns this
+ */
+proto.pb.AreaConfig.prototype.setAnchorExchangeRate = function(value) {
+  return jspb.Message.setProto3FloatField(this, 15, value);
 };
 
 

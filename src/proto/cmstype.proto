@@ -211,6 +211,8 @@ message AreaConfig {
     uint32 dnd_period = 13;
     // 标签配置
     repeated string tags = 14;
+    // 主播转换usd汇率
+    float anchor_exchange_rate = 15;
 
     // 声网配置
     AgoraConfig agora_config = 20;

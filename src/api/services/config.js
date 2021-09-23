@@ -191,4 +191,59 @@ export default class {
             }
         })
     }
+
+
+
+    // 获取商品配置
+    async getCommodityList (param, callback) {
+        const req = new this.proto.CommodityListRequest();
+        req.setAreaId(param.areaId)
+        req.setAppId(param.appId)
+        req.setIsSubscription(param.isSubscription)
+
+        const metadata = {'token': getToken()};
+        this.client.getCommodityList(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+
+    // 保存商品
+    async saveCommodity (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.Commodity()
+        }
+        req.setId(param.id)
+        req.setAppId(param.appId)
+        req.setAreaId(param.areaId)
+        req.setEnable(param.enable)
+        req.setTitle(param.title)
+        req.setName(param.name)
+        req.setSku(param.sku)
+        req.setPrice(param.price)
+        req.setCurrency(param.currency)
+        req.setDiscount(param.discount)
+        req.setIcon(param.icon)
+        req.setAmount(param.amount)
+        req.setBonus(param.bonus)
+        req.setVipDays(param.vipDays)
+        req.setSort(param.sort)
+        req.setIsSubscription(param.isSubscription)
+
+        const metadata = {'token': getToken()};
+        this.client.saveCommodity(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
 }

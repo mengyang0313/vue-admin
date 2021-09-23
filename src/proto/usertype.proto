@@ -124,6 +124,8 @@ enum EntityType {
     EntityMoment = 16;
     // 点赞记录
     EntityLikeRecord = 17;
+    // 评论
+    EntityComment = 18;
 }
 
 // 网络类型
@@ -254,66 +256,68 @@ message User {
     uint32 reward = 13;
     // 充值金额
     uint32 deposit = 14;
+    // vip起始时间
+    uint32 vip_start_at = 15;
     // vip结束时间
-    uint32 vip_end_at = 15;
+    uint32 vip_end_at = 16;
     // 发送消息额度
-    uint32 message_quota = 16;
+    uint32 message_quota = 17;
     // 已发送消息数量
-    uint32 message_used = 17;
+    uint32 message_used = 18;
     // 已签到天数
-    uint32 checkin_days = 18;
+    uint32 checkin_days = 19;
     // 上次签到时间
-    uint32 checkin_at = 19;
+    uint32 checkin_at = 20;
     // 粉丝数量
-    uint32 fans_count = 20;
+    uint32 fans_count = 21;
     // 昵称
-    string nickname = 21;
+    string nickname = 22;
     // 性别
-    GenderType gender = 22;
+    GenderType gender = 23;
     // 生日，unix时间戳，秒
-    uint32 birthday = 23;
+    uint32 birthday = 24;
     // 头像
-    string avatar = 24;
+    string avatar = 25;
     // 签名
-    string signature = 25;
+    string signature = 26;
     // 职业
-    OccupationType occupation = 26;
+    OccupationType occupation = 27;
     // 离线时间
-    uint32 offline_at = 27;
+    uint32 offline_at = 28;
     // 心跳时间
-    uint32 heartbeat_at = 28;
+    uint32 heartbeat_at = 29;
     // 上线ip
-    string online_ip = 29;
+    string online_ip = 30;
     // 经度
-    float longitude = 30;
+    float longitude = 31;
     // 纬度
-    float latitude = 31;
+    float latitude = 32;
     // 创建ip
-    string create_ip = 32;
+    string create_ip = 33;
     // 设备id
-    uint32 device_id = 33;
+    uint32 device_id = 34;
     // 网络类型
-    NetworkType network_type = 34;
+    NetworkType network_type = 35;
     // 登录后的访问token
-    string access_token = 35;
+    string access_token = 36;
     // 访问token过期时间
-    uint32 access_expire_at = 36;
+    uint32 access_expire_at = 37;
     // 封禁原因
-    string block_reason = 37;
+    string block_reason = 38;
     // 是否为匿名用户
-    bool anonymous = 38;
+    bool anonymous = 39;
     // 声网信令token
-    string agora_rtm_token = 39;
+    string agora_rtm_token = 40;
     // 声网信令过期时间，unix时间戳，秒
-    uint32 agora_rtm_expire_at = 40;
+    uint32 agora_rtm_expire_at = 41;
     // 融云token
-    string rc_token = 41;
+    string rc_token = 42;
     // 融云token过期时间
-    uint32 rc_expire_at = 42;
+    uint32 rc_expire_at = 43;
     // 安装id
-    uint32 install_id = 43;
+    uint32 install_id = 44;
     // 问候语，老app使用
-    string greeting = 44;
+    string greeting = 45;
 
     uint32 updated_at = 60;
     uint32 created_at = 61;
@@ -934,7 +938,7 @@ message Approximation {
     // 上限，开区间，不包括该值
     uint32 high_value = 2;
     // 目标值，在上下限区间范围内的值都近似取值为目标值
-    uint32 D = 3;
+    uint32 target_value = 3;
 }
 
 // 支付方式
@@ -1197,6 +1201,34 @@ message LikeRecord {
 
     uint32 updated_at = 20;
     uint32 created_at = 21;
+}
+
+// 评论
+message Comment {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 发布者类型
+    EntityType post_type = 4;
+    // 发布者id
+    uint32 post_id = 5;
+    // 审核状态
+    ReviewStatus status = 6;
+    // 评论对象类型
+    EntityType entity_type = 7;
+    // 评论对象id
+    uint64 entity_id = 8;
+    // 评论内容
+    string content = 9;
+
+    uint32 created_at = 21;
+
+    // 昵称
+    string nickname = 40;
+    // 头像
+    string avatar = 41;
 }
 
 // 长连接流式消息

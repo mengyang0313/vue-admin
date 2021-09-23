@@ -397,6 +397,22 @@ export const asyncRoutes = [
                 meta: {
                     title: '应用管理'
                 }
+            },
+            {
+                path: 'app-commodity-config',
+                name: 'app-commodity-config',
+                component: () => import('../views/manage/config/app-commodity-config'),
+                meta: {
+                    title: '应用商品配置'
+                }
+            },
+            {
+                path: 'commodity',
+                name: 'commodity',
+                component: () => import('../views/manage/config/commodity'),
+                meta: {
+                    title: '商品配置'
+                }
             }
         ]
     },
