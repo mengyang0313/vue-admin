@@ -99,7 +99,7 @@ export const asyncRoutes = [
                 name: 'anchor-audit',
                 component: () => import('../views/manage/audit/anchor-audit'),
                 meta: {
-                    title: '主播审核'
+                    title: '主播资料审核'
                 }
             },
             {
@@ -396,14 +396,6 @@ export const asyncRoutes = [
                 component: () => import('../views/manage/config/app'),
                 meta: {
                     title: '应用管理'
-                }
-            },
-            {
-                path: 'app-commodity-config',
-                name: 'app-commodity-config',
-                component: () => import('../views/manage/config/app-commodity-config'),
-                meta: {
-                    title: '应用商品配置'
                 }
             },
             {

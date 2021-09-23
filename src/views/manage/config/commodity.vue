@@ -1,5 +1,8 @@
 <template>
     <div class="table-classic-wrapper">
+        <Hints :hidden="isHints">
+            <template slot="hintName"> 配置 < {{ search.appName }} > 商品</template>
+        </Hints>
         <el-card shadow="always">
             <!-- 操作栏 -->
             <div class="control-btns">
@@ -103,10 +106,11 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addCommodity from './dialog/addCommodity'
+import Hints from '../../../components/Hints'
 import {getAreaList, getAppList, getPayType, getAppName, getArrName} from "@/utils/common";
 
 export default {
-    components: { Pagination, imageShow, addCommodity },
+    components: { Pagination, Hints, imageShow, addCommodity },
     data() {
         return {
             listLoading: true,
@@ -121,6 +125,7 @@ export default {
             },
             total: 0,
             isCollapse: true,
+            isHints: true,
             areaList: getAreaList(),
             payTypeList: getPayType(),
             appList: getAppList()
@@ -128,6 +133,20 @@ export default {
     },
     created() {
         this.fetchData()
+    },
+    watch: {
+        $route: {
+            handler() {
+                if (typeof(this.$route.query.appId) !== "undefined"){
+                    this.search.appId = Number(this.$route.query.appId)
+                    this.search.areaId = Number(this.$route.query.areaId)
+                    this.search.appName = this.$route.query.appName
+                    this.isHints = false
+                    this.fetchData()
+                }
+            },
+            deep: true
+        }
     },
     methods: {
         fetchData() {
@@ -174,6 +193,7 @@ export default {
             return names
         },
         onSearch() {
+            this.isHints = true
             this.search.page.currentPage = 1
             this.fetchData()
         },

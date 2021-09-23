@@ -71,7 +71,9 @@
                 <el-table-column prop="tags" label="标签配置" align="center" width="820" />
                 <el-table-column label="操作" align="center" width="180" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toDialog('countryConfig', scope.row)">国家配置</el-button>
+                        <el-button type="text">
+                            <router-link :to="{path:'./country',query: {areaId: scope.row.areaId,areaName: scope.row.areaStr}}">国家配置</router-link>
+                        </el-button>
                         <el-button type="text" @click="toDialog('addArea', scope.row)">参数配置</el-button>
                     </template>
                 </el-table-column>
@@ -79,9 +81,6 @@
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData" @changePageSize="changePageSize($event)"/>
-
-            <!-- 国家配置 弹出栏 -->
-            <countryConfig ref="countryConfig" @fetchData="fetchData"/>
 
             <!-- 参数配置 弹出栏 -->
             <addArea ref="addArea" @fetchData="fetchData"/>
@@ -94,12 +93,11 @@
 
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import countryConfig from './dialog/country'
 import addArea from './dialog/addArea'
 import {getAreaList, getAppList, getArrName} from "@/utils/common";
 
 export default {
-    components: { Pagination, imageShow, countryConfig, addArea },
+    components: { Pagination, imageShow, addArea },
     data() {
         return {
             listLoading: true,

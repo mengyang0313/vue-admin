@@ -1,5 +1,8 @@
 <template>
     <div class="table-classic-wrapper">
+        <Hints :hidden="isHints">
+            <template slot="hintName"> 配置 < {{ search.areaName }} > 国家</template>
+        </Hints>
         <el-card shadow="always">
             <!-- 操作栏 -->
             <div class="control-btns">
@@ -83,24 +86,27 @@
 
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
+import Hints from '../../../components/Hints'
 import addCountry from './dialog/addCountry'
 import payConfig from './dialog/payConfig'
 import approximationConfig from './dialog/approximationConfig'
 import {getAreaList, getArrName, getPayType, getPayChannelList} from "@/utils/common"
 
 export default {
-    components: { Pagination, imageShow, addCountry, payConfig, approximationConfig },
+    components: { Pagination, Hints, imageShow, addCountry, payConfig, approximationConfig },
     data() {
         return {
             listLoading: true,
             search: {
                 areaId: undefined,
+                areaName: undefined,
                 page: {
                     currentPage: 1,
                     pageSize: 10
                 }
             },
             total: 0,
+            isHints: true,
             isCollapse: true,
             areaList: getAreaList(),
             payTypeList: getPayType()
@@ -108,6 +114,20 @@ export default {
     },
     created() {
         this.fetchData()
+    },
+    watch: {
+        $route: {
+            handler() {
+                if (typeof(this.$route.query.areaId) !== "undefined"){
+                    let areaId = this.$route.query.areaId
+                    this.search.areaId = Number(areaId)
+                    this.search.areaName = this.$route.query.areaName
+                    this.isHints = false
+                    this.fetchData()
+                }
+            },
+            deep: true
+        }
     },
     methods: {
         fetchData() {
@@ -152,6 +172,7 @@ export default {
             return channelNames;
         },
         onSearch() {
+            this.isHints = true
             this.search.page.currentPage = 1
             this.fetchData()
         },

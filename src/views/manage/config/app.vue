@@ -67,9 +67,10 @@
                 <el-table-column prop="note" label="备注" align="center" width="120" />
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text">
-                            <router-link :to="{path:'./app-commodity-config',query: {appId: scope.row.id,appname: scope.row.app.label}}">商品配置</router-link>
-                        </el-button>
+<!--                        <el-button type="text">-->
+<!--                            <router-link :to="{path:'./app-commodity-config',query: {appId: scope.row.id,appName: scope.row.app.label}}">商品配置</router-link>-->
+<!--                        </el-button>-->
+                        <el-button type="text" @click="toDialog('commodityConfig',scope.row)">配置商品</el-button>
                         <el-button type="text" @click="toDialog('addApp',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('delPay',scope.row)">删除</el-button>
                     </template>
@@ -82,8 +83,8 @@
             <!-- 新增应用 弹出栏 -->
             <addApp ref="addApp" @fetchData="fetchData"/>
 
-            <!-- 删除 弹出栏 -->
-            <delPay ref="delPay" @fetchData="fetchData"/>
+            <commodityConfig ref="commodityConfig" @fetchData="fetchData"/>
+
 
         </el-card>
     </div>
@@ -95,11 +96,11 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addApp from './dialog/addApp'
 import addPay from './dialog/addPay'
-import delPay from './dialog/delPay'
+import commodityConfig from './dialog/commodityConfig'
 import {getAreaList, getAppList, getPayType, getAppName} from "@/utils/common";
 
 export default {
-    components: { Pagination, imageShow, addPay, delPay, addApp },
+    components: { Pagination, imageShow, addPay, commodityConfig, addApp },
     data() {
         return {
             listLoading: true,
