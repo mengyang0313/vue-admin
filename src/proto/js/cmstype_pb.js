@@ -4423,7 +4423,7 @@ proto.pb.GreenConfig.prototype.setKeySecret = function(value) {
  * @private {!Array<number>}
  * @const
  */
-proto.pb.AreaConfig.repeatedFields_ = [11,14];
+proto.pb.AreaConfig.repeatedFields_ = [11,14,16];
 
 
 
@@ -4471,6 +4471,7 @@ proto.pb.AreaConfig.toObject = function(includeInstance, msg) {
     dndPeriod: jspb.Message.getFieldWithDefault(msg, 13, 0),
     tagsList: (f = jspb.Message.getRepeatedField(msg, 14)) == null ? undefined : f,
     anchorExchangeRate: jspb.Message.getFloatingPointFieldWithDefault(msg, 15, 0.0),
+    payChannelIdsList: (f = jspb.Message.getRepeatedField(msg, 16)) == null ? undefined : f,
     agoraConfig: (f = msg.getAgoraConfig()) && proto.pb.AgoraConfig.toObject(includeInstance, f),
     ossConfig: (f = msg.getOssConfig()) && proto.pb.OssConfig.toObject(includeInstance, f),
     rongcloudConfig: (f = msg.getRongcloudConfig()) && proto.pb.RongcloudConfig.toObject(includeInstance, f),
@@ -4574,6 +4575,12 @@ proto.pb.AreaConfig.deserializeBinaryFromReader = function(msg, reader) {
     case 15:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setAnchorExchangeRate(value);
+      break;
+    case 16:
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addPayChannelIds(values[i]);
+      }
       break;
     case 20:
       var value = new proto.pb.AgoraConfig;
@@ -4734,6 +4741,13 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeFloat(
       15,
+      f
+    );
+  }
+  f = message.getPayChannelIdsList();
+  if (f.length > 0) {
+    writer.writePackedUint32(
+      16,
       f
     );
   }
@@ -5091,6 +5105,43 @@ proto.pb.AreaConfig.prototype.getAnchorExchangeRate = function() {
  */
 proto.pb.AreaConfig.prototype.setAnchorExchangeRate = function(value) {
   return jspb.Message.setProto3FloatField(this, 15, value);
+};
+
+
+/**
+ * repeated uint32 pay_channel_ids = 16;
+ * @return {!Array<number>}
+ */
+proto.pb.AreaConfig.prototype.getPayChannelIdsList = function() {
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 16));
+};
+
+
+/**
+ * @param {!Array<number>} value
+ * @return {!proto.pb.AreaConfig} returns this
+ */
+proto.pb.AreaConfig.prototype.setPayChannelIdsList = function(value) {
+  return jspb.Message.setField(this, 16, value || []);
+};
+
+
+/**
+ * @param {number} value
+ * @param {number=} opt_index
+ * @return {!proto.pb.AreaConfig} returns this
+ */
+proto.pb.AreaConfig.prototype.addPayChannelIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 16, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.pb.AreaConfig} returns this
+ */
+proto.pb.AreaConfig.prototype.clearPayChannelIdsList = function() {
+  return this.setPayChannelIdsList([]);
 };
 
 

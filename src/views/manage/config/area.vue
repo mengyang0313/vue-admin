@@ -2,9 +2,9 @@
     <div class="table-classic-wrapper">
         <el-card shadow="always">
             <!-- 操作栏 -->
-<!--            <div class="control-btns">-->
-<!--                <el-button type="primary" @click="toDialog('addArea', '')">+ 新增区域</el-button>-->
-<!--            </div>-->
+            <div class="control-btns">
+                <el-button type="primary" @click="toDialog('addArea', '')">+ 新增区域</el-button>
+            </div>
             <!-- 查询栏 -->
             <el-form
                 ref="searchForm"
@@ -28,6 +28,16 @@
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
+                            <span v-if="item.os === 1">
+                                <i class="icon-android-fill" style="float: right"></i>
+                            </span>
+                            <span v-else>
+                                <i class="icon-pingguo" style="float: right"></i>
+                            </span>
+                            <span v-if="item.isAnchor">
+                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>
+                            </span>
                         </el-option>
                     </el-select>
                 </el-form-item>

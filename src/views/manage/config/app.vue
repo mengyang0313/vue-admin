@@ -61,18 +61,16 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaNames" label="启用的区域" align="center" width="120" />
-                <el-table-column prop="bundleId" label="包名" align="center" width="150"/>
-                <el-table-column prop="storeCred" label="google play" align="center" width="270"/>
-                <el-table-column prop="apiAddr" label="api地址" align="center" width="250" />
-                <el-table-column prop="note" label="备注" align="center" width="120" />
+                <el-table-column prop="bundleId" label="包名" align="center" width="150" :show-overflow-tooltip="true"/>
+                <el-table-column prop="storeCred" label="store cred"  align="center" width="170" :show-overflow-tooltip="true" />
+                <el-table-column prop="apiAddr" label="api地址" align="center" width="170" :show-overflow-tooltip="true"/>
+                <el-table-column prop="note" label="备注" align="center" width="120" :show-overflow-tooltip="true"/>
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
-<!--                        <el-button type="text">-->
-<!--                            <router-link :to="{path:'./app-commodity-config',query: {appId: scope.row.id,appName: scope.row.app.label}}">商品配置</router-link>-->
-<!--                        </el-button>-->
-                        <el-button type="text" @click="toDialog('commodityConfig',scope.row)">配置商品</el-button>
-                        <el-button type="text" @click="toDialog('addApp',scope.row)">更新</el-button>
-                        <el-button type="text" @click="toDialog('delPay',scope.row)">删除</el-button>
+                        <el-button type="text" @click="toDialog('commodityConfig', scope.row)">配置商品</el-button>
+                        <el-button type="text" @click="toDialog('version', scope.row)">版本</el-button>
+                        <el-button type="text" @click="toDialog('addApp', scope.row)">更新</el-button>
+                        <el-button type="text" @click="toDialog('delPay', scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -85,7 +83,7 @@
 
             <commodityConfig ref="commodityConfig" @fetchData="fetchData"/>
 
-
+            <version ref="version" @fetchData="fetchData"/>
         </el-card>
     </div>
 </template>
@@ -96,11 +94,12 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addApp from './dialog/addApp'
 import addPay from './dialog/addPay'
+import version from './dialog/version'
 import commodityConfig from './dialog/commodityConfig'
 import {getAreaList, getAppList, getPayType, getAppName} from "@/utils/common";
 
 export default {
-    components: { Pagination, imageShow, addPay, commodityConfig, addApp },
+    components: { Pagination, imageShow, addPay, version, commodityConfig, addApp },
     data() {
         return {
             listLoading: true,

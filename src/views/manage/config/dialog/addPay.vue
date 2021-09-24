@@ -62,7 +62,7 @@
                     <el-switch v-model="form.enable"/>
                 </el-form-item>
                 <el-form-item label="折扣" prop="discount">
-                    <el-input-number v-model="form.discount" :precision="2" :step="0.5" :min="0" :max="100"></el-input-number>
+                    <el-input-number v-model="form.discount" :min="0" :max="100"></el-input-number>
                     &nbsp;%
                 </el-form-item>
                 <el-form-item label="排序" prop="sort">

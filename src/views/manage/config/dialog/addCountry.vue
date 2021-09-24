@@ -45,8 +45,7 @@
                     <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
                 </el-form-item>
                 <el-form-item label="汇率" prop="exchangeRate">
-                    <el-input-number v-model="form.exchangeRate" :precision="2" :step="0.5" :min="0" :max="100" style="width: 30%"></el-input-number>
-                    &nbsp;%
+                    <el-input-number v-model="form.exchangeRate" :min="0" style="width: 70%"></el-input-number>
                 </el-form-item>
                 <el-form-item label="排序" prop="sort">
                     <el-input-number v-model="form.sort" :precision="0" :min="1" style="width: 30%"></el-input-number>
@@ -88,12 +87,7 @@ export default {
                 areaId: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
                 ],
-                country: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                title: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
+
                 name: [
                     {required: true, message: '内容不能为空', trigger: 'blur'}
                 ],

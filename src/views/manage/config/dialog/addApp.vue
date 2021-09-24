@@ -38,11 +38,17 @@
                 <el-form-item label="是否为主播端" prop="isAnchor">
                     <el-switch v-model="form.isAnchor"/>
                 </el-form-item>
-                <el-form-item label="google play" prop="storeCred">
-                    <el-input v-model="form.storeCred" placeholder="请输入"/>
-                </el-form-item>
                 <el-form-item label="api地址" prop="apiAddr">
                     <el-input v-model="form.apiAddr" placeholder="请输入"/>
+                </el-form-item>
+                <el-form-item label="store cred" prop="storeCred">
+                    <el-input
+                        v-model="form.storeCred"
+                        type="textarea"
+                        :autosize="{ minRows: 5, maxRows: 8 }"
+                        placeholder="请输入内容"
+                        show-word-limit
+                    />
                 </el-form-item>
                 <el-form-item label="备注" prop="note">
                     <el-input

@@ -29,6 +29,9 @@
                             <span v-else>
                                 <i class="icon-pingguo" style="float: right"></i>
                             </span>
+                            <span v-if="item.isAnchor">
+                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>
+                            </span>
                         </el-option>
                     </el-select>
                 </el-form-item>

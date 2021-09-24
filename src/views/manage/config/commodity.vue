@@ -117,7 +117,7 @@ export default {
             search: {
                 areaId: undefined,
                 appId: undefined,
-                isSubscription: true,
+                isSubscription: false,
                 page: {
                     currentPage: 1,
                     pageSize: 10

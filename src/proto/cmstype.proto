@@ -213,6 +213,8 @@ message AreaConfig {
     repeated string tags = 14;
     // 主播转换usd汇率
     float anchor_exchange_rate = 15;
+    // 启用的支付渠道id
+    repeated uint32 pay_channel_ids = 16;
 
     // 声网配置
     AgoraConfig agora_config = 20;

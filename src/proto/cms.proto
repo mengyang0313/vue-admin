@@ -183,6 +183,14 @@ service CmsSdk {
     rpc SaveApp (App) returns (App) {
     }
 
+    // 获取版本列表，不分页
+    rpc GetVersionList (VersionListRequest) returns (VersionListReply) {
+    }
+
+    // 保存版本，不允许创建
+    rpc SaveVersion (Version) returns (Version) {
+    }
+
     // 获取区域配置，不分页
     rpc GetAreaConfigList (AreaConfigListRequest) returns (AreaConfigListReply) {
     }
@@ -205,6 +213,14 @@ service CmsSdk {
 
     // 保存支付渠道配置，id不为0时创建
     rpc SavePayChannel (PayChannel) returns (PayChannel) {
+    }
+
+    // 获取支付参数配置，不分页
+    rpc GetPayConfigList (PayConfigListRequest) returns (PayConfigListReply) {
+    }
+
+    // 保存支付参数配置，id不为0时创建
+    rpc SavePayConfig (PayConfig) returns (PayConfig) {
     }
 
     // 获取商品配置，不分页
@@ -856,6 +872,15 @@ message AppListReply {
     repeated App apps = 1;
 }
 
+message VersionListRequest {
+    // 应用id
+    uint32 app_id = 1;
+}
+
+message VersionListReply {
+    repeated Version versions = 1;
+}
+
 message AreaConfigListRequest {
     // 区域id
     uint32 area_id = 1;
@@ -885,6 +910,15 @@ message PayChannelListRequest {
 
 message PayChannelListReply {
     repeated PayChannel channels = 1;
+}
+
+message PayConfigListRequest {
+    // 区域id
+    uint32 area_id = 1;
+}
+
+message PayConfigListReply {
+    repeated PayConfig configs = 1;
 }
 
 message CommodityListRequest {

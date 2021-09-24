@@ -1,27 +1,35 @@
 <template>
-    <el-dialog title="新增区域" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
+    <el-dialog title="新增区域" :visible.sync="dialogVisible" append-to-body width="40%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
 
-<!--                <el-form-item label="应用" prop="appId">-->
-<!--                    <el-select v-model="form.appId" placeholder="请选择">-->
-<!--                        <el-option v-for="item in appList"-->
-<!--                                   :key="item.value"-->
-<!--                                   :label="item.label"-->
-<!--                                   :value="item.value">-->
-<!--                        </el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
+                <el-form-item label="区域" prop="areaId">
+                    <el-select v-model="form.areaId" @change="changeArea" placeholder="请选择">
+                        <el-option v-for="item in areaList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="应用" prop="appId">
+                    <el-select v-model="form.appId" @change="changeApp" placeholder="请选择">
+                        <el-option v-for="item in appList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="积分转换比例" prop="convertRate">
-                    <el-input-number v-model="form.convertRate" :precision="2" :step="0.5" :min="0" :max="100"></el-input-number>
-                    &nbsp;%
+                    <el-input-number v-model="form.convertRate" :min="0"></el-input-number>
                 </el-form-item>
                 <el-form-item label="充值分成比例" prop="depositCommission">
-                    <el-input-number v-model="form.depositCommission" :precision="2" :step="0.5" :min="0" :max="100"></el-input-number>
+                    <el-input-number v-model="form.depositCommission" :min="0" :max="100"></el-input-number>
                     &nbsp;%
                 </el-form-item>
-                <el-form-item label="消费分成比例" prop="rewardCommission">
-                    <el-input-number v-model="form.rewardCommission" :precision="2" :step="0.5" :min="0" :max="100"></el-input-number>
+                <el-form-item label="赠送分成比例" prop="rewardCommission">
+                    <el-input-number v-model="form.rewardCommission" :min="0" :max="100"></el-input-number>
                     &nbsp;%
                 </el-form-item>
                 <el-form-item label="默认通话价格" prop="callPrice">
@@ -39,9 +47,21 @@
                 <el-form-item label="免打扰时长" prop="dndPeriod">
                     <el-input-number v-model="form.dndPeriod" :precision="0" :min="1"></el-input-number>&nbsp;秒
                 </el-form-item>
+                <el-form-item label="主播转换usd汇率" prop="anchorExchangeRate">
+                    <el-input-number v-model="form.anchorExchangeRate" :precision="0" :min="1"></el-input-number>&nbsp;
+                </el-form-item>
                 <el-form-item label="支付方式" prop="payTypes">
-                    <el-select v-model="form.payTypes" placeholder="请选择">
+                    <el-select v-model="form.payTypes" multiple placeholder="请选择">
                         <el-option v-for="item in payTypeList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="支付渠道" prop="payChannelIds" :hidden="isPayChannel">
+                    <el-select v-model="form.payChannelIds" multiple placeholder="请选择">
+                        <el-option v-for="item in payChannelList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
@@ -83,7 +103,7 @@
 </template>
 
 <script>
-import { getAreaList, getAppList, getPayType} from "@/utils/common";
+import { getAreaList, getAppList, getPayType, getPayChannelList} from "@/utils/common";
 
 export default {
     data() {
@@ -97,8 +117,10 @@ export default {
             inputVisible: false,
             inputValue: '',
             areaList: getAreaList(),
-            appList: getAppList(),
+            appList: [],
             payTypeList: getPayType(),
+            payChannelList: [],
+            isPayChannel: true,
             rules: {
                 convertRate: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
@@ -135,13 +157,17 @@ export default {
     },
     methods: {
         init(row){
-            this.form = row
-            if(typeof(row.tags) !== "undefined"){
-                this.form.tagList = row.tags.split(",")
+            if(typeof(row.id) != "undefined"){
+                this.form = row
+                if(typeof(row.tags) !== "undefined"){
+                    this.form.tagList = row.tags.split(",")
+                }
+                if(!!row.payTypes){
+                    this.form.payTypes = 0
+                }
             }
-            if(!!row.payTypes){
-                this.form.payTypes = 0
-            }
+
+
         },
         submitForm() {
             const $this = this
@@ -186,6 +212,27 @@ export default {
             }
             this.inputVisible = false;
             this.inputValue = '';
+        },
+        changeArea(val) {
+            this.payChannelList = getPayChannelList(val)
+
+            let apps = getAppList()
+            let newApps = []
+            apps.forEach(item => {
+                if(item.areaIds.indexOf(val)){
+                    newApps.push(item)
+                }
+            })
+            newApps.unshift({
+                isAnchor: false,
+                label: "全部",
+                os: 1,
+                value: 0
+            })
+            this.appList = newApps
+        },
+        changeApp(val) {
+            this.isPayChannel = val !== 0 ? false : true
         }
     }
 }

@@ -3600,6 +3600,166 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveApp =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.VersionListRequest,
+ *   !proto.pb.cms.VersionListReply>}
+ */
+const methodDescriptor_CmsSdk_GetVersionList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetVersionList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.VersionListRequest,
+  proto.pb.cms.VersionListReply,
+  /**
+   * @param {!proto.pb.cms.VersionListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.VersionListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.VersionListRequest,
+ *   !proto.pb.cms.VersionListReply>}
+ */
+const methodInfo_CmsSdk_GetVersionList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.VersionListReply,
+  /**
+   * @param {!proto.pb.cms.VersionListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.VersionListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.VersionListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.VersionListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.VersionListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getVersionList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetVersionList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetVersionList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.VersionListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.VersionListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getVersionList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetVersionList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetVersionList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.Version,
+ *   !proto.pb.Version>}
+ */
+const methodDescriptor_CmsSdk_SaveVersion = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveVersion',
+  grpc.web.MethodType.UNARY,
+  cmstype_pb.Version,
+  cmstype_pb.Version,
+  /**
+   * @param {!proto.pb.Version} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.Version.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.Version,
+ *   !proto.pb.Version>}
+ */
+const methodInfo_CmsSdk_SaveVersion = new grpc.web.AbstractClientBase.MethodInfo(
+  cmstype_pb.Version,
+  /**
+   * @param {!proto.pb.Version} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.Version.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.Version} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Version)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Version>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.saveVersion =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveVersion',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveVersion,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.Version} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Version>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveVersion =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveVersion',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveVersion);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.AreaConfigListRequest,
  *   !proto.pb.cms.AreaConfigListReply>}
  */
@@ -4074,6 +4234,166 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.savePayChannel =
       request,
       metadata || {},
       methodDescriptor_CmsSdk_SavePayChannel);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.PayConfigListRequest,
+ *   !proto.pb.cms.PayConfigListReply>}
+ */
+const methodDescriptor_CmsSdk_GetPayConfigList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetPayConfigList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.PayConfigListRequest,
+  proto.pb.cms.PayConfigListReply,
+  /**
+   * @param {!proto.pb.cms.PayConfigListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.PayConfigListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.PayConfigListRequest,
+ *   !proto.pb.cms.PayConfigListReply>}
+ */
+const methodInfo_CmsSdk_GetPayConfigList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.PayConfigListReply,
+  /**
+   * @param {!proto.pb.cms.PayConfigListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.PayConfigListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.PayConfigListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.PayConfigListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.PayConfigListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getPayConfigList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetPayConfigList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetPayConfigList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.PayConfigListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.PayConfigListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getPayConfigList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetPayConfigList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetPayConfigList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.PayConfig,
+ *   !proto.pb.PayConfig>}
+ */
+const methodDescriptor_CmsSdk_SavePayConfig = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SavePayConfig',
+  grpc.web.MethodType.UNARY,
+  cmstype_pb.PayConfig,
+  cmstype_pb.PayConfig,
+  /**
+   * @param {!proto.pb.PayConfig} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.PayConfig.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.PayConfig,
+ *   !proto.pb.PayConfig>}
+ */
+const methodInfo_CmsSdk_SavePayConfig = new grpc.web.AbstractClientBase.MethodInfo(
+  cmstype_pb.PayConfig,
+  /**
+   * @param {!proto.pb.PayConfig} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  cmstype_pb.PayConfig.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.PayConfig} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.PayConfig)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.PayConfig>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.savePayConfig =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SavePayConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SavePayConfig,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.PayConfig} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.PayConfig>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.savePayConfig =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SavePayConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SavePayConfig);
 };
 
 

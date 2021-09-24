@@ -84,7 +84,9 @@ export const getApps = () => new Promise((resolve, reject) => {
                 const json = {
                     value : item.getId(),
                     label : item.getTitle(),
-                    os : item.getOsType()
+                    os : item.getOsType(),
+                    isAnchor: item.getIsAnchor(),
+                    areaIds: item.getAreaIdsList()
                 }
                 arr.push(json)
             })

@@ -29,6 +29,9 @@ export default class {
     // 保存区域配置
     async saveAreaConfig (param, callback) {
         let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.AreaConfig()
+        }
         req.setAppId(param.appId)
         req.setAreaId(param.areaId)
         req.setConvertRate(param.convertRate)
@@ -38,10 +41,12 @@ export default class {
         req.setFreeMessageCount(param.freeMessageCount)
         req.setNewUserReward(param.newUserReward)
         req.setHeartbeatInterval(param.heartbeatInterval)
-        req.setPayTypesList(param.payTypeList)
+        req.setPayTypesList(param.payTypes)
+        req.setPayChannelIdsList(param.payChannelIds)
         req.setCdn(param.cdn)
         req.setDndPeriod(param.dndPeriod)
         req.setTagsList(param.tags)
+        req.setAnchorExchangeRate(param.anchorExchangeRate)
 
         const metadata = {'token': getToken()}
         this.client.saveAreaConfig(req, metadata, (err, resp) => {
@@ -90,6 +95,52 @@ export default class {
         req.setDiscount(param.discount)
         req.setSort(param.sort)
         req.setNote(param.note)
+
+        const metadata = {'token': getToken()};
+        this.client.savePayChannel(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+
+    // 查询支付参数
+    async getPayConfigList (param, callback) {
+        const req = new this.proto.PayConfigListRequest();
+        req.setAreaId(param.areaId)
+
+        const metadata = {'token': getToken()};
+        this.client.getPayConfigList(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+
+    // 保存支付参数
+    async savePayConfig (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.PayConfig()
+        }
+        req.setAreaId(param.areaId)
+        req.setType(param.type)
+        req.setAppId(param.appId)
+        req.setTitle(param.title)
+        req.setAppSecret(param.appSecret)
+        req.setRedirectUrl(param.redirectUrl)
+        req.setCallbackUrl(param.callbackUrl)
+        req.setExtea1(param.extra1)
+        req.setExtea2(param.extra2)
+        req.setExtea3(param.extra3)
 
         const metadata = {'token': getToken()};
         this.client.savePayChannel(req, metadata, (err, resp) => {
@@ -238,6 +289,50 @@ export default class {
 
         const metadata = {'token': getToken()};
         this.client.saveCommodity(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+
+    // 获取版本列表
+    async getVersionList (param, callback) {
+        const req = new this.proto.VersionListRequest();
+        req.setAppId(param.appId)
+
+        const metadata = {'token': getToken()};
+        this.client.getVersionList(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+
+    // 保存商品
+    async saveVersion (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.Version()
+        }
+        req.setId(param.id)
+        req.setAppId(param.appId)
+        req.setOsType(param.osType)
+        req.setCode(param.code)
+        req.setName(param.name)
+        req.setEnable(param.enable)
+        req.setInReview(param.inReview)
+        req.setNote(param.note)
+
+        const metadata = {'token': getToken()};
+        this.client.saveVersion(req, metadata, (err, resp) => {
             if (!err) {
                 callback(resp)
             } else {
