@@ -57,7 +57,7 @@
 import Pagination from '../../../components/Pagination'
 import addRobotMessage from './dialog/add-robot-message'
 import Hints from '../../../components/Hints'
-import {getActionType} from "@/utils/common";
+import {getActionType} from "@/utils/dist";
 
 export default {
     name: 'Table',

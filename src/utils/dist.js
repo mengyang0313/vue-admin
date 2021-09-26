@@ -756,7 +756,7 @@ export function getTraderType(key){
         label: '全部'
     },{
         value: 1,
-        label: '普通用户'
+        label: '用户'
     }, {
         value: 2,
         label: '主播'

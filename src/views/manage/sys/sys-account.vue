@@ -59,7 +59,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 编辑资料 -->
             <addSysAccount ref="addSysAccount" @fetchData="fetchData"/>
@@ -70,7 +70,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import addSysAccount from './dialog/add-sys-account'
-import {getAreaList} from '@/utils/common'
+import {getAreaList} from '@/utils/dist'
 
 
 export default {
@@ -145,6 +145,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         }
     }
 }

@@ -31,7 +31,7 @@
 
 <script>
 import Background from '../assets/img/login-background.jpg'
-import {initData} from "@/utils/common";
+import {initData} from "@/utils/dist";
 
 export default {
     name: 'Login',

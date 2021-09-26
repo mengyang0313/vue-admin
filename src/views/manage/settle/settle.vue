@@ -136,10 +136,11 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAppList, getArrName, getGuildList, getSettleStatus} from "@/utils/common";
+import {getAreaList, getAppList, getArrName, getGuildList, getSettleStatus} from "@/utils/dist";
 import excel from "@/utils/excel"
 import createSettle from './dialog/createSettle'
 import importData from './dialog/import-data'
+import {toDate} from "@/utils/date";
 
 
 export default {
@@ -192,7 +193,7 @@ export default {
                         "guildId" : item.getGuildId(),
                         "guildStr" : getArrName($this.guildList, item.getGuildId()),
                         "anchorId" : item.getAnchorId(),
-                        "settleAt" : new Date(item.getSettleAt() * 1000).format('yyyy-MM-dd'),
+                        "settleAt" : toDate(item.getSettleAt()),
                         "status" : item.getStatus(),
                         "statusStr" : getSettleStatus(item.getStatus()),
                         "callIncome" : item.getCallIncome(),
@@ -337,6 +338,9 @@ export default {
             }else{
                 this.$message.error("不能为空!")
             }
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         }
     }
 }

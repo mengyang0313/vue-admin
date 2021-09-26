@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType, getPayChannelList} from "@/utils/common";
+import {getAreaList, getAppList, getPayType, getOsType, getPayChannelList} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 import {Approximation} from "@/proto/js/usertype_pb";

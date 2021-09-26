@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {getPayChannelList} from "@/utils/common";
+import {getPayChannelList} from "@/utils/dist";
 
 export default {
     data() {

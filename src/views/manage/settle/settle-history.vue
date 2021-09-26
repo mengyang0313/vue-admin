@@ -118,8 +118,9 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAreaList, getArrName, getGuildList, getSettleStatus} from "@/utils/common";
+import {getAppList, getAreaList, getArrName, getGuildList, getSettleStatus} from "@/utils/dist";
 import excel from "@/utils/excel";
+import {toDate} from "@/utils/date";
 
 export default {
     components: { Pagination },
@@ -173,7 +174,7 @@ export default {
                         "guildId" : item.getGuildId(),
                         "guildStr" : getArrName($this.guildList, item.getGuildId()),
                         "anchorId" : item.getAnchorId(),
-                        "settleAt" : new Date(item.getSettleAt() * 1000).format('yyyy-MM-dd'),
+                        "settleAt" : toDate(item.getSettleAt()),
                         "status" : item.getStatus(),
                         "statusStr" : getSettleStatus(item.getStatus()),
                         "callIncome" : item.getCallIncome(),

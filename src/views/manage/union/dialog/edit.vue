@@ -41,7 +41,7 @@
 <script>
 
 import { boolDict} from '@/dict/index'
-import {getAreaList, getBool} from "@/utils/common";
+import {getAreaList, getBool} from "@/utils/dist";
 
 export default {
     name: 'Form',

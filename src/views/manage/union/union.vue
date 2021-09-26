@@ -63,7 +63,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 新增或编辑 -->
             <edit ref="edit" @fetchData="fetchData"/>
@@ -78,7 +78,8 @@
 import Pagination from '../../../components/Pagination'
 import edit from './dialog/edit'
 import close from './dialog/close'
-import {getAreaList, getBool, getArrName} from "@/utils/common";
+import {getAreaList, getBool, getArrName} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 
 
@@ -127,7 +128,7 @@ export default {
                         "anchorCount" : item.getAnchorCount(),
                         "enable" : item.getEnable(),
                         "note" : item.getNote(),
-                        "createdAt" : new Date(item.getCreatedAt() * 1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "createdAt" : toTime(item.getCreatedAt()),
                         "struct" : item
                     }
                     data.push(json)
@@ -149,6 +150,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         }
     }
 }

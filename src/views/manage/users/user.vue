@@ -169,7 +169,8 @@ import block from './dialog/block'
 import multiAccount from './dialog/multi-account'
 import recharge from './dialog/recharge'
 import updateUser from './dialog/updateUser'
-import {getAreaList, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus, getAppName} from "@/utils/common";
+import {getAreaList, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus, getAppName} from "@/utils/dist";
+import {toDate, toTime} from "@/utils/date";
 
 export default {
     components: { Pagination, imageShow, block, multiAccount, recharge, updateUser},
@@ -220,11 +221,11 @@ export default {
                         "onlineStatusStr" : getOnlineStatus(item.getOnlineStatus()),
                         "blockStatus" : item.getBlockStatus(),
                         "blockStatusStr" : getBlockStatus(item.getBlockStatus()),
-                        "vipEndAt" : new Date(item.getVipEndAt() * 1000).format('yyyy-MM-dd'),
+                        "vipEndAt" : toDate(item.getVipEndAt()),
                         "expense" : item.getExpense(),
                         "deposit" : item.getDeposit(),
                         "balance" : item.getBalance(),
-                        "createdAt" : new Date(item.getCreatedAt() * 1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "createdAt" : toTime(item.getCreatedAt()),
                         "osType" : item.getOsType(),
                         "appVersion" : item.getVersion(),
                         "onlineIp" : item.getOnlineIp(),

@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { getAreaList, getAppList, getPayType, getPayChannelList} from "@/utils/common";
+import { getAreaList, getAppList, getPayType, getPayChannelList} from "@/utils/dist";
 import {isEmpty} from "@/api/api";
 
 export default {

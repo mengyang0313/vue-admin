@@ -241,7 +241,7 @@ import {
     getOnlineStatus,
     getReviewStatus,
     getGuildList, getArrName, getAppList, getBlockStatus, getAppName
-} from "@/utils/common";
+} from "@/utils/dist";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
 import dataList from './dialog/dataInfo'
@@ -254,6 +254,7 @@ import multiAccount from './dialog/multi-account'
 import migrate from './dialog/migrate'
 import merge from './dialog/merge'
 import Child from './anchor-info';
+import {toTime} from "@/utils/date";
 
 
 export default {
@@ -333,8 +334,8 @@ export default {
                         "commissionIncome" : item.getCommissionIncome(),
                         "price" : item.getPrice(),
                         "adjustIncome" : item.getAdjustIncome(),
-                        "updatedAt" : new Date(item.getUpdatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
-                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "updatedAt" : toTime(item.getUpdatedAt()),
+                        "createdAt" : toTime(item.getCreatedAt()),
                         "struct" : item
                     }
                     data.push(json)

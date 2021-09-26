@@ -83,7 +83,8 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAnchorLevel, getArrName } from "@/utils/common";
+import {getAreaList, getAnchorLevel, getArrName } from "@/utils/dist";
+import {toDate} from "@/utils/date";
 
 
 export default {
@@ -122,7 +123,7 @@ export default {
                 list.forEach((item, index) => {
                     const json = {
                         "id" : item.getId(),
-                        "startAt" : new Date(item.getStartAt() * 1000).format('yyyy-MM-dd'),
+                        "startAt" : toDate(item.getStartAt()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "anchorId" : item.getAnchorId(),

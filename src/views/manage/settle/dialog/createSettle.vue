@@ -33,7 +33,7 @@
 
 <script>
 
-import {getAreaList, getArrName} from "@/utils/common";
+import {getAreaList, getArrName} from "@/utils/dist";
 
 export default {
     data() {

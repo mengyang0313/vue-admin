@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { getBlockStatus, getBlockTime} from "@/utils/common";
+import { getBlockStatus, getBlockTime} from "@/utils/dist";
 
 export default {
     components: { },

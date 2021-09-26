@@ -90,7 +90,7 @@ import Hints from '../../../components/Hints'
 import addCountry from './dialog/addCountry'
 import payConfig from './dialog/payConfig'
 import approximationConfig from './dialog/approximationConfig'
-import {getAreaList, getArrName, getPayType, getPayChannelList} from "@/utils/common"
+import {getAreaList, getArrName, getPayType, getPayChannelList} from "@/utils/dist"
 
 export default {
     components: { Pagination, Hints, imageShow, addCountry, payConfig, approximationConfig },

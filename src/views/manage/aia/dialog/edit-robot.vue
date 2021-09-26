@@ -125,7 +125,7 @@
 
 <script>
 import { getToken } from "@/utils/cookie";
-import { getAreaList, getOccupationType } from "@/utils/common";
+import { getAreaList, getOccupationType } from "@/utils/dist";
 import axios from "axios";
 import ImgUpdate from '@/components/ImgUpdate'
 

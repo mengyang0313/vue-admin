@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { getMessageType } from "@/utils/common";
+import { getMessageType } from "@/utils/dist";
 
 export default {
     data() {

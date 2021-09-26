@@ -87,7 +87,7 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addPayChannel from './dialog/addPayChannel'
-import {getAreaList, getArrName, getPayType, getOsType} from "@/utils/common";
+import {getAreaList, getArrName, getPayType, getOsType} from "@/utils/dist";
 
 export default {
     components: { Pagination, imageShow, addPayChannel },

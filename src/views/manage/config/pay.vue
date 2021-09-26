@@ -68,7 +68,8 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addPay from './dialog/addPay'
-import {getAreaList, getArrName, getPayType, getAppList, getAppName} from "@/utils/common";
+import {getAreaList, getArrName, getPayType, getAppList, getAppName} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     components: { Pagination, imageShow, addPay},
@@ -113,7 +114,7 @@ export default {
                         "extra1" : item.getExtra1(),
                         "extra2" : item.getExtra2(),
                         "extra3" : item.getExtra3(),
-                        "createdAt" :  new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "createdAt" :  toTime(item.getCreatedAt()),
                         "struct" : item
                     }
                     data.push(json)

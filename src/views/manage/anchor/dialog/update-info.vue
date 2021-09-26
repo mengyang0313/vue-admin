@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {getAnchorLevel, getAreaList, getGuildList} from "@/utils/common";
+import {getAnchorLevel, getAreaList, getGuildList} from "@/utils/dist";
 
 export default {
     data() {

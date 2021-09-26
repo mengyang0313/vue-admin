@@ -59,15 +59,16 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
         </el-card>
     </div>
 </template>
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getReviewStatus} from "@/utils/common"
+import {getAreaList, getReviewStatus} from "@/utils/dist"
 import videoList from './dialog/video-list'
+import {toTime} from "@/utils/date";
 
 export default {
     name: 'Table',
@@ -116,7 +117,7 @@ export default {
                         "ownerType" : item.getOwnerType(),
                         "thumb" : item.getThumb(),
                         "videos" : "查看",
-                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                        "createdAt" : toTime(item.getCreatedAt())
                     }
                     data.push(json)
                 })
@@ -141,7 +142,9 @@ export default {
                 this.$refs[component].init(row);
             })
         },
-        // 通过
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
+        },
         handlePassed(index, row) {
             console.log(index, row)
             this.$confirm('是否通过?', '提示', {

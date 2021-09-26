@@ -47,7 +47,8 @@
 
 <script>
 import Pagination from '../../../../components/Pagination'
-import {getAppList, getAppName, getAreaList, getMessageType} from "@/utils/common";
+import {getAppList, getAppName, getAreaList, getMessageType} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     name: 'Table',
@@ -102,7 +103,7 @@ export default {
                         "type" : getMessageType(item.getType()),
                         "text" : item.getText(),
                         "uri" : item.getUri(),
-                        "sendAt" : new Date(item.getSendAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                        "sendAt" : toTime(item.getSendAt())
                     }
                     data.push(json)
                 })

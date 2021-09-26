@@ -42,7 +42,7 @@
 
 <script>
 
-import {getAreaList} from '@/utils/common'
+import {getAreaList} from '@/utils/dist'
 
 export default {
     data() {

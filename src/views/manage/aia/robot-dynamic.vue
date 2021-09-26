@@ -55,7 +55,8 @@
 import Pagination from '../../../components/Pagination'
 import addRobotDynamic from './dialog/add-robot-dynamic'
 import Hints from '../../../components/Hints'
-import {getArrName, getAreaList, getAppList, getReviewStatus} from "@/utils/common";
+import {getArrName, getAreaList, getAppList, getReviewStatus} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 
 export default {
@@ -117,7 +118,7 @@ export default {
                         "video": item.getVideo(),
                         "thumb": item.getThumb(),
                         "likes": item.getLikes(),
-                        "publishAt": new Date(item.getPublishAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "publishAt": toTime(item.getPublishAt()),
                         "nickname": item.getNickname(),
                         "avatar": item.getAvatar()
                     }

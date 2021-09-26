@@ -72,7 +72,7 @@
 
 <script>
 import Pagination from '../../../../components/Pagination'
-import {getAppList, getAppName, getAreaList, getMessageType} from "@/utils/common";
+import {getAppList, getAppName, getAreaList, getMessageType} from "@/utils/dist";
 
 export default {
     name: 'Table',

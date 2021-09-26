@@ -85,7 +85,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 编辑资料 -->
             <editRobot ref="editRobot" @fetchData="fetchData"/>
@@ -100,7 +100,7 @@
 import Pagination from '../../../components/Pagination'
 import editRobot from './dialog/edit-robot'
 import showDialog from './dialog/show-dialog'
-import { getBool, getAreaList, getArrName} from "@/utils/common";
+import { getBool, getAreaList, getArrName} from "@/utils/dist";
 
 export default {
     components: { Pagination, editRobot, showDialog},
@@ -178,6 +178,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         }
     }
 }

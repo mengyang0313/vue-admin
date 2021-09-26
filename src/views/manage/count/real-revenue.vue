@@ -57,7 +57,7 @@ import CountTo from 'vue-count-to'
 import ChartsBarLine from '../../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../../components/Charts/ChartsBar'
 import ChartsLine from '../../../components/Charts/ChartsLine'
-import {getAreaList} from "@/utils/common";
+import {getAreaList} from "@/utils/dist";
 
 export default {
     name: 'Home',

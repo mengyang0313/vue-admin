@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import {getActionType, getAreaList} from "@/utils/common";
+import {getActionType, getAreaList} from "@/utils/dist";
 
 export default {
     data() {

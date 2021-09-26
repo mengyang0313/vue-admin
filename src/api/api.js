@@ -14,7 +14,7 @@ import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment, PayChannel,
 import { Admin, Guild, RobotMessage, AutoMessage, App, Version, AreaConfig, PayConfig} from '../proto/js/cmstype_pb'
 import { AnchorProfile } from '../proto/js/anchortype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
-import {getAreaList, getGuildList, getAppList, initData} from "@/utils/common";
+import {getAreaList, getGuildList, getAppList, initData} from "@/utils/dist";
 import axios from "axios";
 
 const getMetadata = () => {

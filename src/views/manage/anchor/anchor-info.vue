@@ -181,7 +181,7 @@ import {
     getGuildList,
     getOnlineStatus,
     getBlockStatus
-} from "@/utils/common";
+} from "@/utils/dist";
 
 export default {
     name: 'Table',

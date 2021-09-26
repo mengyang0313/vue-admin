@@ -107,7 +107,7 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addCommodity from './dialog/addCommodity'
 import Hints from '../../../components/Hints'
-import {getAreaList, getAppList, getPayType, getAppName, getArrName} from "@/utils/common";
+import {getAreaList, getAppList, getPayType, getAppName, getArrName} from "@/utils/dist";
 
 export default {
     components: { Pagination, Hints, imageShow, addCommodity },

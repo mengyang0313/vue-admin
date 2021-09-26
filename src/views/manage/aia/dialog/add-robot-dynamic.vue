@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { getMessageType, getAreaList, getAppList } from "@/utils/common";
+import { getMessageType, getAreaList, getAppList } from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 

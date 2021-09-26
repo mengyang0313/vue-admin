@@ -96,7 +96,7 @@ import addApp from './dialog/addApp'
 import addPay from './dialog/addPayChannel'
 import version from './dialog/version'
 import commodityConfig from './dialog/commodityConfig'
-import {getAreaList, getAppList, getPayType, getAppName} from "@/utils/common";
+import {getAreaList, getAppList, getPayType, getAppName} from "@/utils/dist";
 
 export default {
     components: { Pagination, imageShow, addPay, version, commodityConfig, addApp },

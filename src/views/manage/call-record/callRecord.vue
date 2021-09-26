@@ -124,27 +124,35 @@
                 </el-table-column>
                 <el-table-column prop="userId" label="用户Id" align="center" width="120" />
                 <el-table-column prop="anchorId" label="主播Id" align="center" width="120" />
-                <el-table-column prop="areaStr" label="区域" align="center" width="220"/>
-                <el-table-column prop="callType" label="通话发起类型" align="center" width="220">
+                <el-table-column prop="areaStr" label="区域" align="center" width="120"/>
+                <el-table-column prop="callType" label="通话发起类型" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
                             <el-tag size="medium">{{ scope.row.callType }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="hangType" label="通话结束类型" align="center" width="220">
+
+                <el-table-column prop="connectedAt" label="通话建立时间" align="center" width="150"/>
+                <el-table-column prop="hangAt" label="通话结束时间" align="center" width="150"/>
+                <el-table-column prop="duration" label="通话时长" align="center" width="120"/>
+                <el-table-column prop="billDuration" label="计费时长" align="center" width="120"/>
+                <el-table-column prop="expense" label="用户消费" align="center" width="120"/>
+                <el-table-column prop="hangType" label="通话结束类型" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
                             <el-tag size="medium" v-if="scope.row.hangType!=''">{{ scope.row.hangType }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="duration" label="通话时长" align="center"/>
-                <el-table-column prop="income" label="主播收益" align="center"/>
+                <el-table-column prop="income" label="主播收益" align="center" width="120"/>
+                <el-table-column prop="userScore" label="用户评分" align="center"/>
+                <el-table-column prop="captureDStatus" label="录屏状态" align="center"/>
+                <el-table-column prop="captureDuration" label="录制时长" align="center"/>
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
         </el-card>
     </div>
 </template>
@@ -152,7 +160,8 @@
 <script>
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAppList, getHangType, getCallStatus, getCallType, getArrName, getAppName} from "@/utils/common";
+import {getAreaList, getAppList, getHangType, getCallStatus, getCallType, getArrName, getAppName} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     components: { Pagination },
@@ -203,18 +212,25 @@ export default {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
                         "app" : getAppName($this.appList, item.getAppId()),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "userId" : item.getUserId(),
                         "anchorId" : item.getAnchorId(),
                         "callType" : getCallType(item.getCallType()),
-                        "areaId" : item.getAreaId(),
-                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
-                        "hangType" : getHangType(item.getHangType()),
+                        "connectedAt" : toTime(item.getConnectedAt()),
+                        "hangAt" : toTime(item.getHangAt()),
                         "duration" : item.getDuration(),
-                        "income" : item.getIncome()
+                        "billDuration" : item.getBillDuration(),
+                        "expense": item.getExpense(),
+                        "hangType" : getHangType(item.getHangType()),
+                        "income" : item.getIncome(),
+                        "userScore": item.getUserScore(),
+                        "captureStatus": item.getCaptureStatus(),
+                        "captureDuration": item.getCaptureDuration()
                     }
                     data.push(json)
                 })
-                $this.total = list.length
+                $this.total = result.getTotalCount()
                 $this.tableData = data
                 $this.listLoading = false
             })
@@ -235,6 +251,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         }
     }
 }

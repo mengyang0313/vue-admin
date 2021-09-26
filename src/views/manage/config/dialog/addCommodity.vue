@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/common";
+import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 

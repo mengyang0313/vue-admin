@@ -99,14 +99,29 @@
                 <el-table-column prop="userId" label="用户id" align="center" width="120" />
                 <el-table-column prop="directionStr" label="消息方向" align="center" width="120"/>
                 <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
-                <el-table-column prop="type" label="消息类型" align="center" width="120">
+                <el-table-column prop="typeStr" label="消息类型" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.type }}</el-tag>
+                            <el-tag size="medium">{{ scope.row.typeStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="text" label="私信内容" align="center"  />
+                <el-table-column prop="text" label="私信内容" align="center">
+                    <template scope="scope">
+                        <div v-if="scope.row.type === 1">
+                            {{ scope.row.text }}
+                        </div>
+                        <div v-else-if="scope.row.type === 4">
+                            <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
+                        </div>
+                        <div v-else-if="scope.row.type === 5">
+                            <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        </div>
+                        <div v-else>
+                            {{ scope.row.text }}
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="sendAt" label="发送时间" align="center" width="220"/>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
@@ -116,7 +131,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 对话 弹出栏 -->
             <showDialog ref="showDialog"/>
@@ -129,7 +144,8 @@
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import showDialog from './dialog/show-dialog'
-import {getAppList, getAreaList, getMessageType, getAppName} from "@/utils/common";
+import {getAppList, getAreaList, getMessageType, getAppName} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     components: { Pagination, showDialog },
@@ -181,10 +197,11 @@ export default {
                         "direction" : item.getDirection(),
                         "directionStr" : item.getDirection() === 1 ? "<--" : "-->",
                         "anchorId" : item.getAnchorId(),
-                        "type" : getMessageType(item.getType()),
+                        "type" : item.getType(),
+                        "typeStr" : getMessageType(item.getType()),
                         "text" : item.getText(),
                         "uri" : item.getUri(),
-                        "sendAt" : new Date(item.getSendAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                        "sendAt" : toTime(item.getSendAt())
                     }
                     data.push(json)
                 })
@@ -213,10 +230,19 @@ export default {
                 this.$refs[component].init(row);
             })
         },
-        //重置
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
+        },
         resetForm() {
             this.$refs.searchForm.resetFields()
-        }
+        },
+        play(row) {
+            this.playVisible = true;
+            let src = row.uri
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.initSrc(src);
+            })
+        },
     }
 }
 </script>

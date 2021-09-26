@@ -48,6 +48,8 @@
 
 <script>
 
+import {toTime} from "@/utils/date";
+
 export default {
     name: 'UserCenter',
     data() {
@@ -66,10 +68,10 @@ export default {
             $this.userInfo.areaIds = result.getAreaIdsList()
             $this.userInfo.appIds = result.getAppIdsList()
             $this.userInfo.modules = result.getModulesList()
-            $this.userInfo.loginAt = new Date(result.getLoginAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
+            $this.userInfo.loginAt = toTime(result.getLoginAt()),
             $this.userInfo.loginIp = result.getLoginIp()
-            $this.userInfo.createdAt = new Date(result.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
-        });
+            $this.userInfo.createdAt = toTime(result.getCreatedAt())
+        })
         /*getUserInfo().then(res => {
             this.userInfo = res
         })*/

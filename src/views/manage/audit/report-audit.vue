@@ -104,14 +104,15 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
         </el-card>
     </div>
 </template>
 
 <script>
 import Pagination from '../../../components/Pagination'
-import { getReportedTypes, getReportedTime, getAreaList, getViolationScene } from "@/utils/common";
+import { getReportedTypes, getReportedTime, getAreaList, getViolationScene } from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     name: 'Table',
@@ -163,7 +164,7 @@ export default {
                         "violationType" : item.getViolationType(),
                         "violationScene" : item.getViolationScene(),
                         "reportMessage" : item.getReportMessage(),
-                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
+                        "createdAt" : toTime(item.getCreatedAt()),
                         "dealStatus" : item.getDealStatus(),
                         "dealMessage" : item.getDealMessage(),
                         "dealAt" : item.getDealAt()
@@ -175,16 +176,16 @@ export default {
                 $this.listLoading = false
             });
         },
-        // 查询数据
         onSubmit() {
             this.search.page.currentPage = 1
             this.fetchData()
         },
-        // 多选操作
         handleSelectionChange(val) {
             this.multipleSelection = val
         },
-        // 通过
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
+        },
         handlePassed(index, row) {
             const $this = this
             this.$prompt('', '通过原因', {

@@ -94,7 +94,7 @@
                             <span v-if="scope.row.app.os === 1">
                                 <i class="icon-android-fill"></i>
                             </span>
-                            <span v-else>
+                            <span v-else-if="scope.row.app.os === 2">
                                 <i class="icon-pingguo"></i>
                             </span>
                         </div>
@@ -116,7 +116,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
         </el-card>
     </div>
 </template>
@@ -124,7 +124,8 @@
 <script>
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAreaList, getArrName, getAppName, getSourceType, getTraderType} from "@/utils/common";
+import {getAppList, getAreaList, getArrName, getAppName, getSourceType, getTraderType} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     components: { Pagination },
@@ -177,7 +178,7 @@ export default {
                         "amount" : item.getAmount(),
                         "balance" : item.getBalance(),
                         "desc" : item.getDesc(),
-                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                        "createdAt" : toTime(item.getCreatedAt())
                     }
                     data.push(json)
                 })
@@ -202,6 +203,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         }
     }
 }

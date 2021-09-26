@@ -121,7 +121,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
         </el-card>
     </div>
 </template>
@@ -130,7 +130,8 @@
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import { apps, orderStatus } from '@/dict/index'
-import {getAreaList, getPayStatus, getAppList, getArrName, getAppName} from "@/utils/common";
+import {getAreaList, getPayStatus, getAppList, getArrName, getAppName} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     components: { Pagination },
@@ -185,8 +186,8 @@ export default {
                         "payStatus" : getPayStatus(item.getPayStatus()),
                         "payType" : item.getPayType(),
                         "payChannel" : item.getPayChannel(),
-                        "paidAt" : new Date(item.getPaidAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
-                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
+                        "paidAt" : toTime(item.getPaidAt()),
+                        "createdAt" : toTime(item.getCreatedAt())
                     }
                     data.push(json)
                 })
@@ -211,6 +212,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         }
     }
 }

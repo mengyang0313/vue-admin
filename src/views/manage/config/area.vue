@@ -104,7 +104,7 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addArea from './dialog/addArea'
-import {getAreaList, getAppList, getArrName, getPayType} from "@/utils/common";
+import {getAreaList, getAppList, getArrName, getPayType} from "@/utils/dist";
 
 export default {
     components: { Pagination, imageShow, addArea },

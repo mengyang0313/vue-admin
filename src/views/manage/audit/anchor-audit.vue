@@ -84,7 +84,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 相册列表 -->
             <photoList ref="photoList" @fetchData="fetchData"/>
@@ -102,7 +102,8 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import videoList from './dialog/video-list'
 import photoList from './dialog/photo-list'
-import {getAreaList, getOccupationType, getReviewStatus, getArrName, getGenderType} from "@/utils/common"
+import {getAreaList, getOccupationType, getReviewStatus, getArrName, getGenderType} from "@/utils/dist"
+import {toDate} from "@/utils/date";
 
 export default {
     name: 'Table',
@@ -159,7 +160,7 @@ export default {
                         "tags" : item.getTagsList().join(", "),
                         "occupation" : item.getOccupation(),
                         "occupationStr" : getArrName($this.occupationList, item.getOccupation()),
-                        "birthday" : new Date(item.getBirthday()*1000).format('yyyy-MM-dd'),
+                        "birthday" : toDate(item.getBirthday()),
                         "signature" : item.getSignature(),
                         "voiceGreeting" : item.getVoiceGreeting(),
                         "onlineStart" : item.getOnlineStart(),
@@ -184,7 +185,9 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val
         },
-        // 通过
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
+        },
         handlePassed(index, row) {
             const $this = this
             this.$confirm('是否通过', '提示', {

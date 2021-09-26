@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/common";
+import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/dist";
 
 export default {
     data() {
