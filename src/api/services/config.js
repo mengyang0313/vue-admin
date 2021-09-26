@@ -134,16 +134,15 @@ export default class {
         req.setAreaId(param.areaId)
         req.setType(param.type)
         req.setAppId(param.appId)
-        req.setTitle(param.title)
         req.setAppSecret(param.appSecret)
         req.setRedirectUrl(param.redirectUrl)
         req.setCallbackUrl(param.callbackUrl)
-        req.setExtea1(param.extra1)
-        req.setExtea2(param.extra2)
-        req.setExtea3(param.extra3)
+        req.setExtra1(param.extra1)
+        req.setExtra2(param.extra2)
+        req.setExtra3(param.extra3)
 
         const metadata = {'token': getToken()};
-        this.client.savePayChannel(req, metadata, (err, resp) => {
+        this.client.savePayConfig(req, metadata, (err, resp) => {
             if (!err) {
                 callback(resp)
             } else {

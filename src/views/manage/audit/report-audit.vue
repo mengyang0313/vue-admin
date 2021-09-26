@@ -163,7 +163,7 @@ export default {
                         "violationType" : item.getViolationType(),
                         "violationScene" : item.getViolationScene(),
                         "reportMessage" : item.getReportMessage(),
-                        "createdAt" : item.getCreatedAt(),
+                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
                         "dealStatus" : item.getDealStatus(),
                         "dealMessage" : item.getDealMessage(),
                         "dealAt" : item.getDealAt()

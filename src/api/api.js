@@ -127,6 +127,13 @@ export function getTableList(param, url) {
 }
 
 
+export function isEmpty(str){
+    if(typeof(str) === "undefined" || str === null || str === ""){
+        return true;
+    }
+    return false;
+}
+
 Date.prototype.format = function(fmt) {
     var o = {
         "M+" : this.getMonth()+1,                 //月份

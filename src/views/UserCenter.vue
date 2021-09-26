@@ -66,9 +66,9 @@ export default {
             $this.userInfo.areaIds = result.getAreaIdsList()
             $this.userInfo.appIds = result.getAppIdsList()
             $this.userInfo.modules = result.getModulesList()
-            $this.userInfo.loginAt = result.getLoginAt()
+            $this.userInfo.loginAt = new Date(result.getLoginAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
             $this.userInfo.loginIp = result.getLoginIp()
-            $this.userInfo.createdAt = result.getCreatedAt()
+            $this.userInfo.createdAt = new Date(result.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
         });
         /*getUserInfo().then(res => {
             this.userInfo = res

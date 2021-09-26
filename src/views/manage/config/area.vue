@@ -70,12 +70,12 @@
 <!--                </el-table-column>-->
                 <el-table-column prop="convertRate" label="积分转换比例" align="center" width="120" />
                 <el-table-column prop="depositCommission" label="充值分成" align="center" width="120"/>
-                <el-table-column prop="rewardCommission" label="消费分成" align="center" width="150"/>
-                <el-table-column prop="callPrice" label="通话价格" align="center" width="150"/>
-                <el-table-column prop="freeMessageCount" label="免费消息" align="center" width="250" />
-                <el-table-column prop="newUserReward" label="奖励钻石" align="center" width="150"/>
+                <el-table-column prop="rewardCommission" label="消费分成" align="center" width="120"/>
+                <el-table-column prop="callPrice" label="通话价格" align="center" width="120"/>
+                <el-table-column prop="freeMessageCount" label="免费消息" align="center" width="120" />
+                <el-table-column prop="newUserReward" label="奖励钻石" align="center" width="120"/>
                 <el-table-column prop="heartbeatInterval" label="心跳间隔" align="center" width="120" />
-                <el-table-column prop="payTypes" label="支付方式" align="center" width="120" />
+                <el-table-column prop="payTypeNames" label="支付方式" align="center" width="220" />
                 <el-table-column prop="cdn" label="cdn域名" align="center" width="420" />
                 <el-table-column prop="dndPeriod" label="免打扰时长" align="center" width="120" />
                 <el-table-column prop="tags" label="标签配置" align="center" width="820" />
@@ -104,7 +104,7 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addArea from './dialog/addArea'
-import {getAreaList, getAppList, getArrName} from "@/utils/common";
+import {getAreaList, getAppList, getArrName, getPayType} from "@/utils/common";
 
 export default {
     components: { Pagination, imageShow, addArea },
@@ -123,7 +123,8 @@ export default {
             tableData: [],
             isCollapse: true,
             areaList: getAreaList(),
-            appList: getAppList()
+            appList: getAppList(),
+            payType: getPayType()
         }
     },
     created() {
@@ -151,6 +152,7 @@ export default {
                         "newUserReward" : item.getNewUserReward(),
                         "heartbeatInterval" : item.getHeartbeatInterval(),
                         "payTypes" : item.getPayTypesList(),
+                        "payTypeNames" : $this.handlePayType(item.getPayTypesList()).join(","),
                         "cdn" : item.getCdn(),
                         "dndPeriod" : item.getDndPeriod(),
                         "tags" : item.getTagsList().join(","),
@@ -181,8 +183,12 @@ export default {
         },
         handlePayType(arr) {
             let data = []
-            arr.forEach(item => {
+            getPayType().forEach(item => {
+                if(arr.indexOf(item.value)){
+                    data.push(item.label)
+                }
             })
+            return data
         }
     }
 }

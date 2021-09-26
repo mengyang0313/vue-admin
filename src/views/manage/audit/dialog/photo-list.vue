@@ -1,40 +1,46 @@
 <template>
-    <el-dialog title="已有视频" :visible.sync="dialogVisible" append-to-body width="80%" :before-close="handleClose">
-        <div class="table-classic-wrapper">
-            <el-card shadow="always">
-                <!-- 表格栏 -->
-                <el-table
-                    ref="multipleTable"
-                    v-loading="listLoading"
-                    :data="tableData"
-                    tooltip-effect="dark"
-                    style="width: 100%"
-                    size="medium"
-                >
-                    <el-table-column prop="thumb" label="视频" align="center" width="300">
-                        <template scope="scope">
-                            <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="status" label="状态" align="center" width="200">
-                        <template slot-scope="scope">
-                            <div slot="reference">
-                                <el-tag size="medium">{{ scope.row.status }}</el-tag>
-                            </div>
-                        </template>
-                    </el-table-column>
-
-                    <el-table-column prop="createdAt" label="录制时间" align="center"/>
-                    <el-table-column label="操作" align="center">
-                        <template slot-scope="scope">
-                            <el-button type="success" plain size="mini" @click="handleRefuse(scope.$index, scope.row)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <!-- 分页栏 -->
-                <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                            @pagination="fetchData"/>
-
+    <el-dialog title="查看图片" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="handleClose">
+        <div class="table-classic-wrapper dialog-list">
+            <!-- 表格栏 -->
+            <el-table
+                ref="multipleTable"
+                v-loading="listLoading"
+                :data="tableData"
+                tooltip-effect="dark"
+                style="width: 100%"
+                size="medium"
+            >
+                <el-table-column prop="thumb" label="应用App" align="center" width="300">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                            <i class="icon-android-fill"></i>
+                        </span>
+                            <span v-else>
+                            <i class="icon-pingguo"></i>
+                        </span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="areaStr" label="区域" align="center" width="200"/>
+                <el-table-column prop="type" label="文件类型" align="center" width="200"/>
+                <el-table-column prop="ownerId" label="所有者ID" align="center" width="200"/>
+                <el-table-column prop="uri" label="图片" align="center">
+                    <template scope="scope">
+                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
+                    </template>
+                </el-table-column>
+<!--                    <el-table-column label="操作" align="center">-->
+<!--                        <template slot-scope="scope">-->
+<!--                            <el-button type="success" plain size="mini" @click="handleRefuse(scope.$index, scope.row)">删除</el-button>-->
+<!--                        </template>-->
+<!--                    </el-table-column>-->
+            </el-table>
+            <!-- 分页栏 -->
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
+                        @pagination="fetchData"/>
+        </div>
                 <el-dialog
                     title="播放视频"
                     :visible.sync="playVisible"
@@ -44,14 +50,13 @@
                         <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
                     </div>
                 </el-dialog>
-            </el-card>
-        </div>
     </el-dialog>
 </template>
 
 <script>
 import Pagination from '../../../../components/Pagination'
 import VueVideoPlayer from '../../../../components/VueVideoPlayer'
+import {getAppList, getAppName, getAreaList, getArrName, getFileType} from "@/utils/common"
 
 export default {
     name: 'Table',
@@ -60,18 +65,21 @@ export default {
         return {
             // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
             search: {
-                ownerId: 0,
                 page: {
                     currentPage: 1,
                     pageSize: 10
                 }
             },
+            photoList: [],
+            imgList: [],
             // 数据总条数
             total: 0,
             playVisible: false,
-            dialogVisible: false
+            dialogVisible: false,
+            appList: getAppList(),
+            areaList: getAreaList(),
+            fileTypeList: getFileType()
         }
     },
     created() {
@@ -79,29 +87,25 @@ export default {
     },
     methods: {
         init(row){
-            this.search.ownerId = row.search.ownerId
+            this.photoList = row.photos
             this.fetchData()
         },
-        // 获取数据列表
         fetchData() {
-            const $this = this
-            this.listLoading = true
-            this.$service.audit.getLiveList(this.search, function (result){
-                const list = result.getRecordsList()
-                const data = []
-                list.forEach((item, index)=>{
-                    const json = {
-                        "id" : item.getId(),
-                        "thumb" : item.getThumb(),
-                        "status" : item.getStatus(),
-                        "createdAt" : new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss')
-                    }
-                    data.push(json)
-                })
-                $this.total = result.getTotalCount()
-                $this.tableData = data
-                $this.listLoading = false
-            });
+            let $this = this
+            let data = []
+            this.photoList.forEach(item => {
+                let json = {
+                    "app" : getAppName($this.appList, item.getAppId()),
+                    "areaStr" : getArrName($this.areaList, item.getAreaId()),
+                    "type" : getArrName($this.fileTypeList, item.getType()),
+                    "ownerId" : item.getOwnerId(),
+                    "uri" : item.getUri()
+                }
+                data.push(json)
+            })
+            this.total = this.photoList.length
+            this.tableData = data
+            this.listLoading = false
         },
         play(row) {
             this.playVisible = true;
@@ -118,45 +122,19 @@ export default {
                 this.$refs.myVideoPlayer.emptySrc();
             })
         },
-        // 删除
-        handleRefuse(index, row) {
-            console.log(index, row)
-            this.$confirm('是否删除?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '已删除!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                })
-            })
-        }
+        closeDialog() {
+            this.dialogVisible = false
+            this.resetForm()
+            this.$emit('fetchData');
+        },
     }
 }
 </script>
 
 <style lang="less">
-.video-player-wrapper {
-    .content-box {
-        height: 440px;
-    }
-
-    .content-item {
-        padding: 8px 0;
-
-        .video-js {
-            .vjs-big-play-button {
-                top: 45%;
-                left: 45%;
-                font-size: 2em;
-            }
-        }
-    }
+.dialog-list{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom:  20px;
 }
 </style>

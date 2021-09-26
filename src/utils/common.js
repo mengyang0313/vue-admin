@@ -865,9 +865,6 @@ export function getSettleStatus(key){
 // 支付方式
 export function getPayType(key){
     let arr = [{
-        value: 0,
-        label: '全部'
-    }, {
         value: 1,
         label: 'Google'
     }, {
@@ -909,6 +906,68 @@ export function getOsType(key){
     }, {
         value: 2,
         label: 'Ios'
+    }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
+}
+
+
+
+// 文件类型
+export function getFileType(key){
+    let arr = [{
+        value: 0,
+        label: '全部'
+    }, {
+        value: 1,
+        label: '图片'
+    }, {
+        value: 2,
+        label: '视频'
+    }, {
+        value: 3,
+        label: '音频'
+    }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
+}
+
+
+// 性别类型
+export function getGenderType(key){
+    let arr = [{
+        value: 0,
+        label: '全部'
+    }, {
+        value: 1,
+        label: '男'
+    }, {
+        value: 2,
+        label: '女'
     }]
     if(typeof(key) != "undefined"){
         let label = ""

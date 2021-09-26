@@ -3,7 +3,7 @@
         <el-card shadow="always">
             <!-- 操作栏 -->
             <div class="control-btns">
-                <el-button type="primary" @click="toDialog('addPay', '')">+ 新增支付</el-button>
+                <el-button type="primary" @click="toDialog('addPay', '')">+ 新增支付参数</el-button>
             </div>
             <!-- 查询栏 -->
             <el-form
@@ -16,15 +16,6 @@
                 <el-form-item label="区域" prop="areaId">
                     <el-select v-model="search.areaId" placeholder="请选择">
                         <el-option v-for="item in areaList"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="支付方式" prop="areaId">
-                    <el-select v-model="search.payType" placeholder="请选择">
-                        <el-option v-for="item in payTypeList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
@@ -45,24 +36,15 @@
                 size="medium"
             >
                 <el-table-column prop="areaStr" label="区域" align="center" width="120" />
-                <el-table-column prop="osTypeStr" label="系统类型" align="center" width="120"/>
-                <el-table-column prop="channel" label="支付渠道" align="center" width="120"/>
-                <el-table-column prop="payTypeStr" label="支付方式" align="center" width="150"/>
-                <el-table-column prop="title" label="渠道名称" align="center" width="150"/>
-                <el-table-column prop="name" label="渠道名称" align="center" width="150" />
-                <el-table-column prop="icon" label="支付平台图标" align="center" width="150">
-                    <template scope="scope">
-                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.icon" :preview-src-list="[scope.row.icon]"/>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="enable" label="是否启用" align="center" width="120">
-                    <template slot-scope="scope">
-                        <el-switch v-model="scope.row.enable" disabled/>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="discount" label="折扣" align="center" width="120" />
-                <el-table-column prop="sort" label="排序" align="center" width="120" />
-                <el-table-column prop="note" label="备注" align="center" width="320" />
+                <el-table-column prop="typeStr" label="支付方式" align="center" width="120"/>
+                <el-table-column prop="appId" label="第三方应用Id" align="center" width="200"/>
+                <el-table-column prop="appSecret" label="应用密匙" align="center" :show-overflow-tooltip="true" width="200"/>
+                <el-table-column prop="redirectUrl" label="重定向地址" align="center" :show-overflow-tooltip="true" width="200"/>
+                <el-table-column prop="callbackUrl" label="回调地址" align="center" :show-overflow-tooltip="true" width="200" />
+                <el-table-column prop="extra1" label="字段1" align="center" :show-overflow-tooltip="true" width="200"/>
+                <el-table-column prop="extra2" label="字段2" align="center" :show-overflow-tooltip="true" width="200" />
+                <el-table-column prop="extra3" label="字段3" align="center" :show-overflow-tooltip="true" width="200" />
+                <el-table-column prop="createdAt" label="创建时间" align="center" width="180"/>
                 <el-table-column label="操作" align="center" width="180" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('addPay',scope.row)">更新</el-button>
@@ -77,9 +59,6 @@
             <!-- 更新 弹出栏 -->
             <addPay ref="addPay" @fetchData="fetchData"/>
 
-            <!-- 删除 弹出栏 -->
-            <delPay ref="delPay" @fetchData="fetchData"/>
-
         </el-card>
     </div>
 </template>
@@ -89,17 +68,15 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addPay from './dialog/addPay'
-import delPay from './dialog/delPay'
-import {getAreaList, getArrName, getPayType, getOsType} from "@/utils/common";
+import {getAreaList, getArrName, getPayType, getAppList, getAppName} from "@/utils/common";
 
 export default {
-    components: { Pagination, imageShow, addPay, delPay },
+    components: { Pagination, imageShow, addPay},
     data() {
         return {
             listLoading: true,
             search: {
                 areaId: undefined,
-                payType: undefined,
                 page: {
                     currentPage: 1,
                     pageSize: 10
@@ -108,7 +85,8 @@ export default {
             total: 0,
             isCollapse: true,
             areaList: getAreaList(),
-            payTypeList: getPayType()
+            payTypeList: getPayType(),
+            appList: getAppList()
         }
     },
     created() {
@@ -118,26 +96,24 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.config.getPayChannelList(this.search, function (result){
-                const list = result.getChannelsList()
+            this.$service.config.getPayConfigList(this.search, function (result){
+                const list = result.getConfigsList()
                 const data = []
                 list.forEach((item, index) => {
                     const json = {
                         "id" : item.getId(),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
-                        "osType" : item.getOsType(),
-                        "osTypeStr" : getOsType(item.getOsType()),
-                        "channel" : item.getChannel(),
-                        "payType" : item.getPayType(),
-                        "payTypeStr" : getPayType(item.getPayType()),
-                        "title" : item.getTitle(),
-                        "name" : item.getName(),
-                        "icon" : item.getIcon(),
-                        "enable" : item.getEnable(),
-                        "discount" : item.getDiscount(),
-                        "sort" : item.getSort(),
-                        "note" : item.getNote(),
+                        "type" : item.getType(),
+                        "typeStr" : getPayType(item.getType()),
+                        "appId" : item.getAppId(),
+                        "appSecret" : item.getAppSecret(),
+                        "redirectUrl" : item.getRedirectUrl(),
+                        "callbackUrl" : item.getCallbackUrl(),
+                        "extra1" : item.getExtra1(),
+                        "extra2" : item.getExtra2(),
+                        "extra3" : item.getExtra3(),
+                        "createdAt" :  new Date(item.getCreatedAt()*1000).format('yyyy-MM-dd hh:mm:ss'),
                         "struct" : item
                     }
                     data.push(json)

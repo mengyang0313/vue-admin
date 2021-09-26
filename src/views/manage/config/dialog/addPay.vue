@@ -12,17 +12,8 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="系统类型" prop="osType">
-                    <el-select v-model="form.osType" placeholder="请选择">
-                        <el-option v-for="item in osTypeList"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="支付方式" prop="payType">
-                    <el-select v-model="form.payType" placeholder="请选择">
+                <el-form-item label="支付方式" prop="type">
+                    <el-select v-model="form.type" placeholder="请选择" @change="changePayType">
                         <el-option v-for="item in payTypeList"
                                    :key="item.value"
                                    :label="item.label"
@@ -30,53 +21,26 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="支付渠道" prop="channel">
-                    <el-input v-model="form.channel" placeholder="请输入"/>
+                <el-form-item label="第三方应用Id" prop="appId" :hidden="isAppIdHidden">
+                    <el-input v-model="form.appId" placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="渠道名称(后台)" prop="title">
-                    <el-input v-model="form.title" placeholder="请输入"/>
+                <el-form-item label="应用密匙" prop="appSecret" :hidden="isAppSecretHidden">
+                    <el-input v-model="form.appSecret" placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="渠道名称(客户端)" prop="name">
-                    <el-input v-model="form.name" placeholder="请输入"/>
+                <el-form-item label="重定向地址" prop="redirectUrl">
+                    <el-input v-model="form.redirectUrl" placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="支付平台图标" prop="icon">
-                    <div class="img">
-                        <el-upload
-                            action=""
-                            :limit="1"
-                            :on-preview="previewIcon"
-                            :on-change="successIcon"
-                            list-type="picture-card"
-                            :file-list="iconArr"
-                            :auto-upload="false"
-                        >
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
-                        <el-dialog :visible.sync="iconDialog" :modal-append-to-body="true" append-to-body>
-                            <img width="100%" :src="form.icon" alt />
-                        </el-dialog>
-                    </div>
-                    <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
+                <el-form-item label="回调地址" prop="callbackUrl">
+                    <el-input v-model="form.callbackUrl" placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="是否启用" prop="enable">
-                    <el-switch v-model="form.enable"/>
+                <el-form-item label="字段1" prop="extra1">
+                    <el-input v-model="form.extra1" placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="折扣" prop="discount">
-                    <el-input-number v-model="form.discount" :min="0" :max="100"></el-input-number>
-                    &nbsp;%
+                <el-form-item label="字段2" prop="extra2">
+                    <el-input v-model="form.extra2" placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="排序" prop="sort">
-                    <el-input-number v-model="form.sort" :precision="0" :min="1"></el-input-number>
-                </el-form-item>
-                <el-form-item label="备注" prop="note">
-                    <el-input
-                        v-model="form.note"
-                        type="textarea"
-                        :autosize="{ minRows: 5, maxRows: 8 }"
-                        placeholder="请输入内容"
-                        maxlength="50"
-                        show-word-limit
-                    />
+                <el-form-item label="字段3" prop="extra3">
+                    <el-input v-model="form.extra3" placeholder="请输入"/>
                 </el-form-item>
 
                 <el-form-item class="submit-box">
@@ -90,17 +54,17 @@
 
 <script>
 import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/common";
-import {getToken} from "@/utils/cookie";
-import axios from "axios";
 
 export default {
     data() {
         return {
             form: { },
             dialogVisible: false,
-            title: '新增支付',
+            title: '新增支付参数',
             iconArr: [],
             iconDialog: false,
+            isAppIdHidden: true,
+            isAppSecretHidden: true,
             areaList: getAreaList(),
             appList: getAppList(),
             osTypeList: getOsType(),
@@ -109,13 +73,10 @@ export default {
                 areaId: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
                 ],
-                osType: [
+                type: [
                     {required: true, message: '内容不能为空', trigger: 'blur'}
                 ],
-                payType: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                sort: [
+                redirectUrl: [
                     {required: true, message: '内容不能为空', trigger: 'blur'}
                 ]
             }
@@ -124,9 +85,9 @@ export default {
     methods: {
         init(row){
             if(typeof(row.id) != "undefined"){
-                this.title = "编辑国家"
+                this.title = "编辑支付参数"
                 this.form = row
-                this.iconArr.push({"url": row.icon});
+                this.changePayType(row.type)
             }
         },
         submitForm() {
@@ -134,7 +95,7 @@ export default {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     let param = this.form;
-                    this.$service.config.savePayChannel(param, function (result){
+                    this.$service.config.savePayConfig(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
                             $this.closeDialog()
@@ -154,33 +115,21 @@ export default {
             this.resetForm()
             this.$emit('fetchData');
         },
-        previewIcon(file) {
-            this.iconDialog = true
-        },
-        successIcon(file) {
-            const $this = this
-            this.imgUpload(file.raw, 1, function (data){
-                $this.form.icon = data.uri
-            })
-        },
-        imgUpload(file, type, callback){
-            let headers = {
-                'Content-Type': 'multipart/form-data',
-                "token" : getToken(),
-                "area-id" : 1,
-                "file-type" : type
+        changePayType(val) {
+            if(4 === val){
+                this.isAppIdHidden = false
+                this.isAppSecretHidden = false
+            }else{
+                this.form.appId = undefined
+                if(3 === val){
+                    this.isAppSecretHidden = false
+                }else{
+                    this.isAppSecretHidden = true
+                    this.form.appSecret = undefined
+                }
+                this.isAppIdHidden = true
             }
-            const formData = new FormData()
-            formData.append('file', file)
-            axios({
-                url: 'http://101.33.118.232:8101/file/upload',
-                method: 'post',
-                data: formData,
-                headers: headers
-            }).then(res => {
-                const data = res.data
-                callback(data)
-            })
+
         }
     }
 }

@@ -79,7 +79,7 @@ export default {
             // 查询列表参数对象
             search: {
                 areaId: 1,
-                reviewStatus: 5,
+                reviewStatus: 2,
                 page: {
                     currentPage: 1,
                     pageSize: 10

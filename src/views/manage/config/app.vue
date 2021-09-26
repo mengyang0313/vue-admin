@@ -35,7 +35,7 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="appStr" label="APP" align="center" width="120">
+                <el-table-column prop="appStr" label="应用APP" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
                             {{ scope.row.app.label }}
@@ -93,7 +93,7 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addApp from './dialog/addApp'
-import addPay from './dialog/addPay'
+import addPay from './dialog/addPayChannel'
 import version from './dialog/version'
 import commodityConfig from './dialog/commodityConfig'
 import {getAreaList, getAppList, getPayType, getAppName} from "@/utils/common";

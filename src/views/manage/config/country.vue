@@ -55,7 +55,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="exchangeRate" label="汇率" align="center" :show-overflow-tooltip="true" width="150" />
-                <el-table-column prop="channelNames" label="启用的支付渠道" align="center" width="180" />
+                <el-table-column prop="channelNames" label="启用的支付渠道" align="center" :show-overflow-tooltip="true" width="300" />
                 <el-table-column prop="sort" label="排序" align="center" width="120" />
                 <el-table-column label="操作" align="center" width="180" fixed="right">
                     <template slot-scope="scope">

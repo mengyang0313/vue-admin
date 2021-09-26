@@ -40,6 +40,7 @@
                 <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
                 <el-table-column prop="areaStr" label="区域" align="center" width="120" />
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
+                <el-table-column prop="gender" label="性别" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
@@ -59,17 +60,18 @@
                 </el-table-column>
                 <el-table-column prop="photoCount" label="相册文件" align="center" width="120" @click="toDialog('profileList', scope.row)">
                     <template slot-scope="scope">
-                        {{ scope.row.photoCount }}
+                        <el-button type="text" @click="toDialog('photoList',scope.row)">{{ scope.row.photoCount }}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="videoCount" label="视频文件" align="center" width="120" >
                     <template scope="scope">
-                        {{ scope.row.videoCount }}
+                        <el-button type="text" @click="toDialog('videoList',scope.row)">{{ scope.row.videoCount }}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="tags" label="标签" align="center" width="120" />
                 <el-table-column prop="occupationStr" label="职业" align="center" width="120" />
                 <el-table-column prop="birthday" label="生日" align="center" width="150" />
+                <el-table-column prop="signature" label="签名" align="center" :show-overflow-tooltip="true" width="200" />
                 <el-table-column prop="voiceGreeting" label="语音问候" align="center" width="150" />
                 <el-table-column prop="onlineStart" label="常在线起始时间" align="center" width="150" />
                 <el-table-column prop="onlineEnd" label="常在线结束时间" align="center" width="200" />
@@ -84,6 +86,12 @@
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData"/>
 
+            <!-- 相册列表 -->
+            <photoList ref="photoList" @fetchData="fetchData"/>
+
+            <!-- 视频列表 -->
+            <videoList ref="videoList" @fetchData="fetchData"/>
+
         </el-card>
     </div>
 
@@ -92,11 +100,13 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import {getAreaList, getOccupationType, getReviewStatus, getArrName} from "@/utils/common"
+import videoList from './dialog/video-list'
+import photoList from './dialog/photo-list'
+import {getAreaList, getOccupationType, getReviewStatus, getArrName, getGenderType} from "@/utils/common"
 
 export default {
     name: 'Table',
-    components: { Pagination, imageShow },
+    components: { Pagination, imageShow, videoList, photoList},
     data() {
         return {
             // 数据列表加载动画
@@ -118,7 +128,8 @@ export default {
             multipleSelection: [],
             areaData: getAreaList(),
             reviewStatus: getReviewStatus(),
-            occupationList: getOccupationType()
+            occupationList: getOccupationType(),
+            genderList: getGenderType()
         }
     },
     created() {
@@ -139,6 +150,7 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "nickname" : item.getNickname(),
+                        "gender" : getArrName($this.genderList, item.getGender()),
                         "avatar" : item.getAvatar(),
                         "reviewStatus" : item.getStatus(),
                         "reviewStatusStr" : getReviewStatus(item.getStatus()),
@@ -148,9 +160,12 @@ export default {
                         "occupation" : item.getOccupation(),
                         "occupationStr" : getArrName($this.occupationList, item.getOccupation()),
                         "birthday" : new Date(item.getBirthday()*1000).format('yyyy-MM-dd'),
+                        "signature" : item.getSignature(),
                         "voiceGreeting" : item.getVoiceGreeting(),
                         "onlineStart" : item.getOnlineStart(),
                         "onlineEnd" : item.getOnlineEnd(),
+                        "photos" : item.getPhotosList(),
+                        "videos" : item.getVideosList(),
                         "struct" : item
                     }
                     data.push(json)

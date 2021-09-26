@@ -1,8 +1,7 @@
 <template>
-    <el-dialog title="新增区域" :visible.sync="dialogVisible" append-to-body width="40%" :before-close="closeDialog">
+    <el-dialog title="新增区域" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
-
                 <el-form-item label="区域" prop="areaId">
                     <el-select v-model="form.areaId" @change="changeArea" placeholder="请选择">
                         <el-option v-for="item in areaList"
@@ -51,13 +50,9 @@
                     <el-input-number v-model="form.anchorExchangeRate" :precision="0" :min="1"></el-input-number>&nbsp;
                 </el-form-item>
                 <el-form-item label="支付方式" prop="payTypes">
-                    <el-select v-model="form.payTypes" multiple placeholder="请选择">
-                        <el-option v-for="item in payTypeList"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <el-checkbox-group v-model="form.payTypes" >
+                        <el-checkbox v-for="item in payTypeList" :label="item.value" :key="item">{{ item.label }}</el-checkbox>
+                    </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label="支付渠道" prop="payChannelIds" :hidden="isPayChannel">
                     <el-select v-model="form.payChannelIds" multiple placeholder="请选择">
@@ -104,12 +99,13 @@
 
 <script>
 import { getAreaList, getAppList, getPayType, getPayChannelList} from "@/utils/common";
+import {isEmpty} from "@/api/api";
 
 export default {
     data() {
         return {
             form: {
-                payTypes: 0,
+                payTypes: [],
                 tagList: []
             },
             dialogVisible: false,
@@ -162,12 +158,11 @@ export default {
                 if(typeof(row.tags) !== "undefined"){
                     this.form.tagList = row.tags.split(",")
                 }
-                if(!!row.payTypes){
-                    this.form.payTypes = 0
+                if(isEmpty(row.payTypes)){
+                    this.form.payTypes = []
                 }
+                this.changeArea(row.areaId)
             }
-
-
         },
         submitForm() {
             const $this = this

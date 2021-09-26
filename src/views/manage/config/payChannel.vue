@@ -3,7 +3,7 @@
         <el-card shadow="always">
             <!-- 操作栏 -->
             <div class="control-btns">
-                <el-button type="primary" @click="toDialog('addPay', '')">+ 新增支付</el-button>
+                <el-button type="primary" @click="toDialog('addPayChannel', '')">+ 新增支付</el-button>
             </div>
             <!-- 查询栏 -->
             <el-form
@@ -65,7 +65,7 @@
                 <el-table-column prop="note" label="备注" align="center" width="320" />
                 <el-table-column label="操作" align="center" width="180" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toDialog('addPay',scope.row)">更新</el-button>
+                        <el-button type="text" @click="toDialog('addPayChannel',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('delPay',scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -75,10 +75,8 @@
                         @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 更新 弹出栏 -->
-            <addPay ref="addPay" @fetchData="fetchData"/>
+            <addPayChannel ref="addPayChannel" @fetchData="fetchData"/>
 
-            <!-- 删除 弹出栏 -->
-            <delPay ref="delPay" @fetchData="fetchData"/>
 
         </el-card>
     </div>
@@ -88,12 +86,11 @@
 
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import addPay from './dialog/addPay'
-import delPay from './dialog/delPay'
+import addPayChannel from './dialog/addPayChannel'
 import {getAreaList, getArrName, getPayType, getOsType} from "@/utils/common";
 
 export default {
-    components: { Pagination, imageShow, addPay, delPay },
+    components: { Pagination, imageShow, addPayChannel },
     data() {
         return {
             listLoading: true,
