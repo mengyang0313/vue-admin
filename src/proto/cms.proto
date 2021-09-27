@@ -231,6 +231,12 @@ service CmsSdk {
     rpc SaveCommodity (Commodity) returns (Commodity) {
     }
 
+    // 获取签到配置
+//    rpc GetCheckinConfig ()
+//
+//    // 获取vip配置
+//    rpc GetVipConfig ()
+
     // 上传文件
     // 同时提供http multiple-form 上传接口  /file/upload  文件的key为file 需要设置http header token, area-id, file-type 返回值为JSON格式的FileRecord，
     rpc UploadFile (stream AdminFileChunk) returns (FileRecord) {

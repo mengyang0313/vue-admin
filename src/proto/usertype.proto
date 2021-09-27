@@ -470,6 +470,8 @@ message Relation {
     uint32 user_follow_at = 6;
     // 主播关注时间
     uint32 anchor_follow_at = 7;
+    // 拉黑时间
+    uint32 block_at = 8;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;
@@ -794,6 +796,8 @@ message Commodity {
 
     // 是否为订阅，为兼容之前的版本，客户端忽略
     bool is_subscription = 16;
+    // 是否首次充值双倍奖励
+    bool is_first_reward = 17;
 
     uint32 updated_at = 20;
     uint32 created_at = 21;

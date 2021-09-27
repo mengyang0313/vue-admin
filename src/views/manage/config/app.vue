@@ -42,7 +42,7 @@
                             <span v-if="scope.row.app.os === 1">
                                 <i class="icon-android-fill"></i>
                             </span>
-                            <span v-else>
+                            <span v-else-if="scope.row.app.os === 2">
                                 <i class="icon-pingguo"></i>
                             </span>
                         </div>
@@ -145,7 +145,7 @@ export default {
                     }
                     data.push(json)
                 })
-                $this.total = list.length
+                $this.total = 10
                 $this.tableData = data
                 $this.listLoading = false
             });

@@ -4476,8 +4476,8 @@ proto.pb.AreaConfig.toObject = function(includeInstance, msg) {
     ossConfig: (f = msg.getOssConfig()) && proto.pb.OssConfig.toObject(includeInstance, f),
     rongcloudConfig: (f = msg.getRongcloudConfig()) && proto.pb.RongcloudConfig.toObject(includeInstance, f),
     greenConfig: (f = msg.getGreenConfig()) && proto.pb.GreenConfig.toObject(includeInstance, f),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 30, 0),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 31, 0)
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 40, 0),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 41, 0)
   };
 
   if (includeInstance) {
@@ -4582,31 +4582,31 @@ proto.pb.AreaConfig.deserializeBinaryFromReader = function(msg, reader) {
         msg.addPayChannelIds(values[i]);
       }
       break;
-    case 20:
+    case 30:
       var value = new proto.pb.AgoraConfig;
       reader.readMessage(value,proto.pb.AgoraConfig.deserializeBinaryFromReader);
       msg.setAgoraConfig(value);
       break;
-    case 21:
+    case 31:
       var value = new proto.pb.OssConfig;
       reader.readMessage(value,proto.pb.OssConfig.deserializeBinaryFromReader);
       msg.setOssConfig(value);
       break;
-    case 22:
+    case 32:
       var value = new proto.pb.RongcloudConfig;
       reader.readMessage(value,proto.pb.RongcloudConfig.deserializeBinaryFromReader);
       msg.setRongcloudConfig(value);
       break;
-    case 23:
+    case 33:
       var value = new proto.pb.GreenConfig;
       reader.readMessage(value,proto.pb.GreenConfig.deserializeBinaryFromReader);
       msg.setGreenConfig(value);
       break;
-    case 30:
+    case 40:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setUpdatedAt(value);
       break;
-    case 31:
+    case 41:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setCreatedAt(value);
       break;
@@ -4754,7 +4754,7 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   f = message.getAgoraConfig();
   if (f != null) {
     writer.writeMessage(
-      20,
+      30,
       f,
       proto.pb.AgoraConfig.serializeBinaryToWriter
     );
@@ -4762,7 +4762,7 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   f = message.getOssConfig();
   if (f != null) {
     writer.writeMessage(
-      21,
+      31,
       f,
       proto.pb.OssConfig.serializeBinaryToWriter
     );
@@ -4770,7 +4770,7 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   f = message.getRongcloudConfig();
   if (f != null) {
     writer.writeMessage(
-      22,
+      32,
       f,
       proto.pb.RongcloudConfig.serializeBinaryToWriter
     );
@@ -4778,7 +4778,7 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   f = message.getGreenConfig();
   if (f != null) {
     writer.writeMessage(
-      23,
+      33,
       f,
       proto.pb.GreenConfig.serializeBinaryToWriter
     );
@@ -4786,14 +4786,14 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   f = message.getUpdatedAt();
   if (f !== 0) {
     writer.writeUint32(
-      30,
+      40,
       f
     );
   }
   f = message.getCreatedAt();
   if (f !== 0) {
     writer.writeUint32(
-      31,
+      41,
       f
     );
   }
@@ -5146,12 +5146,12 @@ proto.pb.AreaConfig.prototype.clearPayChannelIdsList = function() {
 
 
 /**
- * optional AgoraConfig agora_config = 20;
+ * optional AgoraConfig agora_config = 30;
  * @return {?proto.pb.AgoraConfig}
  */
 proto.pb.AreaConfig.prototype.getAgoraConfig = function() {
   return /** @type{?proto.pb.AgoraConfig} */ (
-    jspb.Message.getWrapperField(this, proto.pb.AgoraConfig, 20));
+    jspb.Message.getWrapperField(this, proto.pb.AgoraConfig, 30));
 };
 
 
@@ -5160,7 +5160,7 @@ proto.pb.AreaConfig.prototype.getAgoraConfig = function() {
  * @return {!proto.pb.AreaConfig} returns this
 */
 proto.pb.AreaConfig.prototype.setAgoraConfig = function(value) {
-  return jspb.Message.setWrapperField(this, 20, value);
+  return jspb.Message.setWrapperField(this, 30, value);
 };
 
 
@@ -5178,17 +5178,17 @@ proto.pb.AreaConfig.prototype.clearAgoraConfig = function() {
  * @return {boolean}
  */
 proto.pb.AreaConfig.prototype.hasAgoraConfig = function() {
-  return jspb.Message.getField(this, 20) != null;
+  return jspb.Message.getField(this, 30) != null;
 };
 
 
 /**
- * optional OssConfig oss_config = 21;
+ * optional OssConfig oss_config = 31;
  * @return {?proto.pb.OssConfig}
  */
 proto.pb.AreaConfig.prototype.getOssConfig = function() {
   return /** @type{?proto.pb.OssConfig} */ (
-    jspb.Message.getWrapperField(this, proto.pb.OssConfig, 21));
+    jspb.Message.getWrapperField(this, proto.pb.OssConfig, 31));
 };
 
 
@@ -5197,7 +5197,7 @@ proto.pb.AreaConfig.prototype.getOssConfig = function() {
  * @return {!proto.pb.AreaConfig} returns this
 */
 proto.pb.AreaConfig.prototype.setOssConfig = function(value) {
-  return jspb.Message.setWrapperField(this, 21, value);
+  return jspb.Message.setWrapperField(this, 31, value);
 };
 
 
@@ -5215,17 +5215,17 @@ proto.pb.AreaConfig.prototype.clearOssConfig = function() {
  * @return {boolean}
  */
 proto.pb.AreaConfig.prototype.hasOssConfig = function() {
-  return jspb.Message.getField(this, 21) != null;
+  return jspb.Message.getField(this, 31) != null;
 };
 
 
 /**
- * optional RongcloudConfig rongcloud_config = 22;
+ * optional RongcloudConfig rongcloud_config = 32;
  * @return {?proto.pb.RongcloudConfig}
  */
 proto.pb.AreaConfig.prototype.getRongcloudConfig = function() {
   return /** @type{?proto.pb.RongcloudConfig} */ (
-    jspb.Message.getWrapperField(this, proto.pb.RongcloudConfig, 22));
+    jspb.Message.getWrapperField(this, proto.pb.RongcloudConfig, 32));
 };
 
 
@@ -5234,7 +5234,7 @@ proto.pb.AreaConfig.prototype.getRongcloudConfig = function() {
  * @return {!proto.pb.AreaConfig} returns this
 */
 proto.pb.AreaConfig.prototype.setRongcloudConfig = function(value) {
-  return jspb.Message.setWrapperField(this, 22, value);
+  return jspb.Message.setWrapperField(this, 32, value);
 };
 
 
@@ -5252,17 +5252,17 @@ proto.pb.AreaConfig.prototype.clearRongcloudConfig = function() {
  * @return {boolean}
  */
 proto.pb.AreaConfig.prototype.hasRongcloudConfig = function() {
-  return jspb.Message.getField(this, 22) != null;
+  return jspb.Message.getField(this, 32) != null;
 };
 
 
 /**
- * optional GreenConfig green_config = 23;
+ * optional GreenConfig green_config = 33;
  * @return {?proto.pb.GreenConfig}
  */
 proto.pb.AreaConfig.prototype.getGreenConfig = function() {
   return /** @type{?proto.pb.GreenConfig} */ (
-    jspb.Message.getWrapperField(this, proto.pb.GreenConfig, 23));
+    jspb.Message.getWrapperField(this, proto.pb.GreenConfig, 33));
 };
 
 
@@ -5271,7 +5271,7 @@ proto.pb.AreaConfig.prototype.getGreenConfig = function() {
  * @return {!proto.pb.AreaConfig} returns this
 */
 proto.pb.AreaConfig.prototype.setGreenConfig = function(value) {
-  return jspb.Message.setWrapperField(this, 23, value);
+  return jspb.Message.setWrapperField(this, 33, value);
 };
 
 
@@ -5289,16 +5289,16 @@ proto.pb.AreaConfig.prototype.clearGreenConfig = function() {
  * @return {boolean}
  */
 proto.pb.AreaConfig.prototype.hasGreenConfig = function() {
-  return jspb.Message.getField(this, 23) != null;
+  return jspb.Message.getField(this, 33) != null;
 };
 
 
 /**
- * optional uint32 updated_at = 30;
+ * optional uint32 updated_at = 40;
  * @return {number}
  */
 proto.pb.AreaConfig.prototype.getUpdatedAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 30, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 40, 0));
 };
 
 
@@ -5307,16 +5307,16 @@ proto.pb.AreaConfig.prototype.getUpdatedAt = function() {
  * @return {!proto.pb.AreaConfig} returns this
  */
 proto.pb.AreaConfig.prototype.setUpdatedAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 30, value);
+  return jspb.Message.setProto3IntField(this, 40, value);
 };
 
 
 /**
- * optional uint32 created_at = 31;
+ * optional uint32 created_at = 41;
  * @return {number}
  */
 proto.pb.AreaConfig.prototype.getCreatedAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 31, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 41, 0));
 };
 
 
@@ -5325,7 +5325,7 @@ proto.pb.AreaConfig.prototype.getCreatedAt = function() {
  * @return {!proto.pb.AreaConfig} returns this
  */
 proto.pb.AreaConfig.prototype.setCreatedAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 31, value);
+  return jspb.Message.setProto3IntField(this, 41, value);
 };
 
 
@@ -5365,12 +5365,12 @@ proto.pb.PayConfig.toObject = function(includeInstance, msg) {
     areaId: jspb.Message.getFieldWithDefault(msg, 2, 0),
     type: jspb.Message.getFieldWithDefault(msg, 3, 0),
     appId: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    appSecret: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    redirectUrl: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    callbackUrl: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    extra1: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    extra2: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    extra3: jspb.Message.getFieldWithDefault(msg, 13, ""),
+    appSecret: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    redirectUrl: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    callbackUrl: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    extra1: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    extra2: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    extra3: jspb.Message.getFieldWithDefault(msg, 10, ""),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 20, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 21, 0)
   };
@@ -5425,27 +5425,27 @@ proto.pb.PayConfig.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setAppId(value);
       break;
-    case 6:
+    case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setAppSecret(value);
       break;
-    case 8:
+    case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setRedirectUrl(value);
       break;
-    case 10:
+    case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setCallbackUrl(value);
       break;
-    case 11:
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setExtra1(value);
       break;
-    case 12:
+    case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setExtra2(value);
       break;
-    case 13:
+    case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setExtra3(value);
       break;
@@ -5517,42 +5517,42 @@ proto.pb.PayConfig.serializeBinaryToWriter = function(message, writer) {
   f = message.getAppSecret();
   if (f.length > 0) {
     writer.writeString(
-      6,
+      5,
       f
     );
   }
   f = message.getRedirectUrl();
   if (f.length > 0) {
     writer.writeString(
-      8,
+      6,
       f
     );
   }
   f = message.getCallbackUrl();
   if (f.length > 0) {
     writer.writeString(
-      10,
+      7,
       f
     );
   }
   f = message.getExtra1();
   if (f.length > 0) {
     writer.writeString(
-      11,
+      8,
       f
     );
   }
   f = message.getExtra2();
   if (f.length > 0) {
     writer.writeString(
-      12,
+      9,
       f
     );
   }
   f = message.getExtra3();
   if (f.length > 0) {
     writer.writeString(
-      13,
+      10,
       f
     );
   }
@@ -5646,11 +5646,11 @@ proto.pb.PayConfig.prototype.setAppId = function(value) {
 
 
 /**
- * optional string app_secret = 6;
+ * optional string app_secret = 5;
  * @return {string}
  */
 proto.pb.PayConfig.prototype.getAppSecret = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
@@ -5659,16 +5659,16 @@ proto.pb.PayConfig.prototype.getAppSecret = function() {
  * @return {!proto.pb.PayConfig} returns this
  */
 proto.pb.PayConfig.prototype.setAppSecret = function(value) {
-  return jspb.Message.setProto3StringField(this, 6, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string redirect_url = 8;
+ * optional string redirect_url = 6;
  * @return {string}
  */
 proto.pb.PayConfig.prototype.getRedirectUrl = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
 
@@ -5677,16 +5677,16 @@ proto.pb.PayConfig.prototype.getRedirectUrl = function() {
  * @return {!proto.pb.PayConfig} returns this
  */
 proto.pb.PayConfig.prototype.setRedirectUrl = function(value) {
-  return jspb.Message.setProto3StringField(this, 8, value);
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * optional string callback_url = 10;
+ * optional string callback_url = 7;
  * @return {string}
  */
 proto.pb.PayConfig.prototype.getCallbackUrl = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
 
@@ -5695,16 +5695,16 @@ proto.pb.PayConfig.prototype.getCallbackUrl = function() {
  * @return {!proto.pb.PayConfig} returns this
  */
 proto.pb.PayConfig.prototype.setCallbackUrl = function(value) {
-  return jspb.Message.setProto3StringField(this, 10, value);
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
 /**
- * optional string extra1 = 11;
+ * optional string extra1 = 8;
  * @return {string}
  */
 proto.pb.PayConfig.prototype.getExtra1 = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
 
@@ -5713,16 +5713,16 @@ proto.pb.PayConfig.prototype.getExtra1 = function() {
  * @return {!proto.pb.PayConfig} returns this
  */
 proto.pb.PayConfig.prototype.setExtra1 = function(value) {
-  return jspb.Message.setProto3StringField(this, 11, value);
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
- * optional string extra2 = 12;
+ * optional string extra2 = 9;
  * @return {string}
  */
 proto.pb.PayConfig.prototype.getExtra2 = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
 
@@ -5731,16 +5731,16 @@ proto.pb.PayConfig.prototype.getExtra2 = function() {
  * @return {!proto.pb.PayConfig} returns this
  */
 proto.pb.PayConfig.prototype.setExtra2 = function(value) {
-  return jspb.Message.setProto3StringField(this, 12, value);
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
 /**
- * optional string extra3 = 13;
+ * optional string extra3 = 10;
  * @return {string}
  */
 proto.pb.PayConfig.prototype.getExtra3 = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
 };
 
 
@@ -5749,7 +5749,7 @@ proto.pb.PayConfig.prototype.getExtra3 = function() {
  * @return {!proto.pb.PayConfig} returns this
  */
 proto.pb.PayConfig.prototype.setExtra3 = function(value) {
-  return jspb.Message.setProto3StringField(this, 13, value);
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
@@ -11351,9 +11351,13 @@ proto.pb.ActionType = {
   ACTIONREFUSECALL: 1,
   ACTIONMISSCALL: 2,
   ACTIONENDCALL: 3,
-  ACTIONFOLLOW: 4,
-  ACTIONDEPOSIT: 5,
-  ACTIONSENDGIFT: 6
+  ACTIONTHANKFOLLOW: 4,
+  ACTIONTHANKDEPOSIT: 5,
+  ACTIONTHANKGIFT: 6,
+  ACTIONGREETING: 7,
+  ACTIONASKDEPOSIT: 8,
+  ACTIONASKGIFT: 9,
+  ACTIONASKCALL: 10
 };
 
 /**

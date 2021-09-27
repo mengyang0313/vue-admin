@@ -4440,6 +4440,7 @@ proto.pb.Relation.toObject = function(includeInstance, msg) {
     expense: jspb.Message.getFieldWithDefault(msg, 5, 0),
     userFollowAt: jspb.Message.getFieldWithDefault(msg, 6, 0),
     anchorFollowAt: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    blockAt: jspb.Message.getFieldWithDefault(msg, 8, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 20, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 21, 0)
   };
@@ -4507,6 +4508,10 @@ proto.pb.Relation.deserializeBinaryFromReader = function(msg, reader) {
     case 7:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setAnchorFollowAt(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setBlockAt(value);
       break;
     case 20:
       var value = /** @type {number} */ (reader.readUint32());
@@ -4591,6 +4596,13 @@ proto.pb.Relation.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint32(
       7,
+      f
+    );
+  }
+  f = message.getBlockAt();
+  if (f !== 0) {
+    writer.writeUint32(
+      8,
       f
     );
   }
@@ -4753,6 +4765,24 @@ proto.pb.Relation.prototype.getAnchorFollowAt = function() {
  */
 proto.pb.Relation.prototype.setAnchorFollowAt = function(value) {
   return jspb.Message.setProto3IntField(this, 7, value);
+};
+
+
+/**
+ * optional uint32 block_at = 8;
+ * @return {number}
+ */
+proto.pb.Relation.prototype.getBlockAt = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Relation} returns this
+ */
+proto.pb.Relation.prototype.setBlockAt = function(value) {
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -8610,6 +8640,7 @@ proto.pb.Commodity.toObject = function(includeInstance, msg) {
     vipDays: jspb.Message.getFieldWithDefault(msg, 14, 0),
     sort: jspb.Message.getFieldWithDefault(msg, 15, 0),
     isSubscription: jspb.Message.getBooleanFieldWithDefault(msg, 16, false),
+    isFirstReward: jspb.Message.getBooleanFieldWithDefault(msg, 17, false),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 20, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 21, 0)
   };
@@ -8711,6 +8742,10 @@ proto.pb.Commodity.deserializeBinaryFromReader = function(msg, reader) {
     case 16:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsSubscription(value);
+      break;
+    case 17:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsFirstReward(value);
       break;
     case 20:
       var value = /** @type {number} */ (reader.readUint32());
@@ -8858,6 +8893,13 @@ proto.pb.Commodity.serializeBinaryToWriter = function(message, writer) {
   if (f) {
     writer.writeBool(
       16,
+      f
+    );
+  }
+  f = message.getIsFirstReward();
+  if (f) {
+    writer.writeBool(
+      17,
       f
     );
   }
@@ -9163,6 +9205,24 @@ proto.pb.Commodity.prototype.getIsSubscription = function() {
  */
 proto.pb.Commodity.prototype.setIsSubscription = function(value) {
   return jspb.Message.setProto3BooleanField(this, 16, value);
+};
+
+
+/**
+ * optional bool is_first_reward = 17;
+ * @return {boolean}
+ */
+proto.pb.Commodity.prototype.getIsFirstReward = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 17, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.Commodity} returns this
+ */
+proto.pb.Commodity.prototype.setIsFirstReward = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 17, value);
 };
 
 

@@ -42,8 +42,8 @@
                 size="medium"
             >
                 <el-table-column prop="id" label="工会ID" align="center" width="70" />
-                <el-table-column prop="name" label="工会名称" align="center" width="250" />
-                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
+                <el-table-column prop="name" label="工会名称" align="center" width="150" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="100" />
                 <el-table-column prop="anchorCount" label="主播数" align="center" width="120"/>
                 <el-table-column prop="enable" label="状态" align="center" width="120">
                     <template scope="scope">

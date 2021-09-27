@@ -217,20 +217,20 @@ message AreaConfig {
     repeated uint32 pay_channel_ids = 16;
 
     // 声网配置
-    AgoraConfig agora_config = 20;
+    AgoraConfig agora_config = 30;
     // 阿里云oss配置
-    OssConfig oss_config = 21;
+    OssConfig oss_config = 31;
     // 融云配置
-    RongcloudConfig rongcloud_config = 22;
+    RongcloudConfig rongcloud_config = 32;
     // 鉴黄配置
-    GreenConfig green_config = 23;
+    GreenConfig green_config = 33;
 
     // TODO ai policy
     // 仅在服务端发起ai call
     //    bool ai_call_in_server_only = 12;
 
-    uint32 updated_at = 30;
-    uint32 created_at = 31;
+    uint32 updated_at = 40;
+    uint32 created_at = 41;
 }
 
 // 支付配置
@@ -243,12 +243,12 @@ message PayConfig {
     // 应用id，payermax使用
     string app_id = 4;
     // 应用密匙，payermax、xendit使用
-    string app_secret = 6;
-    string redirect_url = 8;
-    string callback_url = 10;
-    string extra1 = 11;
-    string extra2 = 12;
-    string extra3 = 13;
+    string app_secret = 5;
+    string redirect_url = 6;
+    string callback_url = 7;
+    string extra1 = 8;
+    string extra2 = 9;
+    string extra3 = 10;
     uint32 updated_at = 20;
     uint32 created_at = 21;
 }
@@ -339,14 +339,6 @@ enum MessageDirection {
     ToAnchor = 2;
 }
 
-/*
-
-	AIBMissCall = 1
-	AIBFollow = 2
-	AIBRecharge = 3
-	AIBSendGift = 4
-*/
-
 enum ActionType {
     ActionTypeUnknown = 0;
     // 拒绝接听
@@ -355,12 +347,20 @@ enum ActionType {
     ActionMissCall = 2;
     // 通话结束
     ActionEndCall = 3;
-    // 关注
-    ActionFollow = 4;
-    // 充值
-    ActionDeposit = 5;
-    // 发送礼物
-    ActionSendGift = 6;
+    // 感谢关注
+    ActionThankFollow = 4;
+    // 感谢充值
+    ActionThankDeposit = 5;
+    // 感谢赠送礼物
+    ActionThankGift = 6;
+    // 主播打招呼
+    ActionGreeting = 7;
+    // 引导充值
+    ActionAskDeposit = 8;
+    // 引导送礼
+    ActionAskGift = 9;
+    // 引导通话
+    ActionAskCall = 10;
 }
 
 message RobotMessage {
