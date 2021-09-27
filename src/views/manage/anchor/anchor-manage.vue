@@ -99,14 +99,14 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="id" label="主播id" align="center" width="120">
+                <el-table-column prop="id" label="主播id" align="center" width="100">
                     <template slot-scope="scope">
                         <el-button type="text">
                             <router-link :to="{path:'./anchor-info',query: {id: scope.row.id}}"> {{ scope.row.id }}</router-link>
                         </el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="app" label="App" align="center" width="150">
+                <el-table-column prop="app" label="App" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
                             {{ scope.row.app.label }}
@@ -147,11 +147,6 @@
                         <div slot="reference">
                             <el-tag @click="toDialog('blockStatus',scope.row)" v-if="scope.row.blockStatusStr!=''" size="medium">{{ scope.row.blockStatusStr }}</el-tag>
                         </div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="profileCount" label="资料管理" align="center" width="120">
-                    <template slot-scope="scope">
-                        <el-button type="text"><router-link :to="`./data-manage`">{{ scope.row.profileCount }}</router-link></el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="balance" label="余额" align="center" width="120" />

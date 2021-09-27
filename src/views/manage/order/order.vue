@@ -82,6 +82,7 @@
             >
                 <el-table-column prop="id" label="订单ID" align="center" width="150" />
                 <el-table-column prop="payOrderId" label="渠道订单号" align="center" width="150" />
+                <el-table-column prop="commodityId" label="商品名称" align="center" width="200"/>
                 <el-table-column prop="appId" label="来源APP" align="center" width="80">
                     <template scope="scope">
                         <div slot="reference">
@@ -95,12 +96,16 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="userId" label="用户ID" align="center" width="120"/>
                 <el-table-column prop="areaId" label="区域" align="center" width="80"/>
-<!--                <el-table-column prop="country" label="国家" align="center" width="80"/>-->
-                <el-table-column prop="commodityId" label="商品名称" align="center" width="200"/>
-                <el-table-column prop="payPrice" label="本地价格" align="center" width="80"/>
+                <el-table-column prop="userId" label="用户ID" align="center" width="120"/>
+
+                <el-table-column prop="payType" label="支付方式" align="center" width="100"/>
+                <el-table-column prop="payChannel" label="支付渠道" align="center" width="100"/>
+
+                <el-table-column prop="country" label="国家" align="center" width="80"/>
+                <el-table-column prop="payPrice" label="本地价格" align="center" width="150"/>
                 <el-table-column prop="usdPrice" label="美元价格" align="center" width="80"/>
+                <el-table-column prop="paidAt" label="支付时间" align="center" width="180"/>
                 <el-table-column prop="payStatus" label="支付状态" align="center" width="80">
                     <template scope="scope">
                         <div slot="reference">
@@ -108,10 +113,12 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="payType" label="支付渠道" align="center" width="100"/>
-                <el-table-column prop="payChannel" label="支付小渠道" align="center" width="100"/>
-                <el-table-column prop="paidAt" label="支付时间" align="center" width="170"/>
+                <el-table-column prop="amount" label="钻石数量" align="center" width="80"/>
+                <el-table-column prop="payOrderId" label="第三方支付id" align="center" width="180"/>
+                <el-table-column prop="queryAt" label="查询支付状态时间" align="center" width="180"/>
                 <el-table-column prop="createdAt" label="创建时间" align="center" width="170"/>
+                <el-table-column prop="anchorId" label="关联的主播id" align="center" width="120"/>
+                <el-table-column prop="commission" label="主播佣金" align="center" width="120"/>
                 <el-table-column label="操作" align="center" width="170" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toMakeOrder('dataInfo', scope.row)">补单</el-button>
@@ -129,8 +136,15 @@
 <script>
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import { apps, orderStatus } from '@/dict/index'
-import {getAreaList, getPayStatus, getAppList, getArrName, getAppName} from "@/utils/dist";
+import {
+    getAreaList,
+    getPayStatus,
+    getAppList,
+    getArrName,
+    getAppName,
+    getPayType,
+    getCommodityList, getPayChannelList
+} from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
 export default {
@@ -157,7 +171,9 @@ export default {
             isCollapse: true,
             areaData: getAreaList(),
             appList: getAppList(),
-            payStatus: getPayStatus()
+            payStatus: getPayStatus(),
+            payTypeList: getPayType(),
+            commodityList: getCommodityList()
         }
     },
     created() {
@@ -174,18 +190,22 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
-                        "payOrderId" : item.getPayOrderId(),
                         "appId" : item.getAppId(),
                         "app" : getAppName($this.appList, item.getAppId()),
                         "userId" : item.getUserId(),
                         "areaId" : getArrName($this.areaData, item.getAreaId()),
+                        "commission" : item.getCommission(),
+                        "payType" : getPayType(item.getPayType()),
+                        "payChannel" : $this.handlePayChannel(item.getAreaId(), item.getPayChannel()),
                         "country" : item.getCountry(),
-                        "commodityId" : item.getCommodityId(),
-                        "payPrice" : item.getPayPrice(),
-                        "usdPrice" : item.getUsdPrice(),
+                        "commodityId" : $this.handleCommodity(item.getCommodityId()),
+                        "desc" : item.getDesc(),
+                        "payOrderId": item.getPayOrderId(),
+                        "payUrl" : item.getPayUrl(),
+                        "payPrice" : item.getCurrency() + "-" +item.getPayPrice() / 100,
+                        "usdPrice" : item.getUsdPrice() / 100,
+                        "amount": item.getAmount(),
                         "payStatus" : getPayStatus(item.getPayStatus()),
-                        "payType" : item.getPayType(),
-                        "payChannel" : item.getPayChannel(),
                         "paidAt" : toTime(item.getPaidAt()),
                         "createdAt" : toTime(item.getCreatedAt())
                     }
@@ -215,6 +235,24 @@ export default {
         },
         changePageSize(msg){
             this.search.page.pageSize = msg.limit
+        },
+        handleCommodity(commodityId){
+            let name = "";
+            this.commodityList.forEach(item => {
+                if(item.value === commodityId){
+                    name = item.name
+                }
+            })
+            return name
+        },
+        handlePayChannel(areaId, channelId){
+            let name = ""
+            getPayChannelList(areaId).forEach(item => {
+                if(item.value === channelId){
+                    name = item.label
+                }
+            })
+            return name
         }
     }
 }

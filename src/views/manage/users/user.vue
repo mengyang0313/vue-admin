@@ -79,7 +79,6 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="id" label="用户ID" align="center" width="120" />
                 <el-table-column prop="areaStr" label="区域" align="center" width="120" />
                 <el-table-column prop="appStr" label="APP" align="center" width="120">
                     <template scope="scope">
@@ -94,13 +93,16 @@
                         </div>
                     </template>
                 </el-table-column>
+                <el-table-column prop="id" label="用户ID" align="center" width="120" />
                 <el-table-column prop="nickname" label="用户名" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
-<!--                        <imageShow :data="[scope.row.avatar]" :max-show="1"/>-->
                     </template>
                 </el-table-column>
+                <el-table-column prop="genderStr" label="性别" align="center" width="120" />
+                <el-table-column prop="fansCount" label="粉丝数量" align="center" width="120" />
+                <el-table-column prop="osTypeStr" label="系统类型" align="center" width="120" />
                 <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
@@ -115,14 +117,19 @@
                         </div>
                     </template>
                 </el-table-column>
+                <el-table-column prop="signature" label="签名" align="center" width="120" />
+                <el-table-column prop="occupation" label="职业" align="center" width="120" />
                 <el-table-column prop="vipEndAt" label="vip到期时间" align="center" width="120"/>
-                <el-table-column prop="expense" label="累计送礼" align="center" width="150"/>
-                <el-table-column prop="deposit" label="累计充值" align="center" width="150"/>
-                <el-table-column prop="balance" label="账户余额" align="center" width="250" />
+                <el-table-column prop="expense" label="消费金额" align="center" width="120"/>
+                <el-table-column prop="deposit" label="充值金额" align="center" width="120"/>
+                <el-table-column prop="balance" label="账户余额" align="center" width="120" />
+                <el-table-column prop="messageUsed" label="已发送消息数量" align="center" width="120" />
+                <el-table-column prop="checkinDays" label="已签到天数" align="center" width="120" />
+                <el-table-column prop="checkinAt" label="上次签到时间" align="center" width="120"/>
                 <el-table-column prop="createdAt" label="注册日期" align="center" width="150"/>
                 <el-table-column prop="osType" label="手机机型" align="center" width="120" />
                 <el-table-column prop="appVersion" label="app版本" align="center" width="120" />
-                <el-table-column prop="onlineIp" label="ip地址" align="center" width="180">
+                <el-table-column prop="onlineIp" label="ip地址" align="center" width="120">
                     <template slot-scope="scope">
                         <a @click="toDialog('ipAddress', scope.row)" style="color: #1E88C7">查看</a>
                     </template>
@@ -169,8 +176,18 @@ import block from './dialog/block'
 import multiAccount from './dialog/multi-account'
 import recharge from './dialog/recharge'
 import updateUser from './dialog/updateUser'
-import {getAreaList, getArrName, getBool, getAppList, getOnlineStatus, getBlockStatus, getAppName} from "@/utils/dist";
-import {toDate, toTime} from "@/utils/date";
+import {
+    getAreaList,
+    getArrName,
+    getOsType,
+    getBool,
+    getAppList,
+    getOnlineStatus,
+    getBlockStatus,
+    getAppName,
+    getGenderType
+} from "@/utils/dist";
+import {toTime} from "@/utils/date";
 
 export default {
     components: { Pagination, imageShow, block, multiAccount, recharge, updateUser},
@@ -211,22 +228,39 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
-                        "areaId" : item.getAreaId(),
-                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "appId" : item.getAppId(),
                         "app" : getAppName($this.appList, item.getAppId()),
-                        "nickname" : item.getNickname(),
-                        "avatar"  : item.getAvatar(),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
+                        "osType" : item.getOsType(),
+                        "osTypeStr" : getOsType(item.getOsType()),
+                        "country" : item.getCountry(),
+                        "lang" : item.getLang(),
                         "onlineStatus" : item.getOnlineStatus(),
                         "onlineStatusStr" : getOnlineStatus(item.getOnlineStatus()),
                         "blockStatus" : item.getBlockStatus(),
                         "blockStatusStr" : getBlockStatus(item.getBlockStatus()),
-                        "vipEndAt" : toDate(item.getVipEndAt()),
+                        "balance": item.getBalance(),
+                        "lockedBalance": item.getLockedBalance(),
                         "expense" : item.getExpense(),
-                        "deposit" : item.getDeposit(),
-                        "balance" : item.getBalance(),
+                        "reward": item.getReward(),
+                        "deposit": item.getDeposit(),
+                        "vipStartAt": item.getVipStartAt(),
+                        "vipEndAt": item.getVipEndAt(),
+                        "messageQuota": item.getMessageQuota(),
+                        "messageUsed": item.getMessageUsed(),
+                        "checkinDays": item.getCheckinDays(),
+                        "checkinAt": item.getCheckinAt(),
+                        "fansCount": item.getFansCount(),
+                        "nickname" : item.getNickname(),
+                        "gender": item.getGender(),
+                        "genderStr": getGenderType(item.getGender()),
+                        "birthday": toTime(item.getBirthday()),
+                        "avatar": item.getAvatar(),
+                        "signature": item.getSignature(),
+                        "occupation": item.getOccupation(),
+                        "offlineAt": toTime(item.getOfflineAt()),
                         "createdAt" : toTime(item.getCreatedAt()),
-                        "osType" : item.getOsType(),
                         "appVersion" : item.getVersion(),
                         "onlineIp" : item.getOnlineIp(),
                     }

@@ -86,7 +86,7 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="id" label="交易ID" align="center" width="220" />
+                <el-table-column prop="id" label="交易ID" align="center" width="120" />
                 <el-table-column prop="app" label="来源App" align="center" width="120" >
                     <template scope="scope">
                         <div slot="reference">

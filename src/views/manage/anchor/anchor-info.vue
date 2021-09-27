@@ -118,8 +118,20 @@
             >
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="id" label="主播id" align="center" width="120" />
-                <el-table-column prop="areaId" label="区域" align="center" width="120" />
-                <el-table-column prop="guildId" label="工会Id" align="center" width="120" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
+                <el-table-column prop="app" label="应用APP" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else-if="scope.row.app.os === 2">
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
@@ -138,14 +150,14 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="photoCount" label="相册文件" align="center" width="120" @click="toDialog('profileList', scope.row)">
+                <el-table-column prop="photoCount" label="相册文件" align="center" width="120">
                     <template slot-scope="scope">
-                        {{ scope.row.photoCount }}
+                        <el-button type="text" @click="toDialog('photoList',scope.row)">{{ scope.row.photoCount }}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="videoCount" label="视频文件" align="center" width="120" >
                     <template scope="scope">
-                        {{ scope.row.videoCount }}
+                        <el-button type="text" @click="toDialog('videoList',scope.row)">{{ scope.row.videoCount }}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="tags" label="标签" align="center" width="120" >
@@ -163,8 +175,12 @@
             <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
                         @pagination="fetchData"/>
             -->
-            <!-- 新增话术
-            <addRobotMessage ref="addRobotMessage" @fetchData="fetchData"/> -->
+
+            <!-- 相册列表 -->
+            <photoList ref="photoList" @fetchData="fetchData"/>
+
+            <!-- 视频列表 -->
+            <videoList ref="videoList" @fetchData="fetchData"/>
         </el-card>
     </div>
 </template>
@@ -182,10 +198,12 @@ import {
     getOnlineStatus,
     getBlockStatus
 } from "@/utils/dist";
+import videoList from '../audit/dialog/video-list'
+import photoList from '../audit/dialog/photo-list'
 
 export default {
     name: 'Table',
-    components: {Pagination, Hints, DescriptionList},
+    components: {Pagination, Hints, DescriptionList, videoList, photoList},
     data() {
         return {
             listLoading: true,
@@ -227,7 +245,6 @@ export default {
                 $this.handleBasic(result.getBasic())
                 $this.profilePage(result.getProfilesList())
             });
-
         },
         handleBasic(basic){
             this.basic.id = basic.getId()
@@ -267,12 +284,15 @@ export default {
             this.basic.accessToken = basic.getAccessToken()
         },
         profilePage(profiles) {
+            let $this = this
             const profilesData = []
             profiles.forEach((item, index)=>{
                 const json = {
                     "id" : item.getId(),
                     "areaId" : item.getAreaId(),
-                    "guildId" : "工会id",
+                    "areaStr" : getArrName($this.areaList, item.getAreaId()),
+                    "appId" : item.getAppId(),
+                    "app" : getAppList($this.appList, item.getAppId()),
                     "nickname" : item.getNickname(),
                     "avatar" : item.getAvatar(),
                     "reviewStatus" : item.getStatus(),
@@ -285,19 +305,19 @@ export default {
                     "voiceGreeting" : item.getVoiceGreeting(),
                     "onlineStart" : item.getOnlineStart(),
                     "onlineEnd" : item.getOnlineEnd(),
+                    "photos" : item.getPhotosList(),
+                    "videos" : item.getVideosList(),
                     "struct" : item
                 }
                 profilesData.push(json)
             })
-            // $this.total = result.getTotalCount()
             this.profilesTableData = profilesData
             this.listLoading = false
         },
         toDialog(component, row){
-            alert(this.search.robotId)
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
-                this.$refs[component].init(this.search.robotId)
+                this.$refs[component].init(row)
             })
         },
         handleSelectionChange(val) {

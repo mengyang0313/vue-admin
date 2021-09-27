@@ -1,9 +1,7 @@
 import {Empty} from "@/proto/js/usertype_pb";
-import {PayChannelListRequest} from "@/proto/js/cms_pb";
-import {getToken, removeToken} from "@/utils/cookie";
+import {PayChannelListRequest, CommodityListRequest} from "@/proto/js/cms_pb";
+import {getToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
-import Cookies from "js-cookie";
-import {error} from "@/utils/error";
 
 
 export async function initData() {
@@ -18,6 +16,9 @@ export async function initData() {
 
     const payChannelArr = await getPayChannel()
     sessionStorage.setItem("payChannelArr", JSON.stringify(payChannelArr));
+
+    const commodityArr = await getCommodity()
+    sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr));
 }
 
 export const getAreas = () => new Promise((resolve, reject) => {
@@ -128,15 +129,55 @@ export const getPayChannel = () => new Promise((resolve, reject) => {
 })
 export function getPayChannelList(areaId) {
     let str = sessionStorage.getItem("payChannelArr");
-    let appArr = JSON.parse(str);
+    let arr = JSON.parse(str);
     let result = []
-    appArr.forEach(item => {
+    arr.forEach(item => {
         if(item.areaId === areaId){
             result.push(item)
         }
     })
     return result;
 }
+
+
+
+// 商品列表
+export const getCommodity = () => new Promise((resolve, reject) => {
+    const req = new CommodityListRequest();
+    const metadata = {'token': getToken()};
+    cmsService.getCommodityList(req, metadata, (err, resp) => {
+        if (!err) {
+            const arr = []
+            const list = resp.getCommoditiesList()
+            list.forEach((item, index)=>{
+                const json = {
+                    value : item.getId(),
+                    label : item.getTitle(),
+                    name : item.getName(),
+                    areaId : item.getAreaId(),
+                    appId: item.getAppId()
+                }
+                arr.push(json)
+            })
+            resolve(arr)
+        } else {
+            console.log(err)
+        }
+    })
+})
+export function getCommodityList() {
+    let str = sessionStorage.getItem("commodityArr");
+    let arr = JSON.parse(str);
+    // let result = []
+    // appArr.forEach(item => {
+    //     if(item.areaId === areaId && item.appId === appId){
+    //         result.push(item)
+    //     }
+    // })
+    return arr;
+}
+
+
 
 
 export function getArrName(arr, id){
