@@ -36,7 +36,7 @@ module.exports = {
         if (process.env.NODE_ENV === 'development') {
             console.log("当前运行环境为：测试环境")
         }else if (process.env.NODE_ENV === 'production') {
-            console.log("当前运行环境为：生产环境")
+            console.log("当前运行环境为：生产环境-打包")
             config.plugins.push(
                 new CompressionWebpackPlugin({
                     // 正则匹配需要压缩的文件后缀
@@ -57,7 +57,7 @@ module.exports = {
                 }
             })
         }else if (process.env.NODE_ENV === 'test') {
-            console.log("当前运行环境为：测试环境-发布")
+            console.log("当前运行环境为：测试环境-打包")
         }
     },
     chainWebpack(config) {
