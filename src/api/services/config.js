@@ -48,6 +48,11 @@ export default class {
         req.setTagsList(param.tags)
         req.setAnchorExchangeRate(param.anchorExchangeRate)
 
+        req.setOssConfig(param.ossConfig)
+        req.setAgoraConfig(param.agoraConfig)
+        req.setRongcloudConfig(param.rongcloudConfig)
+        req.setGreenConfig(param.greenConfig)
+
         const metadata = {'token': getToken()}
         this.client.saveAreaConfig(req, metadata, (err, resp) => {
             if (!err) {

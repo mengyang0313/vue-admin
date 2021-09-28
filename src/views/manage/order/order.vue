@@ -117,14 +117,19 @@
                 <el-table-column prop="payOrderId" label="第三方支付id" align="center" width="180"/>
                 <el-table-column prop="queryAt" label="查询支付状态时间" align="center" width="180"/>
                 <el-table-column prop="createdAt" label="创建时间" align="center" width="170"/>
-                <el-table-column prop="anchorId" label="关联的主播id" align="center" width="120"/>
-                <el-table-column prop="commission" label="主播佣金" align="center" width="120"/>
-                <el-table-column label="操作" align="center" width="170" fixed="right">
+                <el-table-column prop="isSubscription" label="是否为订阅" align="center" width="120">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toMakeOrder('dataInfo', scope.row)">补单</el-button>
-                        <el-button type="text" @click="toRetreat(scope.$index, scope.row)">退单</el-button>
+                        <el-switch v-model="scope.row.isSubscription" disabled/>
                     </template>
                 </el-table-column>
+                <el-table-column prop="anchorId" label="关联的主播id" align="center" width="120"/>
+                <el-table-column prop="commission" label="主播佣金" align="center" width="120"/>
+<!--                <el-table-column label="操作" align="center" width="170" fixed="right">-->
+<!--                    <template slot-scope="scope">-->
+<!--                        <el-button type="text" @click="toMakeOrder('dataInfo', scope.row)">补单</el-button>-->
+<!--                        <el-button type="text" @click="toRetreat(scope.$index, scope.row)">退单</el-button>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -207,7 +212,9 @@ export default {
                         "amount": item.getAmount(),
                         "payStatus" : getPayStatus(item.getPayStatus()),
                         "paidAt" : toTime(item.getPaidAt()),
-                        "createdAt" : toTime(item.getCreatedAt())
+                        "queryAt": toTime(item.getQueryAt()),
+                        "createdAt" : toTime(item.getCreatedAt()),
+                        "isSubscription" : item.getIsSubscription()
                     }
                     data.push(json)
                 })

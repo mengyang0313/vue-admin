@@ -79,11 +79,15 @@
                 <el-table-column prop="cdn" label="cdn域名" align="center" width="420" />
                 <el-table-column prop="dndPeriod" label="免打扰时长" align="center" width="120" />
                 <el-table-column prop="tags" label="标签配置" align="center" width="820" />
-                <el-table-column label="操作" align="center" width="180" fixed="right">
+                <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text">
                             <router-link :to="{path:'./country',query: {areaId: scope.row.areaId,areaName: scope.row.areaStr}}">国家配置</router-link>
                         </el-button>
+                        <el-button type="text" @click="toDialog('ossConfig', scope.row)">OSS配置</el-button>
+                        <el-button type="text" @click="toDialog('agoraConfig', scope.row)">声网配置</el-button>
+                        <el-button type="text" @click="toDialog('rongcloudConfig', scope.row)">融云配置</el-button>
+                        <el-button type="text" @click="toDialog('greenConfig', scope.row)">鉴黄配置</el-button>
                         <el-button type="text" @click="toDialog('addArea', scope.row)">参数配置</el-button>
                     </template>
                 </el-table-column>
@@ -95,6 +99,14 @@
             <!-- 参数配置 弹出栏 -->
             <addArea ref="addArea" @fetchData="fetchData"/>
 
+            <agoraConfig ref="agoraConfig" @fetchData="fetchData"/>
+
+            <ossConfig ref="ossConfig" @fetchData="fetchData"/>
+
+            <rongcloudConfig ref="rongcloudConfig" @fetchData="fetchData"/>
+
+            <greenConfig ref="greenConfig" @fetchData="fetchData"/>
+
         </el-card>
     </div>
 </template>
@@ -104,10 +116,14 @@
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addArea from './dialog/addArea'
+import ossConfig from './dialog/ossConfig'
+import agoraConfig from './dialog/agoraConfig'
+import rongcloudConfig from './dialog/rongcloudConfig'
+import greenConfig from './dialog/greenConfig'
 import {getAreaList, getAppList, getArrName, getPayType} from "@/utils/dist";
 
 export default {
-    components: { Pagination, imageShow, addArea },
+    components: { Pagination, imageShow, addArea, ossConfig, agoraConfig, rongcloudConfig, greenConfig},
     data() {
         return {
             listLoading: true,
@@ -156,6 +172,14 @@ export default {
                         "cdn" : item.getCdn(),
                         "dndPeriod" : item.getDndPeriod(),
                         "tags" : item.getTagsList().join(","),
+                        "agoraConfig": item.getAgoraConfig(),
+                        "agoraConfigJson": $this.toJsonAgoraConfig(item.getAgoraConfig()),
+                        "ossConfig": item.getOssConfig(),
+                        "ossConfigJson": $this.toJsonOssConfig(item.getOssConfig()),
+                        "rongcloudConfig": item.getRongcloudConfig(),
+                        "rongcloudConfigJson": $this.toJsonRongcloudConfig(item.getRongcloudConfig()),
+                        "greenConfig": item.getGreenConfig(),
+                        "greenConfigJson": $this.toJsonGreenConfig(item.getGreenConfig()),
                         "struct" : item
                     }
                     data.push(json)
@@ -189,6 +213,49 @@ export default {
                 }
             })
             return data
+        },
+        toJsonAgoraConfig(struct){
+            let json = {
+                "appId": struct.getAppId(),
+                "appCert": struct.getAppCert(),
+                "clientId": struct.getClientId(),
+                "clientSecret": struct.getClientSecret(),
+                "captureDuration": struct.getCaptureDuration(),
+                "storageVendor": struct.getStorageVendor(),
+                "storageRegion": struct.getStorageRegion(),
+                "storageEndpoint": struct.getStorageEndpoint(),
+                "storageBucket": struct.getStorageBucket(),
+                "storageAccessKey": struct.getStorageAccessKey(),
+                "storageSecretKey": struct.getStorageSecretKey()
+            }
+            return json
+        },
+        toJsonOssConfig(struct){
+            let json = {
+                    "endpoint": struct.getEndpoint(),
+                    "bucket": struct.getBucket(),
+                    "keyId": struct.getKeyId(),
+                    "keySecret": struct.getKeySecret()
+                }
+            return json
+        },
+        toJsonRongcloudConfig(struct){
+            let json = {
+                "appKey": struct.getAppKey(),
+                "appSecret": struct.getAppSecret(),
+                "domain": struct.getDomain(),
+                "oldAppKey": struct.getOldAppKey(),
+                "oldAppSecret": struct.getOldAppSecret(),
+                "oldDomain": struct.getOldDomain()
+            }
+            return json
+        },
+        toJsonGreenConfig(struct){
+            let json = {
+                "keyId": struct.getKeyId(),
+                "keySecret": struct.getKeySecret()
+            }
+            return json
         }
     }
 }

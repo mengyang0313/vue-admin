@@ -35,6 +35,7 @@
                 style="width: 100%"
                 size="medium"
             >
+                <el-table-column prop="id" label="应用Id" align="center" width="150" />
                 <el-table-column prop="appStr" label="应用APP" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
@@ -54,7 +55,6 @@
                         <el-switch v-model="scope.row.enable" disabled/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="title" label="应用名称" align="center" width="120" />
                 <el-table-column prop="isAnchor" label="是否为主播端" align="center" width="120">
                     <template slot-scope="scope">
                         <el-switch v-model="scope.row.isAnchor" disabled/>

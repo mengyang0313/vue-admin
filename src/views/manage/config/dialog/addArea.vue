@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="新增区域" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
+    <el-dialog :title="title" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="区域" prop="areaId">
@@ -111,6 +111,7 @@ export default {
             dialogVisible: false,
             imgDialogVisible: false,
             inputVisible: false,
+            title: '新增区域',
             inputValue: '',
             areaList: getAreaList(),
             appList: [],
@@ -154,6 +155,7 @@ export default {
     methods: {
         init(row){
             if(typeof(row.id) != "undefined"){
+                this.title = '编辑区域'
                 this.form = row
                 if(typeof(row.tags) !== "undefined"){
                     this.form.tagList = row.tags.split(",")
@@ -168,8 +170,7 @@ export default {
             const $this = this
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    let param = this.form;
-                    param.tags = this.form.tagList
+                    let param = $this.handleParam();
                     this.$service.config.saveAreaConfig(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
@@ -180,6 +181,11 @@ export default {
                     });
                 }
             })
+        },
+        handleParam(){
+            let param = this.form
+            param.tags = this.form.tagList
+            return param
         },
         resetForm() {
             this.$refs.ruleForm.resetFields()

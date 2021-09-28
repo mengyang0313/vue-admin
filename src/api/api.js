@@ -11,7 +11,7 @@ import {
     VersionListRequest, PayConfigListRequest
 } from '../proto/js/cms_pb'
 import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment, PayChannel, Approximation, CountryConfig, OsType, Commodity} from '../proto/js/usertype_pb'
-import { Admin, Guild, RobotMessage, AutoMessage, App, Version, AreaConfig, PayConfig} from '../proto/js/cmstype_pb'
+import { Admin, Guild, RobotMessage, AutoMessage, App, Version, AreaConfig, PayConfig, OssConfig} from '../proto/js/cmstype_pb'
 import { AnchorProfile } from '../proto/js/anchortype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
 import {getAreaList, getGuildList, getAppList, initData} from "@/utils/dist";
@@ -87,6 +87,7 @@ const deps = {
       Version,
       AreaConfig,
       PayConfig,
+      OssConfig,
       AnchorProfile,
       AutoMessage,
       CmsClient: CmsSdkClient
