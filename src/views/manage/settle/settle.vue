@@ -140,7 +140,7 @@ import {getAreaList, getAppList, getArrName, getGuildList, getSettleStatus} from
 import excel from "@/utils/excel"
 import createSettle from './dialog/createSettle'
 import importData from './dialog/import-data'
-import {toDate} from "@/utils/date";
+import {getDateStr, toDate} from "@/utils/date";
 
 
 export default {
@@ -301,7 +301,7 @@ export default {
                     key: ['id', 'areaStr', 'guildStr', 'anchorId', 'settleAt', 'callIncome', 'giftIncome', 'commissionIncome', 'adjustIncome', 'adjustment', 'settled'],
                     data: this.tableData,
                     autoWidth: true,
-                    fileName: '预结算记录-' + this.search.settleAtTime,
+                    fileName: '预结算记录-' + getDateStr(),
                     bookType: type
                 }
                 excel.exportDataToExcel(params)

@@ -58,7 +58,7 @@ export function getAreaListByAreaId(val){
         isAnchor: false,
         label: "全部",
         os: 0,
-        value: 0
+        value: undefined
     })
     return newApps
 }
@@ -203,9 +203,12 @@ export function getCommodityList() {
 export function getArrName(arr, id){
     let label = ""
     arr.forEach((item) => {
-        if(id.toString() === item.value.toString()){
-            label = item.label
+        if(typeof(item.value) !== "undefined"){
+            if(id.toString() === item.value.toString()){
+                label = item.label
+            }
         }
+
     })
     return label
 }
@@ -215,9 +218,11 @@ export function getAppName(arr, id){
     let label = ""
     let os = 0
     arr.forEach((item) => {
-        if(id.toString() === item.value.toString()){
-            label = item.label
-            os = item.os
+        if(typeof(item.value) !== "undefined"){
+            if(id.toString() === item.value.toString()){
+                label = item.label
+                os = item.os
+            }
         }
     })
     return {label:label, os:os}

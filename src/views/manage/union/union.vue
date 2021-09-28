@@ -2,32 +2,32 @@
     <div class="table-classic-wrapper">
         <el-card shadow="always">
             <!-- 查询栏 -->
-            <el-form
-                ref="searchForm"
-                :inline="true"
-                :model="search"
-                label-width="90px"
-                class="search-form"
-            >
-                <el-form-item label="工会ID">
-                    <el-input v-model="search.id" placeholder="工会ID"/>
-                </el-form-item>
-                <el-form-item label="区域">
-                    <el-select v-model="search.areaId" placeholder="请选择">
-                        <el-option v-for="item in areaData"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="是否启用">
-                    <el-switch v-model="search.enable"/>
-                </el-form-item>
-                <el-form-item style="padding-left: 20px">
-                    <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
-                </el-form-item>
-            </el-form>
+<!--            <el-form-->
+<!--                ref="searchForm"-->
+<!--                :inline="true"-->
+<!--                :model="search"-->
+<!--                label-width="90px"-->
+<!--                class="search-form"-->
+<!--            >-->
+<!--                <el-form-item label="工会ID">-->
+<!--                    <el-input v-model="search.id" placeholder="工会ID"/>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item label="区域">-->
+<!--                    <el-select v-model="search.areaId" placeholder="请选择">-->
+<!--                        <el-option v-for="item in areaData"-->
+<!--                                   :key="item.value"-->
+<!--                                   :label="item.label"-->
+<!--                                   :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item label="是否启用">-->
+<!--                    <el-switch v-model="search.enable"/>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item style="padding-left: 20px">-->
+<!--                    <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>-->
+<!--                </el-form-item>-->
+<!--            </el-form>-->
             <!-- 操作栏 -->
             <div class="control-btns">
                 <el-button type="primary" @click="toDialog('edit', '')">+ 新增工会</el-button>
@@ -52,8 +52,8 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="createdAt" label="创建时间" align="center" width="250"/>
-                <el-table-column prop="note" label="备注" align="center" width="220"/>
+                <el-table-column prop="createdAt" label="创建时间" align="center"  width="220" />
+                <el-table-column prop="note" label="备注" align="center"/>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('edit', scope.row)">编辑</el-button>
@@ -133,7 +133,7 @@ export default {
                     }
                     data.push(json)
                 })
-                $this.total = list.length
+                $this.total = 10
                 $this.tableData = data
                 $this.listLoading = false
             })

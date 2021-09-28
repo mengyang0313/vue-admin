@@ -32,7 +32,7 @@
                             <span v-if="item.os === 1">
                                 <i class="icon-android-fill" style="float: right"></i>
                             </span>
-                            <span v-else>
+                            <span v-else-if="item.os === 2">
                                 <i class="icon-pingguo" style="float: right"></i>
                             </span>
                             <span v-if="item.isAnchor">
@@ -55,19 +55,19 @@
                 size="medium"
             >
                 <el-table-column prop="areaStr" label="区域" align="center" width="120" />
-<!--                <el-table-column prop="app" label="APP" align="center" width="120">-->
-<!--                    <template scope="scope">-->
-<!--                        <div slot="reference">-->
-<!--                            {{ scope.row.app.label }}-->
-<!--                            <span v-if="scope.row.app.os === 1">-->
-<!--                                <i class="icon-android-fill"></i>-->
-<!--                            </span>-->
-<!--                            <span v-else-if="scope.row.app.os === 2">-->
-<!--                                <i class="icon-pingguo"></i>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
+                <el-table-column prop="app" label="APP" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else-if="scope.row.app.os === 2">
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="convertRate" label="积分转换比例" align="center" width="120" />
                 <el-table-column prop="depositCommission" label="充值分成" align="center" width="120"/>
                 <el-table-column prop="rewardCommission" label="消费分成" align="center" width="120"/>
@@ -120,7 +120,7 @@ import ossConfig from './dialog/ossConfig'
 import agoraConfig from './dialog/agoraConfig'
 import rongcloudConfig from './dialog/rongcloudConfig'
 import greenConfig from './dialog/greenConfig'
-import {getAreaList, getAppList, getArrName, getPayType, getAreaListByAreaId} from "@/utils/dist";
+import {getAreaList, getAppList, getArrName, getPayType, getAreaListByAreaId, getAppName} from "@/utils/dist";
 
 export default {
     components: { Pagination, imageShow, addArea, ossConfig, agoraConfig, rongcloudConfig, greenConfig},
@@ -160,7 +160,7 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "appId" : item.getAppId(),
-                        "app" : getAppList($this.appList, item.getAppId()),
+                        "app" : getAppName($this.appList, item.getAppId()),
                         "convertRate" : item.getConvertRate(),
                         "depositCommission" : item.getDepositCommission(),
                         "rewardCommission" : item.getRewardCommission(),
@@ -181,6 +181,7 @@ export default {
                         "rongcloudConfigJson": $this.toJsonRongcloudConfig(item.getRongcloudConfig()),
                         "greenConfig": item.getGreenConfig(),
                         "greenConfigJson": $this.toJsonGreenConfig(item.getGreenConfig()),
+                        "payChannelIds": item.getPayChannelIdsList(),
                         "struct" : item
                     }
                     data.push(json)

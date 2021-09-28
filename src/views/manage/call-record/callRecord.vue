@@ -109,6 +109,7 @@
                 style="width: 100%"
                 size="medium"
             >
+                <el-table-column prop="id" label="通话Id" align="center" width="120" />
                 <el-table-column prop="app" label="来源App" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">

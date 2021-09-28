@@ -12,3 +12,11 @@ export function toTime(second){
     }
     return new Date(second*1000).format('yyyy-MM-dd hh:mm:ss')
 }
+
+
+export function getDateStr(date){
+    if(typeof(date) == "undefined"){
+        date = new Date()
+    }
+    return date.format('yyyy-MM-dd')
+}

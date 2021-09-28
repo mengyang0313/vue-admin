@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { getAreaList, getAppList, getPayType, getPayChannelList} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getPayChannelList, getAreaListByAreaId} from "@/utils/dist";
 import {isEmpty} from "@/api/api";
 
 export default {
@@ -164,6 +164,7 @@ export default {
                     this.form.payTypes = []
                 }
                 this.changeArea(row.areaId)
+                this.changeApp(row.appId)
             }
         },
         submitForm() {
@@ -216,21 +217,7 @@ export default {
         },
         changeArea(val) {
             this.payChannelList = getPayChannelList(val)
-
-            let apps = getAppList()
-            let newApps = []
-            apps.forEach(item => {
-                if(item.areaIds.indexOf(val)){
-                    newApps.push(item)
-                }
-            })
-            newApps.unshift({
-                isAnchor: false,
-                label: "全部",
-                os: 1,
-                value: 0
-            })
-            this.appList = newApps
+            this.appList = getAreaListByAreaId(val)
         },
         changeApp(val) {
             this.isPayChannel = val !== 0 ? false : true
