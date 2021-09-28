@@ -79,7 +79,7 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="100" />
                 <el-table-column prop="appStr" label="APP" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
@@ -100,10 +100,10 @@
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="genderStr" label="性别" align="center" width="120" />
-                <el-table-column prop="fansCount" label="粉丝数量" align="center" width="120" />
+                <el-table-column prop="genderStr" label="性别" align="center" width="100" />
+                <el-table-column prop="fansCount" label="粉丝数量" align="center" width="100" />
                 <el-table-column prop="osTypeStr" label="系统类型" align="center" width="120" />
-                <el-table-column prop="onlineStatus" label="在线状态" align="center" width="120">
+                <el-table-column prop="onlineStatus" label="在线状态" align="center" width="100">
                     <template slot-scope="scope">
                         <div slot="reference">
                             <el-tag size="medium" v-if="scope.row.onlineStatusStr!=''">{{ scope.row.onlineStatusStr }}</el-tag>
@@ -119,7 +119,7 @@
                 </el-table-column>
                 <el-table-column prop="signature" label="签名" align="center" width="120" />
                 <el-table-column prop="occupation" label="职业" align="center" width="120" />
-                <el-table-column prop="vipEndAt" label="vip到期时间" align="center" width="120"/>
+                <el-table-column prop="vipEndAt" label="vip到期时间" align="center" width="180"/>
                 <el-table-column prop="expense" label="消费金额" align="center" width="120"/>
                 <el-table-column prop="deposit" label="充值金额" align="center" width="120"/>
                 <el-table-column prop="balance" label="账户余额" align="center" width="120" />
@@ -127,13 +127,8 @@
                 <el-table-column prop="checkinDays" label="已签到天数" align="center" width="120" />
                 <el-table-column prop="checkinAt" label="上次签到时间" align="center" width="120"/>
                 <el-table-column prop="createdAt" label="注册日期" align="center" width="150"/>
-                <el-table-column prop="osType" label="手机机型" align="center" width="120" />
                 <el-table-column prop="appVersion" label="app版本" align="center" width="120" />
-                <el-table-column prop="onlineIp" label="ip地址" align="center" width="120">
-                    <template slot-scope="scope">
-                        <a @click="toDialog('ipAddress', scope.row)" style="color: #1E88C7">查看</a>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="onlineIp" label="ip地址" align="center" width="140"/>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
                         <span v-if="scope.row.blockStatus !== 3 && scope.row.blockStatus !== 4" style="padding-right:10px;padding-left:10px;">
@@ -246,7 +241,7 @@ export default {
                         "reward": item.getReward(),
                         "deposit": item.getDeposit(),
                         "vipStartAt": item.getVipStartAt(),
-                        "vipEndAt": item.getVipEndAt(),
+                        "vipEndAt": toTime(item.getVipEndAt()),
                         "messageQuota": item.getMessageQuota(),
                         "messageUsed": item.getMessageUsed(),
                         "checkinDays": item.getCheckinDays(),

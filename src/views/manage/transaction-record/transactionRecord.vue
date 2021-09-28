@@ -40,7 +40,7 @@
                         </template>
                         <div>
                             <el-form-item label="区域" prop="areaId">
-                                <el-select v-model="search.areaId" placeholder="请选择">
+                                <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -56,11 +56,11 @@
                                                :value="item.value">
                                         <span style="float: left">{{ item.label }}</span>
                                         <span v-if="item.os === 1">
-                                <i class="icon-android-fill" style="float: right"></i>
-                            </span>
-                                        <span v-else>
-                                <i class="icon-pingguo" style="float: right"></i>
-                            </span>
+                                            <i class="icon-android-fill" style="float: right"></i>
+                                        </span>
+                                        <span v-else-if="item.os === 2">
+                                            <i class="icon-pingguo" style="float: right"></i>
+                                        </span>
                                     </el-option>
                                 </el-select>
                             </el-form-item>
@@ -124,7 +124,15 @@
 <script>
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAreaList, getArrName, getAppName, getSourceType, getTraderType} from "@/utils/dist";
+import {
+    getAppList,
+    getAreaList,
+    getArrName,
+    getAppName,
+    getSourceType,
+    getTraderType,
+    getAreaListByAreaId
+} from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
 export default {
@@ -206,6 +214,9 @@ export default {
         },
         changePageSize(msg){
             this.search.page.pageSize = msg.limit
+        },
+        changeArea(val){
+            this.appList = getAreaListByAreaId(val)
         }
     }
 }

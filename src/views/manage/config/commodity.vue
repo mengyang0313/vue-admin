@@ -17,7 +17,7 @@
                 class="search-form"
             >
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -31,6 +31,13 @@
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
+                            <span v-if="item.os === 1">
+                                <i class="icon-android-fill" style="float: right"></i>
+                            </span>
+                            <span v-else-if="item.os === 2">
+                                <i class="icon-pingguo" style="float: right"></i>
+                            </span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -60,7 +67,7 @@
                             <span v-if="scope.row.app.os === 1">
                                 <i class="icon-android-fill"></i>
                             </span>
-                            <span v-else>
+                            <span v-else-if="scope.row.app.os === 2">
                                 <i class="icon-pingguo"></i>
                             </span>
                         </div>
@@ -107,7 +114,7 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addCommodity from './dialog/addCommodity'
 import Hints from '../../../components/Hints'
-import {getAreaList, getAppList, getPayType, getAppName, getArrName} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getAppName, getArrName, getAreaListByAreaId} from "@/utils/dist";
 
 export default {
     components: { Pagination, Hints, imageShow, addCommodity },
@@ -208,6 +215,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changeArea(val){
+            this.appList = getAreaListByAreaId(val)
         }
     }
 }

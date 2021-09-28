@@ -16,22 +16,12 @@
                 <el-form-item label="主播id" prop="anchorId">
                     <el-input v-model="search.anchorId" placeholder="主播id"/>
                 </el-form-item>
-                <el-form-item label="APP" prop="appId">
-                    <el-select v-model="search.appId" placeholder="请选择">
-                        <el-option v-for="item in appList"
+                <el-form-item label="区域" prop="areaId">
+                    <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
+                        <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
-                            <span style="float: left">{{ item.label }}</span>
-                            <span v-if="item.os === 1">
-                                <i class="icon-android-fill" style="float: right"></i>
-                            </span>
-                            <span v-else>
-                                <i class="icon-pingguo" style="float: right"></i>
-                            </span>
-                            <span v-if="item.isAnchor">
-                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>
-                            </span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -44,12 +34,22 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
-                            <el-form-item label="区域" prop="areaId">
-                                <el-select v-model="search.areaId" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
+                            <el-form-item label="APP" prop="appId">
+                                <el-select v-model="search.appId" placeholder="请选择">
+                                    <el-option v-for="item in appList"
                                                :key="item.value"
                                                :label="item.label"
                                                :value="item.value">
+                                        <span style="float: left">{{ item.label }}</span>
+                                        <span v-if="item.os === 1">
+                                            <i class="icon-android-fill" style="float: right"></i>
+                                        </span>
+                                        <span v-else-if="item.os === 2">
+                                            <i class="icon-pingguo" style="float: right"></i>
+                                        </span>
+                                        <span v-if="item.isAnchor">
+                                            <i class="iconfont icon-zhuboguanli" style="float: right"></i>
+                                        </span>
                                     </el-option>
                                 </el-select>
                             </el-form-item>
@@ -116,7 +116,7 @@
                             <span v-if="scope.row.app.os === 1">
                                 <i class="icon-android-fill"></i>
                             </span>
-                            <span v-else>
+                            <span v-else-if="scope.row.app.os === 2">
                                 <i class="icon-pingguo"></i>
                             </span>
                         </div>
@@ -160,7 +160,16 @@
 <script>
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAppList, getHangType, getCallStatus, getCallType, getArrName, getAppName} from "@/utils/dist";
+import {
+    getAreaList,
+    getAppList,
+    getHangType,
+    getCallStatus,
+    getCallType,
+    getArrName,
+    getAppName,
+    getAreaListByAreaId
+} from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
 export default {
@@ -254,6 +263,9 @@ export default {
         },
         changePageSize(msg){
             this.search.page.pageSize = msg.limit
+        },
+        changeArea(val){
+            this.appList = getAreaListByAreaId(val)
         }
     }
 }

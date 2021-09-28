@@ -42,6 +42,15 @@
                                     <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
                                 </el-col>
                             </el-form-item>
+                            <el-form-item label="区域" prop="areaId">
+                                <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
+                                    <el-option v-for="item in areaData"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
                             <el-form-item label="APP" prop="appId">
                                 <el-select v-model="search.appId" placeholder="请选择">
                                     <el-option v-for="item in appList"
@@ -50,23 +59,15 @@
                                                :value="item.value">
                                         <span style="float: left">{{ item.label }}</span>
                                         <span v-if="item.os === 1">
-                                <i class="icon-android-fill" style="float: right"></i>
-                            </span>
-                                        <span v-else>
-                                <i class="icon-pingguo" style="float: right"></i>
-                            </span>
+                                            <i class="icon-android-fill" style="float: right"></i>
+                                        </span>
+                                        <span v-else-if="item.os === 2">
+                                            <i class="icon-pingguo" style="float: right"></i>
+                                        </span>
                                     </el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="区域" prop="areaId">
-                                <el-select v-model="search.areaId" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
+
                         </div>
                     </el-collapse-item>
                 </el-collapse>
@@ -148,9 +149,10 @@ import {
     getArrName,
     getAppName,
     getPayType,
-    getCommodityList, getPayChannelList
+    getCommodityList, getPayChannelList, getAreaListByAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
+import {isEmpty} from "@/api/api";
 
 export default {
     components: { Pagination },
@@ -165,7 +167,7 @@ export default {
                 createdStart: undefined,
                 createdEnd: undefined,
                 appId: undefined,
-                areaId: 1,
+                areaId: undefined,
                 payStatus: 0,
                 page: {
                     currentPage: 1,
@@ -193,6 +195,10 @@ export default {
                 const list = result.getRecordsList()
                 const data = []
                 list.forEach((item, index)=>{
+                    let price = item.getPayPrice() / 100
+                    if(!isEmpty(item.getCurrency())){
+                        price = item.getCurrency() + "-" + price
+                    }
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
@@ -207,7 +213,7 @@ export default {
                         "desc" : item.getDesc(),
                         "payOrderId": item.getPayOrderId(),
                         "payUrl" : item.getPayUrl(),
-                        "payPrice" : item.getCurrency() + "-" +item.getPayPrice() / 100,
+                        "payPrice" : price,
                         "usdPrice" : item.getUsdPrice() / 100,
                         "amount": item.getAmount(),
                         "payStatus" : getPayStatus(item.getPayStatus()),
@@ -260,6 +266,9 @@ export default {
                 }
             })
             return name
+        },
+        changeArea(val){
+            this.appList = getAreaListByAreaId(val)
         }
     }
 }

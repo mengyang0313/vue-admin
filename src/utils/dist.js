@@ -46,6 +46,25 @@ export function getAreaList() {
     return JSON.parse(areaArr);
 }
 
+export function getAreaListByAreaId(val){
+    let apps = getAppList()
+    let newApps = []
+    apps.forEach(item => {
+        if(item.areaIds.indexOf(val) >= 0){
+            newApps.push(item)
+        }
+    })
+    newApps.unshift({
+        isAnchor: false,
+        label: "全部",
+        os: 0,
+        value: 0
+    })
+    return newApps
+}
+
+
+
 // 工会列表
 export const getGuilds = () => new Promise((resolve, reject) => {
     const req = new Empty();
@@ -89,7 +108,9 @@ export const getApps = () => new Promise((resolve, reject) => {
                     isAnchor: item.getIsAnchor(),
                     areaIds: item.getAreaIdsList()
                 }
-                arr.push(json)
+                if(!item.getIsAnchor()){
+                    arr.push(json)
+                }
             })
             resolve(arr)
         } else {
@@ -176,7 +197,6 @@ export function getCommodityList() {
     // })
     return arr;
 }
-
 
 
 

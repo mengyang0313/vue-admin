@@ -14,7 +14,7 @@
                 class="search-form"
             >
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -120,7 +120,7 @@ import ossConfig from './dialog/ossConfig'
 import agoraConfig from './dialog/agoraConfig'
 import rongcloudConfig from './dialog/rongcloudConfig'
 import greenConfig from './dialog/greenConfig'
-import {getAreaList, getAppList, getArrName, getPayType} from "@/utils/dist";
+import {getAreaList, getAppList, getArrName, getPayType, getAreaListByAreaId} from "@/utils/dist";
 
 export default {
     components: { Pagination, imageShow, addArea, ossConfig, agoraConfig, rongcloudConfig, greenConfig},
@@ -144,6 +144,7 @@ export default {
         }
     },
     created() {
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     methods: {
@@ -256,6 +257,9 @@ export default {
                 "keySecret": struct.getKeySecret()
             }
             return json
+        },
+        changeArea(val){
+            this.appList = getAreaListByAreaId(val)
         }
     }
 }

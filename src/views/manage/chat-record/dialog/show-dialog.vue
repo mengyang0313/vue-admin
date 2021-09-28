@@ -16,11 +16,11 @@
                             <div slot="reference">
                                 {{ scope.row.app.label }}
                                 <span v-if="scope.row.app.os === 1">
-                                <i class="icon-android-fill"></i>
-                            </span>
-                                <span v-else>
-                                <i class="icon-pingguo"></i>
-                            </span>
+                                    <i class="icon-android-fill"></i>
+                                </span>
+                                <span v-else-if="scope.row.app.os === 2">
+                                    <i class="icon-pingguo"></i>
+                                </span>
                             </div>
                         </template>
                     </el-table-column>
