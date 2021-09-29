@@ -97,6 +97,6 @@ static_resources:
                             -   endpoint:
                                     address:
                                         socket_address:
-                                            address: 13.251.107.138
+                                            address: 13.213.152.35
                                             port_value: 8100
 
