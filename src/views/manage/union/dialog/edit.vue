@@ -6,7 +6,7 @@
                     <el-input v-model="form.name" placeholder="请输入" />
                 </el-form-item>
                 <el-form-item label="工会区域" prop="areaId">
-                    <el-select v-model="form.areaId" placeholder="请选择">
+                    <el-select v-model="form.areaId" disabled placeholder="请选择">
                         <el-option
                             v-for="item in areaData"
                                    :key="item.value"
@@ -41,7 +41,7 @@
 <script>
 
 import { boolDict} from '@/dict/index'
-import {getAreaList, getBool} from "@/utils/dist";
+import {getAreaList, getBool, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
     name: 'Form',
@@ -78,6 +78,8 @@ export default {
             if(row !== ''){
                 this.title = '编辑工会'
                 this.form = row
+            }else{
+                this.form.areaId = getCurrentUserAreaId()
             }
         },
         submitForm(formName) {

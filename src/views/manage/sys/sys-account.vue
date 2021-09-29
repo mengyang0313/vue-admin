@@ -18,7 +18,7 @@
                         <el-col :span="6">
                             <el-form-item label="区域">
                                 <el-select v-model="search.area" placeholder="请选择">
-                                    <el-option v-for="item in areaData"
+                                    <el-option v-for="item in areaList"
                                                :key="item.value"
                                                :label="item.label"
                                                :value="item.value">
@@ -41,11 +41,7 @@
                 <el-table-column prop="id" label="编号" align="center" width="50"/>
                 <el-table-column prop="email" label="邮箱" align="center" width="300"/>
                 <el-table-column prop="name" label="真实姓名" align="center" width="200"/>
-                <el-table-column prop="photo" label="权限" align="center" width="250">
-                    <template slot-scope="scope">
-                        <a @click="toDialog('editRobot', scope.row)" style="color: #1E88C7">查看</a>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="areaStr" label="绑定的区域" align="center" width="250"/>
                 <el-table-column prop="enable" label="状态" align="center" width="200">
                     <template slot-scope="scope">
                         <el-switch v-model="scope.row.enable" disabled/>
@@ -70,16 +66,14 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import addSysAccount from './dialog/add-sys-account'
-import {getAreaList} from '@/utils/dist'
+import {getAreaList, getArrName} from '@/utils/dist'
 
 
 export default {
     components: { Pagination, addSysAccount},
     data() {
         return {
-            // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
             search: {
                 uid: undefined,
                 app: undefined,
@@ -89,11 +83,9 @@ export default {
                     pageSize: 10
                 }
             },
-            // 数据总条数
             total: 0,
-            // 防止多次连续提交表单
             isSubmit: false,
-            areaData : getAreaList(),
+            areaList : getAreaList(),
         }
     },
     created() {
@@ -113,9 +105,11 @@ export default {
                         "enable" : item.getEnable(),
                         "email" : item.getEmail(),
                         "password" : item.getPassword(),
+                        "passwordNew": "",
                         "name" : item.getName(),
                         "note" : item.getNote(),
-                        "area_ids" : item.getAreaIdsList(),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "app_ids" : item.getAppIdsList(),
                         "modules" : item.getModulesList(),
                         "login_at" : item.getLoginAt(),

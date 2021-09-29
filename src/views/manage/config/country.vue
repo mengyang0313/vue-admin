@@ -17,7 +17,7 @@
                 class="search-form"
             >
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" placeholder="请选择">
+                    <el-select v-model="search.areaId" disabled placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -90,7 +90,7 @@ import Hints from '../../../components/Hints'
 import addCountry from './dialog/addCountry'
 import payConfig from './dialog/payConfig'
 import approximationConfig from './dialog/approximationConfig'
-import {getAreaList, getArrName, getPayType, getPayChannelList} from "@/utils/dist"
+import {getAreaList, getArrName, getPayType, getPayChannelList, getCurrentUserAreaId} from "@/utils/dist"
 
 export default {
     components: { Pagination, Hints, imageShow, addCountry, payConfig, approximationConfig },
@@ -98,7 +98,7 @@ export default {
         return {
             listLoading: true,
             search: {
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 areaName: undefined,
                 page: {
                     currentPage: 1,

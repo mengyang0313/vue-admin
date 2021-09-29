@@ -22,7 +22,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" placeholder="请选择">
+                    <el-select v-model="search.areaId" disabled placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -118,7 +118,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAreaList, getArrName, getGuildList, getSettleStatus} from "@/utils/dist";
+import {getAppList, getAreaList, getArrName, getCurrentUserAreaId, getGuildList, getSettleStatus} from "@/utils/dist";
 import excel from "@/utils/excel";
 import {toDate} from "@/utils/date";
 
@@ -128,7 +128,7 @@ export default {
         return {
             listLoading: true,
             search: {
-                areaId: 1,
+                areaId: getCurrentUserAreaId(),
                 guildId: undefined,
                 anchorId: undefined,
                 settleAtTime: new Date().format('yyyy-MM-dd'),

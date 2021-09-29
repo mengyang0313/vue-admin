@@ -12,11 +12,21 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" placeholder="请选择">
-                        <el-option v-for="item in areaList"
+                    <el-select v-model="form.appId" placeholder="请选择">
+                        <el-option v-for="item in appList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
+                            <span v-if="item.os === 1">
+                                <i class="icon-android-fill" style="float: right"></i>
+                            </span>
+                            <span v-else-if="item.os === 2">
+                                <i class="icon-pingguo" style="float: right"></i>
+                            </span>
+                            <span v-if="item.isAnchor">
+                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>
+                            </span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -87,7 +97,15 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/dist";
+import {
+    getAreaList,
+    getAppList,
+    getPayType,
+    getOsType,
+    getCurrentUserAreaId,
+    getAreaListByAreaId,
+    getPayChannelList
+} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 
@@ -95,7 +113,8 @@ export default {
     data() {
         return {
             form: {
-                enable: true
+                enable: true,
+                areaId : getCurrentUserAreaId()
             },
             dialogVisible: false,
             title: '新增商品',
@@ -128,6 +147,8 @@ export default {
                 this.title = "编辑商品"
                 this.form = row
                 this.iconArr.push({"url": row.icon});
+            }else{
+                this.changeArea(this.form.areaId)
             }
         },
         submitForm() {
@@ -182,6 +203,9 @@ export default {
                 const data = res.data
                 callback(data)
             })
+        },
+        changeArea(val) {
+            this.appList = getAreaListByAreaId(val)
         }
     }
 }

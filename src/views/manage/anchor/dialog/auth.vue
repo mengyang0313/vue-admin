@@ -5,16 +5,16 @@
                 <el-form-item label="用户Id：" prop="anchorId">
                     <el-input v-model="form.anchorId" placeholder="请输入" :disabled="uidDisabled"/>
                 </el-form-item>
-                <el-form-item label="主播区域" prop="areaId">
-                    <el-select v-model="form.areaId" placeholder="请选择">
-                        <el-option
-                            v-for="item in areaData"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item label="主播区域" prop="areaId">-->
+<!--                    <el-select v-model="form.areaId" placeholder="请选择">-->
+<!--                        <el-option-->
+<!--                            v-for="item in areaData"-->
+<!--                            :key="item.value"-->
+<!--                            :label="item.label"-->
+<!--                            :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
 <!--                <el-form-item label="主播等级：" prop="level">-->
 <!--                    <el-select v-model="form.level" placeholder="请选择">-->
 <!--                        <el-option-->
@@ -66,9 +66,6 @@ export default {
             rules: {
                 anchorId: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
-                ],
-                areaId: [
-                    {required: true, message: '请选择', trigger: 'blur'}
                 ],
                 guildId: [
                     {required: true, message: '请选择', trigger: 'blur'}

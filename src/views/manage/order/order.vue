@@ -43,7 +43,7 @@
                                 </el-col>
                             </el-form-item>
                             <el-form-item label="区域" prop="areaId">
-                                <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
+                                <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -149,7 +149,7 @@ import {
     getArrName,
     getAppName,
     getPayType,
-    getCommodityList, getPayChannelList, getAreaListByAreaId
+    getCommodityList, getPayChannelList, getAreaListByAreaId, getCurrentUserAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 import {isEmpty} from "@/api/api";
@@ -167,7 +167,7 @@ export default {
                 createdStart: undefined,
                 createdEnd: undefined,
                 appId: undefined,
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 payStatus: 0,
                 page: {
                     currentPage: 1,
@@ -184,6 +184,7 @@ export default {
         }
     },
     created() {
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     methods: {

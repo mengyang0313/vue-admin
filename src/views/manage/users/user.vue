@@ -16,7 +16,7 @@
                     <el-input v-model="search.nickname" placeholder="用户名"/>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" placeholder="请选择">
+                    <el-select v-model="search.areaId" placeholder="请选择" disabled>
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -180,7 +180,8 @@ import {
     getOnlineStatus,
     getBlockStatus,
     getAppName,
-    getGenderType
+    getGenderType,
+    getCurrentUserAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
@@ -197,7 +198,7 @@ export default {
                 vipOnly: undefined,
                 depositOnly: undefined,
                 minBalance: undefined,
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 page: {
                     currentPage: 1,
                     pageSize: 10

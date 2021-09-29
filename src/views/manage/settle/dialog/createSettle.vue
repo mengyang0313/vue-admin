@@ -8,7 +8,7 @@
             label-width="100px"
         >
             <el-form-item label="区域" prop="areaId">
-                <el-select v-model="search.areaId" placeholder="请选择">
+                <el-select v-model="search.areaId" disabled placeholder="请选择">
                     <el-option v-for="item in areaList"
                                :key="item.value"
                                :label="item.label"
@@ -33,14 +33,14 @@
 
 <script>
 
-import {getAreaList, getArrName} from "@/utils/dist";
+import {getAreaList, getArrName, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
     data() {
         return {
             dialogVisible: false,
             search: {
-                areaId: 1,
+                areaId: getCurrentUserAreaId(),
                 settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
                 minBalance: 100
             },

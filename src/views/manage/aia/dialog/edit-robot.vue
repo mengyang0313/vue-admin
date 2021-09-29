@@ -2,7 +2,36 @@
     <el-dialog :title="title" :visible.sync="dialogVisible" :modal-append-to-body="false" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
-                <el-form-item label="ID：" prop="anchorId" v-if="typeof(form.anchorId) == 0">
+                <el-form-item label="区域" prop="areaId">
+                    <el-select v-model="form.areaId" disabled placeholder="请选择">
+                        <el-option v-for="item in areaData"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="应用App" prop="appId">
+                    <el-select v-model="form.appId" placeholder="请选择">
+                        <el-option v-for="item in appList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
+                            <span v-if="item.os === 1">
+                                <i class="icon-android-fill" style="float: right"></i>
+                            </span>
+                            <span v-else-if="item.os === 2">
+                                <i class="icon-pingguo" style="float: right"></i>
+                            </span>
+                            <span v-if="item.isAnchor">
+                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>
+                            </span>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="ID" prop="anchorId" v-if="typeof(form.anchorId) == 0">
                     <el-input v-model="form.robotId" placeholder="请输入" />
                 </el-form-item>
                 <el-form-item label="昵称" prop="nickname">
@@ -27,17 +56,9 @@
                     </div>
                     <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
                 </el-form-item>
-                <el-form-item label="国家" prop="areaId">
-                    <el-select v-model="form.areaId" placeholder="请选择">
-                        <el-option v-for="item in areaData"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+
                 <el-form-item label="出生日期" prop="birthday">
-                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birthday" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birthday" style="width: 35%;"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="职业" prop="occupation">
                     <el-select v-model="form.occupation" placeholder="请选择">
@@ -125,7 +146,14 @@
 
 <script>
 import { getToken } from "@/utils/cookie";
-import { getAreaList, getOccupationType } from "@/utils/dist";
+import {
+    getAreaList,
+    getOccupationType,
+    getAppList,
+    getCurrentUserAreaId,
+    getAreaListByAreaId,
+    getPayChannelList
+} from "@/utils/dist";
 import axios from "axios";
 import ImgUpdate from '@/components/ImgUpdate'
 
@@ -138,7 +166,8 @@ export default {
                 anchorId: 0,
                 nickname: '',
                 avatar: '',
-                areaId: '',
+                areaId: getCurrentUserAreaId(),
+                appId: '',
                 birthday: '',
                 occupation: '',
                 onlineStart: '',
@@ -160,6 +189,7 @@ export default {
             videoDialog: false,
             areaData: getAreaList(),
             occupationTypes: getOccupationType(),
+            appList: getAppList(),
             avatarArr: [],
             rules: {
                 nickname: [
@@ -188,6 +218,8 @@ export default {
                 this.form.videos.forEach((item) => {
                     this.form.videoUris.push({name: item.getId(), url: item.getUri()})
                 })
+            }else {
+                this.changeArea(this.form.areaId)
             }
         },
         submitForm() {
@@ -291,6 +323,11 @@ export default {
                 const data = res.data
                 callback(data)
             })
+        },
+        changeArea(val) {
+            let arr = getAreaListByAreaId(val)
+            arr.splice(0)
+            this.appList = arr
         }
     }
 }

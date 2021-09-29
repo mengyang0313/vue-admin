@@ -4,7 +4,7 @@
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
 
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" placeholder="请选择">
+                    <el-select v-model="form.areaId" disabled placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType, getPayChannelList} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getOsType, getPayChannelList, getCurrentUserAreaId} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 import {Approximation} from "@/proto/js/usertype_pb";
@@ -73,7 +73,9 @@ import {Approximation} from "@/proto/js/usertype_pb";
 export default {
     data() {
         return {
-            form: {},
+            form: {
+                areaId : getCurrentUserAreaId()
+            },
             dialogVisible: false,
             title: '新增国家',
             iconArr: [],
@@ -103,7 +105,6 @@ export default {
                 this.title = "编辑国家"
                 this.form = row
                 this.iconArr.push({"url": row.icon});
-            }else {
             }
         },
         submitForm() {

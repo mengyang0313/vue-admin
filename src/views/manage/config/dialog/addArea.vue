@@ -3,7 +3,7 @@
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" @change="changeArea" placeholder="请选择">
+                    <el-select v-model="form.areaId" @change="changeArea" disabled placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -12,11 +12,21 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="应用" prop="appId">
-                    <el-select v-model="form.appId" @change="changeApp" placeholder="请选择">
+                    <el-select v-model="form.appId" placeholder="请选择">
                         <el-option v-for="item in appList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
+                            <span v-if="item.os === 1">
+                                <i class="icon-android-fill" style="float: right"></i>
+                            </span>
+                            <span v-else-if="item.os === 2">
+                                <i class="icon-pingguo" style="float: right"></i>
+                            </span>
+                            <span v-if="item.isAnchor">
+                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>
+                            </span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -98,13 +108,14 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getPayChannelList, getAreaListByAreaId} from "@/utils/dist";
+import {getAreaList, getPayType, getPayChannelList, getAreaListByAreaId, getCurrentUserAreaId} from "@/utils/dist";
 import {isEmpty} from "@/api/api";
 
 export default {
     data() {
         return {
             form: {
+                areaId : getCurrentUserAreaId(),
                 payTypes: [],
                 tagList: []
             },
@@ -163,8 +174,11 @@ export default {
                 if(isEmpty(row.payTypes)){
                     this.form.payTypes = []
                 }
+                this.form.appId = this.form.appId === 0 ? undefined : this.form.appId
                 this.changeArea(row.areaId)
                 this.changeApp(row.appId)
+            }else {
+                this.changeArea(this.form.areaId)
             }
         },
         submitForm() {
@@ -216,11 +230,11 @@ export default {
             this.inputValue = '';
         },
         changeArea(val) {
-            this.payChannelList = getPayChannelList(val)
             this.appList = getAreaListByAreaId(val)
+            this.payChannelList = getPayChannelList(val)
         },
         changeApp(val) {
-            this.isPayChannel = val !== 0 ? false : true
+            this.isPayChannel = val !== 0 && typeof(val) != "undefined" ? false : true
         }
     }
 }

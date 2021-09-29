@@ -176,7 +176,7 @@ export default {
                 $this.listLoading = false
             });
         },
-        onSubmit() {
+        onSearch() {
             this.search.page.currentPage = 1
             this.fetchData()
         },

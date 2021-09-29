@@ -4,7 +4,7 @@
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
 
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" placeholder="请选择">
+                    <el-select v-model="form.areaId" disabled placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -89,14 +89,16 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getOsType, getCurrentUserAreaId} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 
 export default {
     data() {
         return {
-            form: { },
+            form: {
+                areaId : getCurrentUserAreaId()
+            },
             dialogVisible: false,
             title: '新增支付',
             iconArr: [],

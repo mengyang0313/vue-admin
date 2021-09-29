@@ -2,33 +2,31 @@
     <el-dialog title="新增管理帐号" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
-<!--                <el-form-item label="运营区域" prop="areaId">-->
-<!--                    <el-select v-model="form.areaId" placeholder="请选择">-->
-<!--                        <el-option v-for="item in areaData"-->
-<!--                                   :key="item.value"-->
-<!--                                   :label="item.label"-->
-<!--                                   :value="item.value">-->
-<!--                        </el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
-                <el-form-item label="账户名：" prop="email">
+
+                <el-form-item label="账户名" prop="email">
                     <el-input v-model="form.email" maxlength="15" show-word-limit placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="密码：" prop="password">
-                    <el-input v-model="form.password" placeholder="请输入" maxlength="16" show-password/>
+                <el-form-item label="密码" prop="passwordNew">
+                    <el-input v-model="form.passwordNew" placeholder="请输入" maxlength="16" show-password/>
                 </el-form-item>
-                <el-form-item label="真实姓名：" prop="name">
+                <el-form-item label="真实姓名" prop="name">
                     <el-input v-model="form.name" placeholder="请输入" show-word-limit/>
                 </el-form-item>
-                <el-form-item label="权限设置：" prop="url">
+                <el-form-item label="运营区域" prop="areaId">
+                    <el-select v-model="form.areaId" placeholder="请选择">
+                        <el-option v-for="item in areaList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="权限设置" prop="url">
                         <div class="content-box" style="height: 360px;">
                             <el-transfer v-model="value1"
                                          :data="data"
                                          :titles="['权限', '已有权限']"/>
                         </div>
-                </el-form-item>
-                <el-form-item label="是否开启" prop="isOpen">
-                    <el-switch v-model="form.isOpen"/>
                 </el-form-item>
 
                 <el-form-item class="submit-box">
@@ -43,6 +41,7 @@
 <script>
 
 import {getAreaList} from '@/utils/dist'
+import {isEmpty} from "@/api/api";
 
 export default {
     data() {
@@ -59,17 +58,12 @@ export default {
         return {
             data: baseData(),
             form: {
-                id: '',
-                areaId: '',
-                email: '',
-                password: '',
-                name: '',
-                isOpen: ''
+                passwordNew: ''
             },
             value1: [1, 5],
             value2: [1, 5],
             dialogVisible: false,
-            areaData : getAreaList(),
+            areaList : getAreaList(),
             rules: {
                 areaId: [
                     {required: true, message: '请选择', trigger: 'blur'}
@@ -77,8 +71,7 @@ export default {
                 email: [
                     {required: true, message: '内容不能为空', trigger: 'blur'}
                 ],
-                password: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'},
+                passwordNew: [
                     {min: 6, max: 16, message: '密码长度在 6 到 16 个字符', trigger: ['blur', 'change']},
                     {pattern: /^[a-zA-Z0-9_-]{6,16}$/, message: '密码只支持字母、数字和下划线', trigger: ['blur', 'change']}
                 ],
@@ -90,15 +83,17 @@ export default {
     },
     methods: {
         init(row){
-            this.form.areaId = row.areaId
-            this.form.email = row.email
-            this.form.password = row.password
-            this.form.name = row.name
+            if(typeof(row.id) != "undefined"){
+                this.form = row
+            }
+            this.form.passwordNew = ''
         },
         submitForm(formName) {
             const $this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    let psw = isEmpty(this.form.passwordNew) ? this.form.password : this.form.passwordNew
+                    this.form.password = psw
                     this.$service.admin.saveAdmin(this.form, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")

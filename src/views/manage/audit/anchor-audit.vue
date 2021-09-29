@@ -13,7 +13,7 @@
                     <el-input v-model="search.anchorId" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="区域">
-                    <el-select v-model="search.areaId" placeholder="请选择" @change="changeArea">
+                    <el-select v-model="search.areaId" placeholder="请选择" disabled @change="changeArea">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -102,7 +102,14 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import videoList from './dialog/video-list'
 import photoList from './dialog/photo-list'
-import {getAreaList, getOccupationType, getReviewStatus, getArrName, getGenderType} from "@/utils/dist"
+import {
+    getAreaList,
+    getOccupationType,
+    getReviewStatus,
+    getArrName,
+    getGenderType,
+    getCurrentUserAreaId
+} from "@/utils/dist"
 import {toDate} from "@/utils/date";
 
 export default {
@@ -114,7 +121,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: 1,
+                areaId: getCurrentUserAreaId(),
                 reviewStatus: 2,
                 page: {
                     currentPage: 1,

@@ -32,7 +32,7 @@ export default class {
         admin.setEmail(param.email)
         admin.setPassword(param.password)
         admin.setName(param.name)
-        admin.setAreaIdsList(param.area)
+        admin.setAreaId(param.areaId)
 
         const metadata = {'token': getToken()};
         this.client.saveAdmin(admin, metadata, (err, resp) => {

@@ -13,7 +13,7 @@
                     <el-input v-model="search.anchorId" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="区域">
-                    <el-select v-model="search.areaId" placeholder="请选择">
+                    <el-select v-model="search.areaId" disabled placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -66,7 +66,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getReviewStatus} from "@/utils/dist"
+import {getAreaList, getCurrentUserAreaId, getReviewStatus} from "@/utils/dist"
 import videoList from './dialog/video-list'
 import {toTime} from "@/utils/date";
 
@@ -79,7 +79,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: 1,
+                areaId: getCurrentUserAreaId(),
                 reviewStatus: 2,
                 page: {
                     currentPage: 1,

@@ -16,7 +16,7 @@
             >
                 <template>
                     <el-form-item label="区域" prop="areaId">
-                        <el-select v-model="search.areaId" placeholder="请选择">
+                        <el-select v-model="search.areaId" disabled placeholder="请选择">
                             <el-option v-for="item in areaData"
                                        :key="item.value"
                                        :label="item.label"
@@ -100,7 +100,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import addAutoMessage from './dialog/add-auto-message'
-import {getBool, getAreaList, getActionType, getArrName, getMessageType} from "@/utils/dist";
+import {getBool, getAreaList, getActionType, getArrName, getMessageType, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
     components: { Pagination, addAutoMessage},
@@ -110,7 +110,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: 1,
+                areaId: getCurrentUserAreaId(),
                 enable: true,
                 action: 0,
                 page: {

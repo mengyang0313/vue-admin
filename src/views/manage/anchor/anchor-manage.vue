@@ -27,7 +27,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" placeholder="请选择">
+                    <el-select v-model="search.areaId" disabled placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -235,7 +235,7 @@ import {
     getAnchorLevel,
     getOnlineStatus,
     getReviewStatus,
-    getGuildList, getArrName, getAppList, getBlockStatus, getAppName
+    getGuildList, getArrName, getAppList, getBlockStatus, getAppName, getCurrentUserAreaId
 } from "@/utils/dist";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
@@ -261,7 +261,7 @@ export default {
             // 查询列表参数对象
             search: {
                 anchorId: undefined,
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 guildId: undefined,
                 blockStatus: undefined,
                 onlineStatus: 0,

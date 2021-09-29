@@ -31,6 +31,7 @@ export default class {
         const req = param.struct
         req.setNickname(param.nickname)
         req.setAvatar(param.avatar)
+        req.setAppId(param.appId)
         req.setAreaId(param.areaId)
         req.setBirthday(param.birthday)
         req.setOccupation(param.occupation)

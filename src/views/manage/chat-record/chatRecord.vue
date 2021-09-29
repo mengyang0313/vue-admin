@@ -22,7 +22,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域">
-                    <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -144,7 +144,14 @@
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import showDialog from './dialog/show-dialog'
-import {getAppList, getAreaList, getMessageType, getAppName, getAreaListByAreaId} from "@/utils/dist";
+import {
+    getAppList,
+    getAreaList,
+    getMessageType,
+    getAppName,
+    getAreaListByAreaId,
+    getCurrentUserAreaId
+} from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
 export default {
@@ -155,7 +162,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 userId: undefined,
                 anchorId: undefined,
                 appId: undefined,
@@ -178,6 +185,7 @@ export default {
         }
     },
     created() {
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     methods: {

@@ -17,7 +17,7 @@
                 class="search-form"
             >
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -114,7 +114,15 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addCommodity from './dialog/addCommodity'
 import Hints from '../../../components/Hints'
-import {getAreaList, getAppList, getPayType, getAppName, getArrName, getAreaListByAreaId} from "@/utils/dist";
+import {
+    getAreaList,
+    getAppList,
+    getPayType,
+    getAppName,
+    getArrName,
+    getAreaListByAreaId,
+    getCurrentUserAreaId
+} from "@/utils/dist";
 
 export default {
     components: { Pagination, Hints, imageShow, addCommodity },
@@ -122,7 +130,7 @@ export default {
         return {
             listLoading: true,
             search: {
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 appId: undefined,
                 isSubscription: false,
                 page: {
@@ -139,6 +147,7 @@ export default {
         }
     },
     created() {
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     watch: {

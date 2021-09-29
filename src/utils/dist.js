@@ -2,6 +2,7 @@ import {Empty} from "@/proto/js/usertype_pb";
 import {PayChannelListRequest, CommodityListRequest} from "@/proto/js/cms_pb";
 import {getToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
+import {toTime} from "@/utils/date";
 
 
 export async function initData() {
@@ -20,10 +21,41 @@ export function initAsyncData(){
     getPayChannel(function(arr){
         sessionStorage.setItem("payChannelArr", JSON.stringify(arr));
     })
-    getCommodity(function(){
-            sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr))
+    getCommodity(function(arr){
+            sessionStorage.setItem("commodityArr", JSON.stringify(arr))
+    })
+    initCurrentUserInfo(function(json){
+        sessionStorage.setItem("currentUser", JSON.stringify(json))
     })
 }
+
+export function initCurrentUserInfo(callback){
+    const req = new Empty();
+    const metadata = {'token': getToken()};
+    cmsService.getAdminInfo(req, metadata, (err, resp) => {
+        if (!err) {
+            const json = {
+                name : resp.getName(),
+                email : resp.getEmail(),
+                areaId : resp.getAreaId(),
+                appIds : resp.getAppIdsList()
+            }
+            callback(json)
+        } else {
+            console.log(err)
+        }
+    })
+}
+export function getCurrentUserAreaId(){
+    try{
+        let json = sessionStorage.getItem("currentUser");
+        return JSON.parse(json).areaId
+    }catch (err){
+        console.log(err)
+    }
+    return undefined
+}
+
 
 export const getAreas = () => new Promise((resolve, reject) => {
     const empty = new Empty();
@@ -212,7 +244,6 @@ export function getArrName(arr, id){
                 label = item.label
             }
         }
-
     })
     return label
 }

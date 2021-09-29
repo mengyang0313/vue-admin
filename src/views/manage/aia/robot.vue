@@ -15,7 +15,7 @@
             >
                 <template>
                     <el-form-item label="区域" prop="areaId">
-                        <el-select v-model="search.areaId" placeholder="请选择">
+                        <el-select v-model="search.areaId" disabled placeholder="请选择">
                             <el-option v-for="item in areaData"
                                        :key="item.value"
                                        :label="item.label"
@@ -36,7 +36,7 @@
                         <el-input v-model="search.robotId" placeholder="机器人主播ID"/>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSearch">筛选</el-button>
+                        <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
                     </el-form-item>
                 </template>
             </el-form>
@@ -56,6 +56,19 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="150" />
+                <el-table-column prop="appStr" label="应用APP" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else-if="scope.row.app.os === 2">
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="avatar" label="头像" align="center" width="150">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
@@ -100,7 +113,7 @@
 import Pagination from '../../../components/Pagination'
 import editRobot from './dialog/edit-robot'
 import showDialog from './dialog/show-dialog'
-import { getBool, getAreaList, getArrName} from "@/utils/dist";
+import {getBool, getAreaList, getArrName, getCurrentUserAreaId, getAppList, getAppName} from "@/utils/dist";
 
 export default {
     components: { Pagination, editRobot, showDialog},
@@ -110,7 +123,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: 1,
+                areaId: getCurrentUserAreaId(),
                 enable: true,
                 robotId: undefined,
                 page: {
@@ -118,11 +131,10 @@ export default {
                     pageSize: 10
                 }
             },
-            // 数据总条数
             total: 0,
-            // 防止多次连续提交表单
             isSubmit: false,
             areaData: getAreaList(),
+            appList: getAppList(),
             bools: getBool()
         }
     },
@@ -139,6 +151,8 @@ export default {
                 const data = []
                 list.forEach((item, index)=>{
                     const json = {
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appList, item.getId()),
                         "anchorId" : item.getAnchorId(),
                         "status" : $this.handleStatus(item.getStatus()),
                         "areaId" : item.getAreaId(),
