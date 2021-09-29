@@ -14,8 +14,8 @@ message Admin {
     string name = 5;
     // 备注
     string note = 6;
-    // 有权限的区域
-    repeated uint32 area_ids = 7;
+    // 绑定的区域
+    uint32 area_id = 7;
     // 有权限的应用
     repeated uint32 app_ids = 8;
     // 有权限的模块

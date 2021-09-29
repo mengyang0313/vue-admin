@@ -511,7 +511,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.pb.Admin.repeatedFields_ = [7,8,9];
+proto.pb.Admin.repeatedFields_ = [8,9];
 
 
 
@@ -550,7 +550,7 @@ proto.pb.Admin.toObject = function(includeInstance, msg) {
     password: jspb.Message.getFieldWithDefault(msg, 4, ""),
     name: jspb.Message.getFieldWithDefault(msg, 5, ""),
     note: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    areaIdsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f,
+    areaId: jspb.Message.getFieldWithDefault(msg, 7, 0),
     appIdsList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
     modulesList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
     loginAt: jspb.Message.getFieldWithDefault(msg, 10, 0),
@@ -620,10 +620,8 @@ proto.pb.Admin.deserializeBinaryFromReader = function(msg, reader) {
       msg.setNote(value);
       break;
     case 7:
-      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
-      for (var i = 0; i < values.length; i++) {
-        msg.addAreaIds(values[i]);
-      }
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAreaId(value);
       break;
     case 8:
       var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
@@ -730,9 +728,9 @@ proto.pb.Admin.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getAreaIdsList();
-  if (f.length > 0) {
-    writer.writePackedUint32(
+  f = message.getAreaId();
+  if (f !== 0) {
+    writer.writeUint32(
       7,
       f
     );
@@ -905,39 +903,20 @@ proto.pb.Admin.prototype.setNote = function(value) {
 
 
 /**
- * repeated uint32 area_ids = 7;
- * @return {!Array<number>}
+ * optional uint32 area_id = 7;
+ * @return {number}
  */
-proto.pb.Admin.prototype.getAreaIdsList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 7));
-};
-
-
-/**
- * @param {!Array<number>} value
- * @return {!proto.pb.Admin} returns this
- */
-proto.pb.Admin.prototype.setAreaIdsList = function(value) {
-  return jspb.Message.setField(this, 7, value || []);
+proto.pb.Admin.prototype.getAreaId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
 
 /**
  * @param {number} value
- * @param {number=} opt_index
  * @return {!proto.pb.Admin} returns this
  */
-proto.pb.Admin.prototype.addAreaIds = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.pb.Admin} returns this
- */
-proto.pb.Admin.prototype.clearAreaIdsList = function() {
-  return this.setAreaIdsList([]);
+proto.pb.Admin.prototype.setAreaId = function(value) {
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 

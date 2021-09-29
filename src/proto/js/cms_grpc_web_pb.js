@@ -4557,5 +4557,85 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveCommodity =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.AgoraKeyRequest,
+ *   !proto.pb.cms.AgoraKeyReply>}
+ */
+const methodDescriptor_CmsSdk_GetAgoraKey = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetAgoraKey',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.AgoraKeyRequest,
+  proto.pb.cms.AgoraKeyReply,
+  /**
+   * @param {!proto.pb.cms.AgoraKeyRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AgoraKeyReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.AgoraKeyRequest,
+ *   !proto.pb.cms.AgoraKeyReply>}
+ */
+const methodInfo_CmsSdk_GetAgoraKey = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.AgoraKeyReply,
+  /**
+   * @param {!proto.pb.cms.AgoraKeyRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.AgoraKeyReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.AgoraKeyRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.AgoraKeyReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.AgoraKeyReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getAgoraKey =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAgoraKey',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAgoraKey,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.AgoraKeyRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.AgoraKeyReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getAgoraKey =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetAgoraKey',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetAgoraKey);
+};
+
+
 module.exports = proto.pb.cms;
 

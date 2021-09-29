@@ -5,20 +5,24 @@ import {cmsService} from "@/grpc/server";
 
 
 export async function initData() {
-    const areaArr = await getAreas()
+    let areaArr = await getAreas()
     sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
 
-    const guildArr = await getGuilds()
+    let guildArr = await getGuilds()
     sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
+    initAsyncData()
+}
 
-    const appArr = await getApps()
-    sessionStorage.setItem("appArr", JSON.stringify(appArr));
-
-    const payChannelArr = await getPayChannel()
-    sessionStorage.setItem("payChannelArr", JSON.stringify(payChannelArr));
-
-    const commodityArr = await getCommodity()
-    sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr));
+export function initAsyncData(){
+    getApps(function (arr){
+        sessionStorage.setItem("appArr", JSON.stringify(arr));
+    })
+    getPayChannel(function(arr){
+        sessionStorage.setItem("payChannelArr", JSON.stringify(arr));
+    })
+    getCommodity(function(){
+            sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr))
+    })
 }
 
 export const getAreas = () => new Promise((resolve, reject) => {
@@ -93,7 +97,7 @@ export function getGuildList() {
 
 
 // 应用列表
-export const getApps = () => new Promise((resolve, reject) => {
+export function getApps(callback) {
     const req = new Empty();
     const metadata = {'token': getToken()};
     cmsService.getAppList(req, metadata, (err, resp) => {
@@ -112,12 +116,12 @@ export const getApps = () => new Promise((resolve, reject) => {
                     arr.push(json)
                 }
             })
-            resolve(arr)
+            callback(arr)
         } else {
             console.log(err)
         }
     })
-})
+}
 export function getAppList() {
     let appArr = sessionStorage.getItem("appArr");
     return JSON.parse(appArr);
@@ -126,7 +130,7 @@ export function getAppList() {
 
 
 // 支付渠道
-export const getPayChannel = () => new Promise((resolve, reject) => {
+export function getPayChannel(callback){
     const req = new PayChannelListRequest();
     const metadata = {'token': getToken()};
     cmsService.getPayChannelList(req, metadata, (err, resp) => {
@@ -142,12 +146,12 @@ export const getPayChannel = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
-            resolve(arr)
+            callback(arr)
         } else {
             console.log(err)
         }
     })
-})
+}
 export function getPayChannelList(areaId) {
     let str = sessionStorage.getItem("payChannelArr");
     let arr = JSON.parse(str);
@@ -163,7 +167,7 @@ export function getPayChannelList(areaId) {
 
 
 // 商品列表
-export const getCommodity = () => new Promise((resolve, reject) => {
+export function getCommodity(callback){
     const req = new CommodityListRequest();
     const metadata = {'token': getToken()};
     cmsService.getCommodityList(req, metadata, (err, resp) => {
@@ -180,12 +184,12 @@ export const getCommodity = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
-            resolve(arr)
+            callback(arr)
         } else {
             console.log(err)
         }
     })
-})
+}
 export function getCommodityList() {
     let str = sessionStorage.getItem("commodityArr");
     let arr = JSON.parse(str);

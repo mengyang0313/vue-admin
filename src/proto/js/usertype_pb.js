@@ -13796,14 +13796,15 @@ proto.pb.Transaction.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, 0),
     appId: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    traderType: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    traderId: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    sourceType: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    sourceId: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    amount: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    balance: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    desc: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 10, 0)
+    areaId: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    traderType: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    traderId: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    sourceType: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    sourceId: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    amount: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    balance: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    desc: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 20, 0)
   };
 
   if (includeInstance) {
@@ -13849,34 +13850,38 @@ proto.pb.Transaction.deserializeBinaryFromReader = function(msg, reader) {
       msg.setAppId(value);
       break;
     case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAreaId(value);
+      break;
+    case 4:
       var value = /** @type {!proto.pb.EntityType} */ (reader.readEnum());
       msg.setTraderType(value);
       break;
-    case 4:
+    case 5:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setTraderId(value);
       break;
-    case 5:
+    case 6:
       var value = /** @type {!proto.pb.EntityType} */ (reader.readEnum());
       msg.setSourceType(value);
       break;
-    case 6:
+    case 7:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setSourceId(value);
       break;
-    case 7:
+    case 8:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setAmount(value);
       break;
-    case 8:
+    case 9:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setBalance(value);
       break;
-    case 9:
+    case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setDesc(value);
       break;
-    case 10:
+    case 20:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setCreatedAt(value);
       break;
@@ -13923,59 +13928,66 @@ proto.pb.Transaction.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getAreaId();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
   f = message.getTraderType();
   if (f !== 0.0) {
     writer.writeEnum(
-      3,
+      4,
       f
     );
   }
   f = message.getTraderId();
   if (f !== 0) {
     writer.writeUint32(
-      4,
+      5,
       f
     );
   }
   f = message.getSourceType();
   if (f !== 0.0) {
     writer.writeEnum(
-      5,
+      6,
       f
     );
   }
   f = message.getSourceId();
   if (f !== 0) {
     writer.writeUint64(
-      6,
+      7,
       f
     );
   }
   f = message.getAmount();
   if (f !== 0) {
     writer.writeInt32(
-      7,
+      8,
       f
     );
   }
   f = message.getBalance();
   if (f !== 0) {
     writer.writeUint32(
-      8,
+      9,
       f
     );
   }
   f = message.getDesc();
   if (f.length > 0) {
     writer.writeString(
-      9,
+      10,
       f
     );
   }
   f = message.getCreatedAt();
   if (f !== 0) {
     writer.writeUint32(
-      10,
+      20,
       f
     );
   }
@@ -14019,11 +14031,29 @@ proto.pb.Transaction.prototype.setAppId = function(value) {
 
 
 /**
- * optional EntityType trader_type = 3;
+ * optional uint32 area_id = 3;
+ * @return {number}
+ */
+proto.pb.Transaction.prototype.getAreaId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Transaction} returns this
+ */
+proto.pb.Transaction.prototype.setAreaId = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional EntityType trader_type = 4;
  * @return {!proto.pb.EntityType}
  */
 proto.pb.Transaction.prototype.getTraderType = function() {
-  return /** @type {!proto.pb.EntityType} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {!proto.pb.EntityType} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
@@ -14032,16 +14062,16 @@ proto.pb.Transaction.prototype.getTraderType = function() {
  * @return {!proto.pb.Transaction} returns this
  */
 proto.pb.Transaction.prototype.setTraderType = function(value) {
-  return jspb.Message.setProto3EnumField(this, 3, value);
+  return jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
 /**
- * optional uint32 trader_id = 4;
+ * optional uint32 trader_id = 5;
  * @return {number}
  */
 proto.pb.Transaction.prototype.getTraderId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
 
@@ -14050,16 +14080,16 @@ proto.pb.Transaction.prototype.getTraderId = function() {
  * @return {!proto.pb.Transaction} returns this
  */
 proto.pb.Transaction.prototype.setTraderId = function(value) {
-  return jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
- * optional EntityType source_type = 5;
+ * optional EntityType source_type = 6;
  * @return {!proto.pb.EntityType}
  */
 proto.pb.Transaction.prototype.getSourceType = function() {
-  return /** @type {!proto.pb.EntityType} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+  return /** @type {!proto.pb.EntityType} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
 
@@ -14068,33 +14098,15 @@ proto.pb.Transaction.prototype.getSourceType = function() {
  * @return {!proto.pb.Transaction} returns this
  */
 proto.pb.Transaction.prototype.setSourceType = function(value) {
-  return jspb.Message.setProto3EnumField(this, 5, value);
+  return jspb.Message.setProto3EnumField(this, 6, value);
 };
 
 
 /**
- * optional uint64 source_id = 6;
+ * optional uint64 source_id = 7;
  * @return {number}
  */
 proto.pb.Transaction.prototype.getSourceId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.pb.Transaction} returns this
- */
-proto.pb.Transaction.prototype.setSourceId = function(value) {
-  return jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-/**
- * optional int32 amount = 7;
- * @return {number}
- */
-proto.pb.Transaction.prototype.getAmount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
@@ -14103,16 +14115,16 @@ proto.pb.Transaction.prototype.getAmount = function() {
  * @param {number} value
  * @return {!proto.pb.Transaction} returns this
  */
-proto.pb.Transaction.prototype.setAmount = function(value) {
+proto.pb.Transaction.prototype.setSourceId = function(value) {
   return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
- * optional uint32 balance = 8;
+ * optional int32 amount = 8;
  * @return {number}
  */
-proto.pb.Transaction.prototype.getBalance = function() {
+proto.pb.Transaction.prototype.getAmount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
@@ -14121,17 +14133,35 @@ proto.pb.Transaction.prototype.getBalance = function() {
  * @param {number} value
  * @return {!proto.pb.Transaction} returns this
  */
-proto.pb.Transaction.prototype.setBalance = function(value) {
+proto.pb.Transaction.prototype.setAmount = function(value) {
   return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
 /**
- * optional string desc = 9;
+ * optional uint32 balance = 9;
+ * @return {number}
+ */
+proto.pb.Transaction.prototype.getBalance = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Transaction} returns this
+ */
+proto.pb.Transaction.prototype.setBalance = function(value) {
+  return jspb.Message.setProto3IntField(this, 9, value);
+};
+
+
+/**
+ * optional string desc = 10;
  * @return {string}
  */
 proto.pb.Transaction.prototype.getDesc = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
 };
 
 
@@ -14140,16 +14170,16 @@ proto.pb.Transaction.prototype.getDesc = function() {
  * @return {!proto.pb.Transaction} returns this
  */
 proto.pb.Transaction.prototype.setDesc = function(value) {
-  return jspb.Message.setProto3StringField(this, 9, value);
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
 /**
- * optional uint32 created_at = 10;
+ * optional uint32 created_at = 20;
  * @return {number}
  */
 proto.pb.Transaction.prototype.getCreatedAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 20, 0));
 };
 
 
@@ -14158,7 +14188,7 @@ proto.pb.Transaction.prototype.getCreatedAt = function() {
  * @return {!proto.pb.Transaction} returns this
  */
 proto.pb.Transaction.prototype.setCreatedAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 20, value);
 };
 
 

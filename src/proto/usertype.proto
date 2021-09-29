@@ -1125,22 +1125,24 @@ message Transaction {
     uint64 id = 1;
     // 应用id
     uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
     // 交易者类型，只能为用户或主播
-    EntityType trader_type = 3;
+    EntityType trader_type = 4;
     // 交易者id
-    uint32 trader_id = 4;
+    uint32 trader_id = 5;
     // 交易实体类型，可以为礼物、通话、支付等
-    EntityType source_type = 5;
+    EntityType source_type = 6;
     // 交易实体id
-    uint64 source_id = 6;
+    uint64 source_id = 7;
     // 金额，正数为增加，负数为消费
-    int32 amount = 7;
+    int32 amount = 8;
     // 交易完成之后交易者余额
-    uint32 balance = 8;
+    uint32 balance = 9;
     // 描述
-    string desc = 9;
+    string desc = 10;
 
-    uint32 created_at = 10;
+    uint32 created_at = 20;
 }
 
 // 文件分片
