@@ -15,7 +15,7 @@
             >
                 <template>
                     <el-form-item label="区域" prop="areaId">
-                        <el-select v-model="search.areaId" disabled placeholder="请选择">
+                        <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                             <el-option v-for="item in areaData"
                                        :key="item.value"
                                        :label="item.label"
@@ -113,7 +113,15 @@
 import Pagination from '../../../components/Pagination'
 import editRobot from './dialog/edit-robot'
 import showDialog from './dialog/show-dialog'
-import {getBool, getAreaList, getArrName, getCurrentUserAreaId, getAppList, getAppName} from "@/utils/dist";
+import {
+    getBool,
+    getAreaList,
+    getArrName,
+    getCurrentUserAreaId,
+    getAppList,
+    getAppName,
+    getAreaListByAreaId
+} from "@/utils/dist";
 
 export default {
     components: { Pagination, editRobot, showDialog},
@@ -132,9 +140,10 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isSubmit: false,
             areaData: getAreaList(),
-            appList: getAppList(),
+            appList: [],
             bools: getBool()
         }
     },
@@ -152,7 +161,7 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "anchorId" : item.getAnchorId(),
                         "status" : $this.handleStatus(item.getStatus()),
                         "areaId" : item.getAreaId(),

@@ -11,7 +11,7 @@
                         class="search-form"
                     >
                         <el-form-item label="区域">
-                            <el-select v-model="search.areaId" placeholder="请选择">
+                            <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                                 <el-option v-for="item in areaList"
                                            :key="item.value"
                                            :label="item.label"
@@ -57,7 +57,7 @@ import CountTo from 'vue-count-to'
 import ChartsBarLine from '../../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../../components/Charts/ChartsBar'
 import ChartsLine from '../../../components/Charts/ChartsLine'
-import {getAreaList} from "@/utils/dist";
+import {getAreaList, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
     name: 'Home',
@@ -65,7 +65,7 @@ export default {
     data() {
         return {
             search: {
-                areaId: 1
+                areaId: getCurrentUserAreaId()
             },
             areaList: getAreaList(),
             expenseData: {

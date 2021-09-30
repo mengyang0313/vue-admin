@@ -17,7 +17,7 @@
                 class="search-form"
             >
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -139,6 +139,7 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             isHints: true,
             areaList: getAreaList(),
@@ -147,6 +148,8 @@ export default {
         }
     },
     created() {
+        this.search.areaId = this.search.areaId === 0 ? this.areaList[1].value : this.search.areaId
+        this.search.appId = typeof(this.search.appId) == "undefined" ? this.appList[1].value : this.search.appId
         this.changeArea(this.search.areaId)
         this.fetchData()
     },
@@ -175,7 +178,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getAppId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "enable" : item.getEnable(),
@@ -226,7 +229,7 @@ export default {
             this.$refs.searchForm.resetFields()
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAreaListByAreaId(val, true)
         }
     }
 }

@@ -43,7 +43,7 @@
                                 </el-col>
                             </el-form-item>
                             <el-form-item label="区域" prop="areaId">
-                                <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
+                                <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -175,6 +175,7 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaData: getAreaList(),
             appList: getAppList(),
@@ -254,7 +255,7 @@ export default {
             let name = "";
             this.commodityList.forEach(item => {
                 if(item.value === commodityId){
-                    name = item.name
+                    name = isEmpty(item.name) ? item.label : item.name
                 }
             })
             return name
@@ -269,7 +270,7 @@ export default {
             return name
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAreaListByAreaId(val, true)
         }
     }
 }

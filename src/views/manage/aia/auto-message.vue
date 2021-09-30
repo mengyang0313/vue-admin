@@ -16,7 +16,7 @@
             >
                 <template>
                     <el-form-item label="区域" prop="areaId">
-                        <el-select v-model="search.areaId" disabled placeholder="请选择">
+                        <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                             <el-option v-for="item in areaData"
                                        :key="item.value"
                                        :label="item.label"
@@ -120,6 +120,7 @@ export default {
             },
             // 数据总条数
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             // 多选数据暂存数组
             multipleSelection: [],
             areaData: getAreaList(),

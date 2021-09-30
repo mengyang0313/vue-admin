@@ -55,7 +55,7 @@
 import Pagination from '../../../components/Pagination'
 import addRobotDynamic from './dialog/add-robot-dynamic'
 import Hints from '../../../components/Hints'
-import {getArrName, getAreaList, getAppList, getReviewStatus} from "@/utils/dist";
+import {getArrName, getAreaList, getAppList, getReviewStatus, getAppName, getAreaListByAreaId} from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
 
@@ -80,7 +80,7 @@ export default {
             multipleSelection: [],
             formVisible: false,
             areaList: getAreaList(),
-            appList: getAppList()
+            appList: []
         }
     },
     created() {
@@ -107,7 +107,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "appStr" : getArrName($this.appList, item.getAreaId()),
+                        "appStr" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "entityType" : item.getEntityType(),

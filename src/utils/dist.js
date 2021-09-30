@@ -2,7 +2,6 @@ import {Empty} from "@/proto/js/usertype_pb";
 import {PayChannelListRequest, CommodityListRequest} from "@/proto/js/cms_pb";
 import {getToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
-import {toTime} from "@/utils/date";
 
 
 export async function initData() {
@@ -11,6 +10,10 @@ export async function initData() {
 
     let guildArr = await getGuilds()
     sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
+
+    let currentUser = await initCurrentUserInfo()
+    sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
+
     initAsyncData()
 }
 
@@ -24,12 +27,10 @@ export function initAsyncData(){
     getCommodity(function(arr){
             sessionStorage.setItem("commodityArr", JSON.stringify(arr))
     })
-    initCurrentUserInfo(function(json){
-        sessionStorage.setItem("currentUser", JSON.stringify(json))
-    })
+
 }
 
-export function initCurrentUserInfo(callback){
+export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
     const req = new Empty();
     const metadata = {'token': getToken()};
     cmsService.getAdminInfo(req, metadata, (err, resp) => {
@@ -40,12 +41,12 @@ export function initCurrentUserInfo(callback){
                 areaId : resp.getAreaId(),
                 appIds : resp.getAppIdsList()
             }
-            callback(json)
+            resolve(json)
         } else {
             console.log(err)
         }
     })
-}
+})
 export function getCurrentUserAreaId(){
     try{
         let json = sessionStorage.getItem("currentUser");
@@ -79,17 +80,27 @@ export const getAreas = () => new Promise((resolve, reject) => {
 })
 export function getAreaList() {
     let areaArr = sessionStorage.getItem("areaArr");
-    return JSON.parse(areaArr);
+    let arr = JSON.parse(areaArr)
+    arr.unshift({
+        label: "全部",
+        value: 0
+    })
+    return arr;
 }
 
-export function getAreaListByAreaId(val){
-    let apps = getAppList()
+export function getAreaListByAreaId(val, isFilter){
+    let apps = getAppList(isFilter)
+
     let newApps = []
-    apps.forEach(item => {
-        if(item.areaIds.indexOf(val) >= 0){
-            newApps.push(item)
-        }
-    })
+    if(val === 0){
+        newApps = apps
+    }else{
+        apps.forEach(item => {
+            if(item.areaIds.indexOf(val) >= 0){
+                newApps.push(item)
+            }
+        })
+    }
     newApps.unshift({
         isAnchor: false,
         label: "全部",
@@ -144,9 +155,7 @@ export function getApps(callback) {
                     isAnchor: item.getIsAnchor(),
                     areaIds: item.getAreaIdsList()
                 }
-                if(!item.getIsAnchor()){
-                    arr.push(json)
-                }
+                arr.push(json)
             })
             callback(arr)
         } else {
@@ -154,9 +163,20 @@ export function getApps(callback) {
         }
     })
 }
-export function getAppList() {
+export function getAppList(isFilter) {
     let appArr = sessionStorage.getItem("appArr");
-    return JSON.parse(appArr);
+    let arr = JSON.parse(appArr)
+    if(isFilter){
+        let result = []
+        arr.forEach(item => {
+            if(!item.isAnchor){
+                result.push(item)
+            }
+        })
+        return result
+    }else{
+        return arr
+    }
 }
 
 

@@ -13,7 +13,7 @@
                     <el-input v-model="search.anchorId" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="区域">
-                    <el-select v-model="search.areaId" placeholder="请选择" disabled @change="changeArea">
+                    <el-select v-model="search.areaId" placeholder="请选择" :disabled="authAreaId !== 0" @change="changeArea">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -130,6 +130,7 @@ export default {
             },
             // 数据总条数
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             // 表格数据数组
             tableData: [],
             // 多选数据暂存数组

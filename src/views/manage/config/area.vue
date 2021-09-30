@@ -14,7 +14,7 @@
                 class="search-form"
             >
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -144,10 +144,11 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             tableData: [],
             isCollapse: true,
             areaList: getAreaList(),
-            appList: getAppList(),
+            appList: [],
             payType: getPayType()
         }
     },
@@ -168,7 +169,7 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getAppId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "convertRate" : item.getConvertRate(),
                         "depositCommission" : item.getDepositCommission(),
                         "rewardCommission" : item.getRewardCommission(),
@@ -268,7 +269,7 @@ export default {
             return json
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAreaListByAreaId(val, true)
         }
     }
 }

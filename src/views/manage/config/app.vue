@@ -14,7 +14,7 @@
                 class="search-form"
             >
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" disabled placeholder="请选择">
+                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -57,7 +57,7 @@
                 </el-table-column>
                 <el-table-column prop="isAnchor" label="是否为主播端" align="center" width="120">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.isAnchor" disabled/>
+                        <el-switch v-model="scope.row.isAnchor" :disabled="authAreaId !== 0"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaNames" label="启用的区域" align="center" width="120" />
@@ -96,7 +96,7 @@ import addApp from './dialog/addApp'
 import addPay from './dialog/addPayChannel'
 import version from './dialog/version'
 import commodityConfig from './dialog/commodityConfig'
-import {getAreaList, getAppList, getPayType, getAppName, getCurrentUserAreaId} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getAppName, getCurrentUserAreaId, getAreaListByAreaId} from "@/utils/dist";
 
 export default {
     components: { Pagination, imageShow, addPay, version, commodityConfig, addApp },
@@ -111,10 +111,11 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaList: getAreaList(),
             payTypeList: getPayType(),
-            appList: getAppList()
+            appList: []
         }
     },
     created() {
@@ -131,7 +132,7 @@ export default {
                 list.forEach((item, index) => {
                     const json = {
                         "id" : item.getId(),
-                        "app" : getAppName($this.appList, item.getId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getId()),
                         "appKey" : item.getAppKey(),
                         "enable" : item.getEnable(),
                         "title" : item.getTitle(),
@@ -175,6 +176,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changeArea(val){
+            this.appList = getAreaListByAreaId(val, true)
         }
     }
 }

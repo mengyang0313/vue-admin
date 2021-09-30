@@ -27,7 +27,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" disabled placeholder="请选择">
+                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -113,7 +113,7 @@
                             <span v-if="scope.row.app.os === 1">
                                 <i class="icon-android-fill"></i>
                             </span>
-                            <span v-else>
+                            <span v-else-if="scope.row.app.os === 2">
                                 <i class="icon-pingguo"></i>
                             </span>
                         </div>
@@ -276,6 +276,7 @@ export default {
             },
             // 数据总条数
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             // 表格数据数组
             tableData: [],
             // 多选数据暂存数组
@@ -287,7 +288,8 @@ export default {
             reviewStatus: getReviewStatus(),
             onlineStatus: getOnlineStatus(),
             blockStatusList : getBlockStatus(),
-            appList: getAppList()
+            appList: getAppList(true),
+            appListAll: getAppList(false)
         }
     },
     created() {
@@ -305,7 +307,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getAppId()),
+                        "app" : getAppName($this.appListAll, item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaName" : getArrName($this.areaData, item.getAreaId()),
                         "country" : item.getCountry(),

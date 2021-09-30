@@ -23,7 +23,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="区域">
-                        <el-select v-model="search.areaId" placeholder="请选择">
+                        <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                             <el-option v-for="item in areaList"
                                        :key="item.value"
                                        :label="item.label"
@@ -83,7 +83,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAnchorLevel, getArrName } from "@/utils/dist";
+import {getAreaList, getAnchorLevel, getArrName, getCurrentUserAreaId} from "@/utils/dist";
 import {toDate} from "@/utils/date";
 
 
@@ -93,7 +93,7 @@ export default {
         return {
             listLoading: true,
             search: {
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 level: undefined,
                 anchorId: undefined,
                 settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
@@ -103,6 +103,7 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isSubmit: false,
             activeIndex: 1,
             areaList: getAreaList(),

@@ -22,7 +22,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域">
-                    <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -178,9 +178,10 @@ export default {
             },
             // 数据总条数
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaData: getAreaList(),
-            appList: getAppList(),
+            appList: [],
             messageTypeList: getMessageType()
         }
     },
@@ -200,7 +201,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getAppId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "userId" : item.getUserId(),
                         "direction" : item.getDirection(),
                         "directionStr" : item.getDirection() === 1 ? "<--" : "-->",
@@ -252,7 +253,7 @@ export default {
             })
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAreaListByAreaId(val, true)
         }
     }
 }

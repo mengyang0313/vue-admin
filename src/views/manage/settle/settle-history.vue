@@ -22,7 +22,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" disabled placeholder="请选择">
+                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -139,6 +139,7 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             // 导出文件格式
             filesFormat: '.txt, .csv, .xls, .xlsx',
             // 导出数据 弹出框显示/隐藏

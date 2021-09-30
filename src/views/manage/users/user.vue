@@ -16,7 +16,7 @@
                     <el-input v-model="search.nickname" placeholder="用户名"/>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" placeholder="请选择" disabled>
+                    <el-select v-model="search.areaId" placeholder="请选择" :disabled="authAreaId !== 0">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -181,7 +181,7 @@ import {
     getBlockStatus,
     getAppName,
     getGenderType,
-    getCurrentUserAreaId
+    getCurrentUserAreaId, getAreaListByAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
@@ -205,10 +205,10 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaData: getAreaList(),
-            boolDict: getBool(),
-            appList: getAppList()
+            boolDict: getBool()
         }
     },
     created() {
@@ -225,7 +225,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getAppId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "osType" : item.getOsType(),

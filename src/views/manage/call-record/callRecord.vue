@@ -16,7 +16,7 @@
                     <el-input v-model="search.anchorId" placeholder="主播id"/>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" @change="changeArea" disabled placeholder="请选择">
+                    <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -197,9 +197,10 @@ export default {
                 }
             },
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaData: getAreaList(),
-            appList: getAppList(),
+            appList: [],
             callTypeList : getCallType(),
             hangTypeList : getHangType(),
             callStatusList : getCallStatus()
@@ -221,7 +222,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getAppId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "userId" : item.getUserId(),
@@ -266,7 +267,7 @@ export default {
             this.search.page.pageSize = msg.limit
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAreaListByAreaId(val, true)
         }
     }
 }

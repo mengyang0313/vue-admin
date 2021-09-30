@@ -40,7 +40,7 @@
                         </template>
                         <div>
                             <el-form-item label="区域" prop="areaId">
-                                <el-select v-model="search.areaId" @change="changeArea" placeholder="请选择">
+                                <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                                     <el-option v-for="item in areaData"
                                                :key="item.value"
                                                :label="item.label"
@@ -125,13 +125,11 @@
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import {
-    getAppList,
     getAreaList,
-    getArrName,
     getAppName,
     getSourceType,
     getTraderType,
-    getAreaListByAreaId
+    getAreaListByAreaId, getCurrentUserAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
@@ -143,7 +141,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: undefined,
+                areaId: getCurrentUserAreaId(),
                 appId: undefined,
                 traderType: 0,
                 traderId: undefined,
@@ -157,14 +155,16 @@ export default {
             },
             // 数据总条数
             total: 0,
+            authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaData: getAreaList(),
-            appList: getAppList(),
+            appList: [],
             traderTypeList : getTraderType(),
             sourceTypeList : getSourceType(),
         }
     },
     created() {
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     methods: {
@@ -179,7 +179,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName($this.appList, item.getAppId()),
+                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
                         "traderType" : getTraderType(item.getTraderType()),
                         "traderId" : item.getTraderId(),
                         "sourceType" : getSourceType(item.getSourceType()),
@@ -216,7 +216,7 @@ export default {
             this.search.page.pageSize = msg.limit
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAreaListByAreaId(val, true)
         }
     }
 }
