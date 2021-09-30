@@ -148,7 +148,7 @@ export default {
         }
     },
     created() {
-        this.search.areaId = this.search.areaId === 0 ? this.areaList[1].value : this.search.areaId
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
         this.search.appId = typeof(this.search.appId) == "undefined" ? this.appList[1].value : this.search.appId
         this.changeArea(this.search.areaId)
         this.fetchData()

@@ -3,7 +3,7 @@
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" disabled placeholder="请选择">
+                    <el-select v-model="form.areaId"  :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -187,6 +187,7 @@ export default {
             avatarDialog: false,
             photoDialog: false,
             videoDialog: false,
+            authAreaId: getCurrentUserAreaId(),
             areaData: getAreaList(),
             occupationTypes: getOccupationType(),
             appList: getAppList(),

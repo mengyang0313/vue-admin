@@ -12,7 +12,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.appId" placeholder="请选择">
+                    <el-select v-model="form.appId"  :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in appList"
                                    :key="item.value"
                                    :label="item.label"
@@ -118,6 +118,7 @@ export default {
             },
             dialogVisible: false,
             title: '新增商品',
+            authAreaId: getCurrentUserAreaId(),
             iconArr: [],
             iconDialog: false,
             areaList: getAreaList(),

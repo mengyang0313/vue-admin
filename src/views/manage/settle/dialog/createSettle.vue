@@ -8,7 +8,7 @@
             label-width="100px"
         >
             <el-form-item label="区域" prop="areaId">
-                <el-select v-model="search.areaId" disabled placeholder="请选择">
+                <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                     <el-option v-for="item in areaList"
                                :key="item.value"
                                :label="item.label"
@@ -39,6 +39,7 @@ export default {
     data() {
         return {
             dialogVisible: false,
+            authAreaId: getCurrentUserAreaId(),
             search: {
                 areaId: getCurrentUserAreaId(),
                 settleAtTime: new Date(new Date().format('yyyy-MM-dd')),

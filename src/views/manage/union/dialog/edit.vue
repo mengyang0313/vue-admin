@@ -6,7 +6,7 @@
                     <el-input v-model="form.name" placeholder="请输入" />
                 </el-form-item>
                 <el-form-item label="工会区域" prop="areaId">
-                    <el-select v-model="form.areaId" disabled placeholder="请选择">
+                    <el-select v-model="form.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option
                             v-for="item in areaData"
                                    :key="item.value"
@@ -56,6 +56,7 @@ export default {
                 note: ''
             },
             title: '',
+            authAreaId: getCurrentUserAreaId(),
             dialogVisible: false,
             boolDict: getBool(),
             areaData : getAreaList(),

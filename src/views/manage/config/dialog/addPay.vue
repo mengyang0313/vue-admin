@@ -4,7 +4,7 @@
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
 
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" disabled placeholder="请选择">
+                    <el-select v-model="form.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -64,6 +64,7 @@ export default {
             dialogVisible: false,
             title: '新增支付参数',
             iconArr: [],
+            authAreaId: getCurrentUserAreaId(),
             iconDialog: false,
             isAppIdHidden: true,
             isAppSecretHidden: true,

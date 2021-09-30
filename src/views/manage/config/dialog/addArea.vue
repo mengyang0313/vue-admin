@@ -3,7 +3,7 @@
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" @change="changeArea" disabled placeholder="请选择">
+                    <el-select v-model="form.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -129,6 +129,7 @@ export default {
             payTypeList: getPayType(),
             payChannelList: [],
             isPayChannel: true,
+            authAreaId: getCurrentUserAreaId(),
             rules: {
                 convertRate: [
                     {required: true, message: '内容不能为空', trigger: 'change'}

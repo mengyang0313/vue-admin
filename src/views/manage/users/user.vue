@@ -117,7 +117,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="signature" label="签名" align="center" width="120" />
+                <el-table-column prop="signature" label="签名" :show-overflow-tooltip="true" align="center" width="120" />
                 <el-table-column prop="occupation" label="职业" align="center" width="120" />
                 <el-table-column prop="vipEndAt" label="vip到期时间" align="center" width="180"/>
                 <el-table-column prop="expense" label="消费金额" align="center" width="120"/>

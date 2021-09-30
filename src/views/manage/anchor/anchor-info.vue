@@ -135,7 +135,7 @@
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
-                        <imageShow :data="[scope.row.avatar]" :max-show="1"/>
+                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="reviewStatus" label="账户状态" align="center" width="120">

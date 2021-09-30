@@ -92,6 +92,7 @@ export default {
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
         this.fetchData()
     },
     methods: {
