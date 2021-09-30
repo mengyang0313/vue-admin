@@ -88,6 +88,11 @@
                 </el-table-column>
                 <el-table-column prop="amount" label="充值数量" align="center" width="120" />
                 <el-table-column prop="bonus" label="奖励数量" align="center" width="120" />
+                <el-table-column prop="isFirstReward" label="是否首次双倍" align="center" width="120">
+                    <template slot-scope="scope">
+                        <el-switch v-model="scope.row.isFirstReward" disabled/>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="vipDays" label="vip天数" align="center" width="120" />
                 <el-table-column prop="sort" label="排序" align="center" width="120" />
                 <el-table-column label="操作" align="center" width="180" fixed="right">

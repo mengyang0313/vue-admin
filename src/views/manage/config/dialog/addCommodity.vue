@@ -82,6 +82,9 @@
                 <el-form-item label="是否启用" prop="enable">
                     <el-switch v-model="form.enable"/>
                 </el-form-item>
+                <el-form-item label="是否首次双倍" prop="isFirstReward">
+                    <el-switch v-model="form.isFirstReward"/>
+                </el-form-item>
                 <el-form-item label="是否为订阅" prop="isSubscription">
                     <el-switch v-model="form.isSubscription"/>
                 </el-form-item>

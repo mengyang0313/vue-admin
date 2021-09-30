@@ -171,6 +171,8 @@ export default {
                 this.form = row
                 if(typeof(row.tags) !== "undefined"){
                     this.form.tagList = row.tags.split(",")
+                }else{
+                    this.form.tagList = []
                 }
                 if(isEmpty(row.payTypes)){
                     this.form.payTypes = []

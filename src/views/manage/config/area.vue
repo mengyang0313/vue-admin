@@ -220,7 +220,7 @@ export default {
         handlePayType(arr) {
             let data = []
             getPayType().forEach(item => {
-                if(arr.indexOf(item.value)){
+                if(arr.indexOf(item.value) >= 0){
                     data.push(item.label)
                 }
             })

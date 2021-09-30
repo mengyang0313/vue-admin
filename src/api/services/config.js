@@ -290,6 +290,7 @@ export default class {
         req.setVipDays(param.vipDays)
         req.setSort(param.sort)
         req.setIsSubscription(param.isSubscription)
+        req.setIsFirstReward(param.isFirstReward)
 
         const metadata = {'token': getToken()};
         this.client.saveCommodity(req, metadata, (err, resp) => {
