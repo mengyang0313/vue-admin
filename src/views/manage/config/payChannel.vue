@@ -105,7 +105,7 @@ export default {
             total: 0,
             authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             payTypeList: getPayType()
         }
     },

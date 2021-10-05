@@ -56,7 +56,7 @@ export default {
                 enable: false
             },
             dialogVisible: false,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             actionTypes: getActionType(),
 
         }

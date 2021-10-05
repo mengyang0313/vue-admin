@@ -78,7 +78,7 @@ export default {
             playVisible: false,
             dialogVisible: false,
             appList: getAppList(),
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             fileTypeList: getFileType()
         }
     },

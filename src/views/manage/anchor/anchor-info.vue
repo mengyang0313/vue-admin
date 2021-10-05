@@ -219,7 +219,7 @@ export default {
             activeIndex: '1',
             profilesTableData: {},
             appList: getAppList(),
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             guildList: getGuildList()
         }
     },

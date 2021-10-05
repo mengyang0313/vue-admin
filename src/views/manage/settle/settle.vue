@@ -159,7 +159,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             records : undefined,
             submitLoading: false,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: getAppList(),
             guildList: getGuildList(),
             statusList: getSettleStatus(),

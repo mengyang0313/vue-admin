@@ -122,7 +122,7 @@ export default {
                 startAt: undefined,
                 endAt: undefined
             },
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: getAppList(),
             cardInfoData: [],
             incomeData: {

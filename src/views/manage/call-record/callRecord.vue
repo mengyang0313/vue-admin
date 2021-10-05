@@ -199,7 +199,7 @@ export default {
             total: 0,
             authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             appList: [],
             callTypeList : getCallType(),
             hangTypeList : getHangType(),

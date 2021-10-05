@@ -67,7 +67,7 @@ export default {
             search: {
                 areaId: getCurrentUserAreaId()
             },
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             userData: {
                 title: '实时用户',
                 legend: ['在线用户', '新用户', '付费用户', '空闲主播', '通话主播'],

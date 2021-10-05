@@ -124,7 +124,7 @@ export default {
             inputVisible: false,
             title: '新增区域',
             inputValue: '',
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: [],
             payTypeList: getPayType(),
             payChannelList: [],

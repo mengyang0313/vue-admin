@@ -68,7 +68,7 @@ export default {
             iconDialog: false,
             isAppIdHidden: true,
             isAppSecretHidden: true,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: getAppList(),
             osTypeList: getOsType(),
             payTypeList: getPayType(),

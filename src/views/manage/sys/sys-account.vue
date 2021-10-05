@@ -85,7 +85,7 @@ export default {
             },
             total: 0,
             isSubmit: false,
-            areaList : getAreaList(),
+            areaList : getAreaList(true),
         }
     },
     created() {

@@ -63,7 +63,7 @@ export default {
             value1: [1, 5],
             value2: [1, 5],
             dialogVisible: false,
-            areaList : getAreaList(),
+            areaList : getAreaList(true),
             rules: {
                 areaId: [
                     {required: true, message: '请选择', trigger: 'blur'}

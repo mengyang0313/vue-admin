@@ -84,7 +84,7 @@ export default {
             iconArr: [],
             iconDialog: false,
             isHiddenAppKey: true,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: getAppList(),
             osTypeList: getOsType(),
             payTypeList: getPayType(),

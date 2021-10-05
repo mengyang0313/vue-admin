@@ -109,7 +109,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             isHints: true,
             isCollapse: true,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             payTypeList: getPayType()
         }
     },

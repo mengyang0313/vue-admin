@@ -79,7 +79,7 @@ export default {
             tableData: [],
             multipleSelection: [],
             formVisible: false,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: []
         }
     },

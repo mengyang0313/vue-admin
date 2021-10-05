@@ -67,7 +67,7 @@ export default {
             search: {
                 areaId: getCurrentUserAreaId()
             },
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             expenseData: {
                 title: '实时消耗',
                 legend: ['全部用户'],

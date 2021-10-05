@@ -59,7 +59,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             dialogVisible: false,
             boolDict: getBool(),
-            areaData : getAreaList(),
+            areaData : getAreaList(true),
             rules: {
                 areaId: [
                     {required: true, message: '请选择', trigger: 'change'}

@@ -138,7 +138,7 @@ export default {
             // 数据总条数
             total: 0,
             isCollapse: true,
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             reportedTypes: getReportedTypes(),
             reportedTimes: getReportedTime(),
             violationScenes: getViolationScene()

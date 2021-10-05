@@ -117,7 +117,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             // 多选数据暂存数组
             multipleSelection: [],
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             bools: getBool(),
             actionTypes: getActionType()
         }

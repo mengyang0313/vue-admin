@@ -106,7 +106,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             isSubmit: false,
             activeIndex: 1,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             levelList: getAnchorLevel()
         }
     },

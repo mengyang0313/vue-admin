@@ -135,7 +135,7 @@ export default {
             tableData: [],
             // 多选数据暂存数组
             multipleSelection: [],
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             reviewStatus: getReviewStatus(),
             occupationList: getOccupationType(),
             genderList: getGenderType()

@@ -50,7 +50,7 @@ export default {
                     {required: true, message: '不能为空', trigger: 'change'}
                 ]
             },
-            areaList: getAreaList()
+            areaList: getAreaList(true)
         }
     },
     methods: {

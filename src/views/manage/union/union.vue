@@ -103,7 +103,7 @@ export default {
             total: 0,
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData : getAreaList(),
+            areaData : getAreaList(true),
             boolDict : getBool()
         }
     },

@@ -136,7 +136,7 @@ export default {
             total: 0,
             authAreaId: getCurrentUserAreaId(),
             isSubmit: false,
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             appList: [],
             bools: getBool()
         }

@@ -282,7 +282,7 @@ export default {
             // 多选数据暂存数组
             multipleSelection: [],
             isCollapse: true,
-            areaData: getAreaList(false),
+            areaData: getAreaList(true),
             guildList: [],
             anchorLevel: getAnchorLevel(),
             reviewStatus: getReviewStatus(),

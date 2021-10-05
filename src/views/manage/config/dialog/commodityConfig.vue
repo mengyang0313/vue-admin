@@ -21,7 +21,7 @@ export default {
     methods: {
         init(row){
             let arr = []
-            getAreaList().forEach(item => {
+            getAreaList(true).forEach(item => {
                 if(row.areaIds.indexOf(item.value) >= 0){
                     arr.push(item)
                 }

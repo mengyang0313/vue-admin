@@ -146,7 +146,7 @@ export default {
             exportVisible: false,
             isCollapse: true,
             submitLoading: false,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: getAppList(),
             guildList: getGuildList(),
             statusList: getSettleStatus()

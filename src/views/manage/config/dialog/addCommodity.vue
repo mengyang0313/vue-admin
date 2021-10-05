@@ -124,7 +124,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             iconArr: [],
             iconDialog: false,
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: getAppList(),
             rules: {
                 appId: [

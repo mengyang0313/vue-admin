@@ -177,7 +177,7 @@ export default {
             photoDialog: false,
             videoDialog: false,
             authAreaId: getCurrentUserAreaId(),
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             occupationTypes: getOccupationType(),
             appList: getAppList(),
             avatarArr: [],

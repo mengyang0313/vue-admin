@@ -115,7 +115,7 @@ export default {
             dialogVisible: false,
             imgDialogVisible: false,
             messageTypes : getMessageType(),
-            areaList: getAreaList(),
+            areaList: getAreaList(true),
             appList: getAppList()
         }
     },

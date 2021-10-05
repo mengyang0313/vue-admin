@@ -90,7 +90,7 @@ export default {
             tableData: {},
             total: 0,
             dialogVisible: false,
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             appList: getAppList(),
             messageTypeList: getMessageType()
         }

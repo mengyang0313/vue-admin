@@ -61,7 +61,7 @@ export default {
     data() {
         return {
             form: {},
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             anchorLevel: getAnchorLevel(),
             guildList: getGuildList(),
             dialogVisible: false

@@ -66,7 +66,7 @@ export default {
             uidDisabled: true,
             dialogVisible: false,
             anchorLevel: getAnchorLevel(),
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             guildList: [],
             rules: {
                 anchorId: [

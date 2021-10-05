@@ -95,7 +95,7 @@ export default {
             multipleSelection: [],
             // 防止多次连续提交表单
             isSubmit: false,
-            areaData: getAreaList(),
+            areaData: getAreaList(true),
             reviewStatus: getReviewStatus()
         }
     },
