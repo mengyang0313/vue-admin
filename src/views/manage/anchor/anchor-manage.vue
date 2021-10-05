@@ -235,7 +235,7 @@ import {
     getAnchorLevel,
     getOnlineStatus,
     getReviewStatus,
-    getGuildList, getArrName, getAppList, getBlockStatus, getAppName, getCurrentUserAreaId
+    getGuildList, getArrName, getAppList, getBlockStatus, getAppName, getCurrentUserAreaId, getGuildListByAreaId
 } from "@/utils/dist";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
@@ -282,8 +282,8 @@ export default {
             // 多选数据暂存数组
             multipleSelection: [],
             isCollapse: true,
-            areaData: getAreaList(),
-            guildList: getGuildList(),
+            areaData: getAreaList(false),
+            guildList: [],
             anchorLevel: getAnchorLevel(),
             reviewStatus: getReviewStatus(),
             onlineStatus: getOnlineStatus(),
@@ -293,6 +293,7 @@ export default {
         }
     },
     created() {
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     methods: {
@@ -453,6 +454,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changeArea(val){
+            this.guildList = getGuildListByAreaId(val, false)
         }
     }
 }

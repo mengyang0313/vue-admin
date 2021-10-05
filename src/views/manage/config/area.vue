@@ -125,7 +125,7 @@ import {
     getAppList,
     getArrName,
     getPayType,
-    getAreaListByAreaId,
+    getAppListByAreaId,
     getAppName,
     getCurrentUserAreaId
 } from "@/utils/dist";
@@ -170,7 +170,7 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "appId" : item.getAppId(),
-                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
+                        "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "convertRate" : item.getConvertRate(),
                         "depositCommission" : item.getDepositCommission(),
                         "rewardCommission" : item.getRewardCommission(),
@@ -270,7 +270,7 @@ export default {
             return json
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true)
         }
     }
 }

@@ -57,8 +57,8 @@
                     <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
                 </el-form-item>
 
-                <el-form-item label="出生日期" prop="birthday">
-                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birthday" style="width: 35%;"></el-date-picker>
+                <el-form-item label="出生日期" prop="birthdayStr">
+                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birthdayStr" style="width: 35%;"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="职业" prop="occupation">
                     <el-select v-model="form.occupation" placeholder="请选择">
@@ -72,7 +72,7 @@
                 <el-form-item label="经常在线" prop="onlineStart">
                     <el-time-select
                         placeholder="起始时间"
-                        v-model="form.onlineStart"
+                        v-model="form.onlineStartStr"
                         :picker-options="{
                           start: '00:00',
                           step: '01:00',
@@ -81,12 +81,12 @@
                     </el-time-select>
                     <el-time-select
                         placeholder="结束时间"
-                        v-model="form.onlineEnd"
+                        v-model="form.onlineEndStr"
                         :picker-options="{
                           start: '01:00',
                           step: '01:00',
                           end: '24:00',
-                          minTime: form.onlineStart
+                          minTime: form.onlineStartStr
                         }">
                     </el-time-select>
                 </el-form-item>
@@ -151,7 +151,7 @@ import {
     getOccupationType,
     getAppList,
     getCurrentUserAreaId,
-    getAreaListByAreaId,
+    getAppListByAreaId,
     getPayChannelList
 } from "@/utils/dist";
 import axios from "axios";
@@ -162,24 +162,13 @@ export default {
     data() {
         return {
             form: {
-                id: 0,
-                anchorId: 0,
-                nickname: '',
-                avatar: '',
                 areaId: getCurrentUserAreaId(),
-                appId: '',
-                birthday: '',
-                occupation: '',
-                onlineStart: '',
-                onlineEnd: '',
-                signature: '',
                 photoIds: [],
                 photos: [],
                 photoUris: [],
                 videoIds: [],
                 videos: [],
-                status: true,
-                struct: ''
+                status: true
             },
             title: '新增机器人',
             dialogImageUrl: '',
@@ -207,9 +196,9 @@ export default {
             if(typeof(row.anchorId) != "undefined"){
                 this.title = "编辑机器人"
                 this.form = row
-                this.form.birthday = row.birthday * 1000;
-                this.form.onlineStart = row.onlineStart + ":00";
-                this.form.onlineEnd = row.onlineEnd + ":00";
+                this.form.birthdayStr = row.birthday * 1000;
+                this.form.onlineStartStr = row.onlineStart + ":00";
+                this.form.onlineEndStr = row.onlineEnd + ":00";
                 this.avatarArr.push({"url": row.avatar});
                 this.form.photoUris = []
                 this.form.photos.forEach((item) => {
@@ -227,10 +216,10 @@ export default {
             const $this = this
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    let param = this.form;
-                    param.onlineStart = parseInt(this.form.onlineStart.split(":")[0])
-                    param.onlineEnd = parseInt(this.form.onlineEnd.split(":")[0])
-                    param.birthday = this.form.birthday / 1000
+                    let param = this.form
+                    param.onlineStart = parseInt(this.form.onlineStartStr.split(":")[0])
+                    param.onlineEnd = parseInt(this.form.onlineEndStr.split(":")[0])
+                    param.birthday = param.birthdayStr.getTime() / 1000
                     param.status = this.form.status ? 5 : 6
                     this.$service.robot.saveRobot(param, function (result){
                         if (result) {
@@ -326,8 +315,8 @@ export default {
             })
         },
         changeArea(val) {
-            let arr = getAreaListByAreaId(val)
-            arr.splice(0)
+            let arr = getAppListByAreaId(val, true)
+            arr.splice(0, 1)
             this.appList = arr
         }
     }

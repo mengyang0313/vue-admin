@@ -149,7 +149,7 @@ import {
     getArrName,
     getAppName,
     getPayType,
-    getCommodityList, getPayChannelList, getAreaListByAreaId, getCurrentUserAreaId
+    getCommodityList, getPayChannelList, getAppListByAreaId, getCurrentUserAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 import {isEmpty} from "@/api/api";
@@ -270,7 +270,7 @@ export default {
             return name
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true)
         }
     }
 }

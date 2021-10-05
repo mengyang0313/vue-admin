@@ -125,7 +125,7 @@ import {
     getPayType,
     getAppName,
     getArrName,
-    getAreaListByAreaId,
+    getAppListByAreaId,
     getCurrentUserAreaId
 } from "@/utils/dist";
 
@@ -183,7 +183,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
+                        "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "enable" : item.getEnable(),
@@ -234,7 +234,7 @@ export default {
             this.$refs.searchForm.resetFields()
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true)
         }
     }
 }

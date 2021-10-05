@@ -5,16 +5,16 @@
                 <el-form-item label="用户Id：" prop="anchorId">
                     <el-input v-model="form.anchorId" placeholder="请输入" :disabled="uidDisabled"/>
                 </el-form-item>
-<!--                <el-form-item label="主播区域" prop="areaId">-->
-<!--                    <el-select v-model="form.areaId" placeholder="请选择">-->
-<!--                        <el-option-->
-<!--                            v-for="item in areaData"-->
-<!--                            :key="item.value"-->
-<!--                            :label="item.label"-->
-<!--                            :value="item.value">-->
-<!--                        </el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
+                <el-form-item label="主播区域" prop="areaId">
+                    <el-select v-model="form.areaId" @change="changeArea" placeholder="请选择">
+                        <el-option
+                            v-for="item in areaData"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
 <!--                <el-form-item label="主播等级：" prop="level">-->
 <!--                    <el-select v-model="form.level" placeholder="请选择">-->
 <!--                        <el-option-->
@@ -45,7 +45,13 @@
 </template>
 
 <script>
-import {getAnchorLevel, getAreaList, getGuildList} from "@/utils/dist";
+import {
+    getAnchorLevel,
+    getAreaList,
+    getCurrentUserAreaId,
+    getGuildListByAreaId
+} from "@/utils/dist";
+import {isEmpty} from "@/api/api";
 
 export default {
     name: 'Form',
@@ -53,16 +59,15 @@ export default {
     data() {
         return {
             form: {
-                anchorId: '',
-                areaId: '',
-                level: '',
-                guildId: ''
+                anchorId: undefined,
+                areaId: getCurrentUserAreaId(),
+                guildId: undefined
             },
             uidDisabled: true,
             dialogVisible: false,
             anchorLevel: getAnchorLevel(),
             areaData: getAreaList(),
-            guildList: getGuildList(),
+            guildList: [],
             rules: {
                 anchorId: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
@@ -83,12 +88,16 @@ export default {
                 this.form.level = row.level
                 this.form.guildId = row.guildId
             }
+            this.changeArea(this.form.areaId)
         },
         submitForm() {
             const $this = this
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    this.$service.anchor.authorizeAnchor(this.form, function (result){
+                    if(!isEmpty($this.form.anchorId)){
+                        $this.form.anchorId = parseInt($this.form.anchorId)
+                    }
+                    this.$service.anchor.authorizeAnchor($this.form, function (result){
                         if (result) {
                             $this.$message.success("认证成功!")
                             $this.closeDialog()
@@ -106,6 +115,9 @@ export default {
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
+        },
+        changeArea(val){
+            this.guildList = getGuildListByAreaId(val, false)
         }
 
     }

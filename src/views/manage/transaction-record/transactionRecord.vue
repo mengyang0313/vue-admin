@@ -129,7 +129,7 @@ import {
     getAppName,
     getSourceType,
     getTraderType,
-    getAreaListByAreaId, getCurrentUserAreaId
+    getAppListByAreaId, getCurrentUserAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
@@ -179,7 +179,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
+                        "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "traderType" : getTraderType(item.getTraderType()),
                         "traderId" : item.getTraderId(),
                         "sourceType" : getSourceType(item.getSourceType()),
@@ -216,7 +216,7 @@ export default {
             this.search.page.pageSize = msg.limit
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true)
         }
     }
 }

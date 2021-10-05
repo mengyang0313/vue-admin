@@ -168,7 +168,7 @@ import {
     getCallType,
     getArrName,
     getAppName,
-    getAreaListByAreaId, getCurrentUserAreaId
+    getAppListByAreaId, getCurrentUserAreaId
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
@@ -222,7 +222,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
+                        "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "userId" : item.getUserId(),
@@ -267,7 +267,7 @@ export default {
             this.search.page.pageSize = msg.limit
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true)
         }
     }
 }

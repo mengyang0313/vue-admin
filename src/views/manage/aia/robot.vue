@@ -23,17 +23,11 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="状态" prop="enable">
-                        <el-select v-model="search.enable" placeholder="请选择">
-                            <el-option v-for="item in bools"
-                                       :key="item.value"
-                                       :label="item.label"
-                                       :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
                     <el-form-item label="机器人ID" prop="robotId">
                         <el-input v-model="search.robotId" placeholder="机器人主播ID"/>
+                    </el-form-item>
+                    <el-form-item label="状态" prop="enable">
+                        <el-switch v-model="search.enable"/>
                     </el-form-item>
                     <el-form-item>
                         <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
@@ -120,7 +114,7 @@ import {
     getCurrentUserAreaId,
     getAppList,
     getAppName,
-    getAreaListByAreaId
+    getAppListByAreaId
 } from "@/utils/dist";
 
 export default {
@@ -161,7 +155,7 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "appId" : item.getAppId(),
-                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getAppId()),
+                        "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "anchorId" : item.getAnchorId(),
                         "status" : $this.handleStatus(item.getStatus()),
                         "areaId" : item.getAreaId(),

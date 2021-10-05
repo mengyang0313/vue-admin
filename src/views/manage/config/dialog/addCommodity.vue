@@ -106,7 +106,7 @@ import {
     getPayType,
     getOsType,
     getCurrentUserAreaId,
-    getAreaListByAreaId,
+    getAppListByAreaId,
     getPayChannelList
 } from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
@@ -209,7 +209,7 @@ export default {
             })
         },
         changeArea(val) {
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAppListByAreaId(val)
         }
     }
 }

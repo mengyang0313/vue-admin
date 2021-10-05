@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import {getAreaList, getPayType, getPayChannelList, getAreaListByAreaId, getCurrentUserAreaId} from "@/utils/dist";
+import {getAreaList, getPayType, getPayChannelList, getAppListByAreaId, getCurrentUserAreaId} from "@/utils/dist";
 import {isEmpty} from "@/api/api";
 
 export default {
@@ -233,7 +233,7 @@ export default {
             this.inputValue = '';
         },
         changeArea(val) {
-            this.appList = getAreaListByAreaId(val)
+            this.appList = getAppListByAreaId(val)
             this.payChannelList = getPayChannelList(val)
         },
         changeApp(val) {

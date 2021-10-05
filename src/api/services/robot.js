@@ -28,7 +28,10 @@ export default class {
     }
 
     async saveRobot (param, callback) {
-        const req = param.struct
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.AnchorProfile()
+        }
         req.setNickname(param.nickname)
         req.setAvatar(param.avatar)
         req.setAppId(param.appId)

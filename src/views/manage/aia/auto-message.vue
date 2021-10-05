@@ -24,15 +24,6 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="状态" prop="enable">
-                        <el-select v-model="search.enable" placeholder="请选择">
-                            <el-option v-for="item in bools"
-                                       :key="item.value"
-                                       :label="item.label"
-                                       :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
                     <el-form-item label="场景标签" prop="action">
                         <el-select v-model="search.action" placeholder="请选择">
                             <el-option v-for="item in actionTypes"
@@ -41,6 +32,9 @@
                                        :value="item.value">
                             </el-option>
                         </el-select>
+                    </el-form-item>
+                    <el-form-item label="状态" prop="enable">
+                        <el-switch v-model="search.enable"/>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSearch">筛选</el-button>

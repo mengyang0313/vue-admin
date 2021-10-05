@@ -78,17 +78,19 @@ export const getAreas = () => new Promise((resolve, reject) => {
         }
     })
 })
-export function getAreaList() {
+export function getAreaList(isShowAll) {
     let areaArr = sessionStorage.getItem("areaArr");
     let arr = JSON.parse(areaArr)
-    arr.unshift({
-        label: "全部",
-        value: 0
-    })
+    if(isShowAll){
+        arr.unshift({
+            label: "全部",
+            value: 0
+        })
+    }
     return arr;
 }
 
-export function getAreaListByAreaId(val, isFilter){
+export function getAppListByAreaId(val, isFilter){
     let apps = getAppList(isFilter)
 
     let newApps = []
@@ -124,6 +126,7 @@ export const getGuilds = () => new Promise((resolve, reject) => {
                 const json = {
                     value : item.getId(),
                     label : item.getName(),
+                    areaId : item.getAreaId()
                 }
                 arr.push(json)
             })
@@ -136,6 +139,30 @@ export const getGuilds = () => new Promise((resolve, reject) => {
 export function getGuildList() {
     let guildArr = sessionStorage.getItem("guildArr");
     return JSON.parse(guildArr);
+}
+
+export function getGuildListByAreaId(val, isShowAll){
+    let guildList = getGuildList()
+
+    let newList = []
+    if(val === 0){
+        newList = guildList
+    }else{
+        guildList.forEach(item => {
+            if(item.areaId === val){
+                newList.push(item)
+            }
+        })
+    }
+    if(isShowAll){
+        newList.unshift({
+            isAnchor: false,
+            label: "全部",
+            os: 0,
+            value: undefined
+        })
+    }
+    return newList
 }
 
 

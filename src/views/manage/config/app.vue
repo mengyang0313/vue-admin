@@ -96,7 +96,7 @@ import addApp from './dialog/addApp'
 import addPay from './dialog/addPayChannel'
 import version from './dialog/version'
 import commodityConfig from './dialog/commodityConfig'
-import {getAreaList, getAppList, getPayType, getAppName, getCurrentUserAreaId, getAreaListByAreaId} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getAppName, getCurrentUserAreaId, getAppListByAreaId} from "@/utils/dist";
 
 export default {
     components: { Pagination, imageShow, addPay, version, commodityConfig, addApp },
@@ -133,7 +133,7 @@ export default {
                 list.forEach((item, index) => {
                     const json = {
                         "id" : item.getId(),
-                        "app" : getAppName(getAreaListByAreaId($this.search.areaId, false), item.getId()),
+                        "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getId()),
                         "appKey" : item.getAppKey(),
                         "enable" : item.getEnable(),
                         "title" : item.getTitle(),
@@ -179,7 +179,7 @@ export default {
             this.$refs.searchForm.resetFields()
         },
         changeArea(val){
-            this.appList = getAreaListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true)
         }
     }
 }
