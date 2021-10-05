@@ -82,10 +82,10 @@ export default {
         init(row){
             if(row === ""){
                 this.uidDisabled = false;
+                this.form.areaId = this.areaData[0].value
             }else{
                 this.form.anchorId = row.id
                 this.form.areaId = row.areaId
-                this.form.level = row.level
                 this.form.guildId = row.guildId
             }
             this.changeArea(this.form.areaId)
@@ -117,6 +117,7 @@ export default {
             this.$emit('fetchData');
         },
         changeArea(val){
+
             this.guildList = getGuildListByAreaId(val, false)
         }
 
