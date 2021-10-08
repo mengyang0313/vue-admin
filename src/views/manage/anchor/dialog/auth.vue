@@ -1,12 +1,13 @@
 <template>
-    <el-dialog title="认证主播" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
+    <el-dialog title="认证主播" :visible.sync="dialogVisible" append-to-body width="40%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
                 <el-form-item label="用户Id：" prop="anchorId">
-                    <el-input v-model="form.anchorId" placeholder="请输入" :disabled="uidDisabled"/>
+                    <el-input v-model="form.anchorId" placeholder="请输入" :disabled="uidDisabled" @change="changeAnchor">
+                    </el-input>
                 </el-form-item>
                 <el-form-item label="主播区域" prop="areaId">
-                    <el-select v-model="form.areaId" @change="changeArea" placeholder="请选择">
+                    <el-select v-model="form.areaId" @change="changeArea" :disabled="form.areaId !== 0" placeholder="请选择">
                         <el-option
                             v-for="item in areaData"
                             :key="item.value"
@@ -26,7 +27,7 @@
 <!--                    </el-select>-->
 <!--                </el-form-item>-->
                 <el-form-item label="主播工会" prop="guildId">
-                    <el-select v-model="form.guildId" placeholder="请选择">
+                    <el-select v-model="form.guildId" filterable placeholder="请选择">
                         <el-option v-for="item in guildList"
                                    :key="item.value"
                                    :label="item.label"
@@ -34,6 +35,25 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+                <div :hidden="isHidden">
+                    <el-divider></el-divider>
+                    <el-form-item label="所属App" prop="app">
+                        {{ form.app.label }}
+                        <span v-if="form.app.os === 1">
+                            <i class="icon-android-fill"></i>
+                        </span>
+                        <span v-else-if="form.app.os === 2">
+                            <i class="icon-pingguo"></i>
+                        </span>
+                    </el-form-item>
+                    <el-form-item label="上线IP" prop="onlineIp">
+                        {{ form.onlineIp }}
+                    </el-form-item>
+                    <el-form-item label="国家" prop="country">
+                        {{ form.country }}
+                    </el-form-item>
+                </div>
+
 
                 <el-form-item class="submit-box">
                     <el-button type="primary" @click="submitForm()" style="margin-right: 50px">提&nbsp;&nbsp;&nbsp;交</el-button>
@@ -46,7 +66,7 @@
 
 <script>
 import {
-    getAnchorLevel,
+    getAnchorLevel, getAppList, getAppName,
     getAreaList,
     getCurrentUserAreaId,
     getGuildListByAreaId
@@ -61,12 +81,20 @@ export default {
             form: {
                 anchorId: undefined,
                 areaId: getCurrentUserAreaId(),
-                guildId: undefined
+                guildId: undefined,
+                app: {
+                    label: 0,
+                    os: 0
+                },
+                country: undefined,
+                onlineIp: undefined
             },
             uidDisabled: true,
             dialogVisible: false,
+            isHidden: true,
             anchorLevel: getAnchorLevel(),
-            areaData: getAreaList(true),
+            areaData: getAreaList(false),
+            appListAll: getAppList(false),
             guildList: [],
             rules: {
                 anchorId: [
@@ -117,21 +145,44 @@ export default {
             this.$emit('fetchData');
         },
         changeArea(val){
-
             this.guildList = getGuildListByAreaId(val, false)
+        },
+        changeAnchor(val){
+            let param = {
+                    userId: val,
+                    page: {
+                        currentPage: 1,
+                        pageSize: 10
+                    }
+                }
+            const $this = this
+            this.$service.user.getUserList(param, function (result){
+                const list = result.getUsersList()
+                if(list.length === 1){
+                    $this.isHidden = false
+                    let user = list[0]
+                    $this.form.app = getAppName($this.appListAll, user.getAppId())
+                    $this.form.country = user.getCountry()
+                    $this.form.onlineIp = user.getOnlineIp()
+                }else{
+                    $this.isHidden = true
+                }
+            })
         }
-
     }
 }
 </script>
 
 <style lang="less">
 .form-list-wrapper {
-    .el-card {
+    .el-input {
+        position: relative;
+        font-size: 14px;
+        display: inline-block;
+        width: 50%;
     }
-
     .form-list {
-        width: 80%;
+        width: 90%;
         margin: 0 auto;
 
         .el-rate {

@@ -33,7 +33,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="工会" prop="guildId">
-                    <el-select v-model="search.guildId" placeholder="请选择">
+                    <el-select v-model="search.guildId" filterable placeholder="请选择">
                         <el-option v-for="item in guildList"
                                    :key="item.value"
                                    :label="item.label"

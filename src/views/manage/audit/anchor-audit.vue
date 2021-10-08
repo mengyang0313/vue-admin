@@ -198,20 +198,14 @@ export default {
         },
         handlePassed(index, row) {
             const $this = this
-            this.$confirm('是否通过', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-            }).then(({ value }) => {
-                let param = {
-                    "profileId" : row.id,
-                    "status" : 5,
-                    "reason" : value
-                }
-                this.$service.audit.processProfile(param, function (result){
-                    result ? $this.$message.success("审核通过 !") : $this.$message.error("审核失败 !")
-                    $this.fetchData()
-                });
-            })
+            let param = {
+                "profileId" : row.id,
+                "status" : 5
+            }
+            this.$service.audit.processProfile(param, function (result){
+                result ? $this.$message.success("审核通过 !") : $this.$message.error("审核失败 !")
+                $this.fetchData()
+            });
         },
         // 拒绝
         handleRefuse(index, row) {
