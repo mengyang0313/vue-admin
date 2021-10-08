@@ -169,12 +169,13 @@ export const asyncRoutes = [
         ]
     },
     {
-        path: '/chat-record',
-        name: 'chat-record',
+        path: '/record',
+        name: 'record',
         component: Layout,
         redirect: '/form-table/table-classic',
         meta: {
-            icon: 'iconfont icon-liaotianjilu'
+            title: '记录查询',
+            icon: 'iconfont vue-dsn-icon-biaoge'
         },
         children: [
             {
@@ -184,18 +185,7 @@ export const asyncRoutes = [
                 meta: {
                     title: '聊天记录'
                 }
-            }
-        ]
-    },
-    {
-        path: '/call-record',
-        name: 'call-record',
-        component: Layout,
-        redirect: '/form-table/table-classic',
-        meta: {
-            icon: 'iconfont icon-tonghuajilu'
-        },
-        children: [
+            },
             {
                 path: 'call-record',
                 name: 'call-record',
@@ -203,18 +193,7 @@ export const asyncRoutes = [
                 meta: {
                     title: '通话记录'
                 }
-            }
-        ]
-    },
-    {
-        path: '/transaction',
-        name: 'transaction',
-        component: Layout,
-        redirect: '/form-table/table-classic',
-        meta: {
-            icon: 'iconfont vue-dsn-icon-biaoge'
-        },
-        children: [
+            },
             {
                 path: 'transaction',
                 name: 'transaction',
@@ -225,6 +204,63 @@ export const asyncRoutes = [
             }
         ]
     },
+    // {
+    //     path: '/chat-record',
+    //     name: 'chat-record',
+    //     component: Layout,
+    //     redirect: '/form-table/table-classic',
+    //     meta: {
+    //         icon: 'iconfont icon-liaotianjilu'
+    //     },
+    //     children: [
+    //         {
+    //             path: 'chat-record',
+    //             name: 'chat-record',
+    //             component: () => import('../views/manage/chat-record/chatRecord'),
+    //             meta: {
+    //                 title: '聊天记录'
+    //             }
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/call-record',
+    //     name: 'call-record',
+    //     component: Layout,
+    //     redirect: '/form-table/table-classic',
+    //     meta: {
+    //         icon: 'iconfont icon-tonghuajilu'
+    //     },
+    //     children: [
+    //         {
+    //             path: 'call-record',
+    //             name: 'call-record',
+    //             component: () => import('../views/manage/call-record/callRecord'),
+    //             meta: {
+    //                 title: '通话记录'
+    //             }
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/transaction',
+    //     name: 'transaction',
+    //     component: Layout,
+    //     redirect: '/form-table/table-classic',
+    //     meta: {
+    //         icon: 'iconfont vue-dsn-icon-biaoge'
+    //     },
+    //     children: [
+    //         {
+    //             path: 'transaction',
+    //             name: 'transaction',
+    //             component: () => import('../views/manage/transaction-record/transactionRecord'),
+    //             meta: {
+    //                 title: '交易记录'
+    //             }
+    //         }
+    //     ]
+    // },
     {
         path: '/order',
         name: 'order',

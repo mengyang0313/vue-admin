@@ -6,12 +6,12 @@
                     <div class="date-block">
                         <div class="date-cont">
                             <div v-if="item.num === 3" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="3000"/>
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="3000"/>
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="3000"/>
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="3000" :decimals="item.decimals"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="3000" :decimals="item.decimals"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="3000" :decimals="item.decimals"/>{{ item.unit }}
                             </div>
                             <div v-else-if="item.num === 2" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="3000"/>
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="3000" :decimals="item.decimals"/>
                                 /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="3000"/>
                             </div>
                             <div v-else-if="item.num === 1" style="display: inline">
@@ -170,20 +170,29 @@ export default {
             const $this = this
             this.cardInfoData = []
             this.$service.home.getOverview(this.handleSearch(), function (result){
+                let income = result.getIncome()
+                let income_decimals = 0
+                if(income>0){
+                    income = income / 100
+                    income_decimals = 2
+                }
                 let inc = {
-                    title: '大盘实时收入', num: 2, count: result.getIncome(), count2: result.getPayCount()
+                    title: '大盘实时收入', num: 2, count: income, count2: result.getPayCount(), decimals: income_decimals
                 }
                 let user = {
-                    title: '新增/活跃用户', num: 2, count: result.getNewUser(), count2: result.getActiveUser()
+                    title: '新增/活跃用户', num: 2, count: result.getNewUser(), count2: result.getActiveUser(), decimals: 0
                 }
                 let anchor = {
-                    title: '通话/在线主播', num: 2, count: result.getBusyAnchor(), count2: result.getOnlineAnchor()
+                    title: '通话/在线主播', num: 2, count: result.getBusyAnchor(), count2: result.getOnlineAnchor(), decimals: 0
                 }
                 let review = {
-                    title: '待审核主播/profile/视频', num: 3, count: result.getReviewAnchor(), count2: result.getReviewProfile(), count3: result.getReviewVideo()
+                    title: '待审核主播/profile/视频', num: 3, count: result.getReviewAnchor(), count2: result.getReviewProfile(), count3: result.getReviewVideo(), decimals: 0
                 }
+                let newAmount = result.getNewAmount() / 1000
+                let expenseAmount = result.getExpenseAmount() / 1000
+                let totalAmount = result.getTotalAmount() / 1000
                 let amount = {
-                    title: '新充值/消费/总余额', num: 3, count: result.getNewAmount(), count2: result.getExpenseAmount(), count3: result.getTotalAmount()
+                    title: '新充值/消费/总余额', num: 3, count: newAmount, count2: expenseAmount, count3: totalAmount, decimals: 1, unit: "k"
                 }
                 $this.cardInfoData.push(inc)
                 $this.cardInfoData.push(user)
@@ -191,8 +200,15 @@ export default {
                 $this.cardInfoData.push(review)
                 $this.cardInfoData.push(amount)
             });
-
-
+        },
+        keepTwoDecimal(num) {
+            let result = parseFloat(num);
+            if (isNaN(result)) {
+                console.log('传递参数错误，请检查！');
+                return false;
+            }
+            result = Math.round(num * 100) / 100;
+            return result;
         },
         initData(){
             const $this = this
