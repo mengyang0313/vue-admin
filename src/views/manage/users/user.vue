@@ -125,7 +125,7 @@
                 <el-table-column prop="balance" label="账户余额" align="center" width="120" />
                 <el-table-column prop="messageUsed" label="已发送消息数量" align="center" width="120" />
                 <el-table-column prop="checkinDays" label="已签到天数" align="center" width="120" />
-                <el-table-column prop="checkinAt" label="上次签到时间" align="center" width="120"/>
+                <el-table-column prop="checkinAt" label="上次签到时间" align="center" width="150"/>
                 <el-table-column prop="createdAt" label="注册日期" align="center" width="150"/>
                 <el-table-column prop="appVersion" label="app版本" align="center" width="120" />
                 <el-table-column prop="onlineIp" label="ip地址" align="center" width="140"/>
@@ -246,7 +246,7 @@ export default {
                         "messageQuota": item.getMessageQuota(),
                         "messageUsed": item.getMessageUsed(),
                         "checkinDays": item.getCheckinDays(),
-                        "checkinAt": item.getCheckinAt(),
+                        "checkinAt": toTime(item.getCheckinAt()),
                         "fansCount": item.getFansCount(),
                         "nickname" : item.getNickname(),
                         "gender": item.getGender(),

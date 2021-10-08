@@ -96,6 +96,7 @@
                         </div>
                     </template>
                 </el-table-column>
+                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
                 <el-table-column prop="userId" label="用户id" align="center" width="120" />
                 <el-table-column prop="directionStr" label="消息方向" align="center" width="120"/>
                 <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
@@ -150,7 +151,7 @@ import {
     getMessageType,
     getAppName,
     getAppListByAreaId,
-    getCurrentUserAreaId
+    getCurrentUserAreaId, getArrName
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
@@ -200,6 +201,8 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "appId" : item.getAppId(),
                         "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "userId" : item.getUserId(),

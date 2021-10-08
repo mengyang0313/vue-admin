@@ -21,12 +21,14 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="权限设置" prop="url">
-                        <div class="content-box" style="height: 360px;">
-                            <el-transfer v-model="value1"
-                                         :data="data"
-                                         :titles="['权限', '已有权限']"/>
-                        </div>
+                <el-form-item label="权限设置" prop="routers">
+                    <el-tree
+                        ref="routers"
+                        :data="data"
+                        show-checkbox
+                        node-key="id"
+                        :props="defaultProps">
+                    </el-tree>
                 </el-form-item>
 
                 <el-form-item class="submit-box">
@@ -42,6 +44,8 @@
 
 import {getAreaList} from '@/utils/dist'
 import {isEmpty} from "@/api/api";
+import Layout from "@/layout";
+import {asyncRoutes} from '@/router/routes'
 
 export default {
     data() {
@@ -56,14 +60,56 @@ export default {
             return data
         }
         return {
-            data: baseData(),
+            //data: baseData(),
             form: {
-                passwordNew: ''
+                passwordNew: '',
+                routers: undefined
             },
             value1: [1, 5],
             value2: [1, 5],
             dialogVisible: false,
             areaList : getAreaList(true),
+            data2: [
+            ],
+            data: [{
+                id: 1,
+                label: '一级 1',
+                children: [{
+                    id: 4,
+                    label: '二级 1-1',
+                    children: [{
+                        id: 9,
+                        label: '三级 1-1-1'
+                    }, {
+                        id: 10,
+                        label: '三级 1-1-2'
+                    }]
+                }]
+            }, {
+                id: 2,
+                label: '一级 2',
+                children: [{
+                    id: 5,
+                    label: '二级 2-1'
+                }, {
+                    id: 6,
+                    label: '二级 2-2'
+                }]
+            }, {
+                id: 3,
+                label: '一级 3',
+                children: [{
+                    id: 7,
+                    label: '二级 3-1'
+                }, {
+                    id: 8,
+                    label: '二级 3-2'
+                }]
+            }],
+            defaultProps: {
+                children: 'children',
+                label: 'label'
+            },
             rules: {
                 areaId: [
                     {required: true, message: '请选择', trigger: 'blur'}
@@ -87,13 +133,16 @@ export default {
                 this.form = row
             }
             this.form.passwordNew = ''
+            this.handleRouter()
         },
         submitForm(formName) {
             const $this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    let psw = isEmpty(this.form.passwordNew) ? this.form.password : this.form.passwordNew
+                    let psw = isEmpty($this.form.passwordNew) ? $this.form.password : $this.form.passwordNew
                     this.form.password = psw
+                    let selRouters = this.$refs.routers.getCheckedNodes()
+                    console.log("routers:"+ selRouters)
                     this.$service.admin.saveAdmin(this.form, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
@@ -112,6 +161,17 @@ export default {
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
+        },
+        handleRouter(){
+            console.log(asyncRoutes)
+            asyncRoutes.forEach(item => {
+                let json = {}
+                if(typeof(item.meta) == "undefined"){
+                    json = {
+                        key: item.children.meta.title
+                    }
+                }
+            })
         }
     }
 }

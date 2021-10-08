@@ -11,25 +11,25 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="应用App" prop="appId">
-                    <el-select v-model="form.appId" placeholder="请选择">
-                        <el-option v-for="item in appList"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                            <span style="float: left">{{ item.label }}</span>
-                            <span v-if="item.os === 1">
-                                <i class="icon-android-fill" style="float: right"></i>
-                            </span>
-                            <span v-else-if="item.os === 2">
-                                <i class="icon-pingguo" style="float: right"></i>
-                            </span>
-                            <span v-if="item.isAnchor">
-                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>
-                            </span>
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item label="应用App" prop="appId">-->
+<!--                    <el-select v-model="form.appId" placeholder="请选择">-->
+<!--                        <el-option v-for="item in appList"-->
+<!--                                   :key="item.value"-->
+<!--                                   :label="item.label"-->
+<!--                                   :value="item.value">-->
+<!--                            <span style="float: left">{{ item.label }}</span>-->
+<!--                            <span v-if="item.os === 1">-->
+<!--                                <i class="icon-android-fill" style="float: right"></i>-->
+<!--                            </span>-->
+<!--                            <span v-else-if="item.os === 2">-->
+<!--                                <i class="icon-pingguo" style="float: right"></i>-->
+<!--                            </span>-->
+<!--                            <span v-if="item.isAnchor">-->
+<!--                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>-->
+<!--                            </span>-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
 
                 <el-form-item label="ID" prop="anchorId" v-if="typeof(form.anchorId) == 0">
                     <el-input v-model="form.robotId" placeholder="请输入" />
@@ -56,9 +56,8 @@
                     </div>
                     <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
                 </el-form-item>
-
-                <el-form-item label="出生日期" prop="birthdayStr">
-                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birthdayStr" style="width: 35%;"></el-date-picker>
+                <el-form-item label="签名" prop="signature">
+                    <el-input v-model="form.signature" placeholder="请输入" />
                 </el-form-item>
                 <el-form-item label="职业" prop="occupation">
                     <el-select v-model="form.occupation" placeholder="请选择">
@@ -69,30 +68,14 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="经常在线" prop="onlineStart">
-                    <el-time-select
-                        placeholder="起始时间"
-                        v-model="form.onlineStartStr"
-                        :picker-options="{
-                          start: '00:00',
-                          step: '01:00',
-                          end: '23:00'
-                        }">
-                    </el-time-select>
-                    <el-time-select
-                        placeholder="结束时间"
-                        v-model="form.onlineEndStr"
-                        :picker-options="{
-                          start: '01:00',
-                          step: '01:00',
-                          end: '24:00',
-                          minTime: form.onlineStartStr
-                        }">
-                    </el-time-select>
+                <el-form-item label="出生日期" prop="birthdayStr">
+                    <el-date-picker type="date" placeholder="出生日期" v-model="form.birthday" style="width: 35%;"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="签名" prop="signature">
-                    <el-input v-model="form.signature" placeholder="请输入" />
+                <el-form-item label="经常在线" prop="onlineStartStr">
+                    <el-input-number v-model="form.onlineStart" :min="1" :max="24" label="开始时间"></el-input-number>
+                    <el-input-number v-model="form.onlineEnd" :min="form.onlineStart" :max="24" label="结束时间"></el-input-number>
                 </el-form-item>
+
                 <el-form-item label="是否启用" prop="status">
                     <el-switch v-model="form.status"/>
                 </el-form-item>
@@ -196,9 +179,6 @@ export default {
             if(typeof(row.anchorId) != "undefined"){
                 this.title = "编辑机器人"
                 this.form = row
-                this.form.birthdayStr = row.birthday * 1000;
-                this.form.onlineStartStr = row.onlineStart + ":00";
-                this.form.onlineEndStr = row.onlineEnd + ":00";
                 this.avatarArr.push({"url": row.avatar});
                 this.form.photoUris = []
                 this.form.photos.forEach((item) => {
@@ -208,6 +188,7 @@ export default {
                 this.form.videos.forEach((item) => {
                     this.form.videoUris.push({name: item.getId(), url: item.getUri()})
                 })
+                this.form.birthday = new Date(row.birthday * 1000)
             }else {
                 this.changeArea(this.form.areaId)
             }
@@ -217,9 +198,7 @@ export default {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     let param = this.form
-                    param.onlineStart = parseInt(this.form.onlineStartStr.split(":")[0])
-                    param.onlineEnd = parseInt(this.form.onlineEndStr.split(":")[0])
-                    param.birthday = param.birthdayStr.getTime() / 1000
+                    param.birthday = param.birthday.getTime() / 1000
                     param.status = this.form.status ? 5 : 6
                     this.$service.robot.saveRobot(param, function (result){
                         if (result) {
@@ -343,9 +322,6 @@ export default {
     }
 }
 .form-list-wrapper {
-    .el-card {
-    }
-
     .form-list {
         width: 80%;
         margin: 0 auto;

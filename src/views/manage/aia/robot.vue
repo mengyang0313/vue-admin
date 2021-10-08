@@ -50,19 +50,19 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="150" />
-                <el-table-column prop="appStr" label="应用APP" align="center" width="120">
-                    <template scope="scope">
-                        <div slot="reference">
-                            {{ scope.row.app.label }}
-                            <span v-if="scope.row.app.os === 1">
-                                <i class="icon-android-fill"></i>
-                            </span>
-                            <span v-else-if="scope.row.app.os === 2">
-                                <i class="icon-pingguo"></i>
-                            </span>
-                        </div>
-                    </template>
-                </el-table-column>
+<!--                <el-table-column prop="appStr" label="应用APP" align="center" width="120">-->
+<!--                    <template scope="scope">-->
+<!--                        <div slot="reference">-->
+<!--                            {{ scope.row.app.label }}-->
+<!--                            <span v-if="scope.row.app.os === 1">-->
+<!--                                <i class="icon-android-fill"></i>-->
+<!--                            </span>-->
+<!--                            <span v-else-if="scope.row.app.os === 2">-->
+<!--                                <i class="icon-pingguo"></i>-->
+<!--                            </span>-->
+<!--                        </div>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
                 <el-table-column prop="avatar" label="头像" align="center" width="150">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
@@ -137,7 +137,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             isSubmit: false,
             areaData: getAreaList(true),
-            appList: [],
+            appListAll: getAppList(false),
             bools: getBool()
         }
     },
@@ -155,7 +155,7 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "appId" : item.getAppId(),
-                        "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
+                        "app" : getAppName($this.appListAll, item.getAppId()),
                         "anchorId" : item.getAnchorId(),
                         "status" : $this.handleStatus(item.getStatus()),
                         "areaId" : item.getAreaId(),

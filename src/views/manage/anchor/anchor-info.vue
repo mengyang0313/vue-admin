@@ -117,9 +117,9 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="id" label="主播id" align="center" width="120" />
+                <el-table-column prop="id" label="资料id" align="center" width="120" />
                 <el-table-column prop="areaStr" label="区域" align="center" width="120" />
-                <el-table-column prop="app" label="应用APP" align="center" width="120">
+                <el-table-column prop="app" label="所属应用" align="center" width="120">
                     <template scope="scope">
                         <div slot="reference">
                             {{ scope.row.app.label }}
