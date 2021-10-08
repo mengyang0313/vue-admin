@@ -6,16 +6,16 @@
                     <div class="date-block">
                         <div class="date-cont">
                             <div v-if="item.num === 3" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="3000" :decimals="item.decimals"/>{{ item.unit }}
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="3000" :decimals="item.decimals"/>{{ item.unit }}
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="3000" :decimals="item.decimals"/>{{ item.unit }}
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
                             </div>
                             <div v-else-if="item.num === 2" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="3000" :decimals="item.decimals"/>
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="3000"/>
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000" :decimals="item.decimals"/>
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000"/>
                             </div>
                             <div v-else-if="item.num === 1" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="3000"/>
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000"/>
                             </div>
                             <p class="title">{{ item.title }}</p>
                         </div>
@@ -63,7 +63,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBarLine :data="incomeData" v-if="incomeData.data" class="data-chart"/>
+                    <ChartsBarLine :data="incomeData" :key="incomeKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -71,7 +71,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBarLine :data="totalDate" v-if="totalDate.data" class="data-chart"/>
+                    <ChartsBarLine :data="totalDate" :key="totalKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -79,7 +79,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBar title="新增用户" :data="userDate" v-if="userDate.data" class="data-chart"/>
+                    <ChartsBar title="新增用户" :key="newUserKey" :data="userDate" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -87,7 +87,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="activeData" v-if="activeData.data" class="data-chart"/>
+                    <ChartsLine :data="activeData" :key="activeKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -96,7 +96,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBar title="充值渠道" :data="channelData" v-if="channelData.data" class="data-chart"/>
+                    <ChartsBar title="充值渠道" :data="channelData" :key="channelKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -125,33 +125,36 @@ export default {
             areaList: getAreaList(true),
             appList: getAppList(),
             cardInfoData: [],
+            newUserKey: 1,
+            incomeKey: 20,
+            totalKey: 40,
+            activeKey: 60,
+            channelKey: 80,
             incomeData: {
                 title: '新增收入',
                 legend: ['新增收入'],
-                data: undefined
+                data: []
             },
             totalDate: {
                 title: '全部收入',
                 legend: ['总收入'],
-                data: undefined
+                data: []
             },
             userDate: {
                 title: '新增用户',
                 legend: ['新增用户'],
-                data: undefined
+                data: []
             },
             activeData: {
                 title: '活跃用户',
                 legend: ['活跃用户'],
-                keys: ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
-                values: [
-                    [120, 132, 101, 134, 90, 230, 210]
-                ]
+                keys: [],
+                values: []
             },
             channelData: {
                 title: '充值渠道',
                 legend: ['google', 'apple', '其他'],
-                data: undefined
+                data: []
             }
         }
     },
@@ -166,12 +169,12 @@ export default {
             this.initData()
         },
         initCard(){
-
             const $this = this
             this.cardInfoData = []
             this.$service.home.getOverview(this.handleSearch(), function (result){
                 let income = result.getIncome()
                 let income_decimals = 0
+                console.log("income:"+income)
                 if(income>0){
                     income = income / 100
                     income_decimals = 2
@@ -192,7 +195,7 @@ export default {
                 let expenseAmount = result.getExpenseAmount() / 1000
                 let totalAmount = result.getTotalAmount() / 1000
                 let amount = {
-                    title: '新充值/消费/总余额', num: 3, count: newAmount, count2: expenseAmount, count3: totalAmount, decimals: 1, unit: "k"
+                    title: '新充值/消费/总余额', num: 3, count: newAmount, count2: expenseAmount, count3: totalAmount, decimals: 0, unit: "K"
                 }
                 $this.cardInfoData.push(inc)
                 $this.cardInfoData.push(user)
@@ -200,15 +203,6 @@ export default {
                 $this.cardInfoData.push(review)
                 $this.cardInfoData.push(amount)
             });
-        },
-        keepTwoDecimal(num) {
-            let result = parseFloat(num);
-            if (isNaN(result)) {
-                console.log('传递参数错误，请检查！');
-                return false;
-            }
-            result = Math.round(num * 100) / 100;
-            return result;
         },
         initData(){
             const $this = this
@@ -224,35 +218,49 @@ export default {
                     let osStr = app.os === 1 ? "🤖" : "";
                     let title = app.label + osStr
 
-                    newArr.push({
-                        title: title,
-                        val1: item.getNewIncome()
-                    })
+                    if(item.getNewIncome() > 0){
+                        newArr.push({
+                            title: title,
+                            val1: item.getNewIncome() / 100
+                        })
+                    }
 
-                    totalArr.push({
-                        title: title,
-                        val1: item.getTotalIncome()
-                    })
+                    if(item.getTotalIncome()>0){
+                        totalArr.push({
+                            title: title,
+                            val1: item.getTotalIncome() / 100
+                        })
+                    }
 
-                    userArr.push({
-                        title: title,
-                        val1: item.getNewUser()
-                    })
+                    if(item.getNewUser()>0){
+                        userArr.push({
+                            title: title,
+                            val1: item.getNewUser()
+                        })
+                    }
 
-                    channelArr.push({
-                        title: title,
-                        val1: item.getGoogleIncome(),
-                        val2: item.getAppleIncome(),
-                        val3: item.getOtherIncome()
-                    })
+                    if(item.getGoogleIncome()>0 || item.getAppleIncome()>0 || item.getOtherIncome()>0){
+                        channelArr.push({
+                            title: title,
+                            val1: item.getGoogleIncome() / 100,
+                            val2: item.getAppleIncome() / 100,
+                            val3: item.getOtherIncome() / 100
+                        })
+                    }
                 })
+                console.log("userArr:"+userArr)
+                $this.$set($this.userDate, 'data', userArr)
+                ++$this.newUserKey
                 $this.incomeData.data = newArr
+                ++$this.incomeKey
                 $this.totalDate.data = totalArr
-                $this.userDate.data = userArr
+                ++$this.totalKey
                 $this.channelData.data = channelArr
+                ++$this.channelKey
 
                 let activeList = result.getHourlyActivesList()
                 $this.handleActiveData(activeList)
+                ++$this.activeKey
                 $this.listLoading = false
             });
 

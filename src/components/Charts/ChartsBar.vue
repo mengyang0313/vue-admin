@@ -45,7 +45,6 @@ export default {
                 // 工具提示
                 tooltip: {
                     trigger: 'axis',
-                    formatter: '{b} <br/>{a} : {c}',
                     axisPointer: {
                         type: 'shadow'
                     }
@@ -132,7 +131,7 @@ export default {
                 ]
             }
             this.dom = echarts.init(this.$refs.dom)
-            this.dom.setOption(options)
+            this.dom.setOption(options, true)
             window.addEventListener('resize', this.resize)
         }
     }
