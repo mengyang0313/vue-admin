@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '../layout'
-import {asyncRoutes} from './routes'
+import {getModules} from './routes'
 
 Vue.use(Router)
 
@@ -54,8 +54,14 @@ export const constantRoutes = [
     }
 ]
 
-const routes = [...constantRoutes, ...asyncRoutes]
-export default new Router({
-    routes
-})
 
+export function initRouter(){
+    console.log("initRouter 2")
+    let modules = getModules()
+    const routes = [...constantRoutes, ...modules]
+    return new Router({
+        routes
+    })
+}
+
+export default initRouter()

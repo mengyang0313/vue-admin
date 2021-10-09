@@ -32,6 +32,7 @@
 <script>
 import Background from '../assets/img/login-background.jpg'
 import {initData} from "@/utils/dist";
+import {initRouter} from '@/router/index'
 
 export default {
     name: 'Login',
@@ -69,6 +70,7 @@ export default {
                         if(bool){
                             initData().then(function () {
                                 $this.$router.push({ path: $this.redirect || '/' })
+                                $this.initRouter()
                             })
                         }else{
                             $this.$message.error("登录失败!!!")
@@ -77,6 +79,10 @@ export default {
                     this.loading = false
                 }
             })
+        },
+        initRouter() {
+            console.log("initRouter")
+            initRouter()
         }
     }
 }

@@ -26,7 +26,7 @@
                         ref="routers"
                         :data="data"
                         show-checkbox
-                        node-key="id"
+                        node-key="key"
                         :props="defaultProps">
                     </el-tree>
                 </el-form-item>
@@ -41,11 +41,9 @@
 </template>
 
 <script>
-
 import {getAreaList} from '@/utils/dist'
 import {isEmpty} from "@/api/api";
-import Layout from "@/layout";
-import {asyncRoutes} from '@/router/routes'
+import {asyncRoutesData} from '@/router/routes'
 
 export default {
     data() {
@@ -71,44 +69,10 @@ export default {
             areaList : getAreaList(true),
             data2: [
             ],
-            data: [{
-                id: 1,
-                label: '一级 1',
-                children: [{
-                    id: 4,
-                    label: '二级 1-1',
-                    children: [{
-                        id: 9,
-                        label: '三级 1-1-1'
-                    }, {
-                        id: 10,
-                        label: '三级 1-1-2'
-                    }]
-                }]
-            }, {
-                id: 2,
-                label: '一级 2',
-                children: [{
-                    id: 5,
-                    label: '二级 2-1'
-                }, {
-                    id: 6,
-                    label: '二级 2-2'
-                }]
-            }, {
-                id: 3,
-                label: '一级 3',
-                children: [{
-                    id: 7,
-                    label: '二级 3-1'
-                }, {
-                    id: 8,
-                    label: '二级 3-2'
-                }]
-            }],
+            data: this.handleTree(),
             defaultProps: {
                 children: 'children',
-                label: 'label'
+                label: 'title'
             },
             rules: {
                 areaId: [
@@ -133,25 +97,21 @@ export default {
                 this.form = row
             }
             this.form.passwordNew = ''
-            this.handleRouter()
         },
         submitForm(formName) {
             const $this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    let psw = isEmpty($this.form.passwordNew) ? $this.form.password : $this.form.passwordNew
-                    this.form.password = psw
-                    let getCheckedKeys = this.$refs.routers.getCheckedKeys()
-                    let getCheckedNodes = this.$refs.routers.getCheckedNodes()
+                    let param = this.form
+                    let psw = isEmpty(param.passwordNew) ? param.password : param.passwordNew
+                    param.password = psw
 
-                    let getHalfCheckedNodes = this.$refs.routers.getHalfCheckedNodes()
-                    let getHalfCheckedKeys = this.$refs.routers.getHalfCheckedKeys()
+                    let checkNodes = this.$refs.routers.getCheckedNodes()
+                    let halfCheckNodes = this.$refs.routers.getHalfCheckedNodes()
+                    checkNodes.push.apply(checkNodes, halfCheckNodes)
+                    param.modules = $this.handleRouter(checkNodes)
 
-                    console.log("getCheckedKeys:"+ getCheckedKeys)
-                    console.log("getCheckedNodes:"+ getCheckedNodes)
-                    console.log("getHalfCheckedNodes:"+ getHalfCheckedNodes)
-                    console.log("getHalfCheckedKeys:"+ getHalfCheckedKeys)
-                    this.$service.admin.saveAdmin(this.form, function (result){
+                    this.$service.admin.saveAdmin(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
                             $this.closeDialog()
@@ -170,16 +130,55 @@ export default {
             this.resetForm()
             this.$emit('fetchData');
         },
-        handleRouter(){
-            console.log(asyncRoutes)
-            asyncRoutes.forEach(item => {
-                let json = {}
-                if(typeof(item.meta) == "undefined"){
-                    json = {
-                        key: item.children.meta.title
-                    }
-                }
+        handleRouter(checkNodes){
+            let arr = []
+            checkNodes.forEach(item => {
+                arr.push(JSON.stringify(item))
             })
+            return arr
+            // let parents = []
+            // let childrens = []
+            // checkNodes.forEach(item => {
+            //     if(item.isParent){
+            //         parents.push(item)
+            //     }else{
+            //         childrens.push(item)
+            //     }
+            // })
+            // parents.sort(function(x,y){
+            //     return x.order-y.order;
+            // });
+            // return {parents: parents, childrens: childrens}
+        },
+        handleTree(){
+            console.log(asyncRoutesData)
+            let list = []
+            let order = 0
+            asyncRoutesData.forEach(item => {
+                let json = {
+                    key: item.name,
+                    isParent : true,
+                    order: order++
+                }
+                if(typeof(item.meta) === "undefined"){
+                    json.title = item.children[0].meta.title
+                }else{
+                    json.title = item.meta.title
+                    let childList = []
+                    item.children.forEach(children => {
+                        let child = {
+                            key: children.name,
+                            title: children.meta.title,
+                            isParent : false,
+                            order: order++
+                        }
+                        childList.push(child)
+                    })
+                    json.children = childList
+                }
+                list.push(json)
+            })
+            return list
         }
     }
 }

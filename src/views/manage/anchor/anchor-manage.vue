@@ -150,7 +150,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="balance" label="余额" align="center" width="120" />
-                <el-table-column prop="settled" label="总收益" align="center" width="120" />
+                <el-table-column prop="settled" label="已结算" align="center" width="120" />
                 <el-table-column prop="callIncome" label="通话收益" align="center" width="120" />
                 <el-table-column prop="giftIncome" label="礼物收益" align="center" width="120" />
                 <el-table-column prop="commissionIncome" label="佣金收益" align="center" width="120" />

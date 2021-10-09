@@ -39,7 +39,8 @@ export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
                 name : resp.getName(),
                 email : resp.getEmail(),
                 areaId : resp.getAreaId(),
-                appIds : resp.getAppIdsList()
+                appIds : resp.getAppIdsList(),
+                modules : resp.getModulesList()
             }
             resolve(json)
         } else {
@@ -51,6 +52,16 @@ export function getCurrentUserAreaId(){
     try{
         let json = sessionStorage.getItem("currentUser");
         return JSON.parse(json).areaId
+    }catch (err){
+        console.log(err)
+    }
+    return undefined
+}
+
+export function getCurrentUserModules(){
+    try{
+        let json = sessionStorage.getItem("currentUser");
+        return JSON.parse(json).modules
     }catch (err){
         console.log(err)
     }

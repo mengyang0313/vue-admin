@@ -65,7 +65,7 @@ export default {
             $this.userInfo.email = result.getEmail()
             $this.userInfo.name = result.getName()
             $this.userInfo.note = result.getNote()
-            $this.userInfo.areaIds = result.getAreaIdsList()
+            $this.userInfo.areaIds = result.getAreaId()
             $this.userInfo.appIds = result.getAppIdsList()
             $this.userInfo.modules = result.getModulesList()
             $this.userInfo.loginAt = toTime(result.getLoginAt()),

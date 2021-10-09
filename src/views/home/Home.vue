@@ -180,7 +180,7 @@ export default {
                     income_decimals = 2
                 }
                 let inc = {
-                    title: '大盘实时收入', num: 2, count: income, count2: result.getPayCount(), decimals: income_decimals
+                    title: '大盘实时收入/订单数', num: 2, count: income, count2: result.getPayCount(), decimals: income_decimals
                 }
                 let user = {
                     title: '新增/活跃用户', num: 2, count: result.getNewUser(), count2: result.getActiveUser(), decimals: 0
@@ -189,7 +189,7 @@ export default {
                     title: '通话/在线主播', num: 2, count: result.getBusyAnchor(), count2: result.getOnlineAnchor(), decimals: 0
                 }
                 let review = {
-                    title: '待审核主播/profile/视频', num: 3, count: result.getReviewAnchor(), count2: result.getReviewProfile(), count3: result.getReviewVideo(), decimals: 0
+                    title: '待审核主播/资料/视频', num: 3, count: result.getReviewAnchor(), count2: result.getReviewProfile(), count3: result.getReviewVideo(), decimals: 0
                 }
                 let newAmount = result.getNewAmount() / 1000
                 let expenseAmount = result.getExpenseAmount() / 1000

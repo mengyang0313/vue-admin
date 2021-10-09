@@ -1,5 +1,8 @@
 import Layout from '../layout'
 import Vue from "vue";
+import {getCurrentUserModules} from "@/utils/dist";
+import {loginOut} from "@/utils/error";
+import { Message } from 'element-ui'
 
 /**
  * hidden: true                  如果设置为 true，该项菜单将不会显示在菜单栏中(默认为 false)
@@ -12,7 +15,7 @@ import Vue from "vue";
 
 
 
-export const asyncRoutes = [
+ const asyncRoutes = [
     {
         path: '/home2',
         name: 'home',
@@ -186,25 +189,18 @@ export const asyncRoutes = [
                 meta: {
                     title: '交易记录'
                 }
-            }
-        ]
-    },
-    {
-        path: '/order',
-        name: 'order',
-        component: Layout,
-        children: [
+            },
             {
                 path: 'order',
                 name: 'order',
                 component: () => import('../views/manage/order/order'),
                 meta: {
-                    title: '订单管理',
-                    icon: 'iconfont icon-dingdanguanli'
+                    title: '订单记录'
                 }
             }
         ]
     },
+
     {
         path: '/union',
         name: 'union',
@@ -408,24 +404,51 @@ export const asyncRoutes = [
 ]
 
 
-// export const initRouter = () => {
-//     let parents = ['home', 'count', 'audit']
-//     let childrens = ['real-time', 'real-revenue', 'data-report', 'audit-video']
-//
-//     let list = []
-//     asyncRoutes.forEach(item => {
-//         if(parents.indexOf(item.name) >= 0){
-//             if(typeof(item.meta) != "undefined"){
-//                 let newChildren = []
-//                 item.children.forEach(children => {
-//                     if(childrens.indexOf(children.name) >= 0){
-//                         newChildren.push(children)
-//                     }
-//                 })
-//                 item.children = newChildren
-//             }
-//             list.push(item)
-//         }
-//     })
-//     return list
-// }
+export const asyncRoutesData = asyncRoutes
+
+
+export function getModules(){
+    let parents = []
+    let childs = []
+
+    let modulesArr = getCurrentUserModules()
+    if(typeof(modulesArr) === "undefined" || modulesArr.length === 0){
+        parents = ['home']
+        childs = []
+    }else{
+        // let json = modulesStr.join(',')
+        // console.log(json)
+        // let modules = JSON.parse(json)
+        // modules.forEach(item => {
+        //     if(item.isParent){
+        //         parents.push(item)
+        //     } else{
+        //         childs.push(item)
+        //     }
+        // })
+        // parents.sort(function(x,y){
+        //     return x.order-y.order;
+        // });
+        parents = ['home', 'sys']
+        childs = ['sys-account']
+    }
+
+    let list = []
+    asyncRoutes.forEach(item => {
+        if(parents.indexOf(item.name) >= 0){
+            if(typeof(item.meta) != "undefined"){
+                let newChildren = []
+                item.children.forEach(children => {
+                    if(childs.indexOf(children.name) >= 0){
+                        newChildren.push(children)
+                    }
+                })
+                item.children = newChildren
+            }
+            list.push(item)
+        }
+    })
+    return asyncRoutes
+}
+
+

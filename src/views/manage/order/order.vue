@@ -102,9 +102,6 @@
 
                 <el-table-column prop="payType" label="支付方式" align="center" width="100"/>
                 <el-table-column prop="payChannel" label="支付渠道" align="center" width="100"/>
-
-                <el-table-column prop="country" label="国家" align="center" width="80"/>
-                <el-table-column prop="payPrice" label="本地价格" align="center" width="150"/>
                 <el-table-column prop="usdPrice" label="美元价格" align="center" width="80"/>
                 <el-table-column prop="paidAt" label="支付时间" align="center" width="180"/>
                 <el-table-column prop="payStatus" label="支付状态" align="center" width="80">
@@ -115,7 +112,8 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="amount" label="钻石数量" align="center" width="80"/>
-                <el-table-column prop="payOrderId" label="第三方支付id" align="center" width="180"/>
+                <el-table-column prop="country" label="国家" align="center" width="80"/>
+                <el-table-column prop="payPrice" label="本地价格" align="center" width="150"/>
                 <el-table-column prop="queryAt" label="查询支付状态时间" align="center" width="180"/>
                 <el-table-column prop="createdAt" label="创建时间" align="center" width="170"/>
                 <el-table-column prop="isSubscription" label="是否为订阅" align="center" width="120">
