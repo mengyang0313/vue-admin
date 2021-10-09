@@ -67,6 +67,10 @@ service CmsSdk {
     rpc UpdateUser (User) returns (User) {
     }
 
+    // 删除用户
+    rpc DeleteUser (DeleteUserRequest) returns (Empty) {
+    }
+
     // 更新主播基础信息
     rpc UpdateAnchorBasic (AnchorBasic) returns (AnchorBasic) {
     }
@@ -459,6 +463,10 @@ message AdjustBalanceRequest {
 message AdjustBalanceReply {
     // 调整后余额
     uint32 balance = 1;
+}
+
+message DeleteUserRequest {
+    uint32 user_id = 1;
 }
 
 message BlockRequest {

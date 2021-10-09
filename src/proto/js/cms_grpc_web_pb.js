@@ -1280,6 +1280,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.updateUser =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.DeleteUserRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_DeleteUser = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/DeleteUser',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.DeleteUserRequest,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.DeleteUserRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.DeleteUserRequest,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_DeleteUser = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.cms.DeleteUserRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.DeleteUserRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.deleteUser =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteUser',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteUser,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.DeleteUserRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.deleteUser =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteUser',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteUser);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.AnchorBasic,
  *   !proto.pb.AnchorBasic>}
  */

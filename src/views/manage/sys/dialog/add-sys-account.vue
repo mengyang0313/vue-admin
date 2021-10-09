@@ -141,8 +141,16 @@ export default {
                 if (valid) {
                     let psw = isEmpty($this.form.passwordNew) ? $this.form.password : $this.form.passwordNew
                     this.form.password = psw
-                    let selRouters = this.$refs.routers.getCheckedNodes()
-                    console.log("routers:"+ selRouters)
+                    let getCheckedKeys = this.$refs.routers.getCheckedKeys()
+                    let getCheckedNodes = this.$refs.routers.getCheckedNodes()
+
+                    let getHalfCheckedNodes = this.$refs.routers.getHalfCheckedNodes()
+                    let getHalfCheckedKeys = this.$refs.routers.getHalfCheckedKeys()
+
+                    console.log("getCheckedKeys:"+ getCheckedKeys)
+                    console.log("getCheckedNodes:"+ getCheckedNodes)
+                    console.log("getHalfCheckedNodes:"+ getHalfCheckedNodes)
+                    console.log("getHalfCheckedKeys:"+ getHalfCheckedKeys)
                     this.$service.admin.saveAdmin(this.form, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")

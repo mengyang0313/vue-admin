@@ -1,4 +1,5 @@
 import Layout from '../layout'
+import Vue from "vue";
 
 /**
  * hidden: true                  如果设置为 true，该项菜单将不会显示在菜单栏中(默认为 false)
@@ -9,14 +10,16 @@ import Layout from '../layout'
   }
  * */
 
+
+
 export const asyncRoutes = [
     {
         path: '/home2',
-        name: 'Layout',
+        name: 'home',
         component: Layout,
         children: [{
             path: 'home2',
-            name: 'Home2',
+            name: 'home',
             component: () => import('../views/home/Home'),
             meta: {
                 title: '首页',
@@ -403,3 +406,26 @@ export const asyncRoutes = [
         }]
     }
 ]
+
+
+// export const initRouter = () => {
+//     let parents = ['home', 'count', 'audit']
+//     let childrens = ['real-time', 'real-revenue', 'data-report', 'audit-video']
+//
+//     let list = []
+//     asyncRoutes.forEach(item => {
+//         if(parents.indexOf(item.name) >= 0){
+//             if(typeof(item.meta) != "undefined"){
+//                 let newChildren = []
+//                 item.children.forEach(children => {
+//                     if(childrens.indexOf(children.name) >= 0){
+//                         newChildren.push(children)
+//                     }
+//                 })
+//                 item.children = newChildren
+//             }
+//             list.push(item)
+//         }
+//     })
+//     return list
+// }

@@ -140,6 +140,7 @@
                         <el-button type="text" @click="toDialog('recharge',scope.row)">充值</el-button>
                         <el-button type="text" @click="toDialog('updateUser',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('multiAccount', scope.row)">多帐号查询</el-button>
+                        <el-button type="text" @click="deleteUser(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -148,7 +149,7 @@
                         @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 封禁设备 弹出栏 -->
-            <block ref="block"/>
+            <block ref="block" @fetchData="fetchData"/>
 
             <!-- 多帐号查询 弹出栏 -->
             <multiAccount ref="multiAccount"/>
@@ -303,6 +304,22 @@ export default {
                 } else {
                     $this.$message.error("解封失败!")
                 }
+            })
+        },
+        deleteUser(row){
+            this.$confirm('是否删除?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                const $this = this
+                let param = {
+                    "userId" : row.id
+                }
+                this.$service.user.deleteUser(param, function (result){
+                    result ? $this.$message.success("删除成功!") : $this.$message.error("删除失败 !")
+                    $this.fetchData()
+                });
             })
         },
         resetForm() {

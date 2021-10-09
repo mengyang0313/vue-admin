@@ -77,6 +77,25 @@ export default class {
         })
     }
 
+
+    /**
+     * 删除用户
+     */
+    async deleteUser (param, callback) {
+        const req = new this.proto.DeleteUserRequest()
+        req.setUserId(param.userId)
+
+        const metadata = {'token': getToken()};
+        this.client.deleteUser(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
     // 获取当前管理员信息
     async getAdminInfo (param, callback) {
         const req = new this.proto.Empty();
