@@ -66,11 +66,11 @@
                             </el-form-item>
                             <el-form-item label="创建时间" prop="createdStart">
                                 <el-col :span="11">
-                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" style="width: 100%;"></el-date-picker>
+                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
                                 </el-col>
                                 <el-col class="line" :span="1" align="center">-</el-col>
                                 <el-col :span="10">
-                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" style="width: 100%;"></el-date-picker>
+                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
                                 </el-col>
                             </el-form-item>
                         </div>
@@ -198,10 +198,10 @@ export default {
         handleParam(){
             let param = this.search;
             if (typeof(this.search.createdStart) != "undefined"){
-                param.createdStartUint = this.search.createdStart.getTime() / 1000
+                param.createdStartUint = new Date(this.search.createdStart).getTime() / 1000
             }
             if (typeof(this.search.createdEnd) != "undefined"){
-                param.createdEndUint = this.search.createdEnd.getTime() / 1000
+                param.createdEndUint = new Date(this.search.createdEnd).getTime() / 1000
             }
             return param
         },
