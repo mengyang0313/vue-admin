@@ -160,7 +160,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             records : undefined,
             submitLoading: false,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             appList: getAppList(),
             guildList: getGuildList(true),
             statusList: getSettleStatus(),
@@ -173,6 +173,7 @@ export default {
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.listLoading = false
     },
     methods: {

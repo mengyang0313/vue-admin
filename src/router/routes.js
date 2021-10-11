@@ -1,8 +1,5 @@
 import Layout from '../layout'
-import Vue from "vue";
 import {getCurrentUserModules} from "@/utils/dist";
-import {loginOut} from "@/utils/error";
-import { Message } from 'element-ui'
 
 /**
  * hidden: true                  如果设置为 true，该项菜单将不会显示在菜单栏中(默认为 false)
@@ -406,7 +403,7 @@ import { Message } from 'element-ui'
 
 export const asyncRoutesData = asyncRoutes
 
-
+export const modules = getModules()
 export function getModules(){
     let parents = []
     let childs = []
@@ -416,14 +413,14 @@ export function getModules(){
         parents = []
         childs = []
     }else{
-        // let modules = JSON.parse(modulesStr)
-        // childs = modules.childrens.map(item => item.key)
-        // parents = parents = modules.parents.map(item => item.key)
-        // parents.sort(function(x,y){
-        //     return x.order-y.order;
-        // });
-        parents = []
-        childs = []
+        let modules = JSON.parse(modulesStr)
+        childs = modules.childrens.map(item => item.key)
+        parents = parents = modules.parents.map(item => item.key)
+        parents.sort(function(x,y){
+            return x.order-y.order;
+        });
+        // parents = []
+        // childs = []
     }
 
     let list = []

@@ -50,12 +50,12 @@ export default {
                     {required: true, message: '不能为空', trigger: 'change'}
                 ]
             },
-            areaList: getAreaList(true)
+            areaList: getAreaList(false)
         }
     },
     methods: {
         init(row){
-
+            this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         },
         onSearch() {
             let $this = this

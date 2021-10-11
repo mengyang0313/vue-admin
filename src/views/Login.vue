@@ -32,7 +32,7 @@
 <script>
 import Background from '../assets/img/login-background.jpg'
 import {initData} from "@/utils/dist";
-import {initRouter} from '@/router/index'
+import {initRouter} from '@/router/logininitrouter'
 
 export default {
     name: 'Login',

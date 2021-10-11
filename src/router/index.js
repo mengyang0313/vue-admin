@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '../layout'
-import {getModules} from './routes'
+import {modules} from './routes'
 
 Vue.use(Router)
 
@@ -55,13 +55,8 @@ export const constantRoutes = [
 ]
 
 
-export function initRouter(){
-    console.log("initRouter 2")
-    let modules = getModules()
-    const routes = [...constantRoutes, ...modules]
-    return new Router({
-        routes
-    })
-}
-
-export default initRouter()
+const routes = [...constantRoutes, ...modules]
+export default new Router({
+    routes
+})
+//export default initRouter()
