@@ -131,24 +131,24 @@ export default {
             this.$emit('fetchData');
         },
         handleRouter(checkNodes){
-            let arr = []
-            checkNodes.forEach(item => {
-                arr.push(JSON.stringify(item))
-            })
-            return arr
-            // let parents = []
-            // let childrens = []
+            // let arr = []
             // checkNodes.forEach(item => {
-            //     if(item.isParent){
-            //         parents.push(item)
-            //     }else{
-            //         childrens.push(item)
-            //     }
+            //     arr.push(JSON.stringify(item))
             // })
-            // parents.sort(function(x,y){
-            //     return x.order-y.order;
-            // });
-            // return {parents: parents, childrens: childrens}
+            // return arr
+            let parents = []
+            let childrens = []
+            checkNodes.forEach(item => {
+                if(item.isParent){
+                    parents.push(item)
+                }else{
+                    childrens.push(item)
+                }
+            })
+            parents.sort(function(x,y){
+                return x.order-y.order;
+            });
+            return JSON.stringify({parents: parents, childrens: childrens})
         },
         handleTree(){
             console.log(asyncRoutesData)

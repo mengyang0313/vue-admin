@@ -19,7 +19,7 @@ message Admin {
     // 有权限的应用
     repeated uint32 app_ids = 8;
     // 有权限的模块
-    repeated string modules = 9;
+    string modules = 9;
     uint32 login_at = 10;
     string login_ip = 11;
     // 连续失败次数

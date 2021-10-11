@@ -17,7 +17,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="结算时间" prop="settleAtTime">
-                <el-date-picker v-model="search.settleAtTime" type="date" placeholder="选择日期">
+                <el-date-picker v-model="search.settleAtTime" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="最小余额" prop="minBalance">
@@ -60,7 +60,7 @@ export default {
         onSearch() {
             let $this = this
             let param = this.search;
-            param.settleAt = this.search.settleAtTime.getTime() / 1000
+            param.settleAt = new Date(this.search.settleAtTime).getTime() / 1000
             this.$service.settle.createSettleRecord(param, function (result){
                 if(result){
                     $this.$message.success("预结算生成成功!")

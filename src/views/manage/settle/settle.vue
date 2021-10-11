@@ -19,6 +19,7 @@
                 <el-form-item label="日期" prop="settleAt">
                     <el-date-picker
                         v-model="search.settleAtTime"
+                        value-format="yyyy-MM-dd"
                         type="date"
                         placeholder="选择日期">
                     </el-date-picker>
@@ -161,7 +162,7 @@ export default {
             submitLoading: false,
             areaList: getAreaList(true),
             appList: getAppList(),
-            guildList: getGuildList(),
+            guildList: getGuildList(true),
             statusList: getSettleStatus(),
             createSettleLoadingText: "预结算生成中...",
             submitSettleLoadingText: "算生成中...",
@@ -180,7 +181,7 @@ export default {
             this.listLoading = true
             let param = this.search;
             if(typeof(this.search.settleAtTime) !== "undefined"){
-                param.settleAt = this.search.settleAtTime.getTime() / 1000
+                param.settleAt = new Date(this.search.settleAtTime).getTime() / 1000
             }
             this.$service.settle.getSettleList(param, function (result){
                 const list = result.getRecordsList()

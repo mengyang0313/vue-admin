@@ -511,7 +511,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.pb.Admin.repeatedFields_ = [8,9];
+proto.pb.Admin.repeatedFields_ = [8];
 
 
 
@@ -552,7 +552,7 @@ proto.pb.Admin.toObject = function(includeInstance, msg) {
     note: jspb.Message.getFieldWithDefault(msg, 6, ""),
     areaId: jspb.Message.getFieldWithDefault(msg, 7, 0),
     appIdsList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
-    modulesList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
+    modules: jspb.Message.getFieldWithDefault(msg, 9, ""),
     loginAt: jspb.Message.getFieldWithDefault(msg, 10, 0),
     loginIp: jspb.Message.getFieldWithDefault(msg, 11, ""),
     failCount: jspb.Message.getFieldWithDefault(msg, 12, 0),
@@ -631,7 +631,7 @@ proto.pb.Admin.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 9:
       var value = /** @type {string} */ (reader.readString());
-      msg.addModules(value);
+      msg.setModules(value);
       break;
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
@@ -742,9 +742,9 @@ proto.pb.Admin.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getModulesList();
+  f = message.getModules();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writeString(
       9,
       f
     );
@@ -958,39 +958,20 @@ proto.pb.Admin.prototype.clearAppIdsList = function() {
 
 
 /**
- * repeated string modules = 9;
- * @return {!Array<string>}
+ * optional string modules = 9;
+ * @return {string}
  */
-proto.pb.Admin.prototype.getModulesList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 9));
-};
-
-
-/**
- * @param {!Array<string>} value
- * @return {!proto.pb.Admin} returns this
- */
-proto.pb.Admin.prototype.setModulesList = function(value) {
-  return jspb.Message.setField(this, 9, value || []);
+proto.pb.Admin.prototype.getModules = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
 
 /**
  * @param {string} value
- * @param {number=} opt_index
  * @return {!proto.pb.Admin} returns this
  */
-proto.pb.Admin.prototype.addModules = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 9, value, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.pb.Admin} returns this
- */
-proto.pb.Admin.prototype.clearModulesList = function() {
-  return this.setModulesList([]);
+proto.pb.Admin.prototype.setModules = function(value) {
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 

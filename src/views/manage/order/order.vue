@@ -82,9 +82,9 @@
                 size="medium"
             >
                 <el-table-column prop="id" label="订单ID" align="center" width="150" />
-                <el-table-column prop="payOrderId" label="渠道订单号" align="center" width="150" />
+                <el-table-column prop="payOrderId" label="渠道订单号" align="center" width="200" />
                 <el-table-column prop="commodityId" label="商品名称" align="center" width="200"/>
-                <el-table-column prop="appId" label="来源APP" align="center" width="80">
+                <el-table-column prop="appId" label="来源APP" align="center" width="140">
                     <template scope="scope">
                         <div slot="reference">
                             {{ scope.row.app.label }}

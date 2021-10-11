@@ -411,26 +411,19 @@ export function getModules(){
     let parents = []
     let childs = []
 
-    let modulesArr = getCurrentUserModules()
-    if(typeof(modulesArr) === "undefined" || modulesArr.length === 0){
-        parents = ['home']
+    let modulesStr = getCurrentUserModules()
+    if(typeof(modulesStr) === "undefined" || modulesStr.length < 5){
+        parents = []
         childs = []
     }else{
-        // let json = modulesStr.join(',')
-        // console.log(json)
-        // let modules = JSON.parse(json)
-        // modules.forEach(item => {
-        //     if(item.isParent){
-        //         parents.push(item)
-        //     } else{
-        //         childs.push(item)
-        //     }
-        // })
+        // let modules = JSON.parse(modulesStr)
+        // childs = modules.childrens.map(item => item.key)
+        // parents = parents = modules.parents.map(item => item.key)
         // parents.sort(function(x,y){
         //     return x.order-y.order;
         // });
-        parents = ['home', 'sys']
-        childs = ['sys-account']
+        parents = []
+        childs = []
     }
 
     let list = []
@@ -448,7 +441,7 @@ export function getModules(){
             list.push(item)
         }
     })
-    return asyncRoutes
+    return list.length === 0 ? asyncRoutes : list
 }
 
 

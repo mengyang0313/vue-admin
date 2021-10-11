@@ -40,7 +40,7 @@ export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
                 email : resp.getEmail(),
                 areaId : resp.getAreaId(),
                 appIds : resp.getAppIdsList(),
-                modules : resp.getModulesList()
+                modules : resp.getModules()
             }
             resolve(json)
         } else {
@@ -147,9 +147,19 @@ export const getGuilds = () => new Promise((resolve, reject) => {
         }
     })
 })
-export function getGuildList() {
+export function getGuildList(isShowAll) {
     let guildArr = sessionStorage.getItem("guildArr");
-    return JSON.parse(guildArr);
+
+    let newList = JSON.parse(guildArr)
+    if(isShowAll){
+        newList.unshift({
+            isAnchor: false,
+            label: "全部",
+            os: 0,
+            value: undefined
+        })
+    }
+    return newList
 }
 
 export function getGuildListByAreaId(val, isShowAll){

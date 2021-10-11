@@ -148,7 +148,7 @@ export default {
             submitLoading: false,
             areaList: getAreaList(true),
             appList: getAppList(),
-            guildList: getGuildList(),
+            guildList: getGuildList(true),
             statusList: getSettleStatus()
         }
     },

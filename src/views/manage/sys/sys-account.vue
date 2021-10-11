@@ -111,7 +111,7 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "app_ids" : item.getAppIdsList(),
-                        "modules" : item.getModulesList(),
+                        "modules" : item.getModules(),
                         "login_at" : item.getLoginAt(),
                         "login_ip" : item.getLoginIp(),
                         "fail_count" : item.getFailCount(),
