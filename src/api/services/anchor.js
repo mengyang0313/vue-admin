@@ -57,6 +57,9 @@ export default class {
         req.setLevel(param.level)
         req.setNote(param.note)
         req.setReviewStatus(param.reviewStatus)
+        req.setBankName(param.bankName)
+        req.setAccountName(param.accountName)
+        req.setBankAccount(param.bankAccount)
 
         const metadata = {'token': getToken()};
         this.client.updateAnchorBasic(req, metadata, (err, resp) => {

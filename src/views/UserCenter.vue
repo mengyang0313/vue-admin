@@ -52,6 +52,7 @@ import {toTime} from "@/utils/date";
 
 export default {
     name: 'UserCenter',
+    inject:["reload"],
     data() {
         return {
             userInfo: {

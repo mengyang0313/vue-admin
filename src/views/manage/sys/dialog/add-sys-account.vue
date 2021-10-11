@@ -21,12 +21,13 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="权限设置" prop="routers">
+                <el-form-item label="权限设置" prop="modules">
                     <el-tree
                         ref="routers"
                         :data="data"
                         show-checkbox
                         node-key="key"
+                        :default-checked-keys="checkeds"
                         :props="defaultProps">
                     </el-tree>
                 </el-form-item>
@@ -47,16 +48,6 @@ import {asyncRoutesData} from '@/router/routes'
 
 export default {
     data() {
-        const baseData = () => {
-            const data = []
-            for (let i = 1; i < 10; i++) {
-                data.push({
-                    key: i,
-                    label: `备选项 ${i}`
-                })
-            }
-            return data
-        }
         return {
             //data: baseData(),
             form: {
@@ -69,6 +60,7 @@ export default {
             areaList : getAreaList(true),
             data2: [
             ],
+            checkeds: [],
             data: this.handleTree(),
             defaultProps: {
                 children: 'children',
@@ -93,8 +85,13 @@ export default {
     },
     methods: {
         init(row){
+            this.data= this.handleTree()
             if(typeof(row.id) != "undefined"){
                 this.form = row
+                if(!isEmpty(this.form.modules)){
+                    let modules = JSON.parse(this.form.modules)
+                    this.checkeds = modules.checkKeys
+                }
             }
             this.form.passwordNew = ''
         },
@@ -106,10 +103,11 @@ export default {
                     let psw = isEmpty(param.passwordNew) ? param.password : param.passwordNew
                     param.password = psw
 
+                    let checkKeys = this.$refs.routers.getCheckedKeys()
                     let checkNodes = this.$refs.routers.getCheckedNodes()
                     let halfCheckNodes = this.$refs.routers.getHalfCheckedNodes()
                     checkNodes.push.apply(checkNodes, halfCheckNodes)
-                    param.modules = $this.handleRouter(checkNodes)
+                    param.modules = $this.handleRouter(checkKeys, checkNodes)
 
                     this.$service.admin.saveAdmin(param, function (result){
                         if (result) {
@@ -127,10 +125,11 @@ export default {
         },
         closeDialog() {
             this.dialogVisible = false
+            this.checkeds = undefined
             this.resetForm()
             this.$emit('fetchData');
         },
-        handleRouter(checkNodes){
+        handleRouter(checkKeys, checkNodes){
             // let arr = []
             // checkNodes.forEach(item => {
             //     arr.push(JSON.stringify(item))
@@ -140,6 +139,7 @@ export default {
             let childrens = []
             checkNodes.forEach(item => {
                 if(item.isParent){
+                    item.children = undefined
                     parents.push(item)
                 }else{
                     childrens.push(item)
@@ -148,10 +148,9 @@ export default {
             parents.sort(function(x,y){
                 return x.order-y.order;
             });
-            return JSON.stringify({parents: parents, childrens: childrens})
+            return JSON.stringify({checkKeys: checkKeys, parents: parents, childrens: childrens})
         },
         handleTree(){
-            console.log(asyncRoutesData)
             let list = []
             let order = 0
             asyncRoutesData.forEach(item => {

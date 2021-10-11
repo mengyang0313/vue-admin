@@ -32,9 +32,10 @@
 <script>
 import Background from '../assets/img/login-background.jpg'
 import {initData} from "@/utils/dist";
-import {initRouter} from '@/router/logininitrouter'
+
 
 export default {
+    inject:["reload"],
     name: 'Login',
     data() {
         return {
@@ -68,9 +69,11 @@ export default {
                     console.log(this.$service)
                     this.$service.login.login(this.loginForm, function (bool){
                         if(bool){
+                            console.log("####4")
                             initData().then(function () {
+                                console.log("####5")
+                                $this.reload()
                                 $this.$router.push({ path: $this.redirect || '/' })
-                                $this.initRouter()
                             })
                         }else{
                             $this.$message.error("登录失败!!!")
@@ -79,10 +82,6 @@ export default {
                     this.loading = false
                 }
             })
-        },
-        initRouter() {
-            console.log("initRouter")
-            initRouter()
         }
     }
 }

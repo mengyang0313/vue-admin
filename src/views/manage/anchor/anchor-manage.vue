@@ -334,6 +334,9 @@ export default {
                         "adjustIncome" : item.getAdjustIncome(),
                         "updatedAt" : toTime(item.getUpdatedAt()),
                         "createdAt" : toTime(item.getCreatedAt()),
+                        "bankName" : item.getBankName(),
+                        "accountName" : item.getAccountName(),
+                        "bankAccount" : item.getBankAccount(),
                         "struct" : item
                     }
                     data.push(json)

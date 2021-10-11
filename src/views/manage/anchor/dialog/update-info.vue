@@ -45,6 +45,17 @@
                         show-word-limit
                     />
                 </el-form-item>
+                <el-divider></el-divider>
+                <el-form-item label="开户行：" prop="bankName">
+                    <el-input v-model="form.bankName" placeholder="请输入"/>
+                </el-form-item>
+                <el-form-item label="账户名：" prop="accountName">
+                    <el-input v-model="form.accountName" placeholder="请输入"/>
+                </el-form-item>
+                <el-form-item label="银行账号：" prop="bankAccount">
+                    <el-input v-model="form.bankAccount" placeholder="请输入"/>
+                </el-form-item>
+
                 <el-form-item class="submit-box">
                     <el-button type="primary" @click="submitForm('form')" style="margin-right: 50px">提&nbsp;&nbsp;&nbsp;交</el-button>
                     <el-button @click="resetForm('form')">重&nbsp;&nbsp;&nbsp;置</el-button>

@@ -119,16 +119,16 @@ import {getCurrentUserModules} from "@/utils/dist";
         },
         children: [
             {
-                path: 'anchor-manage',
-                name: 'anchor-manage',
+                path: 'anchorManage',
+                name: 'anchorManage',
                 component: () => import('../views/manage/anchor/anchor-manage'),
                 meta: {
                     title: '主播管理'
                 }
             },
             {
-                path: 'anchor-info',
-                name: 'anchor-info',
+                path: 'anchorInfo',
+                name: 'anchorInfo',
                 hidden: true,
                 component: () => import('../views/manage/anchor/anchor-info'),
                 meta: {
