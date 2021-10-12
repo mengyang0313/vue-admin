@@ -227,6 +227,9 @@ export default {
             return data
         },
         toJsonAgoraConfig(struct){
+            if(typeof(struct) == "undefined"){
+                return {}
+            }
             let json = {
                 "appId": struct.getAppId(),
                 "appCert": struct.getAppCert(),
@@ -243,6 +246,9 @@ export default {
             return json
         },
         toJsonOssConfig(struct){
+            if(typeof(struct) == "undefined"){
+                return {}
+            }
             let json = {
                     "endpoint": struct.getEndpoint(),
                     "bucket": struct.getBucket(),
@@ -252,6 +258,9 @@ export default {
             return json
         },
         toJsonRongcloudConfig(struct){
+            if(typeof(struct) == "undefined"){
+                return {}
+            }
             let json = {
                 "appKey": struct.getAppKey(),
                 "appSecret": struct.getAppSecret(),
@@ -263,6 +272,9 @@ export default {
             return json
         },
         toJsonGreenConfig(struct){
+            if(typeof(struct) == "undefined"){
+                return {}
+            }
             let json = {
                 "keyId": struct.getKeyId(),
                 "keySecret": struct.getKeySecret()

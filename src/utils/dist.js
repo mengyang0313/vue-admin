@@ -1,5 +1,5 @@
 import {Empty} from "@/proto/js/usertype_pb";
-import {PayChannelListRequest, CommodityListRequest} from "@/proto/js/cms_pb";
+import {PayChannelListRequest, CommodityListRequest, AppListRequest} from "@/proto/js/cms_pb";
 import {getToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
 
@@ -189,9 +189,11 @@ export function getGuildListByAreaId(val, isShowAll){
 
 // 应用列表
 export function getApps(callback) {
-    const req = new Empty();
+    const req = new AppListRequest();
     const metadata = {'token': getToken()};
     cmsService.getAppList(req, metadata, (err, resp) => {
+        alert("getAppList:" + err)
+        alert("getAppList resp:" + resp)
         if (!err) {
             const arr = []
             const list = resp.getAppsList()
