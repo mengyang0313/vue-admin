@@ -174,6 +174,9 @@ export default {
         play(row) {
             this.playVisible = true;
             let src = row.uri
+            console.log("播放视频")
+            console.log(row)
+            console.log(row.uri)
             this.$nextTick(()=>{
                 this.$refs.myVideoPlayer.initSrc(src);
             })
