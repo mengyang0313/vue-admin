@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="查看视频" :visible.sync="dialogVisible" append-to-body width="40%" :before-close="handleClose">
+    <el-dialog title="查看视频" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="handleClose">
         <div class="table-classic-wrapper dialog-list">
             <!-- 表格栏 -->
             <el-table
@@ -10,14 +10,14 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="id" label="ID" align="center" width="120" />
-                <el-table-column prop="ownerId" label="所有者ID" align="center" width="120"/>
+                <el-table-column prop="id" label="ID" align="center" width="150" />
+                <el-table-column prop="ownerId" label="所有者ID" align="center" width="150"/>
                 <el-table-column prop="thumb" label="视频" align="center">
                     <template scope="scope">
                         <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="thumb" label="应用App" align="center" width="120">
+                <el-table-column prop="thumb" label="应用App" align="center" width="150">
                     <template scope="scope">
                         <div slot="reference">
                             {{ scope.row.app.label }}
@@ -30,8 +30,8 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="areaStr" label="区域" align="center" width="120"/>
-                <el-table-column prop="type" label="文件类型" align="center" width="120"/>
+                <el-table-column prop="areaStr" label="区域" align="center" width="180"/>
+                <el-table-column prop="type" label="文件类型" align="center" width="180"/>
 
                 <!--                    <el-table-column label="操作" align="center">-->
                 <!--                        <template slot-scope="scope">-->
