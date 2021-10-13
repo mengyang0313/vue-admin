@@ -128,7 +128,7 @@ export default {
         return {
             listLoading: true,
             search: {
-                areaId: getCurrentUserAreaId(),
+                areaId: undefined,
                 guildId: undefined,
                 anchorId: undefined,
                 settleAtTime: new Date().format('yyyy-MM-dd'),
@@ -146,7 +146,7 @@ export default {
             exportVisible: false,
             isCollapse: true,
             submitLoading: false,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             appList: getAppList(),
             guildList: getGuildList(true),
             statusList: getSettleStatus()

@@ -9,7 +9,7 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-form-item label="主播1Id" prop="anchorId">
+                <el-form-item label="主播Id" prop="anchorId">
                     <el-input v-model="search.anchorId" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="区域">
@@ -107,7 +107,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: getCurrentUserAreaId(),
+                areaId: undefined,
                 reviewStatus: 2,
                 page: {
                     currentPage: 1,
@@ -120,12 +120,13 @@ export default {
             tableData: [],
             multipleSelection: [],
             playVisible: false,
-            areaData: getAreaList(true),
+            areaData: getAreaList(false),
             reviewStatus: getReviewStatus(),
             appListAll: getAppList(false)
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaData[0].value : this.authAreaId
         this.fetchData()
     },
     methods: {

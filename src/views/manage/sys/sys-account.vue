@@ -6,29 +6,29 @@
                 <el-button type="primary" @click="toDialog('addSysAccount', '')">+ 新增管理帐号</el-button>
             </div>
             <!-- 查询栏 -->
-            <el-form
-                ref="searchForm"
-                :inline="true"
-                :model="search"
-                label-width="90px"
-                class="search-form"
-            >
-                <template>
-                    <el-row>
-                        <el-col :span="6">
-                            <el-form-item label="区域">
-                                <el-select v-model="search.area" placeholder="请选择">
-                                    <el-option v-for="item in areaList"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </template>
-            </el-form>
+<!--            <el-form-->
+<!--                ref="searchForm"-->
+<!--                :inline="true"-->
+<!--                :model="search"-->
+<!--                label-width="90px"-->
+<!--                class="search-form"-->
+<!--            >-->
+<!--                <template>-->
+<!--                    <el-row>-->
+<!--                        <el-col :span="6">-->
+<!--                            <el-form-item label="区域">-->
+<!--                                <el-select v-model="search.area" placeholder="请选择">-->
+<!--                                    <el-option v-for="item in areaList"-->
+<!--                                               :key="item.value"-->
+<!--                                               :label="item.label"-->
+<!--                                               :value="item.value">-->
+<!--                                    </el-option>-->
+<!--                                </el-select>-->
+<!--                            </el-form-item>-->
+<!--                        </el-col>-->
+<!--                    </el-row>-->
+<!--                </template>-->
+<!--            </el-form>-->
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
