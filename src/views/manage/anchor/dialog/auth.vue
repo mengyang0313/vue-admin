@@ -175,12 +175,7 @@ export default {
 
 <style lang="less">
 .form-list-wrapper {
-    .el-input {
-        position: relative;
-        font-size: 14px;
-        display: inline-block;
-        width: 50%;
-    }
+
     .form-list {
         width: 90%;
         margin: 0 auto;
@@ -188,6 +183,13 @@ export default {
         .el-rate {
             line-height: 2;
         }
+
+        //.el-input {
+        //    position: relative;
+        //    font-size: 14px;
+        //    display: inline-block;
+        //    width: 50%;
+        //}
 
         > .el-form-item {
             margin-bottom: 22px;

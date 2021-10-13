@@ -27,8 +27,12 @@ export default class {
     }
 
     async saveGuild (param, callback) {
-        const req = param.struct;
-        req.setId(param.id)
+        let req = param.struct;
+        if(typeof(req) == "undefined"){
+            req = new this.proto.Guild()
+        }else{
+            req.setId(param.id)
+        }
         req.setAreaId(param.areaId)
         req.setName(param.name)
         req.setEnable(param.enable)

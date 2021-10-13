@@ -115,6 +115,10 @@ service CmsSdk {
     rpc GetLiveList (LiveListRequest) returns (LiveListReply) {
     }
 
+    // 处理通话录制视频列表
+    rpc ProcessLive (FileRecord) returns (Empty) {
+    }
+
     // 获取支付订单列表
     rpc GetPayList (PayListRequest) returns (PayListReply) {
     }

@@ -24,18 +24,18 @@ export async function initData() {
     sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr));
 }
 
-export function initAsyncData(){
-    getApps(function (arr){
-        sessionStorage.setItem("appArr", JSON.stringify(arr));
-    })
-    getPayChannel(function(arr){
-        sessionStorage.setItem("payChannelArr", JSON.stringify(arr));
-    })
-    getCommodity(function(arr){
-            sessionStorage.setItem("commodityArr", JSON.stringify(arr))
-    })
-
-}
+// export function initAsyncData(){
+//     getApps(function (arr){
+//         sessionStorage.setItem("appArr", JSON.stringify(arr));
+//     })
+//     getPayChannel(function(arr){
+//         sessionStorage.setItem("payChannelArr", JSON.stringify(arr));
+//     })
+//     getCommodity(function(arr){
+//             sessionStorage.setItem("commodityArr", JSON.stringify(arr))
+//     })
+//
+// }
 
 export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
     const req = new Empty();
@@ -198,8 +198,6 @@ export const getApps = () => new Promise((resolve, reject) => {
     const req = new AppListRequest();
     const metadata = {'token': getToken()};
     cmsService.getAppList(req, metadata, (err, resp) => {
-        alert("getAppList:" + err)
-        alert("getAppList resp:" + resp)
         if (!err) {
             const arr = []
             const list = resp.getAppsList()
@@ -659,6 +657,9 @@ export function getOccupationType(key){
     }]
     if(typeof(key) != "undefined"){
         let label = ""
+        if(key===0){
+            return label
+        }
         arr.forEach((item) => {
             if(key.toString() === item.value.toString()){
                 label = item.label

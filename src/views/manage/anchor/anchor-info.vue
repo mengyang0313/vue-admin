@@ -138,6 +138,7 @@
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
+                <el-table-column prop="signature" label="签名" align="center" width="180" :show-overflow-tooltip="true"/>
                 <el-table-column prop="reviewStatus" label="账户状态" align="center" width="120">
                     <template slot-scope="scope">
                         <div slot="reference">
@@ -196,10 +197,11 @@ import {
     getAreaList,
     getGuildList,
     getOnlineStatus,
-    getBlockStatus
+    getBlockStatus, getOccupationType
 } from "@/utils/dist";
 import videoList from '../audit/dialog/video-list'
 import photoList from '../audit/dialog/photo-list'
+import {toTime} from "@/utils/date";
 
 export default {
     name: 'Table',
@@ -294,14 +296,15 @@ export default {
                     "appId" : item.getAppId(),
                     "app" : getAppList($this.appList, item.getAppId()),
                     "nickname" : item.getNickname(),
+                    "signature" : item.getSignature(),
                     "avatar" : item.getAvatar(),
                     "reviewStatus" : item.getStatus(),
                     "reviewStatusStr" : getReviewStatus(item.getStatus()),
                     "photoCount" : item.getPhotoIdsList().length,
                     "videoCount" : item.getVideoIdsList().length,
                     "tags" : item.getTagsList().join(", "),
-                    "occupation" : item.getOccupation(),
-                    "birthday" : item.getBirthday(),
+                    "occupation" : getOccupationType(item.getOccupation()),
+                    "birthday" : toTime(item.getBirthday()),
                     "voiceGreeting" : item.getVoiceGreeting(),
                     "onlineStart" : item.getOnlineStart(),
                     "onlineEnd" : item.getOnlineEnd(),

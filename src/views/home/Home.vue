@@ -108,7 +108,7 @@ import CountTo from 'vue-count-to'
 import ChartsBarLine from '../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../components/Charts/ChartsBar'
 import ChartsLine from '../../components/Charts/ChartsLine'
-import {getAreaList, getAppList, getAppName} from "@/utils/dist"
+import {getAreaList, getAppList, getAppName, getCurrentUserAreaId} from "@/utils/dist"
 
 export default {
     name: 'Home',
@@ -117,12 +117,13 @@ export default {
         return {
             listLoading: false,
             search: {
-                areaId: 1,
+                areaId: undefined,
                 date: new Date(new Date().format('yyyy-MM-dd')),
                 startAt: undefined,
                 endAt: undefined
             },
-            areaList: getAreaList(true),
+            authAreaId: getCurrentUserAreaId(),
+            areaList: getAreaList(false),
             appList: getAppList(),
             cardInfoData: [],
             newUserKey: 1,
@@ -159,6 +160,7 @@ export default {
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.initCard()
         this.initData()
     },
@@ -174,7 +176,6 @@ export default {
             this.$service.home.getOverview(this.handleSearch(), function (result){
                 let income = result.getIncome()
                 let income_decimals = 0
-                console.log("income:"+income)
                 if(income>0){
                     income = income / 100
                     income_decimals = 2

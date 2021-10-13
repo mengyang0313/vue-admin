@@ -9,7 +9,7 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-form-item label="主播Id" prop="anchorId">
+                <el-form-item label="主播1Id" prop="anchorId">
                     <el-input v-model="search.anchorId" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="区域">
@@ -36,43 +36,67 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="ownerId" label="用户id" align="center" width="120" />
-                <el-table-column prop="ownerNickname" label="昵称" align="center" />
-                <el-table-column prop="ownerType" label="用户类型" align="center" />
-                <el-table-column prop="thumb" label="视频" align="center" width="300">
+                <el-table-column prop="ownerId" label="主播Id" align="center" width="120" />
+                <el-table-column prop="app" label="App" align="center" width="120">
                     <template scope="scope">
-                        <el-image style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else-if="scope.row.app.os === 2">
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="ownerId" label="已有视频" align="center" width="300">
+                <el-table-column prop="areaName" label="区域" align="center" width="120"/>
+                <el-table-column prop="thumb" label="视频" align="center" width="150">
+                    <template scope="scope">
+                        <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="likes" label="点赞次数" align="center" width="120"/>
+                <el-table-column prop="ownerId" label="已有视频" align="center" width="120">
                     <template slot-scope="scope">
                         <a @click="toDialog('videoList',scope.row)" style="color: #1E88C7">查看</a>
                     </template>
                 </el-table-column>
-                <el-table-column prop="createdAt" label="录制时间" align="center" width="150" />
-                <el-table-column label="操作" align="center" width="200">
+                <el-table-column prop="createdAt" label="录制时间" align="center"/>
+                <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="primary" plain size="mini" :disabled="scope.row.forbid" @click="handlePassed(scope.$index, scope.row)">通过</el-button>
-                        <el-button type="success" plain size="mini" @click="handleRefuse(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="text" @click="passed(scope.row)">通过</el-button>
+                        <el-button type="text" @click="delVideo(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData" @changePageSize="changePageSize($event)"/>
+
+            <el-dialog
+                title="播放视频"
+                :visible.sync="playVisible"
+                :before-close="closeVideo"
+                :append-to-body="true">
+                <div class="content-item">
+                    <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
+                </div>
+            </el-dialog>
         </el-card>
     </div>
 </template>
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getCurrentUserAreaId, getReviewStatus} from "@/utils/dist"
+import {getAppList, getAppName, getAreaList, getArrName, getCurrentUserAreaId, getReviewStatus} from "@/utils/dist"
 import videoList from './dialog/video-list'
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/date"
+import VueVideoPlayer from '../../../components/VueVideoPlayer'
 
 export default {
     name: 'Table',
-    components: {Pagination, videoList},
+    components: {Pagination, videoList, VueVideoPlayer},
     data() {
         return {
             // 数据列表加载动画
@@ -89,14 +113,12 @@ export default {
             // 数据总条数
             total: 0,
             authAreaId: getCurrentUserAreaId(),
-            // 表格数据数组
             tableData: [],
-            // 多选数据暂存数组
             multipleSelection: [],
-            // 防止多次连续提交表单
-            isSubmit: false,
+            playVisible: false,
             areaData: getAreaList(true),
-            reviewStatus: getReviewStatus()
+            reviewStatus: getReviewStatus(),
+            appListAll: getAppList(false)
         }
     },
     created() {
@@ -113,11 +135,14 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appListAll, item.getAppId()),
+                        "areaId" : item.getAreaId(),
+                        "areaName" : getArrName($this.areaData, item.getAreaId()),
                         "ownerId" : item.getOwnerId(),
-                        "ownerNickname" : "昵称",
                         "ownerType" : item.getOwnerType(),
                         "thumb" : item.getThumb(),
-                        "videos" : "查看",
+                        "likes" : item.getLikes(),
                         "createdAt" : toTime(item.getCreatedAt())
                     }
                     data.push(json)
@@ -146,41 +171,46 @@ export default {
         changePageSize(msg){
             this.search.page.pageSize = msg.limit
         },
-        handlePassed(index, row) {
-            console.log(index, row)
-            this.$confirm('是否通过?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '通过!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                })
+        play(row) {
+            this.playVisible = true;
+            let src = row.uri
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.initSrc(src);
             })
         },
+        closeVideo(){
+            this.playVisible = false;
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.emptySrc();
+            })
+        },
+        passed(row) {
+            const $this = this
+            let param = {
+                "id" : row.id,
+                "status" : 5
+            }
+            this.$service.audit.processLive(param, function (result){
+                result ? $this.$message.success("审核通过 !") : $this.$message.error("审核失败 !")
+                $this.fetchData()
+            });
+        },
         // 拒绝
-        handleRefuse(index, row) {
-            console.log(index, row)
-            this.$confirm('是否拒绝?', '提示', {
+        delVideo(index, row) {
+            const $this = this
+            this.$confirm('是否删除?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '已拒绝!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                })
+                let param = {
+                    "id" : row.id,
+                    "status" : 4
+                }
+                this.$service.audit.processLive(param, function (result){
+                    result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
+                    $this.fetchData()
+                });
             })
         },
         // 列表中婚姻状况栏，状态值改变时，调用

@@ -125,5 +125,24 @@ export default class {
         })
     }
 
+    /**
+     * 处理通话录制视频列表
+     */
+    async processLive (param, callback) {
+        const req = new this.proto.FileRecord()
+        req.setId(param.id)
+        req.setStatus(param.status)
+
+        const metadata = {'token': getToken()}
+        this.client.processLive(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                callback(false)
+                error(err)
+            }
+        })
+    }
+
 
 }

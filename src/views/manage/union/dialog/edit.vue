@@ -49,17 +49,16 @@ export default {
     data() {
         return {
             form: {
-                id:'',
-                areaId: '',
-                name: '',
+                areaId: undefined,
+                name: undefined,
                 enable: true,
-                note: ''
+                note: undefined
             },
             title: '',
             authAreaId: getCurrentUserAreaId(),
             dialogVisible: false,
             boolDict: getBool(),
-            areaData : getAreaList(true),
+            areaData : getAreaList(false),
             rules: {
                 areaId: [
                     {required: true, message: '请选择', trigger: 'change'}
@@ -80,7 +79,7 @@ export default {
                 this.title = '编辑工会'
                 this.form = row
             }else{
-                this.form.areaId = getCurrentUserAreaId()
+                this.form.areaId = this.authAreaId === 0 ? this.areaData[0].value : this.authAreaId
             }
         },
         submitForm(formName) {

@@ -29,7 +29,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="userData" v-if="userData.values" class="data-chart"/>
+                    <ChartsCountLine :data="userData" :key="userKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -37,7 +37,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="callingData" v-if="callingData.values" class="data-chart"/>
+                    <ChartsCountLine :data="callingData" :key="callingKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -45,7 +45,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="callData" v-if="callData.values" class="data-chart"/>
+                    <ChartsCountLine :data="callData" :key="callKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -56,39 +56,44 @@
 import CountTo from 'vue-count-to'
 import ChartsBarLine from '../../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../../components/Charts/ChartsBar'
-import ChartsLine from '../../../components/Charts/ChartsLine'
+import ChartsCountLine from '../../../components/Charts/ChartsCountLine'
 import {getAreaList, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
     name: 'Home',
-    components: {CountTo, ChartsBar, ChartsBarLine, ChartsLine},
+    components: {CountTo, ChartsBar, ChartsBarLine, ChartsCountLine},
     data() {
         return {
+            userKey: 20,
+            callingKey: 40,
+            callKey: 60,
             search: {
                 areaId: getCurrentUserAreaId()
             },
-            areaList: getAreaList(true),
+            authAreaId: getCurrentUserAreaId(),
+            areaList: getAreaList(false),
             userData: {
                 title: '实时用户',
                 legend: ['在线用户', '新用户', '付费用户', '空闲主播', '通话主播'],
                 keys: [],
-                values: undefined
+                values: []
             },
             callingData: {
                 title: '实时通话',
                 legend: ['AIB发起', '用户发起', '主播发起'],
                 keys: [],
-                values: undefined
+                values: []
             },
             callData: {
                 title: '实时呼叫',
                 legend: ['整体呼叫', 'AIB呼叫', '用户呼叫', '主播呼叫'],
                 keys: [],
-                values: undefined
+                values: []
             }
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.initData()
     },
     methods: {
@@ -115,9 +120,10 @@ export default {
             let payUser = []
             let idleAnchor = []
             let busyAnchor = []
+            let len = statList.length
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("HH:mm"))
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
                 onlineUser.push(item.getOnlineUser())
                 newUser.push(item.getNewUser())
                 payUser.push(item.getPayUser())
@@ -133,6 +139,7 @@ export default {
 
             this.userData.keys = keys
             this.userData.values = values
+            ++this.userKey
         },
         handleCallingData(statList){
             let keys = []
@@ -142,7 +149,7 @@ export default {
             let anchorCalling = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("HH:mm"))
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
                 aiCalling.push(item.getAiCalling())
                 userCalling.push(item.getUserCalling())
                 anchorCalling.push(item.getAnchorCalling())
@@ -153,6 +160,7 @@ export default {
 
             this.callingData.keys = keys
             this.callingData.values = values
+            ++this.callingKey
         },
         handleCallData(statList){
             let keys = []
@@ -162,7 +170,7 @@ export default {
             let anchorCall = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("HH:mm"))
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
                 aiCall.push(item.getAiCall())
                 userCall.push(item.getUserCall())
                 anchorCall.push(item.getAnchorCall())
@@ -173,9 +181,10 @@ export default {
 
             this.callData.keys = keys
             this.callData.values = values
+            ++this.callKey
         },
         startUnix($date) {
-            return new Date($date.toLocaleDateString()).getTime() / 1000
+            return new Date($date.format('yyyy-MM-dd')).getTime() /1000
         },
         endUnix($date) {
             return this.startUnix($date) + 24 * 60 * 60 - 1
