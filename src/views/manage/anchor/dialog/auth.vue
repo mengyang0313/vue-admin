@@ -7,7 +7,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="主播区域" prop="areaId">
-                    <el-select v-model="form.areaId" @change="changeArea" :disabled="form.areaId !== 0" placeholder="请选择">
+                    <el-select v-model="form.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option
                             v-for="item in areaData"
                             :key="item.value"
@@ -37,7 +37,7 @@
                 </el-form-item>
                 <div :hidden="isHidden">
                     <el-divider></el-divider>
-                    <el-form-item label="所属App" prop="app">
+                    <el-form-item label="App: " prop="app">
                         {{ form.app.label }}
                         <span v-if="form.app.os === 1">
                             <i class="icon-android-fill"></i>
@@ -46,10 +46,10 @@
                             <i class="icon-pingguo"></i>
                         </span>
                     </el-form-item>
-                    <el-form-item label="上线IP" prop="onlineIp">
+                    <el-form-item label="上线IP: " prop="onlineIp">
                         {{ form.onlineIp }}
                     </el-form-item>
-                    <el-form-item label="国家" prop="country">
+                    <el-form-item label="国家: " prop="country">
                         {{ form.country }}
                     </el-form-item>
                 </div>
@@ -80,7 +80,7 @@ export default {
         return {
             form: {
                 anchorId: undefined,
-                areaId: getCurrentUserAreaId(),
+                areaId: undefined,
                 guildId: undefined,
                 app: {
                     label: 0,
@@ -92,6 +92,7 @@ export default {
             uidDisabled: true,
             dialogVisible: false,
             isHidden: true,
+            authAreaId: getCurrentUserAreaId().areaId,
             anchorLevel: getAnchorLevel(),
             areaData: getAreaList(false),
             appListAll: getAppList(false),
@@ -110,7 +111,7 @@ export default {
         init(row){
             if(row === ""){
                 this.uidDisabled = false;
-                this.form.areaId = this.areaData[0].value
+                this.form.areaId = this.authAreaId === 0 ? this.areaData[0].value : this.authAreaId
             }else{
                 this.form.anchorId = row.id
                 this.form.areaId = row.areaId
@@ -161,6 +162,7 @@ export default {
                 if(list.length === 1){
                     $this.isHidden = false
                     let user = list[0]
+                    $this.form.areaId = user.getAreaId()
                     $this.form.app = getAppName($this.appListAll, user.getAppId())
                     $this.form.country = user.getCountry()
                     $this.form.onlineIp = user.getOnlineIp()

@@ -27,7 +27,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0"  @change="changeArea" placeholder="请选择">
                         <el-option v-for="item in areaData"
                                    :key="item.value"
                                    :label="item.label"
@@ -261,7 +261,7 @@ export default {
             // 查询列表参数对象
             search: {
                 anchorId: undefined,
-                areaId: getCurrentUserAreaId(),
+                areaId: undefined,
                 guildId: undefined,
                 blockStatus: undefined,
                 onlineStatus: 0,
@@ -293,6 +293,7 @@ export default {
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaData[0].value : this.authAreaId
         this.changeArea(this.search.areaId)
         this.fetchData()
     },

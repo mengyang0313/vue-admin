@@ -25,7 +25,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" @change="changeArea" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -137,7 +137,15 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAppList, getArrName, getGuildList, getSettleStatus, getCurrentUserAreaId} from "@/utils/dist";
+import {
+    getAreaList,
+    getAppList,
+    getArrName,
+    getGuildList,
+    getSettleStatus,
+    getCurrentUserAreaId,
+    getGuildListByAreaId
+} from "@/utils/dist";
 import excel from "@/utils/excel"
 import createSettle from './dialog/createSettle'
 import importData from './dialog/import-data'
@@ -162,7 +170,7 @@ export default {
             submitLoading: false,
             areaList: getAreaList(false),
             appList: getAppList(),
-            guildList: getGuildList(true),
+            guildList: [],
             statusList: getSettleStatus(),
             createSettleLoadingText: "预结算生成中...",
             submitSettleLoadingText: "算生成中...",
@@ -174,6 +182,7 @@ export default {
     },
     created() {
         this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
+        this.changeArea(this.search.areaId)
         this.listLoading = false
     },
     methods: {
@@ -344,6 +353,9 @@ export default {
         },
         changePageSize(msg){
             this.search.page.pageSize = msg.limit
+        },
+        changeArea(val){
+            this.guildList = getGuildListByAreaId(val, true)
         }
     }
 }

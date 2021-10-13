@@ -104,6 +104,12 @@ export default {
         resetForm() {
             this.$refs.ruleForm.resetFields()
         },
+        closeVideo(){
+            this.playVisible = false;
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.emptySrc();
+            })
+        },
         closeDialog() {
             this.dialogVisible = false
             this.resetForm()

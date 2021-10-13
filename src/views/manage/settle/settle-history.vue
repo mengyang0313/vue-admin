@@ -22,7 +22,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                    <el-select v-model="search.areaId" :disabled="authAreaId !== 0" @change="changeArea" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -118,7 +118,15 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAreaList, getArrName, getCurrentUserAreaId, getGuildList, getSettleStatus} from "@/utils/dist";
+import {
+    getAppList,
+    getAreaList,
+    getArrName,
+    getCurrentUserAreaId,
+    getGuildList,
+    getGuildListByAreaId,
+    getSettleStatus
+} from "@/utils/dist";
 import excel from "@/utils/excel";
 import {toDate} from "@/utils/date";
 
@@ -148,12 +156,13 @@ export default {
             submitLoading: false,
             areaList: getAreaList(false),
             appList: getAppList(),
-            guildList: getGuildList(true),
+            guildList: [],
             statusList: getSettleStatus()
         }
     },
     created() {
         this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     methods: {
@@ -214,6 +223,9 @@ export default {
                 excel.exportDataToExcel(params)
                 this.exportVisible = false
             }
+        },
+        changeArea(val){
+            this.guildList = getGuildListByAreaId(val, true)
         }
     }
 }

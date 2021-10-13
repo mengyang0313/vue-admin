@@ -2,20 +2,23 @@ import {Empty} from "@/proto/js/usertype_pb";
 import {PayChannelListRequest, CommodityListRequest, AppListRequest} from "@/proto/js/cms_pb";
 import {getToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
+import {isEmpty} from "@/api/api";
 
 
 export async function initData() {
-    let areaArr = await getAreas()
-    sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
-
-    let guildArr = await getGuilds()
-    sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
+    // let areaArr = await getAreas()
+    // sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
+    getAreaList()
+    getGuildList()
+    getAppList()
+    // let guildArr = await getGuilds()
+    // sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
 
     let currentUser = await initCurrentUserInfo()
     sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
 
-    let apps = await getApps()
-    sessionStorage.setItem("appArr", JSON.stringify(apps));
+    // let apps = await getApps()
+    // sessionStorage.setItem("appArr", JSON.stringify(apps));
 
     let payChannelArr = await getPayChannel()
     sessionStorage.setItem("payChannelArr", JSON.stringify(payChannelArr));
@@ -76,7 +79,28 @@ export function getCurrentUserModules(){
 }
 
 
-export const getAreas = () => new Promise((resolve, reject) => {
+// export const getAreas = () => new Promise((resolve, reject) => {
+//     const empty = new Empty();
+//     const metadata = {'token': getToken()};
+//     cmsService.getAreaList(empty, metadata, (err, resp) => {
+//         if (!err) {
+//             const arr = []
+//             const list = resp.getAreasList()
+//             list.forEach((item, index)=>{
+//                 const json = {
+//                     value : item.getId(),
+//                     label : item.getTitle(),
+//                 }
+//                 arr.push(json)
+//             })
+//             resolve(arr)
+//         } else {
+//             console.log(err)
+//         }
+//     })
+// })
+
+export function initAreas(callback){
     const empty = new Empty();
     const metadata = {'token': getToken()};
     cmsService.getAreaList(empty, metadata, (err, resp) => {
@@ -90,24 +114,24 @@ export const getAreas = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
-            resolve(arr)
+            callback(arr)
         } else {
             console.log(err)
         }
     })
-})
-export function getAreaList(isShowAll) {
-    let areaArr = sessionStorage.getItem("areaArr");
-    let arr = JSON.parse(areaArr)
-    if(isShowAll){
-        arr.unshift({
-            label: "全部",
-            value: 0
-        })
-    }
-    return arr;
 }
-
+export function getAreaList(isShowAll) {
+    let json = sessionStorage.getItem("areaArr");
+    if (isEmpty(json)) {
+        initAreas(function (areaArr){
+            sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
+            return setOk(isShowAll, areaArr)
+        })
+    }else{
+        let arr = JSON.parse(json)
+        return setOk(isShowAll, arr)
+    }
+}
 export function getAppListByAreaId(val, isFilter){
     let apps = getAppList(isFilter)
 
@@ -133,7 +157,7 @@ export function getAppListByAreaId(val, isFilter){
 
 
 // 工会列表
-export const getGuilds = () => new Promise((resolve, reject) => {
+/*export const getGuilds = () => new Promise((resolve, reject) => {
     const req = new Empty();
     const metadata = {'token': getToken()};
     cmsService.getGuildList(req, metadata, (err, resp) => {
@@ -153,25 +177,42 @@ export const getGuilds = () => new Promise((resolve, reject) => {
             console.log(err)
         }
     })
-})
-export function getGuildList(isShowAll) {
-    let guildArr = sessionStorage.getItem("guildArr");
-
-    let newList = JSON.parse(guildArr)
-    if(isShowAll){
-        newList.unshift({
-            isAnchor: false,
-            label: "全部",
-            os: 0,
-            value: undefined
-        })
-    }
-    return newList
+})*/
+export function initGuilds(callback){
+    const req = new Empty();
+    const metadata = {'token': getToken()};
+    cmsService.getGuildList(req, metadata, (err, resp) => {
+        if (!err) {
+            const arr = []
+            const list = resp.getGuildsList()
+            list.forEach((item, index)=>{
+                const json = {
+                    value : item.getId(),
+                    label : item.getName(),
+                    areaId : item.getAreaId()
+                }
+                arr.push(json)
+            })
+            callback(arr)
+        } else {
+            console.log(err)
+        }
+    })
 }
-
+export function getGuildList(isShowAll) {
+    let json = sessionStorage.getItem("guildArr");
+    if (isEmpty(json)) {
+        initGuilds(function (arr){
+            sessionStorage.setItem("guildArr", JSON.stringify(arr));
+            return setOk(isShowAll, arr)
+        })
+    }else{
+        let arr = JSON.parse(json)
+        return setOk(isShowAll, arr)
+    }
+}
 export function getGuildListByAreaId(val, isShowAll){
-    let guildList = getGuildList()
-
+    let guildList = getGuildList(false)
     let newList = []
     if(val === 0){
         newList = guildList
@@ -182,19 +223,35 @@ export function getGuildListByAreaId(val, isShowAll){
             }
         })
     }
-    if(isShowAll){
-        newList.unshift({
-            isAnchor: false,
-            label: "全部",
-            os: 0,
-            value: undefined
-        })
-    }
-    return newList
+    return setOk(isShowAll, newList)
 }
 
 // 应用列表
-export const getApps = () => new Promise((resolve, reject) => {
+// export const getApps = () => new Promise((resolve, reject) => {
+//     const req = new AppListRequest();
+//     const metadata = {'token': getToken()};
+//     cmsService.getAppList(req, metadata, (err, resp) => {
+//         if (!err) {
+//             const arr = []
+//             const list = resp.getAppsList()
+//             list.forEach((item, index)=>{
+//                 const json = {
+//                     value : item.getId(),
+//                     label : item.getTitle(),
+//                     os : item.getOsType(),
+//                     isAnchor: item.getIsAnchor(),
+//                     areaIds: item.getAreaIdsList()
+//                 }
+//                 arr.push(json)
+//             })
+//             resolve(arr)
+//         } else {
+//             console.log(err)
+//         }
+//     })
+// })
+
+export function initApps(callback) {
     const req = new AppListRequest();
     const metadata = {'token': getToken()};
     cmsService.getAppList(req, metadata, (err, resp) => {
@@ -211,26 +268,33 @@ export const getApps = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
-            resolve(arr)
+            callback(arr)
         } else {
             console.log(err)
         }
     })
-})
+}
 
-export function getAppList(isFilter) {
-    let appArr = sessionStorage.getItem("appArr");
-    let arr = JSON.parse(appArr)
-    if(isFilter){
+export function getAppList(isNoAnchor) {
+    let json = sessionStorage.getItem("appArr");
+    let arr = []
+    if (isEmpty(json)) {
+        initApps(function (arr){
+            sessionStorage.setItem("appArr", JSON.stringify(arr));
+        })
+    }else{
+        arr = JSON.parse(json)
+    }
+    if(isNoAnchor){
         let result = []
         arr.forEach(item => {
             if(!item.isAnchor){
                 result.push(item)
             }
         })
-        return result
+        return setOk(false, result)
     }else{
-        return arr
+        return setOk(false, arr)
     }
 }
 
@@ -336,6 +400,17 @@ export function getAppName(arr, id){
         }
     })
     return {label:label, os:os}
+}
+
+
+export function setOk(isShowAll, arr){
+    if (isShowAll) {
+        arr.unshift({
+            label: "全部",
+            value: 0
+        })
+    }
+    return arr
 }
 
 

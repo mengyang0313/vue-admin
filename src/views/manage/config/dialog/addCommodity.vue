@@ -12,8 +12,8 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.appId"  :disabled="authAreaId !== 0" placeholder="请选择">
-                        <el-option v-for="item in appList"
+                    <el-select v-model="form.areaId"  :disabled="authAreaId !== 0" placeholder="请选择">
+                        <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
@@ -117,14 +117,14 @@ export default {
         return {
             form: {
                 enable: true,
-                areaId : getCurrentUserAreaId()
+                areaId : undefined
             },
             dialogVisible: false,
             title: '新增商品',
             authAreaId: getCurrentUserAreaId(),
             iconArr: [],
             iconDialog: false,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             appList: getAppList(),
             rules: {
                 appId: [
@@ -152,8 +152,9 @@ export default {
                 this.form = row
                 this.iconArr.push({"url": row.icon});
             }else{
-                this.changeArea(this.form.areaId)
+                this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             }
+            this.changeArea(this.form.areaId)
         },
         submitForm() {
             const $this = this
