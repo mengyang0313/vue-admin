@@ -68,7 +68,7 @@
                         <el-button type="text" @click="toDialog('videoList',scope.row)">{{ scope.row.videoCount }}</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="tags" label="标签" align="center" width="120" />
+                <el-table-column prop="tags" label="标签" align="center" width="180" />
                 <el-table-column prop="occupationStr" label="职业" align="center" width="120" />
                 <el-table-column prop="birthday" label="生日" align="center" width="150" />
                 <el-table-column prop="signature" label="签名" align="center" :show-overflow-tooltip="true" width="200" />
@@ -167,7 +167,7 @@ export default {
                         "videoCount" : item.getVideoIdsList().length,
                         "tags" : item.getTagsList().join(", "),
                         "occupation" : item.getOccupation(),
-                        "occupationStr" : getArrName($this.occupationList, item.getOccupation()),
+                        "occupationStr" : getOccupationType(item.getOccupation()),
                         "birthday" : toDate(item.getBirthday()),
                         "signature" : item.getSignature(),
                         "voiceGreeting" : item.getVoiceGreeting(),

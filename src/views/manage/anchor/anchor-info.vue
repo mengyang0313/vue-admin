@@ -48,7 +48,7 @@
                                         {{ basic.activeCount }}
                                     </el-descriptions-item>
                                     <el-descriptions-item label="等级">
-                                        {{ basic.level }}
+                                        {{ basic.levelStr }}
                                     </el-descriptions-item>
                                     <el-descriptions-item label="首选语言">
                                         {{ basic.lang }}
@@ -161,11 +161,7 @@
                         <el-button type="text" @click="toDialog('videoList',scope.row)">{{ scope.row.videoCount }}</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="tags" label="标签" align="center" width="120" >
-                    <template scope="scope">
-                        <el-tag size="medium">{{ scope.row.tags }}</el-tag>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="tags" label="标签" align="center" width="180" />
                 <el-table-column prop="occupation" label="职业" align="center" width="120" />
                 <el-table-column prop="birthday" label="生日" align="center" width="150" />
                 <el-table-column prop="voiceGreeting" label="语音问候" align="center" width="150" />
@@ -197,11 +193,11 @@ import {
     getAreaList,
     getGuildList,
     getOnlineStatus,
-    getBlockStatus, getOccupationType
+    getBlockStatus, getOccupationType, getAnchorLevel
 } from "@/utils/dist";
 import videoList from '../audit/dialog/video-list'
 import photoList from '../audit/dialog/photo-list'
-import {toTime} from "@/utils/date";
+import {toDate} from "@/utils/date";
 
 export default {
     name: 'Table',
@@ -261,6 +257,7 @@ export default {
             this.basic.profileCount = basic.getProfileCount()
             this.basic.activeCount = basic.getActiveCount()
             this.basic.level = basic.getLevel()
+            this.basic.levelStr = getAnchorLevel(basic.getLevel())
             this.basic.lang = basic.getLang()
             this.basic.price = basic.getPrice()
             this.basic.callIncome = basic.getCallIncome()
@@ -304,7 +301,7 @@ export default {
                     "videoCount" : item.getVideoIdsList().length,
                     "tags" : item.getTagsList().join(", "),
                     "occupation" : getOccupationType(item.getOccupation()),
-                    "birthday" : toTime(item.getBirthday()),
+                    "birthday" : toDate(item.getBirthday()),
                     "voiceGreeting" : item.getVoiceGreeting(),
                     "onlineStart" : item.getOnlineStart(),
                     "onlineEnd" : item.getOnlineEnd(),
