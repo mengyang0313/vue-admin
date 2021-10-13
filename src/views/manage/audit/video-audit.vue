@@ -143,6 +143,7 @@ export default {
                         "ownerType" : item.getOwnerType(),
                         "thumb" : item.getThumb(),
                         "likes" : item.getLikes(),
+                        "uri" : item.getUri(),
                         "createdAt" : toTime(item.getCreatedAt())
                     }
                     data.push(json)
