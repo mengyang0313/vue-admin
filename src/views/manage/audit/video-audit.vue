@@ -83,6 +83,9 @@
                     <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
                 </div>
             </el-dialog>
+
+            <!-- 视频列表 -->
+            <videoList ref="videoList" @fetchData="fetchData"/>
         </el-card>
     </div>
 </template>
