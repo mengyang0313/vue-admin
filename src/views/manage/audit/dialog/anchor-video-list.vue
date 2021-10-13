@@ -10,6 +10,8 @@
                 style="width: 100%"
                 size="medium"
             >
+                <el-table-column prop="id" label="ID" align="center" width="120" />
+                <el-table-column prop="ownerId" label="所有者ID" align="center" width="120"/>
                 <el-table-column prop="thumb" label="视频" align="center">
                     <template scope="scope">
                         <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
@@ -30,7 +32,6 @@
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="120"/>
                 <el-table-column prop="type" label="文件类型" align="center" width="120"/>
-                <el-table-column prop="ownerId" label="所有者ID" align="center" width="120"/>
                 <!--                    <el-table-column label="操作" align="center">-->
                 <!--                        <template slot-scope="scope">-->
                 <!--                            <el-button type="success" plain size="mini" @click="handleRefuse(scope.$index, scope.row)">删除</el-button>-->
@@ -101,6 +102,7 @@ export default {
                 const data = []
                 list.forEach((item, index)=>{
                     const json = {
+                        "id" : item.getId(),
                         "app" : getAppName($this.appList, item.getAppId()),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "type" : getArrName($this.fileTypeList, item.getType()),

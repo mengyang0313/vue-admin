@@ -36,6 +36,7 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="60"/>
+                <el-table-column prop="id" label="ID" align="center" width="120" />
                 <el-table-column prop="ownerId" label="主播Id" align="center" width="120" />
                 <el-table-column prop="app" label="App" align="center" width="120">
                     <template scope="scope">
@@ -203,7 +204,7 @@ export default {
             });
         },
         // 拒绝
-        delVideo(index, row) {
+        delVideo(row) {
             const $this = this
             this.$confirm('是否删除?', '提示', {
                 confirmButtonText: '确定',
