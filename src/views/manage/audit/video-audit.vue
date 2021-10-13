@@ -58,8 +58,8 @@
                 </el-table-column>
                 <el-table-column prop="likes" label="点赞次数" align="center" width="120"/>
                 <el-table-column prop="ownerId" label="已有视频" align="center" width="120">
-                    <template slot-scope="scope">
-                        <a @click="toDialog('videoList',scope.row)" style="color: #1E88C7">查看</a>
+                    <template scope="scope">
+                        <el-button type="text" @click="toDialog('videoList',scope.row)">查看</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="createdAt" label="录制时间" align="center"/>
@@ -90,7 +90,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import {getAppList, getAppName, getAreaList, getArrName, getCurrentUserAreaId, getReviewStatus} from "@/utils/dist"
-import videoList from './dialog/video-list'
+import videoList from './dialog/anchor-video-list'
 import {toTime} from "@/utils/date"
 import VueVideoPlayer from '../../../components/VueVideoPlayer'
 
