@@ -241,22 +241,37 @@ export default {
                     }
 
                     if(item.getGoogleIncome()>0 || item.getAppleIncome()>0 || item.getOtherIncome()>0){
+                        let googleIncome = item.getGoogleIncome() / 100
+                        let appleIncome = item.getAppleIncome() / 100
+                        let otherIncome = item.getOtherIncome() / 100
                         channelArr.push({
                             title: title,
-                            val1: item.getGoogleIncome() / 100,
-                            val2: item.getAppleIncome() / 100,
-                            val3: item.getOtherIncome() / 100
+                            val1: googleIncome,
+                            val2: appleIncome,
+                            val3: otherIncome,
+                            total: googleIncome + appleIncome + otherIncome
                         })
                     }
                 })
-                console.log("userArr:"+userArr)
-                $this.$set($this.userDate, 'data', userArr)
+
+                $this.userDate.data = userArr.sort(function(x,y){
+                    return y.val1 - x.val1;
+                })
                 ++$this.newUserKey
-                $this.incomeData.data = newArr
+
+                $this.incomeData.data = newArr.sort(function(x,y){
+                    return y.val1 - x.val1;
+                })
                 ++$this.incomeKey
-                $this.totalDate.data = totalArr
+
+                $this.totalDate.data = totalArr.sort(function(x,y){
+                    return y.val1 - x.val1;
+                })
                 ++$this.totalKey
-                $this.channelData.data = channelArr
+
+                $this.channelData.data = channelArr.sort(function(x,y){
+                    return y.total - x.total;
+                })
                 ++$this.channelKey
 
                 let activeList = result.getHourlyActivesList()
@@ -273,12 +288,17 @@ export default {
             return this.search
         },
         handleActiveData(statList){
+            let keyArr = []
+            let valueArr = []
             let data = []
             statList.forEach((item, index) => {
-                this.activeData.keys.push(index + ":00")
+                keyArr.push(index + ":00")
                 data.push(item)
             })
-            this.activeData.values.push(data)
+            valueArr.push(data)
+            this.activeData.keys = keyArr
+            this.activeData.values = valueArr
+            ++this.activeKey
         },
         startUnix($date) {
             return new Date($date.toLocaleDateString()).getTime() / 1000

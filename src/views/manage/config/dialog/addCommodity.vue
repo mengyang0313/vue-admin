@@ -8,15 +8,6 @@
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId"  :disabled="authAreaId !== 0" placeholder="请选择">
-                        <el-option v-for="item in areaList"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
                             <span style="float: left">{{ item.label }}</span>
                             <span v-if="item.os === 1">
                                 <i class="icon-android-fill" style="float: right"></i>
@@ -27,6 +18,16 @@
                             <span v-if="item.isAnchor">
                                 <i class="iconfont icon-zhuboguanli" style="float: right"></i>
                             </span>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="区域" prop="areaId">
+                    <el-select v-model="form.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                        <el-option v-for="item in areaList"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -125,7 +126,7 @@ export default {
             iconArr: [],
             iconDialog: false,
             areaList: getAreaList(false),
-            appList: getAppList(),
+            appList: [],
             rules: {
                 appId: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
@@ -210,7 +211,7 @@ export default {
             })
         },
         changeArea(val) {
-            this.appList = getAppListByAreaId(val)
+            this.appList = getAppListByAreaId(val, true, false)
         }
     }
 }

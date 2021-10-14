@@ -34,6 +34,7 @@
                     <el-form-item label="日期" prop="settleAt">
                         <el-date-picker
                             v-model="search.settleAtTime"
+                            value-format="yyyy-MM-dd"
                             type="date"
                             placeholder="选择日期">
                         </el-date-picker>
@@ -59,11 +60,13 @@
                 size="medium"
             >
                 <el-table-column prop="anchorId" label="主播ID" align="center" />
+                <el-table-column prop="areaStr" label="区域" align="center"/>
                 <el-table-column prop="startAt" label="统计时间" align="center"/>
                 <el-table-column prop="onlineDuration" label="在线时长" align="center"/>
                 <el-table-column prop="inCall" label="来电数" align="center"  />
                 <el-table-column prop="outCall" label="呼出数" align="center"/>
                 <el-table-column prop="answer" label="接听数" align="center/>
+                <el-table-column prop="answer10" label="" align="center"/>
                 <el-table-column prop="answer30" label="通话时间30s" align="center"/>
                 <el-table-column prop="answer50" label="通话时间50s" align="center"/>
                 <el-table-column prop="duration" label="通话时长" align="center"/>
@@ -84,7 +87,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import {getAreaList, getAnchorLevel, getArrName, getCurrentUserAreaId} from "@/utils/dist";
-import {toDate} from "@/utils/date";
+import {toDate} from "@/utils/date"
 
 
 export default {
@@ -93,7 +96,7 @@ export default {
         return {
             listLoading: true,
             search: {
-                areaId: getCurrentUserAreaId(),
+                areaId: undefined,
                 level: undefined,
                 anchorId: undefined,
                 settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
@@ -106,11 +109,12 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             isSubmit: false,
             activeIndex: 1,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             levelList: getAnchorLevel()
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.fetchData()
     },
     methods: {
@@ -128,13 +132,13 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "anchorId" : item.getAnchorId(),
-                        "onlineDuration" : item.getOnlineDuration(),
+                        "onlineDuration" : $this.formatSeconds(item.getOnlineDuration()),
                         "inCall" : item.getInCall(),
                         "outCall" : item.getOutCall(),
                         "answer" : item.getAnswer(),
                         "answer30" : item.getAnswer30(),
-                        "answer50" : item.getAnswer50(),
-                        "duration" : item.getDuration(),
+                        "answer50" :item.getAnswer50(),
+                        "duration" : $this.formatSeconds(item.getDuration()),
                         "callIncome" : item.getCallIncome(),
                         "giftIncome" : item.getGiftIncome(),
                         "commissionIncome" : item.getCommissionIncome(),
@@ -152,7 +156,10 @@ export default {
         handleParam(){
             let param = this.search;
             if (typeof(this.search.settleAtTime) != "undefined"){
-                param.statAt = this.search.settleAtTime.getTime() / 1000
+                param.statAt = new Date(this.search.settleAtTime).getTime() / 1000
+            }
+            if (typeof(this.search.anchorId) != "undefined"){
+                param.anchorId = parseInt(this.search.anchorId)
             }
             return param
         },
@@ -176,6 +183,16 @@ export default {
                 case '2':
                     break;
             }
+        },
+        formatSeconds(value) {
+            let result = parseInt(value)
+            let h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600);
+            let m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60));
+            let s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60));
+
+            let res = '';
+            if(m !== '00') res += `${h}:${m}`;
+            return res;
         }
     }
 }

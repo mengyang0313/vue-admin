@@ -68,7 +68,7 @@ export default {
             callingKey: 40,
             callKey: 60,
             search: {
-                areaId: getCurrentUserAreaId()
+                areaId: undefined
             },
             authAreaId: getCurrentUserAreaId(),
             areaList: getAreaList(false),
@@ -184,7 +184,7 @@ export default {
             ++this.callKey
         },
         startUnix($date) {
-            return new Date($date.format('yyyy-MM-dd')).getTime() /1000
+            return new Date($date.toLocaleDateString()).getTime() / 1000
         },
         endUnix($date) {
             return this.startUnix($date) + 24 * 60 * 60 - 1

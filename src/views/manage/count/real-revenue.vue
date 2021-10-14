@@ -29,7 +29,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="expenseData" v-if="expenseData.keys" class="data-chart"/>
+                    <ChartsCountLine :data="expenseData" :key="expenseKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -37,7 +37,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="depositData" v-if="depositData.keys" class="data-chart"/>
+                    <ChartsCountLine :data="depositData" :key="depositKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -45,7 +45,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="payData" v-if="payData.keys" class="data-chart"/>
+                    <ChartsCountLine :data="payData" :key="payKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -56,18 +56,22 @@
 import CountTo from 'vue-count-to'
 import ChartsBarLine from '../../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../../components/Charts/ChartsBar'
-import ChartsLine from '../../../components/Charts/ChartsLine'
+import ChartsCountLine from '../../../components/Charts/ChartsCountLine'
 import {getAreaList, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
     name: 'Home',
-    components: {CountTo, ChartsBar, ChartsBarLine, ChartsLine},
+    components: {CountTo, ChartsBar, ChartsBarLine, ChartsCountLine},
     data() {
         return {
+            expenseKey: 20,
+            depositKey: 40,
+            payKey: 60,
             search: {
-                areaId: getCurrentUserAreaId()
+                areaId: undefined
             },
-            areaList: getAreaList(true),
+            authAreaId: getCurrentUserAreaId(),
+            areaList: getAreaList(false),
             expenseData: {
                 title: '实时消耗',
                 legend: ['全部用户'],
@@ -89,6 +93,7 @@ export default {
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.initData()
     },
     methods: {
@@ -109,42 +114,51 @@ export default {
         },
         handleExpenseData(statList){
             let keys = []
+            let values = []
             let expense = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("HH:mm"))
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
                 expense.push(item.getExpense())
             })
-            this.expenseData.values.push(expense)
+            values.push(expense)
+            this.expenseData.values = values
             this.expenseData.keys = keys
+            ++this.expenseKey
         },
         handleDepositData(statList){
             let keys = []
+            let values = []
             let deposit = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("HH:mm"))
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
                 deposit.push(item.getDeposit())
             })
-            this.depositData.values.push(deposit)
+            values.push(deposit)
+            this.depositData.values = values
             this.depositData.keys = keys
+            ++this.depositKey
         },
         handlePayData(statList){
             let keys = []
+            let values = []
             let googlePay = []
             let applePay = []
             let otherPay = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("HH:mm"))
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
                 googlePay.push(item.getGooglePay())
                 applePay.push(item.getApplePay())
                 otherPay.push(item.getOtherPay())
             })
-            this.payData.values.push(googlePay)
-            this.payData.values.push(applePay)
-            this.payData.values.push(otherPay)
+            values.push(googlePay)
+            values.push(applePay)
+            values.push(otherPay)
+            this.payData.values = values
             this.payData.keys = keys
+            ++this.payKey
         },
         startUnix($date) {
             return new Date($date.toLocaleDateString()).getTime() / 1000
