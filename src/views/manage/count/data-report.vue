@@ -11,41 +11,48 @@
                         class="search-form"
                     >
                         <el-form-item label="区域">
-                            <el-select v-model="search.area" placeholder="请选择">
-                                <el-option v-for="item in areaData"
+                            <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
+                                <el-option v-for="item in areaList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="产品" >
-                            <el-select v-model="search.area" placeholder="请选择">
-                                <el-option v-for="item in areaData"
+                        <el-form-item label="APP">
+                            <el-select v-model="search.appId" placeholder="请选择">
+                                <el-option v-for="item in appList"
                                            :key="item.value"
                                            :label="item.label"
                                            :value="item.value">
+                                    <span style="float: left">{{ item.label }}</span>
+                                    <span v-if="item.os === 1">
+                                            <i class="icon-android-fill" style="float: right"></i>
+                                        </span>
+                                    <span v-else-if="item.os === 2">
+                                            <i class="icon-pingguo" style="float: right"></i>
+                                        </span>
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="时间">
-                            <el-select v-model="search.area" placeholder="请选择">
-                                <el-option v-for="item in areaData"
-                                           :key="item.value"
-                                           :label="item.label"
-                                           :value="item.value">
-                                </el-option>
-                            </el-select>
+                        <el-form-item label="时间" prop="createdStart">
+                            <el-col :span="11">
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                            </el-col>
+                            <el-col class="line" :span="1" align="center">-</el-col>
+                            <el-col :span="10">
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                            </el-col>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="danger" @click="onSubmit" icon="el-icon-refresh">刷 新</el-button>
+                            <el-button type="danger" @click="onSearch" icon="el-icon-refresh">刷 新</el-button>
                         </el-form-item>
                     </el-form>
                 </el-card>
             </el-col>
         </el-row>
 
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="selItem">
             <el-menu-item index="1">整体收入</el-menu-item>
             <el-menu-item index="2">新增收入</el-menu-item>
             <el-menu-item index="3">整体付费率</el-menu-item>
@@ -85,7 +92,7 @@
             <el-table-column prop="reward" label="ARPPU" align="center"/>
         </el-table>
         <!-- 分页栏 -->
-        <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+        <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                     @pagination="fetchData"/>
         </el-card>
     </div>
@@ -96,6 +103,7 @@ import CountTo from 'vue-count-to'
 import ChartsLine from '../../../components/Charts/ChartsLine'
 import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
+import {getAppList, getAppListByAreaId, getAreaList, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
     name: 'Home',
@@ -105,13 +113,20 @@ export default {
             // 数据列表加载动画
             listLoading: true,
             // 查询列表参数对象
-            search: this.initQuery(),
-            // 数据总条数
+            search: {
+                areaId: undefined,
+                appId: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
             total: 0,
-            // 防止多次连续提交表单
-            isSubmit: false,
             activeIndex: 1,
             currentDate: {},
+            authAreaId: getCurrentUserAreaId(),
+            appList: undefined,
+            areaList: getAreaList(true),
             overallData: {
                 title: '整体收入',
                 legend: ['整体收入'],
@@ -151,10 +166,29 @@ export default {
     },
     methods: {
         init(){
-            this.handleSelect(this.activeIndex,this.activeIndex)
+            this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
+            this.changeArea(this.search.areaId)
+            this.selItem(this.activeIndex)
             this.fetchData()
         },
-        handleSelect(key, keyPath) {
+        fetchData() {
+            const $this = this
+            this.cardInfoData = []
+            this.$service.home.getUserStat(this.handleSearch(), function (result){
+                let income = result.getIncome()
+            });
+        },
+        handleSearch(){
+            let date = this.search.date
+            this.search.startAt = this.startUnix(date)
+            this.search.endAt = this.endUnix(date)
+            return this.search
+        },
+        onSearch() {
+            this.search.page.currentPage = 1
+            this.fetchData()
+        },
+        selItem(key) {
             this.currentDate = {}
             switch (key){
                 case '1':
@@ -172,34 +206,8 @@ export default {
             }
             this.$refs.chartsLine.init(this.currentDate);
         },
-        // 获取数据列表
-        fetchData() {
-            this.listLoading = true
-            let url = process.env.VUE_APP_JSON_URI + "/settle.json"
-            // 获取数据列表接口
-            getTableList(this.search, url).then(res => {
-                const data = res.data
-                if (data.code === 0) {
-                    this.total = data.data.total
-                    this.tableData = data.data.list
-                    this.listLoading = false
-                }
-            }).catch(() => {
-                this.listLoading = false
-            })
-        },
-        // 查询数据
-        onSearch() {
-            this.search.currentPage = 1
-            this.fetchData()
-        },
-        initQuery() {
-            return {
-                uid: undefined,
-                app: undefined,
-                currentPage: 1,
-                pageSize: 10
-            }
+        changeArea(val){
+            this.appList = getAppListByAreaId(val, true, true)
         }
     }
 }

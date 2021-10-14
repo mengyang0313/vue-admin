@@ -166,6 +166,7 @@ export default {
                     $this.form.app = getAppName($this.appListAll, user.getAppId())
                     $this.form.country = user.getCountry()
                     $this.form.onlineIp = user.getOnlineIp()
+                    $this.changeArea($this.form.areaId)
                 }else{
                     $this.isHidden = true
                 }

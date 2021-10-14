@@ -640,6 +640,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getAnchorStat =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.UserStatRequest,
+ *   !proto.pb.cms.UserStatReply>}
+ */
+const methodDescriptor_CmsSdk_GetUserStat = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetUserStat',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.UserStatRequest,
+  proto.pb.cms.UserStatReply,
+  /**
+   * @param {!proto.pb.cms.UserStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.UserStatReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.UserStatRequest,
+ *   !proto.pb.cms.UserStatReply>}
+ */
+const methodInfo_CmsSdk_GetUserStat = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.UserStatReply,
+  /**
+   * @param {!proto.pb.cms.UserStatRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.UserStatReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.UserStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.UserStatReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.UserStatReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getUserStat =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetUserStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetUserStat,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.UserStatRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.UserStatReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getUserStat =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetUserStat',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetUserStat);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.Admin,
  *   !proto.pb.Admin>}
  */

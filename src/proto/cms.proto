@@ -35,6 +35,10 @@ service CmsSdk {
     rpc GetAnchorStat (AnchorStatRequest) returns (AnchorStatReply) {
     }
 
+    // 获取用户统计数据
+    rpc GetUserStat (UserStatRequest) returns (UserStatReply) {
+    }
+
     // 保存管理员，id为0时创建
     rpc SaveAdmin (Admin) returns (Admin) {
     }
@@ -367,6 +371,23 @@ message AnchorStatReply {
     uint32 total_page = 4;
     // 总记录数
     uint32 total_count = 5;
+}
+
+message UserStatRequest {
+    // 起始时间
+    uint32 start_at = 1;
+    // 起始时间
+    uint32 end_at = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 应用
+    uint32 app_id = 4;
+    // 主播id
+    StatInterval interval = 5;
+}
+
+message UserStatReply {
+    repeated UserStat stats = 1;
 }
 
 message AdminListReply {
