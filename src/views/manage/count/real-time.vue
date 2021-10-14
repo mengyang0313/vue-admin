@@ -49,6 +49,30 @@
                 </el-card>
             </el-col>
         </el-row>
+
+        <el-row class="date-box" :gutter="30">
+            <el-col :span="24">
+                <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
+                    <ChartsCountLine :data="expenseData" :key="expenseKey" class="data-chart"/>
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <el-row class="date-box" :gutter="30">
+            <el-col :span="24">
+                <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
+                    <ChartsCountLine :data="depositData" :key="depositKey" class="data-chart"/>
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <el-row class="date-box" :gutter="30">
+            <el-col :span="24">
+                <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
+                    <ChartsCountLine :data="payData" :key="payKey" class="data-chart"/>
+                </el-card>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -67,6 +91,9 @@ export default {
             userKey: 20,
             callingKey: 40,
             callKey: 60,
+            expenseKey: 80,
+            depositKey: 100,
+            payKey: 120,
             search: {
                 areaId: undefined
             },
@@ -87,6 +114,24 @@ export default {
             callData: {
                 title: '实时呼叫',
                 legend: ['整体呼叫', 'AIB呼叫', '用户呼叫', '主播呼叫'],
+                keys: [],
+                values: []
+            },
+            expenseData: {
+                title: '实时消耗',
+                legend: ['全部用户'],
+                keys: [],
+                values: []
+            },
+            depositData: {
+                title: '实时充值',
+                legend: ['全部用户'],
+                keys: [],
+                values: []
+            },
+            payData: {
+                title: '渠道占比',
+                legend: ['Google', 'Apple', '三方渠道'],
                 keys: [],
                 values: []
             }
@@ -110,6 +155,9 @@ export default {
                 $this.handleUserData(statList)
                 $this.handleCallingData(statList)
                 $this.handleCallData(statList)
+                $this.handleExpenseData(statList)
+                $this.handleDepositData(statList)
+                $this.handlePayData(statList)
             });
         },
         handleUserData(statList){
@@ -182,6 +230,54 @@ export default {
             this.callData.keys = keys
             this.callData.values = values
             ++this.callKey
+        },
+        handleExpenseData(statList){
+            let keys = []
+            let values = []
+            let expense = []
+            statList.forEach((item, index) => {
+                let startAt = item.getStartAt()
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                expense.push(item.getExpense() / 1000)
+            })
+            values.push(expense)
+            this.expenseData.values = values
+            this.expenseData.keys = keys
+            ++this.expenseKey
+        },
+        handleDepositData(statList){
+            let keys = []
+            let values = []
+            let deposit = []
+            statList.forEach((item, index) => {
+                let startAt = item.getStartAt()
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                deposit.push(item.getDeposit() / 1000)
+            })
+            values.push(deposit)
+            this.depositData.values = values
+            this.depositData.keys = keys
+            ++this.depositKey
+        },
+        handlePayData(statList){
+            let keys = []
+            let values = []
+            let googlePay = []
+            let applePay = []
+            let otherPay = []
+            statList.forEach((item, index) => {
+                let startAt = item.getStartAt()
+                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                googlePay.push(item.getGooglePay() / 1000)
+                applePay.push(item.getApplePay() / 1000)
+                otherPay.push(item.getOtherPay() / 1000)
+            })
+            values.push(googlePay)
+            values.push(applePay)
+            values.push(otherPay)
+            this.payData.values = values
+            this.payData.keys = keys
+            ++this.payKey
         },
         startUnix($date) {
             return new Date($date.toLocaleDateString()).getTime() / 1000

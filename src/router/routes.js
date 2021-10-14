@@ -43,17 +43,17 @@ import {getCurrentUserModules} from "@/utils/dist";
                 name: 'real-time',
                 component: () => import('../views/manage/count/real-time'),
                 meta: {
-                    title: '实时通话'
+                    title: '实时数据'
                 }
             },
-            {
-                path: 'real-revenue',
-                name: 'real-revenue',
-                component: () => import('../views/manage/count/real-revenue'),
-                meta: {
-                    title: '实时营收'
-                }
-            },
+            // {
+            //     path: 'real-revenue',
+            //     name: 'real-revenue',
+            //     component: () => import('../views/manage/count/real-revenue'),
+            //     meta: {
+            //         title: '实时营收'
+            //     }
+            // },
             {
                 path: 'data-report',
                 name: 'data-report',
