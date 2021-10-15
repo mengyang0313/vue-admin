@@ -80,4 +80,26 @@ export default class {
         })
     }
 
+
+    // 获取用户统计数据
+    async getUserStat (param, callback) {
+        let req = new this.proto.UserStatRequest();
+        req.setStartAt(param.startAt)
+        req.setEndAt(param.endAt)
+        req.setAreaId(param.areaId)
+        req.setAppId(param.appId)
+        req.setInterval(param.interval)
+
+        const metadata = {'token': getToken()};
+        this.client.getUserStat(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+
 }

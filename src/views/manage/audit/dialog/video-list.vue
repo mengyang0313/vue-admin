@@ -17,27 +17,14 @@
                         <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="thumb" label="应用App" align="center" width="150">
-                    <template scope="scope">
-                        <div slot="reference">
-                            {{ scope.row.app.label }}
-                            <span v-if="scope.row.app.os === 1">
-                                <i class="icon-android-fill"></i>
-                            </span>
-                            <span v-else>
-                                <i class="icon-pingguo"></i>
-                            </span>
-                        </div>
-                    </template>
-                </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="180"/>
                 <el-table-column prop="type" label="文件类型" align="center" width="180"/>
-
-                <!--                    <el-table-column label="操作" align="center">-->
-                <!--                        <template slot-scope="scope">-->
-                <!--                            <el-button type="success" plain size="mini" @click="handleRefuse(scope.$index, scope.row)">删除</el-button>-->
-                <!--                        </template>-->
-                <!--                    </el-table-column>-->
+<!--                <el-table-column label="操作" align="center" width="250" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="passed(scope.row)">通过</el-button>
+                        <el-button type="text" @click="delVideo(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>-->
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"

@@ -491,6 +491,9 @@ export function getReviewStatus(key){
         }]
     if(typeof(key) != "undefined"){
         let label = ""
+        if(key===0){
+            return label
+        }
         arr.forEach((item) => {
             if(key.toString() === item.value.toString()){
                 label = item.label
@@ -1227,6 +1230,33 @@ export function getGenderType(key){
     }, {
         value: 2,
         label: '女'
+    }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0 || key==='0'){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
+}
+
+
+
+// 时间间隔
+export function getStatInterval(key){
+    let arr = [{
+        value: 3,
+        label: '1小时'
+    }, {
+        value: 4,
+        label: '1天'
     }]
     if(typeof(key) != "undefined"){
         let label = ""

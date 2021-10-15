@@ -31,6 +31,7 @@ export default {
         },
         drawing() {
             const title = this.data.title
+            const name = this.data.name
             const legendData = this.data.legend
             const xAxisData = this.data.data.map(item => item.title)
             const seriesData1 = this.data.data.map(item => item.val1)
@@ -40,7 +41,8 @@ export default {
                 // 标题
                 title: {
                     text: title,
-                    top: 15
+                    subtext: name,
+                    top: 5
                 },
                 // 工具提示
                 tooltip: {
@@ -79,8 +81,15 @@ export default {
                 yAxis: [
                     {
                         type: 'value',
+                    },
+                    {
+                        type: 'value',
+                        show  : false,
+                        axisLabel: {
+                            formatter: '{value} %'
+                        },
                         max: value => {
-                            return Math.ceil(value.max / 100) * 100 + 300
+                            return Math.ceil(value.max / 100) * 100 + 200
                         }
                     }
                 ],

@@ -37,27 +37,13 @@
             >
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="id" label="ID" align="center" width="120" />
-                <el-table-column prop="ownerId" label="主播Id" align="center" width="120" />
-                <el-table-column prop="app" label="App" align="center" width="120">
-                    <template scope="scope">
-                        <div slot="reference">
-                            {{ scope.row.app.label }}
-                            <span v-if="scope.row.app.os === 1">
-                                <i class="icon-android-fill"></i>
-                            </span>
-                            <span v-else-if="scope.row.app.os === 2">
-                                <i class="icon-pingguo"></i>
-                            </span>
-                        </div>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="ownerId" label="主播Id" align="center" width="180" />
                 <el-table-column prop="areaName" label="区域" align="center" width="120"/>
                 <el-table-column prop="thumb" label="视频" align="center" width="150">
                     <template scope="scope">
                         <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="likes" label="点赞次数" align="center" width="120"/>
                 <el-table-column prop="ownerId" label="已有视频" align="center" width="120">
                     <template scope="scope">
                         <el-button type="text" @click="toDialog('videoList',scope.row)">查看</el-button>
@@ -221,10 +207,6 @@ export default {
                     $this.fetchData()
                 });
             })
-        },
-        // 列表中婚姻状况栏，状态值改变时，调用
-        selectChange(row) {
-            // 此处添加后台接口，成功后调用fetchData方法更新列表
         }
     }
 }

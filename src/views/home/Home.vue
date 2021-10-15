@@ -133,16 +133,19 @@ export default {
             channelKey: 80,
             incomeData: {
                 title: '新增收入',
+                name: '',
                 legend: ['新增收入'],
                 data: []
             },
             totalDate: {
                 title: '全部收入',
+                name: '',
                 legend: ['总收入'],
                 data: []
             },
             userDate: {
                 title: '新增用户',
+                name: '',
                 legend: ['新增用户'],
                 data: []
             },
@@ -254,21 +257,32 @@ export default {
                     }
                 })
 
+                // 新增用户
+                $this.userDate.name = "总计:" + $this.countTotal(userArr, 'val1')
                 $this.userDate.data = userArr.sort(function(x,y){
                     return y.val1 - x.val1;
                 })
                 ++$this.newUserKey
 
+                // 新增收入
+                $this.incomeData.name = "总计:" + $this.countTotal(newArr, 'val1')
                 $this.incomeData.data = newArr.sort(function(x,y){
                     return y.val1 - x.val1;
                 })
                 ++$this.incomeKey
 
+                // 全部收入
+                $this.totalDate.name = "总计:" + $this.countTotal(totalArr, 'val1')
                 $this.totalDate.data = totalArr.sort(function(x,y){
                     return y.val1 - x.val1;
                 })
                 ++$this.totalKey
 
+                // 充值渠道
+                $this.channelData.name = "总计:" + $this.countTotal(channelArr, 'tatal')
+                    + "  google:"+ $this.countTotal(channelArr, 'val1')
+                    + "  apple:"+ $this.countTotal(channelArr, 'val2')
+                    + "  其他:"+ $this.countTotal(channelArr, 'val3')
                 $this.channelData.data = channelArr.sort(function(x,y){
                     return y.total - x.total;
                 })
@@ -305,6 +319,13 @@ export default {
         },
         endUnix($date) {
             return this.startUnix($date) + 24 * 60 * 60 - 1
+        },
+        countTotal(arr, keyName) {
+            let $total = 0;
+            $total = arr.reduce(function (total, currentValue, currentIndex, arr){
+                return currentValue[keyName] ? (total + currentValue[keyName]) : total;
+            }, 0);
+            return $total.toFixed(2);
         }
     }
 }

@@ -35,13 +35,22 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item label="间隔">
+                            <el-select v-model="search.interval" placeholder="请选择">
+                                <el-option v-for="item in intervalList"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
                         <el-form-item label="时间" prop="createdStart">
                             <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="开始时间" v-model="search.startDate" style="width: 100%;"></el-date-picker>
                             </el-col>
                             <el-col class="line" :span="1" align="center">-</el-col>
                             <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="结束时间" v-model="search.endDate" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                         <el-form-item>
@@ -58,16 +67,15 @@
             <el-menu-item index="3">整体付费率</el-menu-item>
             <el-menu-item index="4">新增付费率</el-menu-item>
             <el-menu-item index="5">新增用户数</el-menu-item>
-            <el-menu-item index="6">在线主播数</el-menu-item>
-            <el-menu-item index="7">活跃的付费用户数</el-menu-item>
-            <el-menu-item index="8">电话接通率</el-menu-item>
-            <el-menu-item index="9">平均通话时长</el-menu-item>
+            <el-menu-item index="6">活跃的付费用户数</el-menu-item>
+            <el-menu-item index="7">电话接通率</el-menu-item>
+            <el-menu-item index="8">平均通话时长</el-menu-item>
         </el-menu>
 
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsLine :data="overallData" ref="chartsLine" class="data-chart"/>
+                    <ChartsLine :data="incomeData" ref="chartsLine" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -81,15 +89,29 @@
             style="width: 100%"
             size="medium"
         >
-            <el-table-column prop="uid" label="日期" align="center" width="150" />
-            <el-table-column prop="nickname" label="产品" align="center" width="200" />
-            <el-table-column prop="unionname" label="区域" align="center" width="220" />
-            <el-table-column prop="balance" label="活跃用户" align="center" width="120"/>
-            <el-table-column prop="settle" label="整体收入" align="center" width="120"/>
-            <el-table-column prop="call" label="整体付费率" align="center" width="120"/>
-            <el-table-column prop="gift" label="vip付费率" align="center" width="120"/>
-            <el-table-column prop="other" label="ARPU" align="center" width="120"/>
-            <el-table-column prop="reward" label="ARPPU" align="center"/>
+            <el-table-column prop="date" label="日期" align="center" width="200" />
+            <el-table-column prop="app" label="APP" align="center" width="120">
+                <template scope="scope">
+                    <div slot="reference">
+                        {{ scope.row.app.label }}
+                        <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                        <span v-else-if="scope.row.app.os === 2">
+                                <i class="icon-pingguo"></i>
+                            </span>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="areaName" label="区域" align="center" width="120" />
+            <el-table-column prop="income" label="整体收入" align="center" width="120"/>
+            <el-table-column prop="newIncome" label="新增收入" align="center" width="120"/>
+            <el-table-column prop="payPaidRatio" label="整体付费率" align="center" width="120"/>
+            <el-table-column prop="newPayPaidRatio" label="新增付费率" align="center" width="120"/>
+            <el-table-column prop="newUser" label="新增用户数" align="center" width="120"/>
+            <el-table-column prop="payUser" label="活跃的付费用户数" align="center"/>
+            <el-table-column prop="answerRatio" label="电话接通率" align="center"/>
+            <el-table-column prop="durationRatio" label="平均通话时长" align="center"/>
         </el-table>
         <!-- 分页栏 -->
         <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -103,7 +125,17 @@ import CountTo from 'vue-count-to'
 import ChartsLine from '../../../components/Charts/ChartsLine'
 import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
-import {getAppList, getAppListByAreaId, getAreaList, getCurrentUserAreaId} from "@/utils/dist";
+import {
+    getAnchorLevel,
+    getAppList,
+    getAppListByAreaId,
+    getAppName,
+    getAreaList,
+    getArrName, getBlockStatus,
+    getCurrentUserAreaId,
+    getOnlineStatus, getReviewStatus, getSettleStatus, getStatInterval
+} from "@/utils/dist";
+import {toDate, toTime} from "@/utils/date";
 
 export default {
     name: 'Home',
@@ -116,48 +148,65 @@ export default {
             search: {
                 areaId: undefined,
                 appId: undefined,
+                startDate: new Date(new Date().format('yyyy-MM-dd')),
+                endDate: new Date(new Date().format('yyyy-MM-dd')),
+                interval: 3,
                 page: {
                     currentPage: 1,
                     pageSize: 10
                 }
             },
             total: 0,
-            activeIndex: 1,
+            activeIndex: '1',
             currentDate: {},
             authAreaId: getCurrentUserAreaId(),
             appList: undefined,
             areaList: getAreaList(true),
-            overallData: {
+            areaListAll: getAreaList(false),
+            intervalList: getStatInterval(),
+            incomeData: {
                 title: '整体收入',
                 legend: ['整体收入'],
-                keys: ['7-10', '7-11', '7-12', '7-13', '7-14', '7-15', '7-16', '7-17', '7-18', '7-19'],
-                values: [
-                    [820, 932, 901, 934, 1290, 1330, 1320, 1520, 820, 750]
-                ]
+                values: []
             },
-            incData: {
+            newIncomeData: {
                 title: '新增收入',
-                legend: ['新增收入'],
-                keys: ['7-10', '7-11', '7-12', '7-13', '7-14', '7-15', '7-16', '7-17', '7-18', '7-19'],
-                values: [
-                    [120, 232, 101, 534, 290, 130, 120, 2120, 720, 550]
-                ]
+                legend: ['新增收入']
             },
-            overallPaidData: {
+            payPaidRatioData: {
                 title: '整体付费率',
                 legend: ['整体付费率'],
-                keys: ['7-10', '7-11', '7-12', '7-13', '7-14', '7-15', '7-16', '7-17', '7-18', '7-19'],
-                values: [
-                    [8.2, 9.3, 9.1, 9.34, 12.90, 13.30, 13.20, 15.20, 8.20, 7.50]
-                ]
+                values: []
             },
-            incPaidData: {
+            newPayPaidRatioData: {
                 title: '新增付费率',
                 legend: ['新增付费率'],
-                keys: ['7-10', '7-11', '7-12', '7-13', '7-14', '7-15', '7-16', '7-17', '7-18', '7-19'],
-                values: [
-                    [11.2, 21.3, 3.1, 13.34, 15.90, 19.30, 9.20, 5.20, 8.20, 2.50]
-                ]
+                keys: [],
+                values: []
+            },
+            newUserData: {
+                title: '新增用户数',
+                legend: ['新增用户'],
+                keys: [],
+                values: []
+            },
+            payUserData: {
+                title: '活跃的付费用户数',
+                legend: ['付费率用户'],
+                keys: [],
+                values: []
+            },
+            answerRatioData: {
+                title: '电话接通率',
+                legend: ['接通率'],
+                keys: [],
+                values: []
+            },
+            durationRatioData: {
+                title: '平均通话时长',
+                legend: ['通话时长'],
+                keys: [],
+                values: []
             }
         }
     },
@@ -168,21 +217,136 @@ export default {
         init(){
             this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             this.changeArea(this.search.areaId)
-            this.selItem(this.activeIndex)
             this.fetchData()
         },
         fetchData() {
             const $this = this
             this.cardInfoData = []
             this.$service.home.getUserStat(this.handleSearch(), function (result){
-                let income = result.getIncome()
+                const list = result.getStatsList()
+                let keys = []
+                let tableData = []
+
+                let incomes = []
+                let newIncomes = []
+                let payPaidRatios = []
+                let newPayPaidRatios = []
+                let newUser = []
+                let payUser = []
+                let answerRatios = []
+                let durationRatios = []
+                list.forEach((item, index)=>{
+                    let startAt = item.getStartAt()
+                    keys.push(new Date(startAt * 1000).format("hh:mm"))
+                    incomes.push(item.getIncome())
+                    newIncomes.push(item.getNewIncome())
+
+                    let payPaidRatio = $this.toRatio(item.getActiveUser(), item.getPayUser())
+                    payPaidRatios.push(payPaidRatio)
+
+                    let newPayPaidRatio = $this.toRatio(item.getNewIncome(), item.getNewUser())
+                    newPayPaidRatios.push(newPayPaidRatio)
+
+                    newUser.push(item.getNewUser())
+
+                    payUser.push(item.getPayUser())
+
+                    let answerRatio = $this.toRatio(item.getAnswer(), item.getCall())
+                    answerRatios.push(answerRatio)
+
+                    let durationRatio = $this.toAve(item.getDuration(), item.getAnswer())
+                    durationRatios.push(durationRatio)
+
+                    // 列表数据
+                    const json = {
+                        "id" : item.getId(),
+                        "date" : new Date(startAt * 1000).format("yyyy-MM-dd hh:mm"),
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appList, item.getAppId()),
+                        "areaId" : item.getAreaId(),
+                        "areaName" : getArrName($this.areaListAll, item.getAreaId()),
+                        "income" : item.getIncome(),
+                        "newIncome" : item.getNewIncome(),
+                        "payPaidRatio" : payPaidRatio,
+                        "newPayPaidRatio" : newPayPaidRatio,
+                        "newUser" : item.getNewUser(),
+                        "payUser" : item.getPayUser(),
+                        "answerRatio" : answerRatio,
+                        "durationRatio" : durationRatio
+                    }
+                    tableData.push(json)
+                })
+                //整体收入
+                $this.incomeData.keys = keys
+                $this.incomeData.values = []
+                $this.incomeData.values.push(incomes)
+
+                //新增收入
+                $this.newIncomeData.keys = keys
+                $this.newIncomeData.values = []
+                $this.newIncomeData.values.push(newIncomes)
+
+                //整体付费率
+                $this.payPaidRatioData.keys = keys
+                $this.payPaidRatioData.values = []
+                $this.payPaidRatioData.values.push(payPaidRatios)
+
+                //新增付费率
+                $this.newPayPaidRatioData.keys = keys
+                $this.newPayPaidRatioData.values = []
+                $this.newPayPaidRatioData.values.push(newPayPaidRatios)
+
+                //新增用户数
+                $this.newUserData.keys = keys
+                $this.newUserData.values = []
+                $this.newUserData.values.push(newUser)
+
+                //活跃的付费用户数
+                $this.payUserData.keys = keys
+                $this.payUserData.values = []
+                $this.payUserData.values.push(payUser)
+
+                //电话接通率
+                $this.answerRatioData.keys = keys
+                $this.answerRatioData.values = []
+                $this.answerRatioData.values.push(answerRatios)
+
+                //平均通话时长
+                $this.durationRatioData.keys = keys
+                $this.durationRatioData.values = []
+                $this.durationRatioData.values.push(durationRatios)
+
+                $this.total = tableData.length
+                $this.tableData = tableData
+                $this.listLoading = false
+
+                $this.selItem($this.activeIndex)
             });
         },
+        toRatio(num, total){
+            num = parseFloat(num);
+            total = parseFloat(total);
+            if (isNaN(num) || isNaN(total)) {
+                return 0;
+            }
+            return total <= 0 ? 0 : (Math.round(num / total * 10000) / 100.00);
+        },
+        toAve(num, total){
+            if (total === 0) {
+                return num
+            }else {
+                return Math.round(num / total)
+            }
+        },
         handleSearch(){
-            let date = this.search.date
-            this.search.startAt = this.startUnix(date)
-            this.search.endAt = this.endUnix(date)
-            return this.search
+            let param = this.search;
+            if (typeof(this.search.startDate) != "undefined"){
+                param.startAt = this.startUnix(this.search.startDate)
+            }
+            if (typeof(this.search.endDate) != "undefined"){
+                param.endAt = this.endUnix(this.search.endDate)
+            }
+            return param
         },
         onSearch() {
             this.search.page.currentPage = 1
@@ -192,22 +356,40 @@ export default {
             this.currentDate = {}
             switch (key){
                 case '1':
-                    this.currentDate = this.overallData
+                    this.currentDate = this.incomeData
                     break;
                 case '2':
-                    this.currentDate = this.incData
+                    this.currentDate = this.newIncomeData
                     break;
                 case '3':
-                    this.currentDate = this.overallPaidData
+                    this.currentDate = this.payPaidRatioData
                     break;
                 case '4':
-                    this.currentDate = this.incPaidData
+                    this.currentDate = this.newPayPaidRatioData
+                    break;
+                case '5':
+                    this.currentDate = this.newUserData
+                    break;
+                case '6':
+                    this.currentDate = this.payUserData
+                    break;
+                case '7':
+                    this.currentDate = this.answerRatioData
+                    break;
+                case '8':
+                    this.currentDate = this.durationRatioData
                     break;
             }
             this.$refs.chartsLine.init(this.currentDate);
         },
         changeArea(val){
             this.appList = getAppListByAreaId(val, true, true)
+        },
+        startUnix($date) {
+            return new Date($date.toLocaleDateString()).getTime() / 1000
+        },
+        endUnix($date) {
+            return this.startUnix($date) + 24 * 60 * 60 - 1
         }
     }
 }

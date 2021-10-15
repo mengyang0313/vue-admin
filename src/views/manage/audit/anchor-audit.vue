@@ -137,8 +137,7 @@ export default {
             multipleSelection: [],
             areaData: getAreaList(true),
             reviewStatus: getReviewStatus(),
-            occupationList: getOccupationType(),
-            genderList: getGenderType()
+            occupationList: getOccupationType()
         }
     },
     created() {
@@ -159,7 +158,7 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "nickname" : item.getNickname(),
-                        "gender" : getArrName($this.genderList, item.getGender()),
+                        "gender" : getGenderType(item.getGender()),
                         "avatar" : item.getAvatar(),
                         "reviewStatus" : item.getStatus(),
                         "reviewStatusStr" : getReviewStatus(item.getStatus()),
