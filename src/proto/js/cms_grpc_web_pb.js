@@ -4800,6 +4800,326 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveCommodity =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.CheckinConfigRequest,
+ *   !proto.pb.cms.CheckinConfigReply>}
+ */
+const methodDescriptor_CmsSdk_GetCheckinConfig = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetCheckinConfig',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.CheckinConfigRequest,
+  proto.pb.cms.CheckinConfigReply,
+  /**
+   * @param {!proto.pb.cms.CheckinConfigRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.CheckinConfigReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.CheckinConfigRequest,
+ *   !proto.pb.cms.CheckinConfigReply>}
+ */
+const methodInfo_CmsSdk_GetCheckinConfig = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.CheckinConfigReply,
+  /**
+   * @param {!proto.pb.cms.CheckinConfigRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.CheckinConfigReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.CheckinConfigRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.CheckinConfigReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.CheckinConfigReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getCheckinConfig =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetCheckinConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetCheckinConfig,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.CheckinConfigRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.CheckinConfigReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getCheckinConfig =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetCheckinConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetCheckinConfig);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.CheckinConfig,
+ *   !proto.pb.CheckinConfig>}
+ */
+const methodDescriptor_CmsSdk_SaveCheckinConfig = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveCheckinConfig',
+  grpc.web.MethodType.UNARY,
+  usertype_pb.CheckinConfig,
+  usertype_pb.CheckinConfig,
+  /**
+   * @param {!proto.pb.CheckinConfig} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.CheckinConfig.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.CheckinConfig,
+ *   !proto.pb.CheckinConfig>}
+ */
+const methodInfo_CmsSdk_SaveCheckinConfig = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.CheckinConfig,
+  /**
+   * @param {!proto.pb.CheckinConfig} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.CheckinConfig.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.CheckinConfig} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.CheckinConfig)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.CheckinConfig>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.saveCheckinConfig =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveCheckinConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveCheckinConfig,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.CheckinConfig} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.CheckinConfig>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveCheckinConfig =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveCheckinConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveCheckinConfig);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.VipConfigRequest,
+ *   !proto.pb.cms.VipConfigReply>}
+ */
+const methodDescriptor_CmsSdk_GetVipConfig = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetVipConfig',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.VipConfigRequest,
+  proto.pb.cms.VipConfigReply,
+  /**
+   * @param {!proto.pb.cms.VipConfigRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.VipConfigReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.VipConfigRequest,
+ *   !proto.pb.cms.VipConfigReply>}
+ */
+const methodInfo_CmsSdk_GetVipConfig = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.VipConfigReply,
+  /**
+   * @param {!proto.pb.cms.VipConfigRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.VipConfigReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.VipConfigRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.VipConfigReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.VipConfigReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getVipConfig =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetVipConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetVipConfig,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.VipConfigRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.VipConfigReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getVipConfig =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetVipConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetVipConfig);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.VipConfig,
+ *   !proto.pb.VipConfig>}
+ */
+const methodDescriptor_CmsSdk_SaveVipConfig = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveVipConfig',
+  grpc.web.MethodType.UNARY,
+  usertype_pb.VipConfig,
+  usertype_pb.VipConfig,
+  /**
+   * @param {!proto.pb.VipConfig} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.VipConfig.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.VipConfig,
+ *   !proto.pb.VipConfig>}
+ */
+const methodInfo_CmsSdk_SaveVipConfig = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.VipConfig,
+  /**
+   * @param {!proto.pb.VipConfig} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.VipConfig.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.VipConfig} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.VipConfig)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.VipConfig>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.saveVipConfig =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveVipConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveVipConfig,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.VipConfig} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.VipConfig>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveVipConfig =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/SaveVipConfig',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_SaveVipConfig);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.AgoraKeyRequest,
  *   !proto.pb.cms.AgoraKeyReply>}
  */
@@ -4874,6 +5194,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getAgoraKey =
       request,
       metadata || {},
       methodDescriptor_CmsSdk_GetAgoraKey);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.IpLocationRequest,
+ *   !proto.pb.cms.IpLocationReply>}
+ */
+const methodDescriptor_CmsSdk_GetIpLocation = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetIpLocation',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.IpLocationRequest,
+  proto.pb.cms.IpLocationReply,
+  /**
+   * @param {!proto.pb.cms.IpLocationRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.IpLocationReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.IpLocationRequest,
+ *   !proto.pb.cms.IpLocationReply>}
+ */
+const methodInfo_CmsSdk_GetIpLocation = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.IpLocationReply,
+  /**
+   * @param {!proto.pb.cms.IpLocationRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.IpLocationReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.IpLocationRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.IpLocationReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.IpLocationReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getIpLocation =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetIpLocation',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetIpLocation,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.IpLocationRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.IpLocationReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getIpLocation =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetIpLocation',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetIpLocation);
 };
 
 

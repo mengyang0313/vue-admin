@@ -4432,6 +4432,7 @@ proto.pb.AreaConfig.toObject = function(includeInstance, msg) {
     tagsList: (f = jspb.Message.getRepeatedField(msg, 14)) == null ? undefined : f,
     anchorExchangeRate: jspb.Message.getFloatingPointFieldWithDefault(msg, 15, 0.0),
     payChannelIdsList: (f = jspb.Message.getRepeatedField(msg, 16)) == null ? undefined : f,
+    enableAia: jspb.Message.getBooleanFieldWithDefault(msg, 17, false),
     agoraConfig: (f = msg.getAgoraConfig()) && proto.pb.AgoraConfig.toObject(includeInstance, f),
     ossConfig: (f = msg.getOssConfig()) && proto.pb.OssConfig.toObject(includeInstance, f),
     rongcloudConfig: (f = msg.getRongcloudConfig()) && proto.pb.RongcloudConfig.toObject(includeInstance, f),
@@ -4541,6 +4542,10 @@ proto.pb.AreaConfig.deserializeBinaryFromReader = function(msg, reader) {
       for (var i = 0; i < values.length; i++) {
         msg.addPayChannelIds(values[i]);
       }
+      break;
+    case 17:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setEnableAia(value);
       break;
     case 30:
       var value = new proto.pb.AgoraConfig;
@@ -4708,6 +4713,13 @@ proto.pb.AreaConfig.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writePackedUint32(
       16,
+      f
+    );
+  }
+  f = message.getEnableAia();
+  if (f) {
+    writer.writeBool(
+      17,
       f
     );
   }
@@ -5102,6 +5114,24 @@ proto.pb.AreaConfig.prototype.addPayChannelIds = function(value, opt_index) {
  */
 proto.pb.AreaConfig.prototype.clearPayChannelIdsList = function() {
   return this.setPayChannelIdsList([]);
+};
+
+
+/**
+ * optional bool enable_aia = 17;
+ * @return {boolean}
+ */
+proto.pb.AreaConfig.prototype.getEnableAia = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 17, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.AreaConfig} returns this
+ */
+proto.pb.AreaConfig.prototype.setEnableAia = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 17, value);
 };
 
 
@@ -10351,7 +10381,7 @@ proto.pb.UserStat.toObject = function(includeInstance, msg) {
     activeUser: jspb.Message.getFieldWithDefault(msg, 8, 0),
     newUser: jspb.Message.getFieldWithDefault(msg, 9, 0),
     payUser: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    vipUser: jspb.Message.getFloatingPointFieldWithDefault(msg, 11, 0.0),
+    vipUser: jspb.Message.getFieldWithDefault(msg, 11, 0),
     repayUser: jspb.Message.getFieldWithDefault(msg, 12, 0),
     newIncome: jspb.Message.getFieldWithDefault(msg, 13, 0),
     newPayUser: jspb.Message.getFieldWithDefault(msg, 14, 0),
@@ -10447,7 +10477,7 @@ proto.pb.UserStat.deserializeBinaryFromReader = function(msg, reader) {
       msg.setPayUser(value);
       break;
     case 11:
-      var value = /** @type {number} */ (reader.readFloat());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setVipUser(value);
       break;
     case 12:
@@ -10622,8 +10652,8 @@ proto.pb.UserStat.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getVipUser();
-  if (f !== 0.0) {
-    writer.writeFloat(
+  if (f !== 0) {
+    writer.writeUint32(
       11,
       f
     );
@@ -10938,11 +10968,11 @@ proto.pb.UserStat.prototype.setPayUser = function(value) {
 
 
 /**
- * optional float vip_user = 11;
+ * optional uint32 vip_user = 11;
  * @return {number}
  */
 proto.pb.UserStat.prototype.getVipUser = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 11, 0.0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
 
@@ -10951,7 +10981,7 @@ proto.pb.UserStat.prototype.getVipUser = function() {
  * @return {!proto.pb.UserStat} returns this
  */
 proto.pb.UserStat.prototype.setVipUser = function(value) {
-  return jspb.Message.setProto3FloatField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -11329,7 +11359,8 @@ proto.pb.StatInterval = {
   STATMIN5: 2,
   STATHOURLY: 3,
   STATDAILY: 4,
-  STATWEEKLY: 5
+  STATWEEKLY: 5,
+  STATMONTHLY: 6
 };
 
 goog.object.extend(exports, proto.pb);

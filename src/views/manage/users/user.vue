@@ -94,7 +94,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="id" label="用户ID" align="center" width="120" />
-                <el-table-column prop="nickname" label="用户名" align="center" width="120" />
+                <el-table-column prop="nickname" label="用户名" align="center" width="200" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>

@@ -279,7 +279,7 @@ export default {
                 ++$this.totalKey
 
                 // 充值渠道
-                $this.channelData.name = "总计:" + $this.countTotal(channelArr, 'tatal')
+                $this.channelData.name = "总计:" + $this.countTotal(channelArr, 'total')
                     + "  google:"+ $this.countTotal(channelArr, 'val1')
                     + "  apple:"+ $this.countTotal(channelArr, 'val2')
                     + "  其他:"+ $this.countTotal(channelArr, 'val3')

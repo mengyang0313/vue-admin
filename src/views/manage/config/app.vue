@@ -57,7 +57,7 @@
                 </el-table-column>
                 <el-table-column prop="isAnchor" label="是否为主播端" align="center" width="120">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.isAnchor" :disabled="authAreaId !== 0"/>
+                        <el-switch v-model="scope.row.isAnchor" disabled/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaNames" label="启用的区域" align="center" width="120" />

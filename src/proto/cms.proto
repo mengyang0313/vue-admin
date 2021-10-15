@@ -244,13 +244,27 @@ service CmsSdk {
     }
 
     // 获取签到配置
-    //    rpc GetCheckinConfig ()
-    //
-    //    // 获取vip配置
-    //    rpc GetVipConfig ()
+    rpc GetCheckinConfig (CheckinConfigRequest) returns (CheckinConfigReply) {
+    }
+
+    // 保存签到配置
+    rpc SaveCheckinConfig (CheckinConfig) returns (CheckinConfig) {
+    }
+
+    // 获取vip配置
+    rpc GetVipConfig (VipConfigRequest) returns (VipConfigReply) {
+    }
+
+    // 保存vip配置
+    rpc SaveVipConfig (VipConfig) returns (VipConfig) {
+    }
 
     // 获取声网key
     rpc GetAgoraKey (AgoraKeyRequest) returns (AgoraKeyReply) {
+    }
+
+    // 查询ip
+    rpc GetIpLocation (IpLocationRequest) returns (IpLocationReply) {
     }
     // 上传文件
     // 同时提供http multiple-form 上传接口  /file/upload  文件的key为file 需要设置http header token, area-id, file-type 返回值为JSON格式的FileRecord，
@@ -382,7 +396,7 @@ message UserStatRequest {
     uint32 area_id = 3;
     // 应用
     uint32 app_id = 4;
-    // 主播id
+    // 统计间隔
     StatInterval interval = 5;
 }
 
@@ -976,6 +990,28 @@ message CommodityListReply {
     repeated Commodity commodities = 1;
 }
 
+message CheckinConfigRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 应用id
+    uint32 app_id = 2;
+}
+
+message CheckinConfigReply {
+    repeated CheckinConfig configs = 1;
+}
+
+message VipConfigRequest {
+    // 区域id
+    uint32 area_id = 1;
+    // 应用id
+    uint32 app_id = 2;
+}
+
+message VipConfigReply {
+    repeated VipConfig configs = 1;
+}
+
 message AgoraKeyRequest {
     uint64 call_id = 1;
     uint32 user_id = 2;
@@ -983,6 +1019,15 @@ message AgoraKeyRequest {
 
 message AgoraKeyReply {
     string key = 1;
+}
+
+message IpLocationRequest {
+    string ip = 1;
+}
+
+message IpLocationReply {
+    string country = 1;
+    string city = 2;
 }
 
 message AdminFileChunk {

@@ -215,6 +215,8 @@ message AreaConfig {
     float anchor_exchange_rate = 15;
     // 启用的支付渠道id
     repeated uint32 pay_channel_ids = 16;
+    // 是否启用AIA
+    bool enable_aia = 17;
 
     // 声网配置
     AgoraConfig agora_config = 30;
@@ -473,6 +475,8 @@ enum StatInterval {
     StatDaily = 4;
     // 每周
     StatWeekly = 5;
+    // 每月
+    StatMonthly = 6;
 }
 
 // 区域统计数据
@@ -596,7 +600,7 @@ message UserStat {
     // 充值用户数量
     uint32 pay_user = 10;
     // VIP购买数量
-    float vip_user = 11;
+    uint32 vip_user = 11;
     // 复购用户数量
     uint32 repay_user = 12;
     // 新用户收入
