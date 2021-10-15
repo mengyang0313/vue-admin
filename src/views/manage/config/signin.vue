@@ -6,7 +6,7 @@
         <el-card shadow="always">
             <!-- 操作栏 -->
             <div class="control-btns">
-                <el-button type="primary" @click="toDialog('addCommodity', '')">+ 新增</el-button>
+                <el-button type="primary" @click="toDialog('addSignin', '')">+ 新增签到配置</el-button>
             </div>
             <!-- 查询栏 -->
             <el-form
@@ -55,8 +55,8 @@
                 size="medium"
             >
                 <el-table-column prop="id" label="id" align="center" width="150" />
-                <el-table-column prop="areaStr" label="区域" align="center" width="120" />
-                <el-table-column prop="app" label="APP" align="center" width="120">
+                <el-table-column prop="areaStr" label="区域" align="center" width="150" />
+                <el-table-column prop="app" label="APP" align="center" width="150">
                     <template scope="scope">
                         <div slot="reference">
                             {{ scope.row.app.label }}
@@ -69,15 +69,15 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="bonus" label="奖励钻石数量" align="center" width="190" />
-                <el-table-column prop="vipDays" label="奖励vip天数" align="center" width="120" />
-                <el-table-column prop="matches" label="奖励匹配次数" align="center" width="120" />
-                <el-table-column prop="weight" label="权重" align="center" width="120" />
+                <el-table-column prop="title" label="后台使用名称" align="center" width="190" />
+                <el-table-column prop="days" label="天数" align="center" width="120" />
+                <el-table-column prop="price" label="价格" align="center" width="120" />
+                <el-table-column prop="discount" label="折扣" align="center" width="120" />
+                <el-table-column prop="enable" label="是否启用" align="center" width="120" />
                 <el-table-column prop="sort" label="排序" align="center" width="120" />
-                <el-table-column prop="sort" label="排序" align="center" width="120" />
-                <el-table-column label="操作" align="center" width="180" fixed="right">
+                <el-table-column label="操作" align="center" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toDialog('addCommodity',scope.row)">更新</el-button>
+                        <el-button type="text" @click="toDialog('addVip',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('delPay',scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -87,7 +87,7 @@
                         @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 新增商品 弹出栏 -->
-            <addCommodity ref="addCommodity" @fetchData="fetchData"/>
+            <addVip ref="addVip" @fetchData="fetchData"/>
 
         </el-card>
     </div>
@@ -97,7 +97,7 @@
 
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import addCommodity from './dialog/addCommodity'
+import addVip from './dialog/addVip'
 import Hints from '../../../components/Hints'
 import {
     getAreaList,
@@ -110,7 +110,7 @@ import {
 } from "@/utils/dist";
 
 export default {
-    components: { Pagination, Hints, imageShow, addCommodity },
+    components: { Pagination, Hints, imageShow, addVip },
     data() {
         return {
             listLoading: true,
@@ -124,7 +124,6 @@ export default {
             },
             total: 0,
             authAreaId: getCurrentUserAreaId(),
-            isCollapse: true,
             isHints: true,
             areaList: getAreaList(true),
             payTypeList: getPayType(),
@@ -133,7 +132,7 @@ export default {
     },
     created() {
         this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
-        this.search.appId = typeof(this.search.appId) == "undefined" ? this.appList[1].value : this.search.appId
+        this.search.appId = typeof(this.search.appId) == "undefined" ? this.appList[0].value : this.search.appId
         this.changeArea(this.search.areaId)
         this.fetchData()
     },
@@ -155,8 +154,8 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.config.getCommodityList(this.search, function (result){
-                const list = result.getCommoditiesList()
+            this.$service.config.getVipConfig(this.search, function (result){
+                const list = result.getConfigsList()
                 const data = []
                 list.forEach((item, index) => {
                     const json = {
@@ -165,10 +164,11 @@ export default {
                         "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
-                        "bonus" : item.getBonus(),
-                        "vipDays" : item.getVipDays(),
-                        "matches": item.getMatches(),
-                        "weight" : item.getWeight(),
+                        "title" : item.getTitle(),
+                        "days" : item.getDays(),
+                        "price": item.getPrice(),
+                        "discount" : item.getDiscount(),
+                        "enable" : item.getEnable(),
                         "struct" : item
                     }
                     data.push(json)

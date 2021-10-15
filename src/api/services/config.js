@@ -350,7 +350,7 @@ export default class {
 
     // 获取签到配置
     async getCheckinConfig (param, callback) {
-        const req = new this.proto.VersionListRequest();
+        const req = new this.proto.CheckinConfigRequest();
         req.setAppId(param.appId)
         req.setAreaId(param.areaId)
 
@@ -375,13 +375,57 @@ export default class {
         req.setAppId(param.appId)
         req.setAreaId(param.areaId)
         req.setBonus(param.bonus)
-        req.setName(param.name)
-        req.setEnable(param.enable)
-        req.setInReview(param.inReview)
-        req.setNote(param.note)
+        req.setVipDays(param.vipDays)
+        req.setMatches(param.matches)
+        req.setWeight(param.weight)
+        req.setSort(param.sort)
 
         const metadata = {'token': getToken()};
         this.client.saveCheckinConfig(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+    // 获取vip配置
+    async getVipConfig (param, callback) {
+        const req = new this.proto.VipConfigRequest();
+        req.setAppId(param.appId)
+        req.setAreaId(param.areaId)
+
+        const metadata = {'token': getToken()};
+        this.client.getVipConfig(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+    // 保存vip配置
+    async saveVipConfig (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.CheckinConfig()
+        }
+        req.setId(param.id)
+        req.setAppId(param.appId)
+        req.setAreaId(param.areaId)
+        req.setTitle(param.title)
+        req.setDays(param.days)
+        req.setPrice(param.price)
+        req.setDiscount(param.discount)
+        req.setEnable(param.enable)
+        req.setSort(param.sort)
+
+        const metadata = {'token': getToken()};
+        this.client.saveVipConfig(req, metadata, (err, resp) => {
             if (!err) {
                 callback(resp)
             } else {

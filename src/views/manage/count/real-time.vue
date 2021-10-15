@@ -130,7 +130,7 @@ export default {
                 values: []
             },
             payData: {
-                title: '渠道占比',
+                title: '渠道收入',
                 legend: ['Google', 'Apple', '三方渠道'],
                 keys: [],
                 values: []

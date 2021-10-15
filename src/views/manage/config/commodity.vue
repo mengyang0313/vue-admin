@@ -197,6 +197,7 @@ export default {
                         "amount" : item.getAmount(),
                         "bonus" : item.getBonus(),
                         "isSubscription" : item.getIsSubscription(),
+                        "isFirstReward" : item.getIsFirstReward(),
                         "vipDays" : item.getVipDays(),
                         "sort" : item.getSort()
                     }
