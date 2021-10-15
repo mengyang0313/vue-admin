@@ -299,6 +299,22 @@ import {getCurrentUserModules} from "@/utils/dist";
                 meta: {
                     title: '商品配置'
                 }
+            },
+            {
+                path: 'signin',
+                name: 'signin',
+                component: () => import('../views/manage/config/signin'),
+                meta: {
+                    title: '签到配置'
+                }
+            },
+            {
+                path: 'vip',
+                name: 'vip',
+                component: () => import('../views/manage/config/vip'),
+                meta: {
+                    title: 'vip配置'
+                }
             }
         ]
     },

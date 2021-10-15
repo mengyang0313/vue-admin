@@ -346,4 +346,48 @@ export default class {
         })
     }
 
+
+
+    // 获取签到配置
+    async getCheckinConfig (param, callback) {
+        const req = new this.proto.VersionListRequest();
+        req.setAppId(param.appId)
+        req.setAreaId(param.areaId)
+
+        const metadata = {'token': getToken()};
+        this.client.getCheckinConfig(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
+
+    // 保存签到配置
+    async saveCheckinConfig (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.CheckinConfig()
+        }
+        req.setId(param.id)
+        req.setAppId(param.appId)
+        req.setAreaId(param.areaId)
+        req.setBonus(param.bonus)
+        req.setName(param.name)
+        req.setEnable(param.enable)
+        req.setInReview(param.inReview)
+        req.setNote(param.note)
+
+        const metadata = {'token': getToken()};
+        this.client.saveCheckinConfig(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
 }

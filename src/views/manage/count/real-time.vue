@@ -238,7 +238,7 @@ export default {
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
                 keys.push(new Date(startAt * 1000).format("hh:mm"))
-                expense.push(item.getExpense() / 1000)
+                expense.push(item.getExpense())
             })
             values.push(expense)
             this.expenseData.values = values
@@ -252,7 +252,7 @@ export default {
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
                 keys.push(new Date(startAt * 1000).format("hh:mm"))
-                deposit.push(item.getDeposit() / 1000)
+                deposit.push(item.getDeposit())
             })
             values.push(deposit)
             this.depositData.values = values
@@ -268,9 +268,9 @@ export default {
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
                 keys.push(new Date(startAt * 1000).format("hh:mm"))
-                googlePay.push(item.getGooglePay() / 1000)
-                applePay.push(item.getApplePay() / 1000)
-                otherPay.push(item.getOtherPay() / 1000)
+                googlePay.push(item.getGooglePay())
+                applePay.push(item.getApplePay())
+                otherPay.push(item.getOtherPay())
             })
             values.push(googlePay)
             values.push(applePay)
