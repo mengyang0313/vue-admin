@@ -169,6 +169,7 @@ export default {
                         "vipDays" : item.getVipDays(),
                         "matches": item.getMatches(),
                         "weight" : item.getWeight(),
+                        "sort" : item.getSort(),
                         "struct" : item
                     }
                     data.push(json)

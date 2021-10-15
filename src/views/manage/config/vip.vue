@@ -178,6 +178,7 @@ export default {
                         "price": item.getPrice(),
                         "discount" : item.getDiscount(),
                         "enable" : item.getEnable(),
+                        "sort" : item.getSort(),
                         "struct" : item
                     }
                     data.push(json)
