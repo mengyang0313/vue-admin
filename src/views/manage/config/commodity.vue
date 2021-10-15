@@ -31,7 +31,7 @@
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value">
-                            <span style="float: left">{{ item.label }}</span>
+                            <span style="float: left">{{ item.label + item.value }}</span>
                             <span v-if="item.os === 1">
                                 <i class="icon-android-fill" style="float: right"></i>
                             </span>
@@ -154,7 +154,7 @@ export default {
     },
     created() {
         this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
-        this.search.appId = typeof(this.search.appId) == "undefined" ? this.appList[1].value : this.search.appId
+        this.search.appId = typeof(this.search.appId) == "undefined" ? this.appList[0].value : this.search.appId
         this.changeArea(this.search.areaId)
         this.fetchData()
     },
@@ -165,6 +165,7 @@ export default {
                     this.search.appId = Number(this.$route.query.appId)
                     this.search.areaId = Number(this.$route.query.areaId)
                     this.search.appName = this.$route.query.appName
+                    this.changeArea(this.search.areaId)
                     this.isHints = false
                     this.fetchData()
                 }

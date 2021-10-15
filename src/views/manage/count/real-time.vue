@@ -268,9 +268,9 @@ export default {
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
                 keys.push(new Date(startAt * 1000).format("hh:mm"))
-                googlePay.push(item.getGooglePay())
-                applePay.push(item.getApplePay())
-                otherPay.push(item.getOtherPay())
+                googlePay.push(item.getGooglePay()/100)
+                applePay.push(item.getApplePay()/100)
+                otherPay.push(item.getOtherPay()/100)
             })
             values.push(googlePay)
             values.push(applePay)

@@ -77,7 +77,7 @@ export default {
                 areaId : undefined
             },
             dialogVisible: false,
-            title: '新增签到',
+            title: '签到配置',
             authAreaId: getCurrentUserAreaId(),
             areaList: getAreaList(false),
             appList: [],
@@ -103,7 +103,6 @@ export default {
     methods: {
         init(row){
             if(typeof(row.id) != "undefined"){
-                this.title = "编辑签到"
                 this.form = row
             }else{
                 this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId

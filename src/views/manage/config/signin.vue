@@ -69,15 +69,14 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="title" label="后台使用名称" align="center" width="190" />
-                <el-table-column prop="days" label="天数" align="center" width="120" />
-                <el-table-column prop="price" label="价格" align="center" width="120" />
-                <el-table-column prop="discount" label="折扣" align="center" width="120" />
-                <el-table-column prop="enable" label="是否启用" align="center" width="120" />
+                <el-table-column prop="bonus" label="奖励钻石数量" align="center" width="190" />
+                <el-table-column prop="vipDays" label="奖励vip天数" align="center" width="120" />
+                <el-table-column prop="matches" label="奖励匹配次数" align="center" width="120" />
+                <el-table-column prop="weight" label="权重" align="center" width="120" />
                 <el-table-column prop="sort" label="排序" align="center" width="120" />
                 <el-table-column label="操作" align="center" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toDialog('addVip',scope.row)">更新</el-button>
+                        <el-button type="text" @click="toDialog('addSignin',scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('delPay',scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -87,7 +86,7 @@
                         @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 新增商品 弹出栏 -->
-            <addVip ref="addVip" @fetchData="fetchData"/>
+            <addSignin ref="addSignin" @fetchData="fetchData"/>
 
         </el-card>
     </div>
@@ -97,7 +96,7 @@
 
 import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
-import addVip from './dialog/addVip'
+import addSignin from './dialog/addSignin'
 import Hints from '../../../components/Hints'
 import {
     getAreaList,
@@ -110,7 +109,7 @@ import {
 } from "@/utils/dist";
 
 export default {
-    components: { Pagination, Hints, imageShow, addVip },
+    components: { Pagination, Hints, imageShow, addSignin },
     data() {
         return {
             listLoading: true,
@@ -143,6 +142,7 @@ export default {
                     this.search.appId = Number(this.$route.query.appId)
                     this.search.areaId = Number(this.$route.query.areaId)
                     this.search.appName = this.$route.query.appName
+                    this.changeArea(this.search.areaId)
                     this.isHints = false
                     this.fetchData()
                 }
@@ -154,7 +154,7 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.config.getVipConfig(this.search, function (result){
+            this.$service.config.getCheckinConfig(this.search, function (result){
                 const list = result.getConfigsList()
                 const data = []
                 list.forEach((item, index) => {
@@ -164,11 +164,10 @@ export default {
                         "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
-                        "title" : item.getTitle(),
-                        "days" : item.getDays(),
-                        "price": item.getPrice(),
-                        "discount" : item.getDiscount(),
-                        "enable" : item.getEnable(),
+                        "bonus" : item.getBonus(),
+                        "vipDays" : item.getVipDays(),
+                        "matches": item.getMatches(),
+                        "weight" : item.getWeight(),
                         "struct" : item
                     }
                     data.push(json)
@@ -177,15 +176,6 @@ export default {
                 $this.tableData = data
                 $this.listLoading = false
             });
-        },
-        handleAreaNames(areaIds){
-            let names = []
-            this.areaList.forEach(item => {
-                if(areaIds.indexOf(item.value)>=0){
-                    names.push(item.label)
-                }
-            })
-            return names
         },
         onSearch() {
             this.isHints = true

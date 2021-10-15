@@ -10,7 +10,7 @@ import {
     HomeStatRequest, AreaStatRequest, AnchorStatRequest, AreaConfigListRequest, PayChannelListRequest, CountryConfigListRequest, CommodityListRequest,
     VersionListRequest, PayConfigListRequest, DeleteUserRequest, UserStatRequest, CheckinConfigRequest, VipConfigRequest
 } from '../proto/js/cms_pb'
-import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment, PayChannel, Approximation, CountryConfig, OsType, Commodity, FileRecord, CheckinConfig} from '../proto/js/usertype_pb'
+import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment, PayChannel, Approximation, CountryConfig, OsType, Commodity, FileRecord, CheckinConfig, VipConfig} from '../proto/js/usertype_pb'
 import { Admin, Guild, RobotMessage, AutoMessage, App, Version, AreaConfig, PayConfig, OssConfig} from '../proto/js/cmstype_pb'
 import { AnchorProfile } from '../proto/js/anchortype_pb'
 import { CmsSdkClient } from '@/proto/js/cms_grpc_web_pb.js'
@@ -80,6 +80,7 @@ const deps = {
       Commodity,
       FileRecord,
       CheckinConfig,
+      VipConfig,
       Empty,
       EntityType,
       User,

@@ -193,20 +193,14 @@ export default {
         // 拒绝
         delVideo(row) {
             const $this = this
-            this.$confirm('是否删除?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                let param = {
-                    "id" : row.id,
-                    "status" : 4
-                }
-                this.$service.audit.processLive(param, function (result){
-                    result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
-                    $this.fetchData()
-                });
-            })
+            let param = {
+                "id" : row.id,
+                "status" : 4
+            }
+            this.$service.audit.processLive(param, function (result){
+                result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
+                $this.fetchData()
+            });
         }
     }
 }

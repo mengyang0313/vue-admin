@@ -67,7 +67,9 @@
                 <el-table-column prop="note" label="备注" align="center" width="120" :show-overflow-tooltip="true"/>
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="toDialog('commodityConfig', scope.row)">配置商品</el-button>
+                        <el-button type="text" @click="toDialog('toConfig', scope.row, './commodity')">配置商品</el-button>
+                        <el-button type="text" @click="toDialog('toConfig', scope.row, './signin')">配置签到</el-button>
+                        <el-button type="text" @click="toDialog('toConfig', scope.row, './vip')">配置VIP</el-button>
                         <el-button type="text" @click="toDialog('version', scope.row)">版本</el-button>
                         <el-button type="text" @click="toDialog('addApp', scope.row)">更新</el-button>
                         <el-button type="text" @click="toDialog('delPay', scope.row)">删除</el-button>
@@ -81,7 +83,7 @@
             <!-- 新增应用 弹出栏 -->
             <addApp ref="addApp" @fetchData="fetchData"/>
 
-            <commodityConfig ref="commodityConfig" @fetchData="fetchData"/>
+            <toConfig ref="toConfig" @fetchData="fetchData"/>
 
             <version ref="version" @fetchData="fetchData"/>
         </el-card>
@@ -95,11 +97,11 @@ import imageShow from '../../../components/ImageShow/image-show'
 import addApp from './dialog/addApp'
 import addPay from './dialog/addPayChannel'
 import version from './dialog/version'
-import commodityConfig from './dialog/commodityConfig'
+import toConfig from './dialog/toConfig'
 import {getAreaList, getAppList, getPayType, getAppName, getCurrentUserAreaId, getAppListByAreaId} from "@/utils/dist";
 
 export default {
-    components: { Pagination, imageShow, addPay, version, commodityConfig, addApp },
+    components: { Pagination, imageShow, addPay, version, toConfig, addApp },
     data() {
         return {
             listLoading: true,
@@ -169,7 +171,10 @@ export default {
         changePageSize(msg){
             this.search.page.pageSize = msg.limit
         },
-        toDialog(component, row){
+        toDialog(component, row, uri){
+            if(typeof(uri) !== "undefined"){
+                row.uri = uri
+            }
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
                 this.$refs[component].init(row);

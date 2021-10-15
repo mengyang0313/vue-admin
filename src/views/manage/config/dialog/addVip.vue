@@ -32,17 +32,21 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item label="奖励钻石数量" prop="bonus">
-                    <el-input-number v-model="form.bonus" :min="0" placeholder="请输入" />
+                <el-form-item label="后台使用名称" prop="title">
+                    <el-input v-model="form.title" placeholder="请输入" />
                 </el-form-item>
-                <el-form-item label="奖励vip天数" prop="vipDays">
-                    <el-input-number v-model="form.vipDays" :min="0" placeholder="请输入"/>
+
+                <el-form-item label="天数" prop="days">
+                    <el-input-number v-model="form.days" :min="0" placeholder="请输入" />
                 </el-form-item>
-                <el-form-item label="奖励匹配次数" prop="matches">
-                    <el-input-number v-model="form.matches" :min="0" placeholder="请输入"/>
+                <el-form-item label="价格" prop="price">
+                    <el-input-number v-model="form.price" :min="0" placeholder="请输入"/>
                 </el-form-item>
-                <el-form-item label="权重" prop="weight">
-                    <el-input-number v-model="form.weight" :min="0" placeholder="请输入"/>
+                <el-form-item label="折扣" prop="discount">
+                    <el-input-number v-model="form.discount" :min="0" placeholder="请输入"/>
+                </el-form-item>
+                <el-form-item label="是否启用" prop="enable">
+                    <el-switch v-model="form.enable"/>
                 </el-form-item>
                 <el-form-item label="排序" prop="sort">
                     <el-input-number v-model="form.sort" :min="0" placeholder="请输入"/>
@@ -77,7 +81,7 @@ export default {
                 areaId : undefined
             },
             dialogVisible: false,
-            title: '新增签到',
+            title: 'vip配置',
             authAreaId: getCurrentUserAreaId(),
             areaList: getAreaList(false),
             appList: [],
@@ -94,7 +98,7 @@ export default {
                 price: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
                 ],
-                amount: [
+                sort: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
                 ]
             }
@@ -103,7 +107,6 @@ export default {
     methods: {
         init(row){
             if(typeof(row.id) != "undefined"){
-                this.title = "编辑签到"
                 this.form = row
             }else{
                 this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
@@ -115,7 +118,7 @@ export default {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     let param = this.form;
-                    this.$service.config.saveCheckinConfig(param, function (result){
+                    this.$service.config.saveVipConfig(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
                             $this.closeDialog()

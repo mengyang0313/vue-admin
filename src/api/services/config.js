@@ -412,7 +412,7 @@ export default class {
     async saveVipConfig (param, callback) {
         let req = param.struct
         if(typeof(req) == "undefined"){
-            req = new this.proto.CheckinConfig()
+            req = new this.proto.VipConfig()
         }
         req.setId(param.id)
         req.setAppId(param.appId)
