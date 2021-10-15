@@ -34,7 +34,7 @@ export default {
 
     .header-right {
         float: right;
-        width: 200px;
+        width: 120px;
     }
 }
 </style>

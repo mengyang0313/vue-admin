@@ -198,7 +198,7 @@ export default {
                 "status" : 4
             }
             this.$service.audit.processLive(param, function (result){
-                result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
+                result ? $this.$message.success("已删除 !") : $this.$message.error("拒绝删除 !")
                 $this.fetchData()
             });
         }

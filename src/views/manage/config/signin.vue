@@ -1,7 +1,7 @@
 <template>
     <div class="table-classic-wrapper">
         <Hints :hidden="isHints">
-            <template slot="hintName"> 配置 < {{ search.appName }} > 签到</template>
+            <template slot="hintName"> 配置 < {{ search.appName }}  <i :class="search.osIcon"></i>> 签到</template>
         </Hints>
         <el-card shadow="always">
             <!-- 操作栏 -->
@@ -142,6 +142,7 @@ export default {
                     this.search.appId = Number(this.$route.query.appId)
                     this.search.areaId = Number(this.$route.query.areaId)
                     this.search.appName = this.$route.query.appName
+                    this.search.osIcon = this.$route.query.os === '1' ? "icon-android-fill" : "icon-pingguo"
                     this.changeArea(this.search.areaId)
                     this.isHints = false
                     this.fetchData()
