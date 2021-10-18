@@ -77,6 +77,7 @@ export default {
                                 $this.$router.push({ path: $this.redirect || '/' })
                             })
                         }else{
+                            $this.listLoading = false
                             $this.$message.error("登录失败!!!")
                         }
                     });
