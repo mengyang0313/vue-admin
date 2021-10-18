@@ -22,7 +22,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                    <el-select v-model="form.areaId" :disabled="authAreaId !== 0" @change="changeArea" placeholder="请选择">
                         <el-option v-for="item in areaList"
                                    :key="item.value"
                                    :label="item.label"
@@ -109,6 +109,7 @@ export default {
             if(typeof(row.id) != "undefined"){
                 this.form = row
             }else{
+                this.form.id = undefined
                 this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             }
             this.changeArea(this.form.areaId)

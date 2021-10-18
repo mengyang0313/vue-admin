@@ -73,7 +73,7 @@ export default {
                         if(bool){
                             initData().then(function () {
                                 $this.listLoading = false
-                                //$this.reload()
+                                $this.reload()
                                 $this.$router.push({ path: $this.redirect || '/' })
                             })
                         }else{
