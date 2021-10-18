@@ -34,13 +34,20 @@
                         </template>
                         <div>
                             <el-form-item label="交易时间" prop="createdStart">
-                                <el-col :span="11">
-                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
-                                </el-col>
-                                <el-col class="line" :span="1" align="center">-</el-col>
-                                <el-col :span="10">
-                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
-                                </el-col>
+                                <el-date-picker
+                                    v-model="search.date"
+                                    type="daterange"
+                                    range-separator="至"
+                                    start-placeholder="开始日期"
+                                    end-placeholder="结束日期">
+                                </el-date-picker>
+<!--                                <el-col :span="11">-->
+<!--                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
+<!--                                </el-col>-->
+<!--                                <el-col class="line" :span="1" align="center">-</el-col>-->
+<!--                                <el-col :span="10">-->
+<!--                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
+<!--                                </el-col>-->
                             </el-form-item>
                             <el-form-item label="区域" prop="areaId">
                                 <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
@@ -149,7 +156,7 @@ import {
     getPayType,
     getCommodityList, getPayChannelList, getAppListByAreaId, getCurrentUserAreaId
 } from "@/utils/dist";
-import {toTime} from "@/utils/date";
+import {endUnix, toTime} from "@/utils/date";
 import {isEmpty} from "@/api/api";
 
 export default {
@@ -162,8 +169,7 @@ export default {
             search: {
                 userId: undefined,
                 recordId: undefined,
-                createdStart: undefined,
-                createdEnd: undefined,
+                date: [],
                 appId: undefined,
                 areaId: getCurrentUserAreaId(),
                 payStatus: 0,
@@ -231,11 +237,9 @@ export default {
         },
         handleParam(){
             let param = this.search;
-            if (typeof(this.search.createdStart) != "undefined"){
-                param.createdStartUint = new Date(this.search.createdStart).getTime() / 1000
-            }
-            if (typeof(this.search.createdEnd) != "undefined"){
-                param.createdEndUint = new Date(this.search.createdEnd).getTime() / 1000
+            if (param.date.length > 0){
+                param.createdStartUint = this.search.date[0].getTime() / 1000
+                param.createdEndUint = endUnix(this.search.date[1])
             }
             return param
         },

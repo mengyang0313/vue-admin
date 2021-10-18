@@ -20,3 +20,12 @@ export function getDateStr(date){
     }
     return date.format('yyyy-MM-dd')
 }
+
+
+export function startUnix($date) {
+    return new Date($date.toLocaleDateString()).getTime() / 1000
+}
+
+export function endUnix($date) {
+    return startUnix($date) + 24 * 60 * 60 - 1
+}

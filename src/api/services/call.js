@@ -26,8 +26,8 @@ export default class {
         req.setStatus(param.status)
         req.setMinDuration(param.minDuration)
         req.setMaxDuration(param.maxDuration)
-        req.setCreatedStart(param.createdStart)
-        req.setCreatedEnd(param.createdEnd)
+        req.setCreatedStart(param.createdStartUint)
+        req.setCreatedEnd(param.createdEndUint)
 
         const metadata = {'token': getToken()};
         this.client.getCallList(req, metadata, (err, resp) => {

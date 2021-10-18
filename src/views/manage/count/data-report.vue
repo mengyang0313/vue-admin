@@ -45,13 +45,20 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="时间" prop="createdStart">
-                            <el-col :span="11">
-                                <el-date-picker type="date" placeholder="开始时间" v-model="search.startDate" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                            <el-col class="line" :span="1" align="center">-</el-col>
-                            <el-col :span="10">
-                                <el-date-picker type="date" placeholder="结束时间" v-model="search.endDate" style="width: 100%;"></el-date-picker>
-                            </el-col>
+                            <el-date-picker
+                                v-model="search.date"
+                                type="daterange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                            </el-date-picker>
+<!--                            <el-col :span="11">-->
+<!--                                <el-date-picker type="date" placeholder="开始时间" v-model="search.startDate" :max="search.endDate" style="width: 100%;"></el-date-picker>-->
+<!--                            </el-col>-->
+<!--                            <el-col class="line" :span="1" align="center">-</el-col>-->
+<!--                            <el-col :span="10">-->
+<!--                                <el-date-picker type="date" placeholder="结束时间" v-model="search.endDate" :min="search.startDate" style="width: 100%;"></el-date-picker>-->
+<!--                            </el-col>-->
                         </el-form-item>
                         <el-form-item>
                             <el-button type="danger" @click="onSearch" icon="el-icon-refresh">刷 新</el-button>
@@ -95,11 +102,11 @@
                     <div slot="reference">
                         {{ scope.row.app.label }}
                         <span v-if="scope.row.app.os === 1">
-                                <i class="icon-android-fill"></i>
-                            </span>
+                            <i class="icon-android-fill"></i>
+                        </span>
                         <span v-else-if="scope.row.app.os === 2">
-                                <i class="icon-pingguo"></i>
-                            </span>
+                            <i class="icon-pingguo"></i>
+                        </span>
                     </div>
                 </template>
             </el-table-column>
@@ -135,7 +142,7 @@ import {
     getCurrentUserAreaId,
     getOnlineStatus, getReviewStatus, getSettleStatus, getStatInterval
 } from "@/utils/dist";
-import {toDate, toTime} from "@/utils/date";
+import {endUnix, startUnix, toDate, toTime} from "@/utils/date";
 
 export default {
     name: 'Home',
@@ -148,8 +155,10 @@ export default {
             search: {
                 areaId: undefined,
                 appId: undefined,
-                startDate: new Date(new Date().format('yyyy-MM-dd')),
-                endDate: new Date(new Date().format('yyyy-MM-dd')),
+                date: [
+                    new Date(new Date().format('yyyy-MM-dd')),
+                    new Date(new Date().format('yyyy-MM-dd'))
+                ],
                 interval: 3,
                 page: {
                     currentPage: 1,
@@ -222,10 +231,13 @@ export default {
         fetchData() {
             const $this = this
             this.cardInfoData = []
-            this.$service.home.getUserStat(this.handleSearch(), function (result){
+            let param = this.handleSearch()
+            this.$service.home.getUserStat(param, function (result){
                 const list = result.getStatsList()
                 let keys = []
                 let tableData = []
+
+                let fmt = $this.toFmt(param)
 
                 let incomes = []
                 let newIncomes = []
@@ -237,7 +249,7 @@ export default {
                 let durationRatios = []
                 list.forEach((item, index)=>{
                     let startAt = item.getStartAt()
-                    keys.push(new Date(startAt * 1000).format("hh:mm"))
+                    keys.push(new Date(startAt * 1000).format(fmt))
                     incomes.push(item.getIncome())
                     newIncomes.push(item.getNewIncome())
 
@@ -323,6 +335,16 @@ export default {
                 $this.selItem($this.activeIndex)
             });
         },
+        toFmt(param){
+            let fmt = "MM-dd hh:mm";
+            let interval = param.interval
+            if(interval === 3){
+                let startDate = param.date[0]
+                let endDate = param.date[1]
+                fmt = startDate.getTime() === endDate.getTime() ? "hh:mm" : "MM-dd hh:mm"
+            }
+            return fmt
+        },
         toRatio(num, total){
             num = parseFloat(num);
             total = parseFloat(total);
@@ -340,12 +362,8 @@ export default {
         },
         handleSearch(){
             let param = this.search;
-            if (typeof(this.search.startDate) != "undefined"){
-                param.startAt = this.startUnix(this.search.startDate)
-            }
-            if (typeof(this.search.endDate) != "undefined"){
-                param.endAt = this.endUnix(this.search.endDate)
-            }
+            param.startAt = startUnix(this.search.date[0])
+            param.endAt = endUnix(this.search.date[1])
             return param
         },
         onSearch() {
@@ -384,12 +402,6 @@ export default {
         },
         changeArea(val){
             this.appList = getAppListByAreaId(val, true, true)
-        },
-        startUnix($date) {
-            return new Date($date.toLocaleDateString()).getTime() / 1000
-        },
-        endUnix($date) {
-            return this.startUnix($date) + 24 * 60 * 60 - 1
         }
     }
 }
