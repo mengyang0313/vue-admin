@@ -33,7 +33,7 @@ export default {
         },
         pageSizes: {
             type: Array,
-            default: () => [5, 10, 15, 20, 50]
+            default: () => [5, 10, 15, 20, 50, 1000]
         },
         total: {
             type: Number,

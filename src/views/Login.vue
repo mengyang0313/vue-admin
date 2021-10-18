@@ -5,7 +5,7 @@
                 <img src="../assets/img/logo2.png" alt="icon">
                 <p>账 号 登 录</p>
             </div>
-            <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-width="0px" class="login-form">
+            <el-form ref="loginForm" :model="loginForm" :rules="loginRules" v-loading="listLoading" label-width="0px" class="login-form">
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.email" type="text" auto-complete="off" placeholder="请输入账号"
                               prefix-icon="el-icon-user"/>
@@ -39,6 +39,8 @@ export default {
     name: 'Login',
     data() {
         return {
+            // 数据列表加载动画
+            listLoading: false,
             Background,
             loginForm: {
                 email: 'superadmin',
@@ -63,16 +65,15 @@ export default {
     },
     methods: {
         handleLogin() {
+            this.listLoading = true
             this.$refs.loginForm.validate(valid => {
                 const $this = this
                 if (valid) {
-                    console.log(this.$service)
                     this.$service.login.login(this.loginForm, function (bool){
                         if(bool){
-                            console.log("####4")
                             initData().then(function () {
-                                console.log("####5")
-                                $this.reload()
+                                $this.listLoading = false
+                                //$this.reload()
                                 $this.$router.push({ path: $this.redirect || '/' })
                             })
                         }else{

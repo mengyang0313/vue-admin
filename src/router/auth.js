@@ -5,13 +5,11 @@ import {getToken} from '@/utils/cookie'
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
-    console.log("####1")
     if (getToken()) {
         // 已登录且要跳转的是登录页
         if (to.path === '/login') {
             next({path: '/'})
         } else {
-            console.log("####2")
             next()
         }
     } else {

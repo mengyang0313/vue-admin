@@ -176,7 +176,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaData: getAreaList(true),
-            appList: getAppList(),
+            appList: getAppList(true, true),
             payStatus: getPayStatus(),
             payTypeList: getPayType(),
             commodityList: getCommodityList()
@@ -268,7 +268,7 @@ export default {
             return name
         },
         changeArea(val){
-            this.appList = getAppListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true, true)
         }
     }
 }

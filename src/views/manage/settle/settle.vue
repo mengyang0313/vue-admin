@@ -109,8 +109,8 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-<!--            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.page.pageSize"-->
-<!--                        @pagination="fetchData"/>-->
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
+                        @pagination="fetchData"/>
             <!-- 导出数据 弹出栏 -->
             <el-dialog
                 title="导出数据"
@@ -162,7 +162,11 @@ export default {
                 guildId: undefined,
                 anchorId: undefined,
                 settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
-                status: undefined
+                status: undefined,
+                page: {
+                    currentPage: 1,
+                    pageSize: 1000
+                }
             },
             total: 0,
             authAreaId: getCurrentUserAreaId(),

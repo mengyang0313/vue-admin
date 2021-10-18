@@ -96,7 +96,7 @@ export default {
                 enable: true,
                 page: {
                     currentPage: 1,
-                    pageSize: 10
+                    pageSize: 1000
                 }
             },
             // 数据总条数
@@ -133,7 +133,7 @@ export default {
                     }
                     data.push(json)
                 })
-                $this.total = 10
+                $this.total = data.length
                 $this.tableData = data
                 $this.listLoading = false
             })

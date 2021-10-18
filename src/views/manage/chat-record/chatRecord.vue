@@ -256,7 +256,7 @@ export default {
             })
         },
         changeArea(val){
-            this.appList = getAppListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true, true)
         }
     }
 }

@@ -216,7 +216,7 @@ export default {
             this.search.page.pageSize = msg.limit
         },
         changeArea(val){
-            this.appList = getAppListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true, true)
         }
     }
 }
