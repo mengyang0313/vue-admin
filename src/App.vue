@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view :key="routerKey"/>
+        <router-view v-if="isRouterAlive"/>
     </div>
 </template>
 
@@ -16,13 +16,17 @@ export default {
     },
     data() {
         return {
-            routerKey:1
+            isRouterAlive: true
         };
     },
     methods: {
         reload() {
+            this.isRouterAlive = false;
+            this.$nextTick( () => {
+                this.isRouterAlive = true;
+            })
             initRouter(function (){
-                location.reload()
+                //location.reload()
             })
         }
     }

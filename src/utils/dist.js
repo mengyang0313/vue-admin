@@ -6,27 +6,27 @@ import {isEmpty} from "@/api/api";
 
 
 export async function initData() {
-    // let areaArr = await getAreas()
-    // sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
-    getAreaList()
-    getGuildList()
-    getAppList()
-    getPayChannelList()
-    getCommodityList()
-    // let guildArr = await getGuilds()
-    // sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
+    let areaArr = await initAreas()
+    sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
+    // getAreaList()
+    // getGuildList()
+    // getAppList()
+    // getPayChannelList()
+    // getCommodityList()
+    let guildArr = await initGuilds()
+    sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
 
     let currentUser = await initCurrentUserInfo()
     sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
 
-    // let apps = await getApps()
-    // sessionStorage.setItem("appArr", JSON.stringify(apps));
+    let apps = await getApps()
+    sessionStorage.setItem("appArr", JSON.stringify(apps));
 
-    // let payChannelArr = await getPayChannel()
-    // sessionStorage.setItem("payChannelArr", JSON.stringify(payChannelArr));
+    let payChannelArr = await initPayChannel()
+    sessionStorage.setItem("payChannelArr", JSON.stringify(payChannelArr));
 
-    // let commodityArr = await getCommodity()
-    // sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr));
+    let commodityArr = await initCommodity()
+    sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr));
 }
 
 // export function initAsyncData(){
@@ -194,6 +194,11 @@ export const initApps = () => new Promise((resolve, reject) => {
         }
     })
 })
+
+export async function getApps(isNoAnchor, isShowAll) {
+    let arr = await initApps()
+    return arr
+}
 
 export function getAppList(isNoAnchor, isShowAll) {
     let json = sessionStorage.getItem("appArr");
