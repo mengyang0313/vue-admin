@@ -27,6 +27,15 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="审核状态">
+                    <el-select v-model="search.reviewStatus" placeholder="请选择">
+                        <el-option v-for="item in reviewStatus"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
