@@ -72,7 +72,13 @@
                 <el-table-column prop="occupationStr" label="职业" align="center" width="120" />
                 <el-table-column prop="birthday" label="生日" align="center" width="150" />
                 <el-table-column prop="signature" label="签名" align="center" :show-overflow-tooltip="true" width="200" />
-                <el-table-column prop="voiceGreeting" label="语音问候" align="center" width="150" />
+                <el-table-column prop="voiceGreeting" label="语音问候" align="center" width="150">
+                    <template scope="scope">
+                        <div v-if="scope.row.voiceGreeting">
+                            <m-audio :src="scope.row.voiceGreeting" ></m-audio>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="onlineStart" label="常在线起始时间" align="center" width="150" />
                 <el-table-column prop="onlineEnd" label="常在线结束时间" align="center" width="200" />
                 <el-table-column label="操作" align="center" width="150" fixed="right">
@@ -191,6 +197,11 @@ export default {
         // 多选操作
         handleSelectionChange(val) {
             this.multipleSelection = val
+        },
+        audioOpt($event){
+            alert($event)
+            alert(11)
+            alert($event.paused())
         },
         changePageSize(msg){
             this.search.page.pageSize = msg.limit

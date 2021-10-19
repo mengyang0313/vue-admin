@@ -1,6 +1,12 @@
 <template>
     <div class="table-classic-wrapper">
         <el-card shadow="always">
+
+            <!-- 操作栏 -->
+            <div class="control-btns">
+                <el-button type="primary" icon="el-icon-check" @click="batchPassed">批量通过</el-button>
+                <el-button type="warning" icon="el-icon-delete" @click="batchDele">批量删除</el-button>
+            </div>
             <!-- 查询栏 -->
             <el-form
                 ref="searchForm"
@@ -190,7 +196,7 @@ export default {
                 $this.fetchData()
             });
         },
-        // 拒绝
+        // 删除
         delVideo(row) {
             const $this = this
             let param = {
@@ -201,6 +207,16 @@ export default {
                 result ? $this.$message.success("已删除 !") : $this.$message.error("拒绝删除 !")
                 $this.fetchData()
             });
+        },
+        batchPassed(){
+            this.multipleSelection.forEach(item => {
+                this.passed(item)
+            })
+        },
+        batchDele(){
+            this.multipleSelection.forEach(item => {
+                this.delVideo(item)
+            })
         }
     }
 }

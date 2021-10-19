@@ -1,6 +1,11 @@
 <template>
     <el-dialog title="查看视频" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="handleClose">
         <div class="table-classic-wrapper dialog-list">
+            <!-- 操作栏 -->
+            <div class="control-btns">
+                <el-button type="primary" icon="el-icon-check" @click="batchPassed">批量通过</el-button>
+                <el-button type="warning" icon="el-icon-delete" @click="batchDele">批量删除</el-button>
+            </div>
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
@@ -9,7 +14,9 @@
                 tooltip-effect="dark"
                 style="width: 100%"
                 size="medium"
+                @selection-change="handleSelectionChange"
             >
+                <el-table-column type="selection" width="60"/>
                 <el-table-column prop="id" label="ID" align="center" width="150" />
                 <el-table-column prop="ownerId" label="所有者ID" align="center" width="150"/>
                 <el-table-column prop="thumb" label="视频" align="center" width="180">
@@ -67,6 +74,7 @@ export default {
             imgList: [],
             // 数据总条数
             total: 0,
+            multipleSelection: [],
             playVisible: false,
             dialogVisible: false,
             appList: getAppList(),
@@ -113,6 +121,10 @@ export default {
                 this.$refs.myVideoPlayer.initSrc(src);
             })
         },
+        // 多选操作
+        handleSelectionChange(val) {
+            this.multipleSelection = val
+        },
         closeVideo(){
             this.playVisible = false;
             this.$nextTick(()=>{
@@ -135,7 +147,7 @@ export default {
                 $this.fetchData()
             });
         },
-        // 拒绝
+        // 删除
         delVideo(row) {
             const $this = this
             let param = {
@@ -146,6 +158,16 @@ export default {
                 result ? $this.$message.success("已删除 !") : $this.$message.error("删除失败 !")
                 $this.fetchData()
             });
+        },
+        batchPassed(){
+            this.multipleSelection.forEach(item => {
+                this.passed(item)
+            })
+        },
+        batchDele(){
+            this.multipleSelection.forEach(item => {
+                this.delVideo(item)
+            })
         }
     }
 }
