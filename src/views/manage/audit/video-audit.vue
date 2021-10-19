@@ -59,6 +59,7 @@
                         <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
+                <el-table-column prop="status" label="审核状态" align="center" width="120"/>
                 <el-table-column prop="ownerId" label="已有视频" align="center" width="120">
                     <template scope="scope">
                         <el-button type="text" @click="toDialog('videoList',scope.row)">查看</el-button>
@@ -150,6 +151,7 @@ export default {
                         "thumb" : item.getThumb(),
                         "likes" : item.getLikes(),
                         "uri" : item.getUri(),
+                        "status" : getReviewStatus(item.getStatus()),
                         "createdAt" : toTime(item.getCreatedAt())
                     }
                     data.push(json)
