@@ -163,6 +163,11 @@
                 <el-table-column prop="commissionIncome" label="佣金收益" align="center" width="120" />
                 <el-table-column prop="adjustIncome" label="奖惩" align="center" width="120" />
                 <el-table-column prop="price" label="单价" align="center" width="120" />
+                <el-table-column prop="onlineIp" label="上线ip" align="center" width="180">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="getAddress(scope.row)">{{ scope.row.onlineIp }}</el-button>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="updatedAt" label="最近登录时间" align="center" width="180" />
                 <el-table-column prop="createdAt" label="注册时间" align="center" width="180" />
                 <el-table-column label="操作" align="center" width="250" fixed="right">
@@ -242,7 +247,14 @@ import {
     getAnchorLevel,
     getOnlineStatus,
     getReviewStatus,
-    getGuildList, getArrName, getAppList, getBlockStatus, getAppName, getCurrentUserAreaId, getGuildListByAreaId
+    getGuildList,
+    getArrName,
+    getAppList,
+    getBlockStatus,
+    getAppName,
+    getCurrentUserAreaId,
+    getGuildListByAreaId,
+    ipToAddress
 } from "@/utils/dist";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
@@ -344,6 +356,7 @@ export default {
                         "bankName" : item.getBankName(),
                         "accountName" : item.getAccountName(),
                         "bankAccount" : item.getBankAccount(),
+                        "onlineIp" : item.getOnlineIp(),
                         "struct" : item
                     }
                     data.push(json)
@@ -419,6 +432,15 @@ export default {
                 } else {
                     $this.$message.error("恢复失败!")
                 }
+            })
+        },
+        getAddress(row){
+            const $this = this
+            ipToAddress(row.onlineIp, function (result){
+                let content = result.getCountry() + " . " + result.getCity()
+                $this.$alert(content, '地区', {
+                    confirmButtonText: '确定'
+                });
             })
         },
         handlePassed(index, row) {

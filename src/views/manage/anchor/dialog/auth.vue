@@ -49,7 +49,7 @@
                     <el-form-item label="上线IP: " prop="onlineIp">
                         {{ form.onlineIp }}
                     </el-form-item>
-                    <el-form-item label="国家: " prop="country">
+                    <el-form-item label="上线IP地址: " prop="country">
                         {{ form.country }}
                     </el-form-item>
                 </div>
@@ -69,7 +69,7 @@ import {
     getAnchorLevel, getAppList, getAppName,
     getAreaList,
     getCurrentUserAreaId,
-    getGuildListByAreaId
+    getGuildListByAreaId, ipToAddress
 } from "@/utils/dist";
 import {isEmpty} from "@/api/api";
 
@@ -141,6 +141,7 @@ export default {
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
+            this.isHidden = true
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
@@ -164,8 +165,11 @@ export default {
                     let user = list[0]
                     $this.form.areaId = user.getAreaId()
                     $this.form.app = getAppName($this.appListAll, user.getAppId())
-                    $this.form.country = user.getCountry()
                     $this.form.onlineIp = user.getOnlineIp()
+                    ipToAddress($this.form.onlineIp, function (result){
+                        let content = result.getCountry() + " . " + result.getCity()
+                        $this.form.country = content
+                    })
                     $this.changeArea($this.form.areaId)
                 }else{
                     $this.isHidden = true

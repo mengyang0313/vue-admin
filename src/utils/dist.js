@@ -1,5 +1,5 @@
 import {Empty} from "@/proto/js/usertype_pb";
-import {PayChannelListRequest, CommodityListRequest, AppListRequest} from "@/proto/js/cms_pb";
+import {PayChannelListRequest, CommodityListRequest, AppListRequest, IpLocationRequest} from "@/proto/js/cms_pb";
 import {getToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
 import {isEmpty} from "@/api/api";
@@ -325,6 +325,20 @@ export function getCommodityList() {
     }
 }
 
+
+// 查询ip的地址
+export function ipToAddress(ip, callback){
+    let req = new IpLocationRequest();
+    req.setIp(ip)
+    let metadata = {'token': getToken()};
+    cmsService.getIpLocation(req, metadata, (err, resp) => {
+        if (!err) {
+            callback(resp)
+        } else {
+            console.log(err)
+        }
+    })
+}
 
 
 export function getArrName(arr, id){

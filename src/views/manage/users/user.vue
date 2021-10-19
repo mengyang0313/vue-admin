@@ -135,7 +135,11 @@
                 <el-table-column prop="checkinAt" label="上次签到时间" align="center" width="150"/>
                 <el-table-column prop="createdAt" label="注册日期" align="center" width="150"/>
                 <el-table-column prop="appVersion" label="app版本" align="center" width="120" />
-                <el-table-column prop="onlineIp" label="ip地址" align="center" width="140"/>
+                <el-table-column prop="onlineIp" label="上线IP" align="center" width="140">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="getAddress(scope.row)">{{ scope.row.onlineIp }}</el-button>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
                         <span v-if="scope.row.blockStatus !== 3 && scope.row.blockStatus !== 4" style="padding-right:10px;padding-left:10px;">
@@ -189,7 +193,7 @@ import {
     getBlockStatus,
     getAppName,
     getGenderType,
-    getCurrentUserAreaId, getAppListByAreaId
+    getCurrentUserAreaId, getAppListByAreaId, ipToAddress
 } from "@/utils/dist";
 import {toTime} from "@/utils/date";
 
@@ -293,6 +297,15 @@ export default {
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
                 this.$refs[component].init(row);
+            })
+        },
+        getAddress(row){
+            const $this = this
+            ipToAddress(row.onlineIp, function (result){
+                let content = result.getCountry() + " . " + result.getCity()
+                $this.$alert(content, '地区', {
+                    confirmButtonText: '确定'
+                });
             })
         },
         unblock(entityId){
