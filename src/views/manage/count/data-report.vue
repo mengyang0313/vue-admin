@@ -146,10 +146,10 @@ export default {
                 areaId: 0,
                 appId: 0,
                 date: [
-                    getCurrentDate(),
+                    getCurrentDate(-6),
                     getCurrentDate()
                 ],
-                interval: 3,
+                interval: 4,
                 page: {
                     currentPage: 1,
                     pageSize: 1000

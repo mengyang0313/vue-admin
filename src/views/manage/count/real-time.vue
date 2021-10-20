@@ -310,8 +310,8 @@ export default {
             ++this.payKey
         },
         toFmt(param){
-            let startDate = param.date[0]
-            let endDate = param.date[1]
+            let startDate = new Date(param.date[0].toLocaleDateString())
+            let endDate = new Date(param.date[1].toLocaleDateString())
             if(startDate.getTime() === endDate.getTime()){
                 this.fmt = "hh:mm"
                 this.interval = 10

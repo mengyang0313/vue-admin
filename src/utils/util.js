@@ -30,7 +30,7 @@ export function getDateStr(date){
 
 export function getCurrentDate(d){
     let date = new Date(new Date().toLocaleDateString())
-    return d ? date.setDate(date.getDate() + d) : date
+    return d ? new Date(date.setDate(date.getDate() + d)) : date
 }
 
 export function startTime(){
