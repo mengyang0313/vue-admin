@@ -19,6 +19,15 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item label="时间" prop="createdStart">
+                            <el-date-picker
+                                v-model="search.date"
+                                type="daterange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                            </el-date-picker>
+                        </el-form-item>
                         <el-form-item>
                             <el-button type="danger" @click="onSearch" icon="el-icon-refresh">刷 新</el-button>
                         </el-form-item>
@@ -82,6 +91,7 @@ import ChartsBarLine from '../../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../../components/Charts/ChartsBar'
 import ChartsCountLine from '../../../components/Charts/ChartsCountLine'
 import {getAreaList, getCurrentUserAreaId} from "@/utils/dist";
+import {endUnix, getCurrentDate, startUnix} from "@/utils/date";
 
 export default {
     name: 'Home',
@@ -94,9 +104,16 @@ export default {
             expenseKey: 80,
             depositKey: 100,
             payKey: 120,
+            minDate: getCurrentDate(-3),
             search: {
-                areaId: undefined
+                areaId: undefined,
+                date: [
+                    getCurrentDate(),
+                    getCurrentDate()
+                ]
             },
+            fmt: '',
+            interval: undefined,
             authAreaId: getCurrentUserAreaId(),
             areaList: getAreaList(false),
             userData: {
@@ -147,11 +164,10 @@ export default {
         },
         initData(){
             const $this = this
-            let param = this.search
-            param.startAt = this.startUnix(new Date())
-            param.endAt = this.endUnix(new Date())
-            this.$service.home.getAreaStat(this.search, function (result){
+            let param = this.handleParam()
+            this.$service.home.getAreaStat(param, function (result){
                 let statList = result.getStatsList()
+                $this.toFmt(param)
                 $this.handleUserData(statList)
                 $this.handleCallingData(statList)
                 $this.handleCallData(statList)
@@ -159,6 +175,14 @@ export default {
                 $this.handleDepositData(statList)
                 $this.handlePayData(statList)
             });
+        },
+        handleParam(){
+            let param = this.search;
+            if (param.date.length > 0){
+                param.startAt = startUnix(this.search.date[0])
+                param.endAt = endUnix(this.search.date[1])
+            }
+            return param
         },
         handleUserData(statList){
             let keys = []
@@ -171,7 +195,7 @@ export default {
             let len = statList.length
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                keys.push(new Date(startAt * 1000).format(this.fmt))
                 onlineUser.push(item.getOnlineUser())
                 newUser.push(item.getNewUser())
                 payUser.push(item.getPayUser())
@@ -187,6 +211,7 @@ export default {
 
             this.userData.keys = keys
             this.userData.values = values
+            this.userData.interval = this.interval
             ++this.userKey
         },
         handleCallingData(statList){
@@ -197,7 +222,7 @@ export default {
             let anchorCalling = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                keys.push(new Date(startAt * 1000).format(this.fmt))
                 aiCalling.push(item.getAiCalling())
                 userCalling.push(item.getUserCalling())
                 anchorCalling.push(item.getAnchorCalling())
@@ -208,6 +233,7 @@ export default {
 
             this.callingData.keys = keys
             this.callingData.values = values
+            this.userData.interval = this.interval
             ++this.callingKey
         },
         handleCallData(statList){
@@ -218,7 +244,7 @@ export default {
             let anchorCall = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                keys.push(new Date(startAt * 1000).format(this.fmt))
                 aiCall.push(item.getAiCall())
                 userCall.push(item.getUserCall())
                 anchorCall.push(item.getAnchorCall())
@@ -229,6 +255,7 @@ export default {
 
             this.callData.keys = keys
             this.callData.values = values
+            this.userData.interval = this.interval
             ++this.callKey
         },
         handleExpenseData(statList){
@@ -237,12 +264,13 @@ export default {
             let expense = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                keys.push(new Date(startAt * 1000).format(this.fmt))
                 expense.push(item.getExpense())
             })
             values.push(expense)
             this.expenseData.values = values
             this.expenseData.keys = keys
+            this.userData.interval = this.interval
             ++this.expenseKey
         },
         handleDepositData(statList){
@@ -251,12 +279,13 @@ export default {
             let deposit = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                keys.push(new Date(startAt * 1000).format(this.fmt))
                 deposit.push(item.getDeposit())
             })
             values.push(deposit)
             this.depositData.values = values
             this.depositData.keys = keys
+            this.userData.interval = this.interval
             ++this.depositKey
         },
         handlePayData(statList){
@@ -267,7 +296,7 @@ export default {
             let otherPay = []
             statList.forEach((item, index) => {
                 let startAt = item.getStartAt()
-                keys.push(new Date(startAt * 1000).format("hh:mm"))
+                keys.push(new Date(startAt * 1000).format(this.fmt))
                 googlePay.push(item.getGooglePay()/100)
                 applePay.push(item.getApplePay()/100)
                 otherPay.push(item.getOtherPay()/100)
@@ -277,13 +306,19 @@ export default {
             values.push(otherPay)
             this.payData.values = values
             this.payData.keys = keys
+            this.userData.interval = this.interval
             ++this.payKey
         },
-        startUnix($date) {
-            return new Date($date.toLocaleDateString()).getTime() / 1000
-        },
-        endUnix($date) {
-            return this.startUnix($date) + 24 * 60 * 60 - 1
+        toFmt(param){
+            let startDate = param.date[0]
+            let endDate = param.date[1]
+            if(startDate.getTime() === endDate.getTime()){
+                this.fmt = "hh:mm"
+                this.interval = 10
+            }else{
+                this.fmt = "MM-dd hh:mm"
+                this.interval = undefined
+            }
         }
     }
 }

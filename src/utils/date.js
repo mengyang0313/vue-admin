@@ -22,6 +22,12 @@ export function getDateStr(date){
 }
 
 
+export function getCurrentDate(d){
+    let date = new Date(new Date().format('yyyy-MM-dd'))
+    return d ? date.setDate(date.getDate() + d) : date
+}
+
+
 export function startUnix($date) {
     return new Date($date.toLocaleDateString()).getTime() / 1000
 }

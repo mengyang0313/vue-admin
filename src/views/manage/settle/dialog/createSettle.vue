@@ -34,6 +34,7 @@
 <script>
 
 import {getAreaList, getArrName, getCurrentUserAreaId} from "@/utils/dist";
+import {getCurrentDate} from "@/utils/date";
 
 export default {
     data() {
@@ -42,7 +43,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             search: {
                 areaId: getCurrentUserAreaId(),
-                settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
+                settleAtTime: getCurrentDate(),
                 minBalance: 100
             },
             rules: {

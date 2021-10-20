@@ -35,6 +35,7 @@ export default {
         },
         drawing() {
             const title = this.data.title
+            const interval = this.data.interval
             const legendData = this.data.legend
             const xAxisData = this.data.keys
             const seriesData = []
@@ -42,6 +43,7 @@ export default {
                 let series = {
                                 name: item,
                                 type: 'line',
+                                showSymbol: false,
                                 data: this.data.values[index]
                             }
                 seriesData.push(series)
@@ -84,7 +86,7 @@ export default {
                         type: 'category',
                         data: xAxisData,
                         axisLabel:{
-                            interval: 10
+                            interval: interval
                         }
                         // axisLine:{
                         //     lineStyle:{

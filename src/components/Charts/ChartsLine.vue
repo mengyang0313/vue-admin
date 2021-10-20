@@ -42,6 +42,7 @@ export default {
                 let series = {
                                 name: item,
                                 type: 'line',
+                                showSymbol: false,
                                 data: this.data.values[index]
                             }
                 seriesData.push(series)

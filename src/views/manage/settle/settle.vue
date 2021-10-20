@@ -149,7 +149,7 @@ import {
 import excel from "@/utils/excel"
 import createSettle from './dialog/createSettle'
 import importData from './dialog/import-data'
-import {getDateStr, toDate} from "@/utils/date";
+import {getCurrentDate, getDateStr, toDate} from "@/utils/date";
 
 
 export default {
@@ -161,7 +161,7 @@ export default {
                 areaId: getCurrentUserAreaId(),
                 guildId: undefined,
                 anchorId: undefined,
-                settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
+                settleAtTime: getCurrentDate(),
                 status: undefined,
                 page: {
                     currentPage: 1,

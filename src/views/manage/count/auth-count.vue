@@ -87,7 +87,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import {getAreaList, getAnchorLevel, getArrName, getCurrentUserAreaId} from "@/utils/dist";
-import {toDate} from "@/utils/date"
+import {getCurrentDate, toDate} from "@/utils/date"
 
 
 export default {
@@ -99,7 +99,7 @@ export default {
                 areaId: undefined,
                 level: undefined,
                 anchorId: undefined,
-                settleAtTime: new Date(new Date().format('yyyy-MM-dd')),
+                settleAtTime: getCurrentDate(),
                 page: {
                     currentPage: 1,
                     pageSize: 10

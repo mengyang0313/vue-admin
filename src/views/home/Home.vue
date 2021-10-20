@@ -109,6 +109,7 @@ import ChartsBarLine from '../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../components/Charts/ChartsBar'
 import ChartsLine from '../../components/Charts/ChartsLine'
 import {getAreaList, getAppList, getAppName, getCurrentUserAreaId} from "@/utils/dist"
+import {getCurrentDate} from "@/utils/date";
 
 export default {
     name: 'Home',
@@ -118,7 +119,7 @@ export default {
             listLoading: false,
             search: {
                 areaId: undefined,
-                date: new Date(new Date().format('yyyy-MM-dd')),
+                date: getCurrentDate(),
                 startAt: undefined,
                 endAt: undefined
             },

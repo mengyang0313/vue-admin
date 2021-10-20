@@ -52,13 +52,6 @@
                                 start-placeholder="开始日期"
                                 end-placeholder="结束日期">
                             </el-date-picker>
-<!--                            <el-col :span="11">-->
-<!--                                <el-date-picker type="date" placeholder="开始时间" v-model="search.startDate" :max="search.endDate" style="width: 100%;"></el-date-picker>-->
-<!--                            </el-col>-->
-<!--                            <el-col class="line" :span="1" align="center">-</el-col>-->
-<!--                            <el-col :span="10">-->
-<!--                                <el-date-picker type="date" placeholder="结束时间" v-model="search.endDate" :min="search.startDate" style="width: 100%;"></el-date-picker>-->
-<!--                            </el-col>-->
                         </el-form-item>
                         <el-form-item>
                             <el-button type="danger" @click="onSearch" icon="el-icon-refresh">刷 新</el-button>
@@ -130,19 +123,16 @@
 <script>
 import CountTo from 'vue-count-to'
 import ChartsLine from '../../../components/Charts/ChartsLine'
-import { getTableList } from '../../../api/api'
 import Pagination from '../../../components/Pagination'
 import {
-    getAnchorLevel,
-    getAppList,
     getAppListByAreaId,
     getAppName,
     getAreaList,
-    getArrName, getBlockStatus,
+    getArrName,
     getCurrentUserAreaId,
-    getOnlineStatus, getReviewStatus, getSettleStatus, getStatInterval
+    getStatInterval
 } from "@/utils/dist";
-import {endUnix, startUnix, toDate, toTime} from "@/utils/date";
+import {endUnix, getCurrentDate, startUnix} from "@/utils/date";
 
 export default {
     name: 'Home',
@@ -153,11 +143,11 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: undefined,
-                appId: undefined,
+                areaId: 0,
+                appId: 0,
                 date: [
-                    new Date(new Date().format('yyyy-MM-dd')),
-                    new Date(new Date().format('yyyy-MM-dd'))
+                    getCurrentDate(),
+                    getCurrentDate()
                 ],
                 interval: 3,
                 page: {
