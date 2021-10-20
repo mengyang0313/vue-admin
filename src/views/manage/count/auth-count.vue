@@ -87,7 +87,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import {getAreaList, getAnchorLevel, getArrName, getCurrentUserAreaId} from "@/utils/dist";
-import {getCurrentDate, toDate} from "@/utils/date"
+import {getCurrentDate, startUnix, toDate} from "@/utils/util"
 
 
 export default {
@@ -155,9 +155,7 @@ export default {
         },
         handleParam(){
             let param = this.search;
-            if (typeof(this.search.settleAtTime) != "undefined"){
-                param.statAt = new Date(this.search.settleAtTime).getTime() / 1000
-            }
+            param.statAt = startUnix(new Date(this.search.settleAtTime))
             if (typeof(this.search.anchorId) != "undefined"){
                 param.anchorId = parseInt(this.search.anchorId)
             }

@@ -91,7 +91,7 @@ import ChartsBarLine from '../../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../../components/Charts/ChartsBar'
 import ChartsCountLine from '../../../components/Charts/ChartsCountLine'
 import {getAreaList, getCurrentUserAreaId} from "@/utils/dist";
-import {endUnix, getCurrentDate, startUnix} from "@/utils/date";
+import {endUnix, getCurrentDate, startUnix} from "@/utils/util";
 
 export default {
     name: 'Home',

@@ -109,7 +109,7 @@ import ChartsBarLine from '../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../components/Charts/ChartsBar'
 import ChartsLine from '../../components/Charts/ChartsLine'
 import {getAreaList, getAppList, getAppName, getCurrentUserAreaId} from "@/utils/dist"
-import {getCurrentDate} from "@/utils/date";
+import {endUnix, getCurrentDate, startUnix, toDollar} from "@/utils/util";
 
 export default {
     name: 'Home',
@@ -181,7 +181,7 @@ export default {
                 let income = result.getIncome()
                 let income_decimals = 0
                 if(income>0){
-                    income = income / 100
+                    income = toDollar(income)
                     income_decimals = 2
                 }
                 let inc = {
@@ -226,14 +226,14 @@ export default {
                     if(item.getNewIncome() > 0){
                         newArr.push({
                             title: title,
-                            val1: item.getNewIncome() / 100
+                            val1: toDollar(item.getNewIncome())
                         })
                     }
 
                     if(item.getTotalIncome()>0){
                         totalArr.push({
                             title: title,
-                            val1: item.getTotalIncome() / 100
+                            val1: toDollar(item.getTotalIncome())
                         })
                     }
 
@@ -245,9 +245,9 @@ export default {
                     }
 
                     if(item.getGoogleIncome()>0 || item.getAppleIncome()>0 || item.getOtherIncome()>0){
-                        let googleIncome = item.getGoogleIncome() / 100
-                        let appleIncome = item.getAppleIncome() / 100
-                        let otherIncome = item.getOtherIncome() / 100
+                        let googleIncome = toDollar(item.getGoogleIncome())
+                        let appleIncome = toDollar(item.getAppleIncome())
+                        let otherIncome = toDollar(item.getOtherIncome())
                         channelArr.push({
                             title: title,
                             val1: googleIncome,
@@ -298,8 +298,8 @@ export default {
         },
         handleSearch(){
             let date = this.search.date
-            this.search.startAt = this.startUnix(date)
-            this.search.endAt = this.endUnix(date)
+            this.search.startAt = startUnix(date)
+            this.search.endAt = endUnix(date)
             return this.search
         },
         handleActiveData(statList){
@@ -314,12 +314,6 @@ export default {
             this.activeData.keys = keyArr
             this.activeData.values = valueArr
             ++this.activeKey
-        },
-        startUnix($date) {
-            return new Date($date.toLocaleDateString()).getTime() / 1000
-        },
-        endUnix($date) {
-            return this.startUnix($date) + 24 * 60 * 60 - 1
         },
         countTotal(arr, keyName) {
             let $total = 0;

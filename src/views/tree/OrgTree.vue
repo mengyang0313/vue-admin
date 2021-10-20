@@ -34,6 +34,7 @@
 import OrgView from '../../components/OrgTree/OrgView'
 import ZoomController from '../../components/OrgTree/ZoomController'
 import Hints from '../../components/Hints'
+import {toDollar} from "@/utils/util";
 
 export default {
     name: 'OrgTree',
@@ -47,7 +48,7 @@ export default {
     },
     computed: {
         zoomVal() {
-            return this.zoom / 100
+            return toDollar(this.zoom)
         },
         horizontal() {
             if (this.displayMode === 'vertical') {

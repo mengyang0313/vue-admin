@@ -48,7 +48,7 @@
 <script>
 import Pagination from '../../../../components/Pagination'
 import {getAppList, getAppName, getAreaList, getMessageType} from "@/utils/dist";
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 export default {
     name: 'Table',
@@ -115,12 +115,6 @@ export default {
         },
         handleParam(){
             let param = this.search;
-            if (typeof(this.search.createdStart) != "undefined"){
-                param.createdStartUint = this.search.createdStart.getTime() / 1000
-            }
-            if (typeof(this.search.createdEnd) != "undefined"){
-                param.createdEndUint = this.search.createdEnd.getTime() / 1000
-            }
             return param
         },
         resetForm() {

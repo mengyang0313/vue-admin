@@ -128,7 +128,7 @@ import {
     getSettleStatus
 } from "@/utils/dist";
 import excel from "@/utils/excel";
-import {toDate} from "@/utils/date";
+import {startUnix, toDate} from "@/utils/util";
 
 export default {
     components: { Pagination },
@@ -171,7 +171,7 @@ export default {
             this.listLoading = true
             let param = this.search;
             if(typeof(this.search.settleAtTime) !== "undefined"){
-                param.settleAt = new Date(this.search.settleAtTime).getTime() / 1000
+                param.settleAt = startUnix(new Date(this.search.settleAtTime))
             }
             this.$service.settle.getSettleList(param, function (result){
                 const list = result.getRecordsList()

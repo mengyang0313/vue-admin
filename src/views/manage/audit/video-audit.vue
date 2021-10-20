@@ -97,7 +97,7 @@
 import Pagination from '../../../components/Pagination'
 import {getAppList, getAppName, getAreaList, getArrName, getCurrentUserAreaId, getReviewStatus} from "@/utils/dist"
 import videoList from './dialog/anchor-video-list'
-import {toTime} from "@/utils/date"
+import {toTime} from "@/utils/util"
 import VueVideoPlayer from '../../../components/VueVideoPlayer'
 
 export default {

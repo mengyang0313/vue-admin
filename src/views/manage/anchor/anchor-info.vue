@@ -197,7 +197,7 @@ import {
 } from "@/utils/dist";
 import videoList from '../audit/dialog/video-list'
 import photoList from '../audit/dialog/photo-list'
-import {toDate} from "@/utils/date";
+import {toDate} from "@/utils/util";
 
 export default {
     name: 'Table',

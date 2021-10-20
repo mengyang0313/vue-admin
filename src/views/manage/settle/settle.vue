@@ -149,7 +149,7 @@ import {
 import excel from "@/utils/excel"
 import createSettle from './dialog/createSettle'
 import importData from './dialog/import-data'
-import {getCurrentDate, getDateStr, toDate} from "@/utils/date";
+import {getCurrentDate, getDateStr, startUnix, toDate} from "@/utils/util";
 
 
 export default {
@@ -195,7 +195,7 @@ export default {
             this.listLoading = true
             let param = this.search;
             if(typeof(this.search.settleAtTime) !== "undefined"){
-                param.settleAt = new Date(this.search.settleAtTime).getTime() / 1000
+                param.settleAt = startUnix(new Date(this.search.settleAtTime))
             }
             this.$service.settle.getSettleList(param, function (result){
                 const list = result.getRecordsList()

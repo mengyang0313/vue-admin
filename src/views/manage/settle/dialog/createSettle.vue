@@ -34,7 +34,7 @@
 <script>
 
 import {getAreaList, getArrName, getCurrentUserAreaId} from "@/utils/dist";
-import {getCurrentDate} from "@/utils/date";
+import {getCurrentDate, startUnix} from "@/utils/util";
 
 export default {
     data() {
@@ -61,7 +61,7 @@ export default {
         onSearch() {
             let $this = this
             let param = this.search;
-            param.settleAt = new Date(this.search.settleAtTime).getTime() / 1000
+            param.settleAt = startUnix(new Date(this.search.settleAtTime))
             this.$service.settle.createSettleRecord(param, function (result){
                 if(result){
                     $this.$message.success("预结算生成成功!")

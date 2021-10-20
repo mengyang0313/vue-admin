@@ -156,7 +156,7 @@ import {
     getPayType,
     getCommodityList, getPayChannelList, getAppListByAreaId, getCurrentUserAreaId
 } from "@/utils/dist";
-import {endUnix, toTime} from "@/utils/date";
+import {endUnix, startUnix, toDollar, toTime} from "@/utils/util";
 import {isEmpty} from "@/api/api";
 
 export default {
@@ -201,7 +201,7 @@ export default {
                 const list = result.getRecordsList()
                 const data = []
                 list.forEach((item, index)=>{
-                    let price = item.getPayPrice() / 100
+                    let price = toDollar(item.getPayPrice())
                     if(!isEmpty(item.getCurrency())){
                         price = item.getCurrency() + "-" + price
                     }
@@ -220,7 +220,7 @@ export default {
                         "payOrderId": item.getPayOrderId(),
                         "payUrl" : item.getPayUrl(),
                         "payPrice" : price,
-                        "usdPrice" : item.getUsdPrice() / 100,
+                        "usdPrice" : toDollar(item.getUsdPrice()),
                         "amount": item.getAmount(),
                         "payStatus" : getPayStatus(item.getPayStatus()),
                         "paidAt" : toTime(item.getPaidAt()),
@@ -238,7 +238,7 @@ export default {
         handleParam(){
             let param = this.search;
             if (param.date.length > 0){
-                param.createdStartUint = this.search.date[0].getTime() / 1000
+                param.createdStartUint = startUnix(this.search.date[0])
                 param.createdEndUint = endUnix(this.search.date[1])
             }
             return param

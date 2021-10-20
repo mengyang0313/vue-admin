@@ -132,7 +132,7 @@ import {
     getCurrentUserAreaId,
     getStatInterval
 } from "@/utils/dist";
-import {endUnix, getCurrentDate, startUnix} from "@/utils/date";
+import {endUnix, getCurrentDate, startUnix, toDollar} from "@/utils/util";
 
 export default {
     name: 'Home',
@@ -240,8 +240,8 @@ export default {
                 list.forEach((item, index)=>{
                     let startAt = item.getStartAt()
                     keys.push(new Date(startAt * 1000).format(fmt))
-                    incomes.push(item.getIncome())
-                    newIncomes.push(item.getNewIncome())
+                    incomes.push(toDollar(item.getIncome()))
+                    newIncomes.push(toDollar(item.getNewIncome()))
 
                     let payPaidRatio = $this.toRatio(item.getActiveUser(), item.getPayUser())
                     payPaidRatios.push(payPaidRatio)

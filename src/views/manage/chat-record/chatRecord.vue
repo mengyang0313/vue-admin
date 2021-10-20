@@ -160,7 +160,7 @@ import {
     getAppListByAreaId,
     getCurrentUserAreaId, getArrName
 } from "@/utils/dist";
-import {endUnix, toTime} from "@/utils/date";
+import {endUnix, startUnix, toTime} from "@/utils/util";
 
 export default {
     components: { Pagination, showDialog },
@@ -231,7 +231,7 @@ export default {
         handleParam(){
             let param = this.search;
             if (param.date.length > 0){
-                param.createdStartUint = this.search.date[0].getTime() / 1000
+                param.createdStartUint = startUnix(this.search.date[0])
                 param.createdEndUint = endUnix(this.search.date[1])
             }
             return param

@@ -56,7 +56,7 @@ import Pagination from '../../../components/Pagination'
 import addRobotDynamic from './dialog/add-robot-dynamic'
 import Hints from '../../../components/Hints'
 import {getArrName, getAreaList, getAppList, getReviewStatus, getAppName, getAppListByAreaId} from "@/utils/dist";
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 
 export default {

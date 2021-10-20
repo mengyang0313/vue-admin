@@ -79,7 +79,7 @@ import Pagination from '../../../components/Pagination'
 import edit from './dialog/edit'
 import close from './dialog/close'
 import {getAreaList, getBool, getArrName} from "@/utils/dist";
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 
 

@@ -116,7 +116,7 @@ import {
     getGenderType,
     getCurrentUserAreaId
 } from "@/utils/dist"
-import {toDate} from "@/utils/date";
+import {toDate} from "@/utils/util";
 
 export default {
     name: 'Table',

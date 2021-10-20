@@ -69,7 +69,7 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import addPay from './dialog/addPay'
 import {getAreaList, getArrName, getPayType, getAppList, getAppName, getCurrentUserAreaId} from "@/utils/dist";
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 export default {
     components: { Pagination, imageShow, addPay},

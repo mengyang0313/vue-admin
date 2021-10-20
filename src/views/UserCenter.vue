@@ -48,7 +48,7 @@
 
 <script>
 
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 export default {
     name: 'UserCenter',

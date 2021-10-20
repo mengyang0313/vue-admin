@@ -48,7 +48,7 @@
 <script>
 import Pagination from '../../../../components/Pagination'
 import {getAppList, getAppName, getAreaList, getMessageType} from "@/utils/dist";
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 export default {
     name: 'Table',

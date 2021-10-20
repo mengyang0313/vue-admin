@@ -35,7 +35,7 @@
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
-                        @pagination="fetchData"/>
+                        @pagination="fetchData" @changePageSize="changePageSize($event)"/>
         </div>
         <el-dialog
             title="播放视频"
@@ -53,7 +53,7 @@
 import Pagination from '../../../../components/Pagination'
 import VueVideoPlayer from '../../../../components/VueVideoPlayer'
 import {getAppList, getAppName, getAreaList, getArrName, getFileType, getReviewStatus} from "@/utils/dist"
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 export default {
     name: 'Table',
@@ -67,7 +67,7 @@ export default {
                 status: 5,
                 page: {
                     currentPage: 1,
-                    pageSize: 10
+                    pageSize: 50
                 }
             },
             videoList: [],
@@ -135,6 +135,9 @@ export default {
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
+        },
+        changePageSize(msg){
+            this.search.page.pageSize = msg.limit
         },
         passed(row) {
             const $this = this

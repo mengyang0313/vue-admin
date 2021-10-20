@@ -112,7 +112,7 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import { getReportedTypes, getReportedTime, getAreaList, getViolationScene } from "@/utils/dist";
-import {toTime} from "@/utils/date";
+import {toTime} from "@/utils/util";
 
 export default {
     name: 'Table',

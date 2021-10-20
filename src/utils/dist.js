@@ -3,6 +3,7 @@ import {PayChannelListRequest, CommodityListRequest, AppListRequest, IpLocationR
 import {getToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
 import {isEmpty} from "@/api/api";
+import {loginOut} from "@/utils/error";
 
 
 export async function initData() {
@@ -65,7 +66,11 @@ export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
 export function getCurrentUserAreaId(){
     try{
         let json = sessionStorage.getItem("currentUser");
-        return JSON.parse(json).areaId
+        if(isEmpty(json)){
+            loginOut()
+        }else{
+            return JSON.parse(json).areaId
+        }
     }catch (err){
         console.log(err)
     }
