@@ -15,15 +15,7 @@
                 </li>
                 <li>
                     <label>权限区域：</label>
-                    <span>{{ userInfo.areaIds }}</span>
-                </li>
-                <li>
-                    <label>权限应用：</label>
-                    <span>{{ userInfo.appIds }}</span>
-                </li>
-                <li>
-                    <label>权限模块：</label>
-                    <span>{{ userInfo.modules }}</span>
+                    <span>{{ userInfo.areaId }}</span>
                 </li>
                 <li>
                     <label>备注：</label>
@@ -49,6 +41,7 @@
 <script>
 
 import {toTime} from "@/utils/util";
+import {getAreaList, getArrName} from "@/utils/dist";
 
 export default {
     name: 'UserCenter',
@@ -57,7 +50,8 @@ export default {
         return {
             userInfo: {
                 email: undefined
-            }
+            },
+            areaList: getAreaList(true)
         }
     },
     created() {
@@ -66,9 +60,8 @@ export default {
             $this.userInfo.email = result.getEmail()
             $this.userInfo.name = result.getName()
             $this.userInfo.note = result.getNote()
-            $this.userInfo.areaIds = result.getAreaId()
+            $this.userInfo.areaId = getArrName($this.areaList, result.getAreaId())
             $this.userInfo.appIds = result.getAppIdsList()
-            $this.userInfo.modules = result.getModules()
             $this.userInfo.loginAt = toTime(result.getLoginAt()),
             $this.userInfo.loginIp = result.getLoginIp()
             $this.userInfo.createdAt = toTime(result.getCreatedAt())

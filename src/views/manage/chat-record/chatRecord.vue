@@ -153,7 +153,6 @@ import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import showDialog from './dialog/show-dialog'
 import {
-    getAppList,
     getAreaList,
     getMessageType,
     getAppName,

@@ -791,6 +791,9 @@ export function getActionType(key){
         }]
     if(typeof(key) != "undefined"){
         let label = ""
+        if(key===0){
+            return label
+        }
         arr.forEach((item) => {
             if(key.toString() === item.value.toString()){
                 label = item.label

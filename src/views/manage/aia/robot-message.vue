@@ -7,7 +7,6 @@
             <!-- 操作栏 -->
             <div class="control-btns">
                 <el-button type="primary" @click="toDialog('addRobotMessage', '')">+ 新增话术</el-button>
-                <el-button type="danger" @click="batchDelete">批量删除</el-button>
             </div>
             <!-- 表格栏 -->
             <el-table
@@ -22,11 +21,11 @@
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="robotId" label="机器人ID" align="center" width="120" />
 
-                <el-table-column prop="type" label="类型" align="center" width="100"/>
+                <el-table-column prop="typeStr" label="类型" align="center" width="100"/>
                 <el-table-column prop="text" label="内容" align="center" width="350" />
                 <el-table-column prop="uri" label="连接" align="center" width="150">
                     <template slot-scope="scope">
-                        <a :href="scope.row.url" style="color: #1E88C7">{{ scope.row.fileName }}</a>
+                        <a :href="scope.row.uri" style="color: #1E88C7">{{ scope.row.fileName }}</a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="thumb" label="图片" align="center" width="150">
@@ -42,6 +41,11 @@
                 </el-table-column>
                 <el-table-column prop="interval" label="间隔时间" align="center" width="150"/>
                 <el-table-column prop="action" label="动作类型" align="center" width="150"/>
+                <el-table-column label="操作" align="center" width="150" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="toDialog('addRobotMessage', scope.row)">更新</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页栏
             <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
@@ -91,6 +95,16 @@ export default {
         this.search.nickname = this.$route.query.nickname
         this.fetchData()
     },
+    watch: {
+        $route: {
+            handler() {
+                this.search.robotId = this.$route.query.robotId
+                this.search.nickname = this.$route.query.nickname
+                this.fetchData()
+            },
+            deep: true
+        }
+    },
     methods: {
         // 获取数据列表
         fetchData() {
@@ -101,13 +115,14 @@ export default {
                 const data = []
                 list.forEach((item, index)=>{
                     const json = {
+                        "id" : item.getId(),
                         "robotId" : item.getAnchorId(),
-                        "type" : getActionType(item.getType()),
+                        "type" : item.getType(),
+                        "typeStr" : getActionType(item.getType()),
                         "text" : item.getText(),
                         "uri" : item.getUri(),
                         "thumb" : item.getThumb(),
                         "sort" : item.getSort(),
-                        "aid": "aid",
                         "enable": item.getEnable(),
                         "interval": item.getInterval(),
                         "action": item.getAction()
@@ -126,7 +141,7 @@ export default {
         toDialog(component, row){
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
-                this.$refs[component].init(this.search.robotId)
+                this.$refs[component].init(row, this.search.robotId)
             })
         },
         handleSelectionChange(val) {

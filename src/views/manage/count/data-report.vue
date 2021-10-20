@@ -152,7 +152,7 @@ export default {
                 interval: 3,
                 page: {
                     currentPage: 1,
-                    pageSize: 10
+                    pageSize: 1000
                 }
             },
             total: 0,
@@ -243,10 +243,10 @@ export default {
                     incomes.push(toDollar(item.getIncome()))
                     newIncomes.push(toDollar(item.getNewIncome()))
 
-                    let payPaidRatio = $this.toRatio(item.getActiveUser(), item.getPayUser())
+                    let payPaidRatio = $this.toRatio(item.getPayUser(), item.getActiveUser())
                     payPaidRatios.push(payPaidRatio)
 
-                    let newPayPaidRatio = $this.toRatio(item.getNewIncome(), item.getNewUser())
+                    let newPayPaidRatio = $this.toRatio(item.getNewPayUser(), item.getNewUser())
                     newPayPaidRatios.push(newPayPaidRatio)
 
                     newUser.push(item.getNewUser())
@@ -267,8 +267,8 @@ export default {
                         "app" : getAppName($this.appList, item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaName" : getArrName($this.areaListAll, item.getAreaId()),
-                        "income" : item.getIncome(),
-                        "newIncome" : item.getNewIncome(),
+                        "income" : toDollar(item.getIncome()),
+                        "newIncome" : toDollar(item.getNewIncome()),
                         "payPaidRatio" : payPaidRatio,
                         "newPayPaidRatio" : newPayPaidRatio,
                         "newUser" : item.getNewUser(),

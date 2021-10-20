@@ -381,22 +381,6 @@ import {getCurrentUserModules} from "@/utils/dist";
                 meta: {
                     title: '后台帐号管理'
                 }
-            },
-            {
-                path: 'sys-config',
-                name: 'sys-config',
-                component: () => import('../views/manage/sys/sys-config'),
-                meta: {
-                    title: '配置项管理'
-                }
-            },
-            {
-                path: 'sys-log',
-                name: 'sys-log',
-                component: () => import('../views/manage/sys/sys-log'),
-                meta: {
-                    title: '后台操作日志'
-                }
             }
         ]
     },

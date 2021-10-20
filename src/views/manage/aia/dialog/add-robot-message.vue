@@ -1,7 +1,19 @@
 <template>
-    <el-dialog title="新增话术" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
+    <el-dialog :title="title" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
+                <el-form-item label="机器人Id" prop="robotId">
+                    <el-input v-model="form.robotId" placeholder="请输入" :disabled="isDisabled"/>
+                </el-form-item>
+                <el-form-item label="动作类型" prop="type">
+                    <el-select v-model="form.action" placeholder="请选择">
+                        <el-option v-for="item in actionTypes"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="话术类型" prop="type">
                     <el-select v-model="form.type" placeholder="请选择">
                         <el-option v-for="item in messageTypes"
@@ -47,33 +59,35 @@
 </template>
 
 <script>
-import { getMessageType } from "@/utils/dist";
+import {getActionType, getMessageType} from "@/utils/dist";
 
 export default {
     data() {
         return {
-            form: {
-                robotId: "",
-                type: '',
-                uri: '',
-                text: '',
-                sort: '',
-                interval: '',
-                enable: false
-            },
+            form: { },
+            title: '新增话术',
             dialogVisible: false,
-            messageTypes : getMessageType()
+            isDisabled: false,
+            messageTypes : getMessageType(),
+            actionTypes: getActionType()
         }
     },
     methods: {
-        init(robotId){
-            this.form.robotId = robotId
+        init(row, robotId){
+            if(typeof(row.id) != "undefined"){
+                this.title = "编辑话术"
+                this.form = row
+            }else{
+                this.form.robotId = robotId
+            }
+            this.isDisabled = true
         },
         submitForm() {
             const $this = this
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                     let param = this.form;
+                    param.robotId = parseInt(param.robotId)
                     this.$service.robot.saveRobotMessage(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
@@ -90,6 +104,7 @@ export default {
         },
         closeDialog() {
             this.dialogVisible = false
+            this.isDisabled = false
             this.resetForm()
             this.$emit('fetchData');
         }

@@ -22,7 +22,7 @@
                         <el-form-item label="时间" prop="createdStart">
                             <el-date-picker
                                 v-model="search.date"
-                                type="daterange"
+                                type="datetimerange"
                                 range-separator="至"
                                 start-placeholder="开始日期"
                                 end-placeholder="结束日期">
@@ -91,7 +91,7 @@ import ChartsBarLine from '../../../components/Charts/ChartsBarLine'
 import ChartsBar from '../../../components/Charts/ChartsBar'
 import ChartsCountLine from '../../../components/Charts/ChartsCountLine'
 import {getAreaList, getCurrentUserAreaId} from "@/utils/dist";
-import {endUnix, getCurrentDate, startUnix} from "@/utils/util";
+import {endTime, endUnix, getCurrentDate, startTime, startUnix, toTime} from "@/utils/util";
 
 export default {
     name: 'Home',
@@ -108,8 +108,8 @@ export default {
             search: {
                 areaId: undefined,
                 date: [
-                    getCurrentDate(),
-                    getCurrentDate()
+                    startTime(),
+                    endTime()
                 ]
             },
             fmt: '',
@@ -179,8 +179,8 @@ export default {
         handleParam(){
             let param = this.search;
             if (param.date.length > 0){
-                param.startAt = startUnix(this.search.date[0])
-                param.endAt = endUnix(this.search.date[1])
+                param.startAt = this.search.date[0].getTime() / 1000
+                param.endAt = this.search.date[1].getTime() / 1000
             }
             return param
         },

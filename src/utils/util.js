@@ -29,10 +29,17 @@ export function getDateStr(date){
 
 
 export function getCurrentDate(d){
-    let date = new Date(new Date().format('yyyy-MM-dd'))
+    let date = new Date(new Date().toLocaleDateString())
     return d ? date.setDate(date.getDate() + d) : date
 }
 
+export function startTime(){
+    return new Date(new Date().toLocaleDateString())
+}
+
+export function endTime(){
+    return new Date(endUnix(new Date()) * 1000)
+}
 
 export function startUnix($date) {
     return new Date($date.toLocaleDateString()).getTime() / 1000

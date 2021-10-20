@@ -4,7 +4,6 @@
             <!-- 操作栏 -->
             <div class="control-btns">
                 <el-button type="primary" @click="toDialog('addAutoMessage', '')">+ 新增话术</el-button>
-                <el-button type="danger" @click="batchDelete">批量删除</el-button>
             </div>
             <!-- 查询栏 -->
             <el-form
@@ -117,7 +116,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             // 多选数据暂存数组
             multipleSelection: [],
-            areaData: getAreaList(true),
+            areaData: getAreaList(false),
             bools: getBool(),
             actionTypes: getActionType()
         }

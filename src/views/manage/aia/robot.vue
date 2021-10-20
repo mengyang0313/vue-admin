@@ -91,7 +91,7 @@
                 </el-table-column>
             </el-table>
             <!-- 分页栏 -->
-            <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
+            <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData" @changePageSize="changePageSize($event)"/>
 
             <!-- 编辑资料 -->
@@ -181,7 +181,7 @@ export default {
             });
         },
         onSearch() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
         toDialog(component, row){
