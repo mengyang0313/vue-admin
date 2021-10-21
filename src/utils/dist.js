@@ -46,10 +46,8 @@ export async function initData() {
 export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
     const req = new Empty();
     const metadata = {'token': getToken()};
-    console.log("initCurrentUserInfo")
     cmsService.getAdminInfo(req, metadata, (err, resp) => {
         if (!err) {
-            console.log("initCurrentUserInfo resp:"+resp)
             const json = {
                 name : resp.getName(),
                 email : resp.getEmail(),
@@ -59,7 +57,7 @@ export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
             }
             resolve(json)
         } else {
-            console.log(err)
+            console.log("initCurrentUserInfo :" + err)
         }
     })
 })
@@ -104,7 +102,7 @@ export const initAreas = () => new Promise((resolve, reject) => {
             })
             resolve(arr)
         } else {
-            console.log(err)
+            console.log("initAreas:" + err)
         }
     })
 })
@@ -113,7 +111,6 @@ export function getAreaList(isShowAll) {
     let json = sessionStorage.getItem("areaArr");
     if (isEmpty(json)) {
         initAreas().then(r => {
-            console.log("init area list: "+ r)
             sessionStorage.setItem("areaArr", JSON.stringify(r));
         })
     }else{
@@ -143,7 +140,7 @@ export const initGuilds = () => new Promise((resolve, reject) => {
             })
             resolve(arr)
         } else {
-            console.log(err)
+            console.log("initGuilds:" +err)
         }
     })
 })
@@ -152,7 +149,6 @@ export function getGuildList(isShowAll) {
     let json = sessionStorage.getItem("guildArr");
     if (isEmpty(json)) {
         initGuilds().then(r => {
-            console.log("init guild list: "+ r)
             sessionStorage.setItem("guildArr", JSON.stringify(r));
         })
     }else{
@@ -195,7 +191,7 @@ export const initApps = () => new Promise((resolve, reject) => {
             })
             resolve(arr)
         } else {
-            console.log(err)
+            console.log("initApps:" + err)
         }
     })
 })
@@ -210,7 +206,6 @@ export function getAppList(isNoAnchor, isShowAll) {
     let arr = []
     if (isEmpty(json)) {
         initApps().then(r => {
-            console.log("init app list: "+ r)
             sessionStorage.setItem("appArr", JSON.stringify(r));
         })
     }else{
@@ -265,7 +260,7 @@ export const initPayChannel = () => new Promise((resolve, reject) => {
             })
             resolve(arr)
         } else {
-            console.log(err)
+            console.log("initPayChannel:" +err)
         }
     })
 })
@@ -311,7 +306,7 @@ export const initCommodity = () => new Promise((resolve, reject) => {
             })
             resolve(arr)
         } else {
-            console.log(err)
+            console.log("initCommodity:" +err)
         }
     })
 })
@@ -340,7 +335,7 @@ export function ipToAddress(ip, callback){
         if (!err) {
             callback(resp)
         } else {
-            console.log(err)
+            console.log("ipToAddress:" +err)
         }
     })
 }
@@ -760,7 +755,7 @@ export function getMessageType(key){
 
 
 // 动作类型
-export function getActionType(key){
+export function getActionType(isShowAll, key){
     let arr =  [{
             value: 1,
             label: '拒绝接听'
@@ -792,6 +787,12 @@ export function getActionType(key){
         })
         return label
     }else{
+        if(isShowAll){
+            arr.unshift({
+                value: 0,
+                label: '全部'
+            })
+        }
         return arr
     }
 }

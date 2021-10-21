@@ -103,7 +103,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                areaId: getCurrentUserAreaId(),
+                areaId: undefined,
                 enable: true,
                 action: 0,
                 page: {
@@ -111,17 +111,17 @@ export default {
                     pageSize: 10
                 }
             },
-            // 数据总条数
             total: 0,
             authAreaId: getCurrentUserAreaId(),
-            // 多选数据暂存数组
             multipleSelection: [],
+            tableData: [],
             areaData: getAreaList(false),
             bools: getBool(),
-            actionTypes: getActionType()
+            actionTypes: getActionType(true)
         }
     },
     created() {
+        this.search.areaId = this.authAreaId === 0 ? this.areaData[0].value : this.authAreaId
         this.fetchData()
     },
     methods: {
@@ -140,7 +140,7 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "areaId" : getArrName($this.areaData, item.getAreaId()),
-                        "action" : getActionType(item.getAction()),
+                        "action" : getActionType(false, item.getAction()),
                         "type" : getMessageType(item.getType()),
                         "text" : item.getText(),
                         "enable" : item.getEnable(),

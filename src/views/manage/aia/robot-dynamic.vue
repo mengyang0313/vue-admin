@@ -19,11 +19,7 @@
                 size="medium"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="avatar" label="头像" align="center" width="100">
-                    <template scope="scope">
-                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="entityId" label="机器人Id" align="center" width="100"/>
                 <el-table-column prop="areaStr" label="区域" align="center" width="80" />
                 <el-table-column prop="status" label="审核状态" align="center" width="150">
                     <template slot-scope="scope">
@@ -33,12 +29,12 @@
                 <el-table-column prop="content" label="内容" align="center" width="350" />
                 <el-table-column prop="images" label="图片" align="center" width="120">
                     <template scope="scope">
-                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.images[0]" :preview-src-list="scope.row.images"/>
+                        <el-image v-if="scope.row.images[0]" fit="contain" style="width: 50px; height: 50px" :src="scope.row.images[0]" :preview-src-list="scope.row.images"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="thumb" label="视频" align="center" width="150">
                     <template scope="scope">
-                        <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        <el-image v-if="scope.row.thumb" @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
                 <el-table-column prop="likes" label="点赞次数" align="center" width="150"/>

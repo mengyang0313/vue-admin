@@ -159,7 +159,7 @@ export default {
                         "enable": item.getEnable(),
                         "interval": item.getInterval(),
                         "action": item.getAction(),
-                        "actionStr": getActionType(item.getAction()),
+                        "actionStr": getActionType(false, item.getAction()),
                         "struct": item
                     }
                     data.push(json)

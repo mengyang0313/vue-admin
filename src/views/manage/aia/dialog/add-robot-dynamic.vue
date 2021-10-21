@@ -24,11 +24,11 @@
                         show-word-limit
                     />
                 </el-form-item>
-                <el-form-item label="图片" prop="images">
+                <el-form-item label="图片" prop="imgUris">
                     <div class="img">
                         <el-upload
-                            action=""
                             :limit="10"
+                            :on-preview="imgPreview"
                             :on-change="successPhoto"
                             :on-remove="removePhoto"
                             list-type="picture-card"
@@ -37,15 +37,11 @@
                         >
                             <i class="el-icon-plus"></i>
                         </el-upload>
-                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
-                            <img width="100%" :src="form.images" alt />
-                        </el-dialog>
                     </div>
                 </el-form-item>
-                <el-form-item label="视频" prop="videoIds">
+                <el-form-item label="视频" prop="videoUris">
                     <div class="img">
                         <el-upload
-                            action=""
                             :limit="10"
                             :on-change="successVideo"
                             :on-remove="removeVideo"
@@ -55,9 +51,6 @@
                         >
                             <i class="el-icon-plus"></i>
                         </el-upload>
-                        <el-dialog :visible.sync="imgDialogVisible" :modal-append-to-body="true" append-to-body>
-                            <img width="100%" :src="form.video" alt />
-                        </el-dialog>
                     </div>
                 </el-form-item>
                 <el-form-item label="点赞次数" prop="likes">
@@ -78,6 +71,9 @@
                 </el-form-item>
             </el-form>
         </div>
+        <el-dialog :visible.sync="imgDialog" :modal-append-to-body="true" append-to-body>
+            <img width="100%" :src="imgUri" alt />
+        </el-dialog>
     </el-dialog>
 </template>
 
@@ -90,7 +86,11 @@ import {isEmpty} from "@/api/api";
 export default {
     data() {
         return {
-            form: { },
+            form: {
+                images: []
+            },
+            imgDialog: false,
+            imgUri: undefined,
             imgUris: [],
             videoUris: [],
             isDisabled: false,
@@ -112,7 +112,7 @@ export default {
                 this.videoUris.push({"thumb": row.thumb, "url": row.uri})
             }else{
                 this.form.entityId = entityId
-                this.form.images = []
+                this.form.imgUris = undefined
             }
             this.isDisabled = true
         },
@@ -139,13 +139,19 @@ export default {
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
-            this.imgUris = []
-            this.videoUris = []
+            this.form.video = undefined
+            this.form.images = []
+            this.form.imgUris = []
+            this.form.videoUris = []
             this.form.entityId = undefined
             this.isDisabled = false
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
+        },
+        imgPreview(file) {
+            this.imgDialog = true;
+            this.imgUri = file.url
         },
         successPhoto(file) {
             let $this = this

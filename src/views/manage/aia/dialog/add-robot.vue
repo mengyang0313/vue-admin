@@ -50,7 +50,6 @@
                         >
                             <i class="el-icon-plus"></i>
                         </el-upload>
-
                     </div>
                     <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
                 </el-form-item>

@@ -41,6 +41,7 @@
                             :limit="1"
                             :on-preview="imgPreview"
                             :on-change="successFile"
+                            :on-remove="removeFile"
                             list-type="picture-card"
                             :file-list="fileArr"
                             :auto-upload="false"
@@ -99,6 +100,7 @@ export default {
                 this.title = "编辑话术"
                 this.form = row
                 this.fileArr.push({"url": row.uri})
+                this.changeType(row.type, true)
             }else{
                 this.form = {}
                 this.form.robotId = robotId
@@ -140,6 +142,12 @@ export default {
                 }
             })
         },
+        removeFile(file, fileList){
+            this.form.uri = undefined
+            this.form.thumb = undefined
+            this.form.duration = undefined
+            this.fileArr = undefined
+        },
         imgUpload(file, type, callback){
             let headers = {
                 'Content-Type': 'multipart/form-data',
@@ -159,18 +167,24 @@ export default {
                 callback(data)
             })
         },
-        changeType(val){
+        changeType(val, isInit){
             if(val===1){
                 this.isText = true
             }else if(4 === val ){
                 this.isText = false
                 this.fileType = 1
+                this.form.text = ''
             }else if(5 === val){
                 this.isText = false
                 this.fileType = 2
+                this.form.text = ''
             }else if(6 === val){
                 this.isText = false
                 this.fileType = 3
+                this.form.text = ''
+            }
+            if(!isInit){
+                this.removeFile()
             }
         },
         resetForm(formName) {
