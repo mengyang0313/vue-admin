@@ -132,13 +132,13 @@ export default {
             total: 0,
             authAreaId: getCurrentUserAreaId(),
             isHints: true,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             payTypeList: getPayType(),
             appList: getAppList()
         }
     },
     created() {
-        this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.search.appId = typeof(this.search.appId) == "undefined" ? this.appList[0].value : this.search.appId
         this.changeArea(this.search.areaId)
         this.fetchData()

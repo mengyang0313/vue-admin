@@ -3,16 +3,7 @@
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
                 <el-form-item label="机器人Id" prop="entityId">
-                    <el-input v-model="form.entityId" disabled></el-input>
-                </el-form-item>
-                <el-form-item label="应用" prop="appId">
-                    <el-select v-model="form.appId" placeholder="请选择">
-                        <el-option v-for="item in appList"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <el-input v-model="form.entityId" :disabled="isDisabled"></el-input>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
                     <el-select v-model="form.areaId" placeholder="请选择">
@@ -23,7 +14,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="内容" prop="text">
+                <el-form-item label="内容" prop="content">
                     <el-input
                         v-model="form.content"
                         type="textarea"
@@ -33,16 +24,15 @@
                         show-word-limit
                     />
                 </el-form-item>
-                <el-form-item label="图片" prop="photoIds">
+                <el-form-item label="图片" prop="images">
                     <div class="img">
                         <el-upload
                             action=""
                             :limit="10"
-                            :on-preview="previewPhoto"
                             :on-change="successPhoto"
                             :on-remove="removePhoto"
                             list-type="picture-card"
-                            :file-list="form.photoUris"
+                            :file-list="form.imgUris"
                             :auto-upload="false"
                         >
                             <i class="el-icon-plus"></i>
@@ -57,7 +47,6 @@
                         <el-upload
                             action=""
                             :limit="10"
-                            :on-preview="previewVideo"
                             :on-change="successVideo"
                             :on-remove="removeVideo"
                             list-type="picture-card"
@@ -96,39 +85,45 @@
 import { getMessageType, getAreaList, getAppList } from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
+import {isEmpty} from "@/api/api";
 
 export default {
     data() {
         return {
-            form: {
-                entityId: "",
-                entityType: 2,
-                status: 5,
-                appId: '',
-                areaId: '',
-                content: '',
-                images: '',
-                video: '',
-                likes: 10,
-                publishAtTime:undefined
-            },
+            form: { },
+            imgUris: [],
+            videoUris: [],
+            isDisabled: false,
             dialogVisible: false,
             imgDialogVisible: false,
             messageTypes : getMessageType(),
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             appList: getAppList()
         }
     },
     methods: {
-        init(entityId){
-            this.form.entityId = entityId
+        init(row, entityId){
+            if(!isEmpty(row)){
+                this.title = "编辑话术"
+                this.form = row
+                row.images.forEach(item => {
+                    this.imgUris.push({"url": item.uri})
+                })
+                this.videoUris.push({"thumb": row.thumb, "url": row.uri})
+            }else{
+                this.form.entityId = entityId
+                this.form.images = []
+            }
+            this.isDisabled = true
         },
         submitForm() {
             const $this = this
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    let param = this.form;
-                    param.publishAt = param.publishAtTime.getTime() /1000
+                    let param = this.form
+                    param.entityType = 2
+                    param.status = 5
+                    param.publishAt = param.publishAtTime.getTime() / 1000
                     this.$service.robot.saveMoment(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
@@ -140,44 +135,33 @@ export default {
                 }
             })
         },
-        resetForm(formName) {
+        resetForm() {
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
+            this.imgUris = []
+            this.videoUris = []
+            this.form.entityId = undefined
+            this.isDisabled = false
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
         },
-        previewAvatar(file) {
-            this.imgDialogVisible = true;
-        },
-        previewPhoto(file){
-            this.imgDialogVisible = true;
-        },
-        previewVideo(file){
-            this.imgDialogVisible = true;
-        },
-        successAvatar(file) {
-            const $this = this
-            this.imgUpload(file.raw, 1, function (data){
-                $this.form.avatar = data.uri
-            })
-        },
         successPhoto(file) {
             let $this = this
             this.imgUpload(file.raw, 1, function (data){
-                $this.form.photoIds.push(data.id)
+                $this.form.images.push(data.uri)
             })
         },
         successVideo(file) {
             const $this = this
             this.imgUpload(file.raw, 2, function (data){
-                $this.form.videoIds.push(data.id)
-                $this.form.video = data.id
+                $this.form.video = data.uri
+                $this.form.thumb = data.thumb
             })
         },
         removePhoto(file, fileList){
-            let arr = this.form.photoIds
+            let arr = this.form.images
             let val = file.name
             for(let i = 0; i < arr.length; i++) {
                 if(arr[i] === val) {
@@ -187,14 +171,7 @@ export default {
             }
         },
         removeVideo(file, fileList){
-            let arr = this.form.videoIds
-            let val = file.name
-            for(let i = 0; i < arr.length; i++) {
-                if(arr[i] === val) {
-                    arr.splice(i, 1);
-                    break;
-                }
-            }
+            this.form.video = undefined
         },
         imgUpload(file, type, callback){
             let headers = {

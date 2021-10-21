@@ -34,9 +34,8 @@ export default class {
         }
         req.setNickname(param.nickname)
         req.setAvatar(param.avatar)
-        req.setAppId(param.appId)
         req.setAreaId(param.areaId)
-        req.setBirthday(param.birthday)
+        req.setBirthday(param.birthdayTime)
         req.setOccupation(param.occupation)
         req.setOnlineStart(param.onlineStart)
         req.setOnlineEnd(param.onlineEnd)
@@ -69,14 +68,20 @@ export default class {
 
 
     async saveRobotMessage (param, callback) {
-        const req = new this.proto.RobotMessage()
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.RobotMessage()
+        }
         req.setAnchorId(param.robotId)
         req.setType(param.type)
+        req.setAction(param.action)
         req.setUri(param.uri)
+        req.setThumb(param.thumb)
         req.setText(param.text)
         req.setSort(param.sort)
         req.setInterval(param.interval)
         req.setEnable(param.enable)
+        req.setDuration(param.duration)
 
         const metadata = {'token': getToken()};
         this.client.saveRobotMessage(req, metadata, (err, resp) => {
@@ -145,8 +150,9 @@ export default class {
         req.setContent(param.content)
         req.setStatus(param.status)
         req.setPublishAt(param.publishAt)
-        // req.setImagesList(param.images)
-        // req.setVideo(param.video)
+        req.setImagesList(param.images)
+        req.setThumb(param.thumb)
+        req.setVideo(param.video)
         req.setLikes(param.likes)
 
         const metadata = {'token': getToken()};

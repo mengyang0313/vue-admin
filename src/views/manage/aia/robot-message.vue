@@ -1,6 +1,6 @@
 <template>
     <div class="table-classic-wrapper">
-        <Hints>
+        <Hints :hidden="isHints">
             <template slot="hintName"> 编辑 < {{ search.nickname }} > 话术</template>
         </Hints>
         <el-card shadow="always">
@@ -8,6 +8,23 @@
             <div class="control-btns">
                 <el-button type="primary" @click="toDialog('addRobotMessage', '')">+ 新增话术</el-button>
             </div>
+            <!-- 查询栏 -->
+<!--            <el-form-->
+<!--                ref="searchForm"-->
+<!--                :inline="true"-->
+<!--                :model="search"-->
+<!--                label-width="90px"-->
+<!--                class="search-form"-->
+<!--            >-->
+<!--                <template>-->
+<!--                    <el-form-item label="机器人ID" prop="robotId">-->
+<!--                        <el-input v-model="search.robotId" placeholder="机器人主播ID"/>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item>-->
+<!--                        <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>-->
+<!--                    </el-form-item>-->
+<!--                </template>-->
+<!--            </el-form>-->
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
@@ -21,16 +38,22 @@
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="robotId" label="机器人ID" align="center" width="120" />
 
-                <el-table-column prop="typeStr" label="类型" align="center" width="100"/>
+                <el-table-column prop="typeStr" label="话术类型" align="center" width="100"/>
+                <el-table-column prop="actionStr" label="动作类型" align="center" width="100"/>
                 <el-table-column prop="text" label="内容" align="center" width="350" />
-                <el-table-column prop="uri" label="连接" align="center" width="150">
-                    <template slot-scope="scope">
-                        <a :href="scope.row.uri" style="color: #1E88C7">{{ scope.row.fileName }}</a>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="thumb" label="图片" align="center" width="150">
-                    <template slot-scope="scope">
-                        <el-image v-if="scope.row.thumb!=''" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                <el-table-column prop="thumb" label="文件" align="center" width="150">
+                    <template scope="scope">
+                        <div v-if="scope.row.type === 4">
+                            <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
+                        </div>
+                        <div v-if="scope.row.type === 5">
+                            <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        </div>
+                        <div v-if="scope.row.type === 6">
+                            <div v-if="scope.row.uri">
+                                <m-audio :src="scope.row.uri" ></m-audio>
+                            </div>
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="sort" label="排序" align="center" width="150"/>
@@ -40,7 +63,6 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="interval" label="间隔时间" align="center" width="150"/>
-                <el-table-column prop="action" label="动作类型" align="center" width="150"/>
                 <el-table-column label="操作" align="center" width="150" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('addRobotMessage', scope.row)">更新</el-button>
@@ -53,6 +75,16 @@
             -->
             <!-- 新增话术 -->
             <addRobotMessage ref="addRobotMessage" @fetchData="fetchData"/>
+
+            <el-dialog
+                title="播放视频"
+                :visible.sync="playVisible"
+                :before-close="closeVideo"
+                :append-to-body="true">
+                <div class="content-item">
+                    <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
+                </div>
+            </el-dialog>
         </el-card>
     </div>
 </template>
@@ -61,33 +93,30 @@
 import Pagination from '../../../components/Pagination'
 import addRobotMessage from './dialog/add-robot-message'
 import Hints from '../../../components/Hints'
-import {getActionType} from "@/utils/dist";
+import {getActionType, getMessageType} from "@/utils/dist"
+import VueVideoPlayer from '../../../components/VueVideoPlayer'
 
 export default {
     name: 'Table',
-    components: {Pagination, Hints, addRobotMessage},
+    components: {Pagination, Hints, addRobotMessage, VueVideoPlayer},
     data() {
         return {
-            // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
             search: {
                 robotId: undefined,
-                anchorId: "",
+                anchorId: undefined,
                 nickname: "",
                 page:{
                     currentPage: 1,
                     pageSize: 10
                 }
             },
-            // 数据总条数
             total: 0,
-            // 表格数据数组
             tableData: [],
-            // 多选数据暂存数组
             multipleSelection: [],
-            // 新增/编辑 弹出框显示/隐藏
             formVisible: false,
+            playVisible: false,
+            isHints: true,
         }
     },
     created() {
@@ -110,6 +139,10 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
+            if(typeof(this.search.robotId) == "undefined"){
+                this.listLoading = false
+                return
+            }
             this.$service.robot.getRobotMessageList(this.search, function (result){
                 const list = result.getMessagesList()
                 const data = []
@@ -118,23 +151,24 @@ export default {
                         "id" : item.getId(),
                         "robotId" : item.getAnchorId(),
                         "type" : item.getType(),
-                        "typeStr" : getActionType(item.getType()),
+                        "typeStr" : getMessageType(item.getType()),
                         "text" : item.getText(),
                         "uri" : item.getUri(),
                         "thumb" : item.getThumb(),
                         "sort" : item.getSort(),
                         "enable": item.getEnable(),
                         "interval": item.getInterval(),
-                        "action": item.getAction()
+                        "action": item.getAction(),
+                        "actionStr": getActionType(item.getAction()),
+                        "struct": item
                     }
                     data.push(json)
                 })
-                // $this.total = result.getTotalCount()
                 $this.tableData = data
                 $this.listLoading = false
             });
         },
-        onSubmit() {
+        onSearch() {
             this.search.page.currentPage = 1
             this.fetchData()
         },
@@ -147,36 +181,18 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val
         },
-        handleDelete(index, row) {
-            console.log(index, row)
-            this.$confirm('此操作将删除选中数据, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                // 此处可添加--删除接口
-                // 删除成功调用fetchData方法更新列表
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                })
+        play(row) {
+            this.playVisible = true;
+            let src = row.uri
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.initSrc(src);
             })
         },
-        // 批量删除
-        batchDelete() {
-            if (this.multipleSelection.length < 1) {
-                this.$message({
-                    message: '请先选择要删除的数据！',
-                    type: 'warning'
-                })
-            } else {
-                this.handleDelete()
-            }
+        closeVideo(){
+            this.playVisible = false;
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.emptySrc();
+            })
         }
     }
 }

@@ -105,12 +105,12 @@ export default {
             total: 0,
             authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
-            areaList: getAreaList(true),
-            payTypeList: getPayType()
+            areaList: getAreaList(false),
+            payTypeList: getPayType(true)
         }
     },
     created() {
-        this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.fetchData()
     },
     methods: {
@@ -129,7 +129,7 @@ export default {
                         "osTypeStr" : getOsType(item.getOsType()),
                         "channel" : item.getChannel(),
                         "payType" : item.getPayType(),
-                        "payTypeStr" : getPayType(item.getPayType()),
+                        "payTypeStr" : getPayType(false, item.getPayType()),
                         "title" : item.getTitle(),
                         "name" : item.getName(),
                         "icon" : item.getIcon(),

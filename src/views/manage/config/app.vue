@@ -115,13 +115,13 @@ export default {
             total: 0,
             authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             payTypeList: getPayType(),
             appList: []
         }
     },
     created() {
-        this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.changeArea(this.search.areaId)
         this.fetchData()
     },

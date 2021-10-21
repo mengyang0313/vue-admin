@@ -50,25 +50,13 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="150" />
-<!--                <el-table-column prop="appStr" label="应用APP" align="center" width="120">-->
-<!--                    <template scope="scope">-->
-<!--                        <div slot="reference">-->
-<!--                            {{ scope.row.app.label }}-->
-<!--                            <span v-if="scope.row.app.os === 1">-->
-<!--                                <i class="icon-android-fill"></i>-->
-<!--                            </span>-->
-<!--                            <span v-else-if="scope.row.app.os === 2">-->
-<!--                                <i class="icon-pingguo"></i>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
                 <el-table-column prop="avatar" label="头像" align="center" width="150">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="nickname" label="昵称" align="center" width="400"/>
+                <el-table-column prop="nickname" label="昵称" align="center" width="150"/>
+                <el-table-column prop="signature" label="签名" align="center"/>
                 <el-table-column prop="data" label="动态" align="center" width="150">
                     <template slot-scope="scope">
                         <el-button type="text">
@@ -105,7 +93,7 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import editRobot from './dialog/edit-robot'
+import editRobot from './dialog/add-robot'
 import showDialog from './dialog/show-dialog'
 import {
     getBool,
@@ -134,6 +122,7 @@ export default {
                 }
             },
             total: 0,
+            tableData: [],
             authAreaId: getCurrentUserAreaId(),
             isSubmit: false,
             areaData: getAreaList(true),

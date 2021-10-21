@@ -342,7 +342,7 @@ import {getCurrentUserModules} from "@/utils/dist";
                 hidden: true,
                 component: () => import('../views/manage/aia/robot-message'),
                 meta: {
-                    title: 'AIA编辑话术'
+                    title: 'AIA机器人话术'
                 }
             },
             {

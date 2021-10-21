@@ -668,9 +668,6 @@ export function getPayStatus(key){
 // 职业类型
 export function getOccupationType(key){
     let arr = [{
-        value: 0,
-        label: '全部'
-    },{
         value: 1,
         label: 'IT/互联网/通信'
     }, {
@@ -724,9 +721,6 @@ export function getOccupationType(key){
 // 消息类型
 export function getMessageType(key){
     let arr = [{
-        value: 0,
-        label: '全部'
-    },{
         value: 1,
         label: '文本'
     }, {
@@ -768,9 +762,6 @@ export function getMessageType(key){
 // 动作类型
 export function getActionType(key){
     let arr =  [{
-            value: 0,
-            label: '全部'
-        },{
             value: 1,
             label: '拒绝接听'
         }, {
@@ -1094,7 +1085,7 @@ export function getSettleStatus(key){
 
 
 // 支付方式
-export function getPayType(key){
+export function getPayType(isShowAll, key){
     let arr = [{
         value: 1,
         label: 'Google'
@@ -1120,6 +1111,12 @@ export function getPayType(key){
         })
         return label
     }else{
+        if(isShowAll){
+            arr.unshift({
+                value: 0,
+                label: '全部'
+            })
+        }
         return arr
     }
 }

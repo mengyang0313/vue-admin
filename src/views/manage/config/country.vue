@@ -109,12 +109,12 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             isHints: true,
             isCollapse: true,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             payTypeList: getPayType()
         }
     },
     created() {
-        this.search.areaId = this.authAreaId === 0 ? this.areaList[1].value : this.authAreaId
+        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
         this.fetchData()
     },
     watch: {

@@ -212,7 +212,7 @@ export default {
                         "userId" : item.getUserId(),
                         "areaId" : getArrName($this.areaData, item.getAreaId()),
                         "commission" : item.getCommission(),
-                        "payType" : getPayType(item.getPayType()),
+                        "payType" : getPayType(false, item.getPayType()),
                         "payChannel" : $this.handlePayChannel(item.getAreaId(), item.getPayChannel()),
                         "country" : item.getCountry(),
                         "commodityId" : $this.handleCommodity(item.getCommodityId()),

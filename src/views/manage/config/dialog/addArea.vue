@@ -124,7 +124,7 @@ export default {
             inputVisible: false,
             title: '新增区域',
             inputValue: '',
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             appList: [],
             payTypeList: getPayType(),
             payChannelList: [],
@@ -182,6 +182,7 @@ export default {
                 this.changeApp(row.appId)
             }else {
                 this.changeArea(this.form.areaId)
+                this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             }
         },
         submitForm() {

@@ -81,7 +81,7 @@ export default {
             iconArr: [],
             iconDialog: false,
             authAreaId: getCurrentUserAreaId(),
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             appList: getAppList(),
             osTypeList: getOsType(),
             payTypeList: getPayType(),
@@ -106,6 +106,8 @@ export default {
                 this.title = "编辑国家"
                 this.form = row
                 this.iconArr.push({"url": row.icon});
+            }else{
+                this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             }
         },
         submitForm() {

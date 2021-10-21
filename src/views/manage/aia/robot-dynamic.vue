@@ -6,7 +6,7 @@
         <el-card shadow="always">
             <!-- 操作栏 -->
             <div class="control-btns">
-                <el-button type="primary" @click="toDialog('addRobotDynamic', search.entityId)">+ 新增动态</el-button>
+                <el-button type="primary" @click="toDialog('addRobotDynamic', undefined, search.entityId)">+ 新增动态</el-button>
                 <el-button type="danger" @click="batchDelete">批量删除</el-button>
             </div>
             <!-- 表格栏 -->
@@ -19,13 +19,11 @@
                 size="medium"
             >
                 <el-table-column type="selection" width="60"/>
-                <el-table-column prop="nickname" label="昵称" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="100">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="appStr" label="app" align="center" width="80" />
                 <el-table-column prop="areaStr" label="区域" align="center" width="80" />
                 <el-table-column prop="status" label="审核状态" align="center" width="150">
                     <template slot-scope="scope">
@@ -33,9 +31,14 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="content" label="内容" align="center" width="350" />
-                <el-table-column prop="thumb" label="图片/视频" align="center" width="150">
-                    <template slot-scope="scope">
-                        <el-image v-if="scope.row.thumb!=''" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                <el-table-column prop="images" label="图片" align="center" width="120">
+                    <template scope="scope">
+                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.images[0]" :preview-src-list="scope.row.images"/>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="thumb" label="视频" align="center" width="150">
+                    <template scope="scope">
+                        <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
                     </template>
                 </el-table-column>
                 <el-table-column prop="likes" label="点赞次数" align="center" width="150"/>
@@ -47,6 +50,16 @@
             -->
             <!-- 新增话术 -->
             <addRobotDynamic ref="addRobotDynamic" @fetchData="fetchData"/>
+
+            <el-dialog
+                title="播放视频"
+                :visible.sync="playVisible"
+                :before-close="closeVideo"
+                :append-to-body="true">
+                <div class="content-item">
+                    <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
+                </div>
+            </el-dialog>
         </el-card>
     </div>
 </template>
@@ -55,13 +68,14 @@
 import Pagination from '../../../components/Pagination'
 import addRobotDynamic from './dialog/add-robot-dynamic'
 import Hints from '../../../components/Hints'
-import {getArrName, getAreaList, getAppList, getReviewStatus, getAppName, getAppListByAreaId} from "@/utils/dist";
+import {getArrName, getAreaList, getReviewStatus} from "@/utils/dist";
 import {toTime} from "@/utils/util";
+import VueVideoPlayer from '../../../components/VueVideoPlayer'
 
 
 export default {
     name: 'Table',
-    components: {Pagination, Hints, addRobotDynamic},
+    components: {Pagination, Hints, addRobotDynamic, VueVideoPlayer},
     data() {
         return {
             // 数据列表加载动画
@@ -79,11 +93,15 @@ export default {
             tableData: [],
             multipleSelection: [],
             formVisible: false,
+            playVisible: false,
             areaList: getAreaList(true),
             appList: []
         }
     },
     created() {
+        this.search.entityId = this.$route.query.robotId
+        this.search.nickname = this.$route.query.nickname
+        this.fetchData()
     },
     watch: {
         $route: {
@@ -107,7 +125,6 @@ export default {
                     const json = {
                         "id" : item.getId(),
                         "appId" : item.getAppId(),
-                        "appStr" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "entityType" : item.getEntityType(),
@@ -120,7 +137,8 @@ export default {
                         "likes": item.getLikes(),
                         "publishAt": toTime(item.getPublishAt()),
                         "nickname": item.getNickname(),
-                        "avatar": item.getAvatar()
+                        "avatar": item.getAvatar(),
+                        "struct": item
                     }
                     data.push(json)
                 })
@@ -133,10 +151,23 @@ export default {
             this.search.page.currentPage = 1
             this.fetchData()
         },
-        toDialog(component, row){
+        toDialog(component, row, entityId){
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
-                this.$refs[component].init(this.search.entityId)
+                this.$refs[component].init(row, entityId)
+            })
+        },
+        play(row) {
+            this.playVisible = true;
+            let src = row.video
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.initSrc(src);
+            })
+        },
+        closeVideo(){
+            this.playVisible = false;
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.emptySrc();
             })
         },
         handleDelete(index, row) {

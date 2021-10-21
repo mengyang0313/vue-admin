@@ -282,7 +282,7 @@ export default {
             return json
         },
         changeArea(val){
-            this.appList = getAppListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true, true)
         }
     }
 }

@@ -68,10 +68,10 @@ export default {
             iconDialog: false,
             isAppIdHidden: true,
             isAppSecretHidden: true,
-            areaList: getAreaList(true),
+            areaList: getAreaList(false),
             appList: getAppList(),
             osTypeList: getOsType(),
-            payTypeList: getPayType(),
+            payTypeList: getPayType(true),
             rules: {
                 areaId: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
@@ -91,6 +91,8 @@ export default {
                 this.title = "编辑支付参数"
                 this.form = row
                 this.changePayType(row.type)
+            }else{
+                this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             }
         },
         submitForm() {

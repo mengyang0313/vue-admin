@@ -233,7 +233,7 @@ export default {
 
             this.callingData.keys = keys
             this.callingData.values = values
-            this.userData.interval = this.interval
+            this.callingData.interval = this.interval
             ++this.callingKey
         },
         handleCallData(statList){
@@ -255,7 +255,7 @@ export default {
 
             this.callData.keys = keys
             this.callData.values = values
-            this.userData.interval = this.interval
+            this.callData.interval = this.interval
             ++this.callKey
         },
         handleExpenseData(statList){
@@ -270,7 +270,7 @@ export default {
             values.push(expense)
             this.expenseData.values = values
             this.expenseData.keys = keys
-            this.userData.interval = this.interval
+            this.expenseData.interval = this.interval
             ++this.expenseKey
         },
         handleDepositData(statList){
@@ -285,7 +285,7 @@ export default {
             values.push(deposit)
             this.depositData.values = values
             this.depositData.keys = keys
-            this.userData.interval = this.interval
+            this.depositData.interval = this.interval
             ++this.depositKey
         },
         handlePayData(statList){
@@ -306,7 +306,7 @@ export default {
             values.push(otherPay)
             this.payData.values = values
             this.payData.keys = keys
-            this.userData.interval = this.interval
+            this.payData.interval = this.interval
             ++this.payKey
         },
         toFmt(param){
