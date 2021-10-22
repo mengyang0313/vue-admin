@@ -40,7 +40,7 @@
                 <el-table-column prop="anchorId" label="主播id" align="center" width="120" />
                 <el-table-column prop="areaStr" label="区域" align="center" width="120" />
                 <el-table-column prop="nickname" label="昵称" align="center" width="120" />
-                <el-table-column prop="gender" label="性别" align="center" width="120" />
+                <el-table-column prop="genderStr" label="性别" align="center" width="120" />
                 <el-table-column prop="avatar" label="头像" align="center" width="120">
                     <template scope="scope">
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
@@ -84,6 +84,7 @@
                 <el-table-column label="操作" align="center" width="150" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text"  @click="handlePassed(scope.$index, scope.row)">通过</el-button>
+                        <el-button type="text" @click="toDialog('updateProfile',scope.row)">更新资料</el-button>
                         <el-button type="text"  @click="handleRefuse(scope.$index, scope.row)">拒绝</el-button>
                     </template>
                 </el-table-column>
@@ -98,6 +99,8 @@
             <!-- 视频列表 -->
             <videoList ref="videoList" @fetchData="fetchData"/>
 
+            <!-- 主播资料 -->
+            <updateProfile ref="updateProfile" @fetchData="fetchData"/>
         </el-card>
     </div>
 
@@ -108,6 +111,7 @@ import Pagination from '../../../components/Pagination'
 import imageShow from '../../../components/ImageShow/image-show'
 import videoList from './dialog/video-list'
 import photoList from './dialog/photo-list'
+import updateProfile from './dialog/update-profile';
 import {
     getAreaList,
     getOccupationType,
@@ -118,9 +122,10 @@ import {
 } from "@/utils/dist"
 import {toDate} from "@/utils/util";
 
+
 export default {
     name: 'Table',
-    components: { Pagination, imageShow, videoList, photoList},
+    components: { Pagination, imageShow, videoList, photoList, updateProfile},
     data() {
         return {
             // 数据列表加载动画
@@ -164,7 +169,8 @@ export default {
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "nickname" : item.getNickname(),
-                        "gender" : getGenderType(item.getGender()),
+                        "gender" : item.getGender(),
+                        "genderStr" : getGenderType(item.getGender()),
                         "avatar" : item.getAvatar(),
                         "reviewStatus" : item.getStatus(),
                         "reviewStatusStr" : getReviewStatus(item.getStatus()),
@@ -197,11 +203,6 @@ export default {
         // 多选操作
         handleSelectionChange(val) {
             this.multipleSelection = val
-        },
-        audioOpt($event){
-            alert($event)
-            alert(11)
-            alert($event.paused())
         },
         changePageSize(msg){
             this.search.page.pageSize = msg.limit

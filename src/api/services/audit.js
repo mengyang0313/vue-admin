@@ -1,6 +1,5 @@
 import { getToken } from '@/utils/cookie'
 import { error } from '@/utils/error'
-import {ProcessProfileRequest, ProcessViolationRequest} from "@/proto/js/cms_pb";
 
 export default class {
     constructor (deps) {
@@ -35,14 +34,18 @@ export default class {
     /**
      * 处理主播资料审核
      */
-    async processProfile (param, callback) {
-        const req = new this.proto.ProcessProfileRequest()
-        req.setProfileId(param.profileId)
-        req.setStatus(param.status)
-        req.setReason(param.reason)
+    async saveProfile (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.AnchorProfile()
+        }
+        req.setId(param.profileId)
+        req.setNickname(param.nickname)
+        req.setSignature(param.signature)
+        req.setGender(param.gender)
 
         const metadata = {'token': getToken()}
-        this.client.processProfile(req, metadata, (err, resp) => {
+        this.client.saveProfile(req, metadata, (err, resp) => {
             if (!err) {
                 callback(true)
             } else {
@@ -51,6 +54,27 @@ export default class {
             }
         })
     }
+
+    async processProfile (param, callback) {
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.AnchorProfile()
+        }
+        req.setId(param.profileId)
+        req.setStatus(param.status)
+        req.setRejectReason(param.reason)
+
+        const metadata = {'token': getToken()}
+        this.client.saveProfile(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                callback(false)
+                error(err)
+            }
+        })
+    }
+
 
 
 

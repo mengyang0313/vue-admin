@@ -30,6 +30,7 @@
                         <el-upload
                             action=""
                             :limit="1"
+                            accept="image/*"
                             :on-preview="previewIcon"
                             :on-change="successIcon"
                             list-type="picture-card"

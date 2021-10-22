@@ -28,6 +28,7 @@
                     <div class="img">
                         <el-upload
                             :limit="10"
+                            accept="image/*"
                             :on-preview="imgPreview"
                             :on-change="successPhoto"
                             :on-remove="removePhoto"
@@ -43,6 +44,7 @@
                     <div class="img">
                         <el-upload
                             :limit="10"
+                            accept="video/*"
                             :on-change="successVideo"
                             :on-remove="removeVideo"
                             list-type="picture-card"
@@ -87,7 +89,7 @@ export default {
     data() {
         return {
             form: {
-                images: []
+
             },
             title: '新增动态',
             formLoading: false,
@@ -121,6 +123,7 @@ export default {
                 this.form.publishAtTime = new Date(this.form.publishAtTime)
             }else{
                 this.form.entityId = entityId
+                this.form.images = []
                 this.imgUris = undefined
             }
             this.isDisabled = true
@@ -148,14 +151,16 @@ export default {
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
-            this.formLoading = false
-            this.form.video = undefined
-            this.form.images = []
+            // this.formLoading = false
+            // this.form.video = undefined
+            // this.form.images = []
+            // this.form.entityId = undefined
+            this.form = {}
             this.imgUris = []
             this.videoUris = []
-            this.form.entityId = undefined
             this.isDisabled = false
             this.dialogVisible = false
+            this.formLoading = false
             this.resetForm()
             this.$emit('fetchData');
         },
@@ -167,6 +172,7 @@ export default {
             let $this = this
             this.formLoading = true
             this.imgUpload(file.raw, 1, function (data){
+                alert(data.uri)
                 $this.form.images.push(data.uri)
                 $this.formLoading = false
             })

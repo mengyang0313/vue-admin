@@ -20,8 +20,8 @@
                 <el-form-item label="头像" prop="avatar">
                     <div class="img">
                         <el-upload
-                            action=""
                             :limit="1"
+                            accept="image/*"
                             :on-preview="imgPreview"
                             :on-change="successAvatar"
                             list-type="picture-card"
@@ -59,8 +59,8 @@
                 <el-form-item label="图片" prop="photoIds">
                     <div class="img">
                         <el-upload
-                            action=""
                             :limit="10"
+                            accept="image/*"
                             :on-preview="imgPreview"
                             :on-change="successPhoto"
                             :on-remove="removePhoto"
@@ -75,8 +75,8 @@
                 <el-form-item label="视频" prop="videoIds">
                     <div class="img">
                         <el-upload
-                            action=""
                             :limit="10"
+                            accept="video/*"
                             :on-preview="imgPreview"
                             :on-change="successVideo"
                             :on-remove="removeVideo"
@@ -114,7 +114,7 @@ import {
 } from "@/utils/dist";
 import axios from "axios";
 import ImgUpdate from '@/components/ImgUpdate'
-import {getCurrentDate} from "@/utils/util";
+import {checkImg, checkVideo, getCurrentDate} from "@/utils/util";
 
 export default {
     components: { ImgUpdate },

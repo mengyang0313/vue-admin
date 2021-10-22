@@ -234,6 +234,8 @@
 
             <!-- 主播信息 -->
             <anchorInfo ref="anchorInfo" @fetchData="fetchData"/>
+
+
             <router-view></router-view>
         </el-card>
     </div>
@@ -247,7 +249,6 @@ import {
     getAnchorLevel,
     getOnlineStatus,
     getReviewStatus,
-    getGuildList,
     getArrName,
     getAppList,
     getBlockStatus,
