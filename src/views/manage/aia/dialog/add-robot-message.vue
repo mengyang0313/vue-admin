@@ -194,6 +194,7 @@ export default {
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
+            this.formLoading = false
             this.fileArr = []
             this.isText = true
             this.dialogVisible = false

@@ -1,7 +1,7 @@
 <template>
     <el-dialog :title="title" :visible.sync="dialogVisible" :modal-append-to-body="false" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
+            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list" v-loading="formLoading">
                 <el-form-item label="区域" prop="areaId">
                     <el-select v-model="form.areaId"  :disabled="authAreaId !== 0" placeholder="请选择">
                         <el-option v-for="item in areaData"
@@ -11,26 +11,6 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-<!--                <el-form-item label="应用App" prop="appId">-->
-<!--                    <el-select v-model="form.appId" placeholder="请选择">-->
-<!--                        <el-option v-for="item in appList"-->
-<!--                                   :key="item.value"-->
-<!--                                   :label="item.label"-->
-<!--                                   :value="item.value">-->
-<!--                            <span style="float: left">{{ item.label }}</span>-->
-<!--                            <span v-if="item.os === 1">-->
-<!--                                <i class="icon-android-fill" style="float: right"></i>-->
-<!--                            </span>-->
-<!--                            <span v-else-if="item.os === 2">-->
-<!--                                <i class="icon-pingguo" style="float: right"></i>-->
-<!--                            </span>-->
-<!--                            <span v-if="item.isAnchor">-->
-<!--                                <i class="iconfont icon-zhuboguanli" style="float: right"></i>-->
-<!--                            </span>-->
-<!--                        </el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
-
                 <el-form-item label="ID" prop="anchorId" v-if="typeof(form.anchorId) == 0">
                     <el-input v-model="form.robotId" placeholder="请输入" />
                 </el-form-item>
@@ -150,6 +130,7 @@ export default {
                 status: true
             },
             title: '新增机器人',
+            formLoading: false,
             dialogImageUrl: '',
             dialogVisible: false,
             imgDialog: false,
@@ -217,8 +198,10 @@ export default {
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
+            this.formLoading = false
             this.dialogVisible = false
             this.avatarArr = []
+            this.form = {}
             this.resetForm()
             this.$emit('fetchData');
         },
@@ -228,21 +211,27 @@ export default {
         },
         successAvatar(file) {
             const $this = this
+            this.formLoading = true
             this.imgUpload(file.raw, 1, function (data){
                 $this.form.avatar = data.uri
+                $this.formLoading = false
             })
         },
         successPhoto(file) {
             let $this = this
+            this.formLoading = true
             this.imgUpload(file.raw, 1, function (data){
                 $this.form.photoIds.push(data.id)
+                $this.formLoading = false
             })
         },
         successVideo(file) {
             const $this = this
+            this.formLoading = true
             this.imgUpload(file.raw, 2, function (data){
                 $this.form.videoIds.push(data.id)
                 $this.form.video = data.id
+                $this.formLoading = false
             })
         },
         removePhoto(file, fileList){

@@ -148,6 +148,7 @@ export default {
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
+            this.formLoading = false
             this.form.video = undefined
             this.form.images = []
             this.imgUris = []
