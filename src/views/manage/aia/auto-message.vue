@@ -52,18 +52,18 @@
             >
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="id" label="话术ID" align="center" width="80"/>
-                <el-table-column prop="areaId" label="区域" align="center" width="120"/>
+                <el-table-column prop="areaName" label="区域" align="center" width="120"/>
                 <el-table-column prop="action" label="动作类型" align="center" width="150">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.action }}</el-tag>
+                            <el-tag size="medium">{{ scope.row.actionStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="type" label="消息类型" align="center" width="150">
                     <template slot-scope="scope">
                         <div slot="reference">
-                            <el-tag size="medium">{{ scope.row.type }}</el-tag>
+                            <el-tag size="medium">{{ scope.row.typeStr }}</el-tag>
                         </div>
                     </template>
                 </el-table-column>
@@ -72,11 +72,26 @@
                         <el-switch v-model="scope.row.enable" disabled/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="text" label="内容" align="center"/>
-                <el-table-column prop="uri" label="uri" align="center" width="150"/>
-                <el-table-column prop="thumb" label="图片" align="center" width="150">
+                <el-table-column prop="text" label="内容" align="center" />
+                <el-table-column prop="thumb" label="文件" align="center" width="200">
+                    <template scope="scope">
+                        <div v-if="scope.row.type === 4">
+                            <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
+                        </div>
+                        <div v-if="scope.row.type === 5">
+                            <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        </div>
+                        <div v-if="scope.row.type === 6">
+                            <div v-if="scope.row.uri">
+                                <m-audio :src="scope.row.uri" ></m-audio>
+                            </div>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" align="center" width="150" fixed="right">
                     <template slot-scope="scope">
-                        <el-image v-if="scope.row.thumb!=''" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        <el-button type="text" @click="toDialog('addAutoMessage', scope.row)">更新</el-button>
+                        <el-button type="text" @click="deleteAutoMessage(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -86,6 +101,16 @@
 
             <!-- 编辑资料 -->
             <addAutoMessage ref="addAutoMessage" @fetchData="fetchData"/>
+
+            <el-dialog
+                title="播放视频"
+                :visible.sync="playVisible"
+                :before-close="closeVideo"
+                :append-to-body="true">
+                <div class="content-item">
+                    <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
+                </div>
+            </el-dialog>
         </el-card>
     </div>
 </template>
@@ -93,10 +118,11 @@
 <script>
 import Pagination from '../../../components/Pagination'
 import addAutoMessage from './dialog/add-auto-message'
+import VueVideoPlayer from '../../../components/VueVideoPlayer'
 import {getBool, getAreaList, getActionType, getArrName, getMessageType, getCurrentUserAreaId} from "@/utils/dist";
 
 export default {
-    components: { Pagination, addAutoMessage},
+    components: { Pagination, addAutoMessage, VueVideoPlayer},
     data() {
         return {
             // 数据列表加载动画
@@ -115,6 +141,7 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             multipleSelection: [],
             tableData: [],
+            playVisible: false,
             areaData: getAreaList(false),
             bools: getBool(),
             actionTypes: getActionType(true)
@@ -139,13 +166,17 @@ export default {
                 list.forEach((item, index)=>{
                     const json = {
                         "id" : item.getId(),
-                        "areaId" : getArrName($this.areaData, item.getAreaId()),
-                        "action" : getActionType(false, item.getAction()),
-                        "type" : getMessageType(item.getType()),
+                        "areaId" : item.getAreaId(),
+                        "areaName" : getArrName($this.areaData, item.getAreaId()),
+                        "type" : item.getType(),
+                        "typeStr" : getMessageType(item.getType()),
+                        "action": item.getAction(),
+                        "actionStr": getActionType(false, item.getAction()),
                         "text" : item.getText(),
                         "enable" : item.getEnable(),
                         "uri" : item.getUri(),
-                        "thumb" : item.getThumb()
+                        "thumb" : item.getThumb(),
+                        "struct": item
                     }
                     data.push(json)
                 })
@@ -170,36 +201,34 @@ export default {
         changePageSize(msg){
             this.search.page.pageSize = msg.limit
         },
-        handleDelete(index, row) {
-            console.log(index, row)
-            this.$confirm('此操作将删除选中数据, 是否继续?', '提示', {
+        play(row) {
+            this.playVisible = true;
+            let src = row.uri
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.initSrc(src);
+            })
+        },
+        closeVideo(){
+            this.playVisible = false;
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.emptySrc();
+            })
+        },
+        deleteAutoMessage(row){
+            this.$confirm('是否删除?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                // 此处可添加--删除接口
-                // 删除成功调用fetchData方法更新列表
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                })
+                const $this = this
+                let param = {
+                    "id" : row.id
+                }
+                this.$service.robot.deleteAutoMessage(param, function (result){
+                    result ? $this.$message.success("删除成功!") : $this.$message.error("删除失败 !")
+                    $this.fetchData()
+                });
             })
-        },
-        // 批量删除
-        batchDelete() {
-            if (this.multipleSelection.length < 1) {
-                this.$message({
-                    message: '请先选择要删除的数据！',
-                    type: 'warning'
-                })
-            } else {
-                this.handleDelete()
-            }
         }
     }
 }

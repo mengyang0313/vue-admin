@@ -130,7 +130,7 @@ export default {
             },
             callData: {
                 title: '实时呼叫',
-                legend: ['整体呼叫', 'AIB呼叫', '用户呼叫', '主播呼叫'],
+                legend: ['AIB呼叫', '用户呼叫', '主播呼叫'],
                 keys: [],
                 values: []
             },

@@ -63,6 +63,10 @@ service CmsSdk {
     rpc GetUserList (UserListRequest) returns (UserListReply) {
     }
 
+    // 获取关联用户
+    rpc GetRelatedUser (RelatedUserRequest) returns (RelatedUserReply) {
+    }
+
     // 调整余额
     rpc AdjustBalance (AdjustBalanceRequest) returns (AdjustBalanceReply) {
     }
@@ -103,8 +107,8 @@ service CmsSdk {
     rpc GetProfileList (ProfileListRequest) returns (ProfileListReply) {
     }
 
-    // 处理主播资料审核
-    rpc ProcessProfile (ProcessProfileRequest) returns (AnchorProfile) {
+    // 修改保存主播资料审核
+    rpc SaveProfile (AnchorProfile) returns (AnchorProfile) {
     }
 
     // 获取举报记录
@@ -143,6 +147,10 @@ service CmsSdk {
     rpc SaveRobotMessage (RobotMessage) returns (RobotMessage) {
     }
 
+    // 删除机器人消息，AIA消息
+    rpc DeleteRobotMessage (RobotMessage) returns (Empty) {
+    }
+
     // 获取朋友圈列表
     rpc GetMomentList (MomentListRequest) returns (MomentListReply) {
     }
@@ -159,12 +167,20 @@ service CmsSdk {
     rpc SaveAutoMessage (AutoMessage) returns (AutoMessage) {
     }
 
+    // 删除自动消息，AIB消息
+    rpc DeleteAutoMessage (AutoMessage) returns (Empty) {
+    }
+
     // 获取聊天记录列表
     rpc GetChatMessageList (ChatMessageListRequest) returns (ChatMessageListReply) {
     }
 
     // 获取通话记录列表
     rpc GetCallList (CallListRequest) returns (CallListReply) {
+    }
+
+    // 获取礼物记录列表
+    rpc GetGiftList (GiftListRequest) returns (GiftListReply) {
     }
 
     // 获取交易记录列表
@@ -450,6 +466,11 @@ message AnchorListReply {
     uint32 total_count = 5;
 }
 
+message FullUser {
+    User user = 1;
+    Device device = 2;
+}
+
 message UserListRequest {
     // 页号
     uint32 page_no = 1;
@@ -484,6 +505,14 @@ message UserListReply {
     uint32 total_page = 4;
     // 总记录数
     uint32 total_count = 5;
+}
+
+message RelatedUserRequest {
+    uint32 user_id = 1;
+}
+
+message RelatedUserReply {
+    repeated FullUser users = 1;
 }
 
 message AdjustBalanceRequest {
@@ -578,13 +607,6 @@ message ProfileListReply {
     uint32 total_page = 4;
     // 总记录数
     uint32 total_count = 5;
-}
-
-message ProcessProfileRequest {
-    uint32 profile_id = 1;
-    ReviewStatus status = 2;
-    // 拒绝原因
-    string reason = 3;
 }
 
 message ViolationListRequest {
@@ -833,6 +855,37 @@ message CallListRequest {
 
 message CallListReply {
     repeated CallRecord calls = 1;
+    // 页号
+    uint32 page_no = 2;
+    // 页面大小
+    uint32 page_size = 3;
+    // 总页数
+    uint32 total_page = 4;
+    // 总记录数
+    uint32 total_count = 5;
+}
+
+message GiftListRequest {
+    // 页号
+    uint32 page_no = 1;
+    // 页大小
+    uint32 page_size = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 应用id
+    uint32 app_id = 4;
+    // 用户id
+    uint32 user_id = 5;
+    // 主播id
+    uint32 anchor_id = 6;
+    // 创建起始时间
+    uint32 created_start = 7;
+    // 创建结束时间
+    uint32 created_end = 8;
+}
+
+message GiftListReply {
+    repeated GiftRecord gifts = 1;
     // 页号
     uint32 page_no = 2;
     // 页面大小

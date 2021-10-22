@@ -1,7 +1,7 @@
 <template>
-    <el-dialog title="新增动态" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
+    <el-dialog :title="title" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
+            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list" v-loading="formLoading">
                 <el-form-item label="机器人Id" prop="entityId">
                     <el-input v-model="form.entityId" :disabled="isDisabled"></el-input>
                 </el-form-item>
@@ -32,7 +32,7 @@
                             :on-change="successPhoto"
                             :on-remove="removePhoto"
                             list-type="picture-card"
-                            :file-list="form.imgUris"
+                            :file-list="imgUris"
                             :auto-upload="false"
                         >
                             <i class="el-icon-plus"></i>
@@ -46,7 +46,7 @@
                             :on-change="successVideo"
                             :on-remove="removeVideo"
                             list-type="picture-card"
-                            :file-list="form.videoUris"
+                            :file-list="videoUris"
                             :auto-upload="false"
                         >
                             <i class="el-icon-plus"></i>
@@ -89,6 +89,8 @@ export default {
             form: {
                 images: []
             },
+            title: '新增动态',
+            formLoading: false,
             imgDialog: false,
             imgUri: undefined,
             imgUris: [],
@@ -104,15 +106,22 @@ export default {
     methods: {
         init(row, entityId){
             if(!isEmpty(row)){
-                this.title = "编辑话术"
+                this.title = "编辑动态"
                 this.form = row
-                row.images.forEach(item => {
-                    this.imgUris.push({"url": item.uri})
-                })
-                this.videoUris.push({"thumb": row.thumb, "url": row.uri})
+                if(row.images.length>0 && !isEmpty(row.images[0])){
+                    row.images.forEach(item => {
+                        this.imgUris.push({"url": item})
+                    })
+                }else {
+                    this.imgUris = undefined
+                }
+                if(!isEmpty(row.thumb)){
+                    this.videoUris.push({"thumb": row.thumb, "url": row.uri})
+                }
+                this.form.publishAtTime = new Date(this.form.publishAtTime)
             }else{
                 this.form.entityId = entityId
-                this.form.imgUris = undefined
+                this.imgUris = undefined
             }
             this.isDisabled = true
         },
@@ -141,8 +150,8 @@ export default {
         closeDialog() {
             this.form.video = undefined
             this.form.images = []
-            this.form.imgUris = []
-            this.form.videoUris = []
+            this.imgUris = []
+            this.videoUris = []
             this.form.entityId = undefined
             this.isDisabled = false
             this.dialogVisible = false
@@ -155,23 +164,29 @@ export default {
         },
         successPhoto(file) {
             let $this = this
+            this.formLoading = true
             this.imgUpload(file.raw, 1, function (data){
                 $this.form.images.push(data.uri)
+                $this.formLoading = false
             })
         },
         successVideo(file) {
             const $this = this
+            this.formLoading = true
             this.imgUpload(file.raw, 2, function (data){
                 $this.form.video = data.uri
                 $this.form.thumb = data.thumb
+                $this.formLoading = false
             })
         },
         removePhoto(file, fileList){
             let arr = this.form.images
-            let val = file.name
+            let val = file.url
             for(let i = 0; i < arr.length; i++) {
                 if(arr[i] === val) {
                     arr.splice(i, 1);
+                    this.form.images = arr.length === 0 ? undefined : arr
+                    alert(this.form.images)
                     break;
                 }
             }

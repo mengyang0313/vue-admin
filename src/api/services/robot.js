@@ -90,6 +90,23 @@ export default class {
     }
 
 
+    // 删除机器人消息
+    async deleteRobotMessage (param, callback) {
+        const req = new this.proto.RobotMessage()
+        req.setId(param.id)
+
+        const metadata = {'token': getToken()};
+        this.client.deleteRobotMessage(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                callback(false)
+                error(err)
+            }
+        })
+    }
+
+
     // AIB场景话术
     async getAutoMessageList (param, callback) {
         const req = new this.proto.AutoMessageListRequest()
@@ -110,11 +127,18 @@ export default class {
     }
 
     async saveAutoMessage (param, callback) {
-        const req = new this.proto.AutoMessage()
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.AutoMessage()
+        }
         req.setAreaId(param.areaId)
         req.setAction(param.action)
+        req.setType(param.type)
         req.setText(param.text)
         req.setEnable(param.enable)
+        req.setUri(param.uri)
+        req.setThumb(param.thumb)
+        req.setDuration(param.duration)
 
         const metadata = {'token': getToken()};
         this.client.saveAutoMessage(req, metadata, (err, resp) => {
@@ -122,6 +146,22 @@ export default class {
         })
     }
 
+
+    // 删除自动消息
+    async deleteAutoMessage (param, callback) {
+        const req = new this.proto.AutoMessage()
+        req.setId(param.id)
+
+        const metadata = {'token': getToken()};
+        this.client.deleteAutoMessage(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(true)
+            } else {
+                callback(false)
+                error(err)
+            }
+        })
+    }
 
 
     // 获取朋友圈列表
@@ -142,7 +182,10 @@ export default class {
 
 
     async saveMoment (param, callback) {
-        const req = new this.proto.Moment()
+        let req = param.struct
+        if(typeof(req) == "undefined"){
+            req = new this.proto.Moment()
+        }
         req.setEntityId(param.entityId)
         req.setEntityType(param.entityType)
         req.setAppId(param.appId)
@@ -160,4 +203,8 @@ export default class {
             !err ? callback(true) : callback(false)
         })
     }
+
+
+
+
 }

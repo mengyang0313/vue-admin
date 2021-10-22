@@ -1,7 +1,7 @@
 <template>
     <el-dialog :title="title" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list">
+            <el-form ref="ruleForm" :model="form" label-width="150px" class="form-list" v-loading="formLoading">
                 <el-form-item label="机器人Id" prop="robotId">
                     <el-input v-model="form.robotId" placeholder="请输入" :disabled="isDisabled"/>
                 </el-form-item>
@@ -84,6 +84,7 @@ export default {
             form: { },
             title: '新增话术',
             dialogVisible: false,
+            formLoading: false,
             isDisabled: false,
             isText: true,
             fileType: 1,
@@ -130,6 +131,7 @@ export default {
         },
         successFile(file) {
             const $this = this
+            this.formLoading = true
             this.imgUpload(file.raw, this.fileType, function (data){
                 if(1 === $this.fileType){
                     $this.form.uri = data.uri
@@ -140,6 +142,7 @@ export default {
                     $this.form.uri = data.uri
                     $this.form.duration = data.duration
                 }
+                $this.formLoading = false
             })
         },
         removeFile(file, fileList){

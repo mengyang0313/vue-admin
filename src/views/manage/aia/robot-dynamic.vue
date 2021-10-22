@@ -38,7 +38,12 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="likes" label="点赞次数" align="center" width="150"/>
-                <el-table-column prop="publishAt" label="发布时间" align="center"/>
+                <el-table-column prop="publishAtTime" label="发布时间" align="center"/>
+                <el-table-column label="操作" align="center" width="150" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="toDialog('addRobotDynamic', scope.row)">更新</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页栏
             <Pagination :total="total" :page.sync="search.currentPage" :limit.sync="search.pageSize"
@@ -131,7 +136,7 @@ export default {
                         "video": item.getVideo(),
                         "thumb": item.getThumb(),
                         "likes": item.getLikes(),
-                        "publishAt": toTime(item.getPublishAt()),
+                        "publishAtTime": toTime(item.getPublishAt()),
                         "nickname": item.getNickname(),
                         "avatar": item.getAvatar(),
                         "struct": item

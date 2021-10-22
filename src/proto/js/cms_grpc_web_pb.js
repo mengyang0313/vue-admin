@@ -1200,6 +1200,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getUserList =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.RelatedUserRequest,
+ *   !proto.pb.cms.RelatedUserReply>}
+ */
+const methodDescriptor_CmsSdk_GetRelatedUser = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetRelatedUser',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.RelatedUserRequest,
+  proto.pb.cms.RelatedUserReply,
+  /**
+   * @param {!proto.pb.cms.RelatedUserRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.RelatedUserReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.RelatedUserRequest,
+ *   !proto.pb.cms.RelatedUserReply>}
+ */
+const methodInfo_CmsSdk_GetRelatedUser = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.RelatedUserReply,
+  /**
+   * @param {!proto.pb.cms.RelatedUserRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.RelatedUserReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.RelatedUserRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.RelatedUserReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.RelatedUserReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getRelatedUser =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetRelatedUser',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetRelatedUser,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.RelatedUserRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.RelatedUserReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getRelatedUser =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetRelatedUser',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetRelatedUser);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.AdjustBalanceRequest,
  *   !proto.pb.cms.AdjustBalanceReply>}
  */
@@ -2000,16 +2080,16 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getProfileList =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.pb.cms.ProcessProfileRequest,
+ *   !proto.pb.AnchorProfile,
  *   !proto.pb.AnchorProfile>}
  */
-const methodDescriptor_CmsSdk_ProcessProfile = new grpc.web.MethodDescriptor(
-  '/pb.cms.CmsSdk/ProcessProfile',
+const methodDescriptor_CmsSdk_SaveProfile = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/SaveProfile',
   grpc.web.MethodType.UNARY,
-  proto.pb.cms.ProcessProfileRequest,
+  anchortype_pb.AnchorProfile,
   anchortype_pb.AnchorProfile,
   /**
-   * @param {!proto.pb.cms.ProcessProfileRequest} request
+   * @param {!proto.pb.AnchorProfile} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -2022,13 +2102,13 @@ const methodDescriptor_CmsSdk_ProcessProfile = new grpc.web.MethodDescriptor(
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.pb.cms.ProcessProfileRequest,
+ *   !proto.pb.AnchorProfile,
  *   !proto.pb.AnchorProfile>}
  */
-const methodInfo_CmsSdk_ProcessProfile = new grpc.web.AbstractClientBase.MethodInfo(
+const methodInfo_CmsSdk_SaveProfile = new grpc.web.AbstractClientBase.MethodInfo(
   anchortype_pb.AnchorProfile,
   /**
-   * @param {!proto.pb.cms.ProcessProfileRequest} request
+   * @param {!proto.pb.AnchorProfile} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -2039,7 +2119,7 @@ const methodInfo_CmsSdk_ProcessProfile = new grpc.web.AbstractClientBase.MethodI
 
 
 /**
- * @param {!proto.pb.cms.ProcessProfileRequest} request The
+ * @param {!proto.pb.AnchorProfile} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
@@ -2048,32 +2128,32 @@ const methodInfo_CmsSdk_ProcessProfile = new grpc.web.AbstractClientBase.MethodI
  * @return {!grpc.web.ClientReadableStream<!proto.pb.AnchorProfile>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.pb.cms.CmsSdkClient.prototype.processProfile =
+proto.pb.cms.CmsSdkClient.prototype.saveProfile =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/pb.cms.CmsSdk/ProcessProfile',
+      '/pb.cms.CmsSdk/SaveProfile',
       request,
       metadata || {},
-      methodDescriptor_CmsSdk_ProcessProfile,
+      methodDescriptor_CmsSdk_SaveProfile,
       callback);
 };
 
 
 /**
- * @param {!proto.pb.cms.ProcessProfileRequest} request The
+ * @param {!proto.pb.AnchorProfile} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.pb.AnchorProfile>}
  *     Promise that resolves to the response
  */
-proto.pb.cms.CmsSdkPromiseClient.prototype.processProfile =
+proto.pb.cms.CmsSdkPromiseClient.prototype.saveProfile =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/pb.cms.CmsSdk/ProcessProfile',
+      '/pb.cms.CmsSdk/SaveProfile',
       request,
       metadata || {},
-      methodDescriptor_CmsSdk_ProcessProfile);
+      methodDescriptor_CmsSdk_SaveProfile);
 };
 
 
@@ -2800,6 +2880,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveRobotMessage =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.RobotMessage,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_DeleteRobotMessage = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/DeleteRobotMessage',
+  grpc.web.MethodType.UNARY,
+  cmstype_pb.RobotMessage,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.RobotMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.RobotMessage,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_DeleteRobotMessage = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.RobotMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.RobotMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.deleteRobotMessage =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteRobotMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteRobotMessage,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.RobotMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.deleteRobotMessage =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteRobotMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteRobotMessage);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.MomentListRequest,
  *   !proto.pb.cms.MomentListReply>}
  */
@@ -3120,6 +3280,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveAutoMessage =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.AutoMessage,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_DeleteAutoMessage = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/DeleteAutoMessage',
+  grpc.web.MethodType.UNARY,
+  cmstype_pb.AutoMessage,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.AutoMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.AutoMessage,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_DeleteAutoMessage = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.AutoMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.AutoMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.deleteAutoMessage =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteAutoMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteAutoMessage,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.AutoMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.deleteAutoMessage =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteAutoMessage',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteAutoMessage);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.ChatMessageListRequest,
  *   !proto.pb.cms.ChatMessageListReply>}
  */
@@ -3274,6 +3514,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.getCallList =
       request,
       metadata || {},
       methodDescriptor_CmsSdk_GetCallList);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.cms.GiftListRequest,
+ *   !proto.pb.cms.GiftListReply>}
+ */
+const methodDescriptor_CmsSdk_GetGiftList = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/GetGiftList',
+  grpc.web.MethodType.UNARY,
+  proto.pb.cms.GiftListRequest,
+  proto.pb.cms.GiftListReply,
+  /**
+   * @param {!proto.pb.cms.GiftListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.GiftListReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.cms.GiftListRequest,
+ *   !proto.pb.cms.GiftListReply>}
+ */
+const methodInfo_CmsSdk_GetGiftList = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.pb.cms.GiftListReply,
+  /**
+   * @param {!proto.pb.cms.GiftListRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.pb.cms.GiftListReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.cms.GiftListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.cms.GiftListReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.cms.GiftListReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.getGiftList =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetGiftList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetGiftList,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.cms.GiftListRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.cms.GiftListReply>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.getGiftList =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/GetGiftList',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_GetGiftList);
 };
 
 

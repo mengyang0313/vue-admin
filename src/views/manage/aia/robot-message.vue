@@ -66,6 +66,7 @@
                 <el-table-column label="操作" align="center" width="150" fixed="right">
                     <template slot-scope="scope">
                         <el-button type="text" @click="toDialog('addRobotMessage', scope.row)">更新</el-button>
+                        <el-button type="text" @click="deleteRobotMessage(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -192,6 +193,22 @@ export default {
             this.playVisible = false;
             this.$nextTick(()=>{
                 this.$refs.myVideoPlayer.emptySrc();
+            })
+        },
+        deleteRobotMessage(row){
+            this.$confirm('是否删除?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                const $this = this
+                let param = {
+                    "id" : row.id
+                }
+                this.$service.robot.deleteRobotMessage(param, function (result){
+                    result ? $this.$message.success("删除成功!") : $this.$message.error("删除失败 !")
+                    $this.fetchData()
+                });
             })
         }
     }
