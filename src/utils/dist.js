@@ -265,6 +265,7 @@ export const initPayChannel = () => new Promise((resolve, reject) => {
     })
 })
 
+
 export function getPayChannelList(areaId) {
     let str = sessionStorage.getItem("payChannelArr");
     if (isEmpty(str)) {
@@ -280,7 +281,7 @@ export function getPayChannelList(areaId) {
                 result.push(item)
             }
         })
-        return setOk(false, arr)
+        return setOk(false, result)
     }
 }
 
