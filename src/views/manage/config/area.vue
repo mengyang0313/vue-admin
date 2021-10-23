@@ -76,6 +76,12 @@
                 <el-table-column prop="newUserReward" label="奖励钻石" align="center" width="120"/>
                 <el-table-column prop="heartbeatInterval" label="心跳间隔" align="center" width="120" />
                 <el-table-column prop="payTypeNames" label="支付方式" align="center" width="220" />
+                <el-table-column prop="enableAia" label="是否启用AIA" align="center" width="120">
+                    <template slot-scope="scope">
+                        <el-switch v-model="scope.row.enableAia" disabled/>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="matchInterval" label="匹配时间间隔" align="center" width="120" />
                 <el-table-column prop="cdn" label="cdn域名" align="center" width="420" />
                 <el-table-column prop="dndPeriod" label="免打扰时长" align="center" width="120" />
                 <el-table-column prop="tags" label="标签配置" align="center" width="820" />
@@ -191,7 +197,8 @@ export default {
                         "rongcloudConfigJson": $this.toJsonRongcloudConfig(item.getRongcloudConfig()),
                         "greenConfig": item.getGreenConfig(),
                         "greenConfigJson": $this.toJsonGreenConfig(item.getGreenConfig()),
-                        "payChannelIds": item.getPayChannelIdsList(),
+                        "enableAia": item.getEnableAia(),
+                        "matchInterval": item.getMatchInterval(),
                         "struct" : item
                     }
                     data.push(json)

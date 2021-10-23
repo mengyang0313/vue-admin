@@ -59,6 +59,12 @@
                 <el-form-item label="主播转换usd汇率" prop="anchorExchangeRate">
                     <el-input-number v-model="form.anchorExchangeRate" :precision="0" :min="1"></el-input-number>&nbsp;
                 </el-form-item>
+                <el-form-item label="是否启用AIA" prop="enableAia">
+                    <el-switch v-model="form.enableAia"/>
+                </el-form-item>
+                <el-form-item label="匹配时间间隔" prop="matchInterval">
+                    <el-input-number v-model="form.matchInterval" :precision="0" :min="1"></el-input-number> 秒
+                </el-form-item>
                 <el-form-item label="支付方式" prop="payTypes">
                     <el-checkbox-group v-model="form.payTypes" >
                         <el-checkbox v-for="item in payTypeList" :label="item.value" :key="item">{{ item.label }}</el-checkbox>

@@ -52,6 +52,8 @@ export default class {
         req.setAgoraConfig(param.agoraConfig)
         req.setRongcloudConfig(param.rongcloudConfig)
         req.setGreenConfig(param.greenConfig)
+        req.setEnableAia(param.enableAia)
+        req.setMatchInterval(param.matchInterval)
 
         const metadata = {'token': getToken()}
         this.client.saveAreaConfig(req, metadata, (err, resp) => {
