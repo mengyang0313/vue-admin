@@ -128,7 +128,8 @@ import {
     getSettleStatus
 } from "@/utils/dist";
 import excel from "@/utils/excel";
-import {startUnix, toDate} from "@/utils/util";
+import {getCurrentDate, startUnix, toDate} from "@/utils/util";
+import {isEmpty} from "@/api/api";
 
 export default {
     components: { Pagination },
@@ -139,7 +140,7 @@ export default {
                 areaId: undefined,
                 guildId: undefined,
                 anchorId: undefined,
-                settleAtTime: new Date().format('yyyy-MM-dd'),
+                settleAtTime: getCurrentDate(),
                 status: undefined,
                 page: {
                     currentPage: 1,
@@ -169,11 +170,7 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            let param = this.search;
-            if(typeof(this.search.settleAtTime) !== "undefined"){
-                param.settleAt = startUnix(new Date(this.search.settleAtTime))
-            }
-            this.$service.settle.getSettleList(param, function (result){
+            this.$service.settle.getSettleList(this.handleParam(), function (result){
                 const list = result.getRecordsList()
                 $this.records = list
                 const data = []
@@ -201,6 +198,19 @@ export default {
                 $this.tableData = data
                 $this.listLoading = false
             });
+        },
+        handleParam(){
+            let param = this.search
+            if(!isEmpty(param.anchorId)){
+                this.search.settleAtTime = undefined
+                param.settleAt = undefined
+            }else {
+                if(isEmpty(this.search.settleAtTime)){
+                    this.search.settleAtTime = getCurrentDate()
+                }
+                param.settleAt = startUnix(new Date(this.search.settleAtTime))
+            }
+            return param
         },
         onSearch() {
             this.search.page.currentPage = 1

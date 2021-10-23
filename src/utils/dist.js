@@ -343,6 +343,9 @@ export function ipToAddress(ip, callback){
 
 export function getArrName(arr, id){
     let label = ""
+    if(isEmpty(id) || id === 0){
+        return label
+    }
     arr.forEach((item) => {
         if(typeof(item.value) !== "undefined"){
             if(id.toString() === item.value.toString()){

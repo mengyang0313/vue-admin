@@ -8,7 +8,7 @@ import {
     AnchorFullRequest, ChatMessageListRequest, CallListRequest, TransactionListRequest, AuthorizeAnchorRequest, BlockRequest, UnblockRequest,
     MigrateRequest, MomentListRequest, CreateSettleRequest, SubmitSettleRequest, SettleProgressRequest, SettleListRequest, OverviewRequest,
     HomeStatRequest, AreaStatRequest, AnchorStatRequest, AreaConfigListRequest, PayChannelListRequest, CountryConfigListRequest, CommodityListRequest,
-    VersionListRequest, PayConfigListRequest, DeleteUserRequest, UserStatRequest, CheckinConfigRequest, VipConfigRequest
+    VersionListRequest, PayConfigListRequest, DeleteUserRequest, UserStatRequest, CheckinConfigRequest, VipConfigRequest, GiftListRequest
 } from '../proto/js/cms_pb'
 import { Empty, EntityType, User, AnchorLevel, ReviewStatus, Moment, PayChannel, Approximation, CountryConfig, OsType, Commodity, FileRecord, CheckinConfig, VipConfig} from '../proto/js/usertype_pb'
 import { Admin, Guild, RobotMessage, AutoMessage, App, Version, AreaConfig, PayConfig, OssConfig} from '../proto/js/cmstype_pb'
@@ -73,6 +73,7 @@ const deps = {
       UserStatRequest,
       CheckinConfigRequest,
       VipConfigRequest,
+      GiftListRequest,
       PayChannel,
       Approximation,
       CountryConfig,

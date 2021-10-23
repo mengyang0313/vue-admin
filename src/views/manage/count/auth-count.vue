@@ -67,8 +67,8 @@
                 <el-table-column prop="outCall" label="呼出数" align="center"/>
                 <el-table-column prop="answer" label="接听数" align="center/>
                 <el-table-column prop="answer10" label="" align="center"/>
-                <el-table-column prop="answer30" label="通话时间30s" align="center"/>
-                <el-table-column prop="answer50" label="通话时间50s" align="center"/>
+                <el-table-column prop="answer30" label="通话30s" align="center"/>
+                <el-table-column prop="answer50" label="通话50s" align="center"/>
                 <el-table-column prop="duration" label="通话时长" align="center"/>
                 <el-table-column prop="callIncome" label="通话收入" align="center"/>
                 <el-table-column prop="giftIncome" label="礼物收入" align="center"/>

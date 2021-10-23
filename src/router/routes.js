@@ -180,6 +180,14 @@ import {getCurrentUserModules} from "@/utils/dist";
                 }
             },
             {
+                path: 'gift-record',
+                name: 'gift-record',
+                component: () => import('../views/manage/gift-record/giftRecord'),
+                meta: {
+                    title: '礼物记录'
+                }
+            },
+            {
                 path: 'transaction',
                 name: 'transaction',
                 component: () => import('../views/manage/transaction-record/transactionRecord'),
