@@ -53,8 +53,8 @@
                     <el-input-number v-model="form.onlineEnd" :min="form.onlineStart" :max="24" label="结束时间"></el-input-number>
                 </el-form-item>
 
-                <el-form-item label="是否启用" prop="status">
-                    <el-switch v-model="form.status"/>
+                <el-form-item label="是否启用" prop="statusBool">
+                    <el-switch v-model="form.statusBool"/>
                 </el-form-item>
                 <el-form-item label="图片" prop="photoIds">
                     <div class="img">
@@ -127,7 +127,7 @@ export default {
                 photoUris: [],
                 videoIds: [],
                 videos: [],
-                status: true
+                statusBool: true
             },
             title: '新增机器人',
             formLoading: false,
@@ -165,6 +165,7 @@ export default {
                     this.form.videoUris.push({name: item.getId(), url: item.getUri()})
                 })
                 this.form.birthday = new Date(row.birthday * 1000)
+
             }else {
                 this.changeArea(this.form.areaId)
                 this.form.birthday = getCurrentDate()
@@ -176,7 +177,7 @@ export default {
                 if (valid) {
                     let param = this.form
                     param.birthdayTime = param.birthday.getTime() / 1000
-                    param.status = this.form.status ? 5 : 6
+                    param.status = this.form.statusBool ? 5 : 6
                     this.$service.robot.saveRobot(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")

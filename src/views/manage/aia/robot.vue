@@ -56,7 +56,11 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="nickname" label="昵称" align="center" width="150"/>
-                <el-table-column prop="signature" label="签名" align="center"/>
+                <el-table-column prop="statusBool" label="是否启用" align="center">
+                    <template slot-scope="scope">
+                        <el-switch v-model="scope.row.statusBool" disabled/>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="data" label="动态" align="center" width="150">
                     <template slot-scope="scope">
                         <el-button type="text">
@@ -146,7 +150,8 @@ export default {
                         "appId" : item.getAppId(),
                         "app" : getAppName($this.appListAll, item.getAppId()),
                         "anchorId" : item.getAnchorId(),
-                        "status" : $this.handleStatus(item.getStatus()),
+                        "status" : item.getStatus(),
+                        "statusBool" : $this.handleStatus(item.getStatus()),
                         "areaId" : item.getAreaId(),
                         "areaStr" : getArrName($this.areaData, item.getAreaId()),
                         "nickname" : item.getNickname(),
