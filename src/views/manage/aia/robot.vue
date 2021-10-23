@@ -50,8 +50,8 @@
                         <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="nickname" label="昵称" align="center" width="150"/>
-                <el-table-column prop="statusBool" label="是否启用" align="center">
+                <el-table-column prop="nickname" label="昵称" align="center"/>
+                <el-table-column prop="statusBool" label="是否启用" align="center" width="120">
                     <template slot-scope="scope">
                         <el-switch v-model="scope.row.statusBool" disabled/>
                     </template>
