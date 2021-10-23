@@ -5,15 +5,15 @@
                 <el-form-item label="机器人Id" prop="robotId">
                     <el-input v-model="form.robotId" placeholder="请输入" :disabled="isDisabled"/>
                 </el-form-item>
-                <el-form-item label="动作类型" prop="action">
-                    <el-select v-model="form.action" placeholder="请选择">
-                        <el-option v-for="item in actionTypes"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item label="动作类型" prop="action">-->
+<!--                    <el-select v-model="form.action" placeholder="请选择">-->
+<!--                        <el-option v-for="item in actionTypes"-->
+<!--                                   :key="item.value"-->
+<!--                                   :label="item.label"-->
+<!--                                   :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item label="话术类型" prop="type">
                     <el-select v-model="form.type" @change="changeType" placeholder="请选择">
                         <el-option v-for="item in messageTypes"
@@ -37,8 +37,8 @@
                 <el-form-item label="文件" prop="uri" v-else>
                     <div class="img">
                         <el-upload
-                            action=""
                             :limit="1"
+                            :accept="accept"
                             :on-preview="imgPreview"
                             :on-change="successFile"
                             :on-remove="removeFile"
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import {getActionType, getMessageType} from "@/utils/dist";
+import {getActionType, getMessageType, getMessageTypeReject} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 
@@ -86,12 +86,13 @@ export default {
             dialogVisible: false,
             formLoading: false,
             isDisabled: false,
+            accept: '',
             isText: true,
             fileType: 1,
             imgDialog: false,
             imgUri: undefined,
             fileArr: [],
-            messageTypes : getMessageType(),
+            messageTypes : getMessageTypeReject(),
             actionTypes: getActionType()
         }
     },
@@ -177,17 +178,21 @@ export default {
                 this.isText = false
                 this.fileType = 1
                 this.form.text = ''
+                this.accept = 'image/*'
             }else if(5 === val){
                 this.isText = false
                 this.fileType = 2
                 this.form.text = ''
+                this.accept = 'video/*'
             }else if(6 === val){
                 this.isText = false
                 this.fileType = 3
                 this.form.text = ''
+                this.accept = 'audio/*'
             }
             if(!isInit){
                 this.removeFile()
+                document.getElementsByClassName('el-icon-delete')[0].click();
             }
         },
         resetForm(formName) {

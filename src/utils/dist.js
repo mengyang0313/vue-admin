@@ -757,6 +757,36 @@ export function getMessageType(key){
     }
 }
 
+export function getMessageTypeReject(key){
+    let arr = [{
+        value: 1,
+        label: '文本'
+    }, {
+        value: 4,
+        label: '图片'
+    }, {
+        value: 5,
+        label: '视频'
+    }, {
+        value: 6,
+        label: '语音'
+    }, {
+        value: 8,
+        label: '虚拟视频'
+    }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
+}
+
 
 // 动作类型
 export function getActionType(isShowAll, key){

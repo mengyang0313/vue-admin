@@ -5,15 +5,15 @@
                 <el-form-item label="机器人Id" prop="entityId">
                     <el-input v-model="form.entityId" :disabled="isDisabled"></el-input>
                 </el-form-item>
-                <el-form-item label="区域" prop="areaId">
-                    <el-select v-model="form.areaId" placeholder="请选择">
-                        <el-option v-for="item in areaList"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item label="区域" prop="areaId">-->
+<!--                    <el-select v-model="form.areaId" placeholder="请选择">-->
+<!--                        <el-option v-for="item in areaList"-->
+<!--                                   :key="item.value"-->
+<!--                                   :label="item.label"-->
+<!--                                   :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item label="内容" prop="content">
                     <el-input
                         v-model="form.content"
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { getMessageType, getAreaList, getAppList } from "@/utils/dist";
+import {getMessageType, getAreaList, getAppList, getMessageTypeReject} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 import {isEmpty} from "@/api/api";
@@ -100,8 +100,8 @@ export default {
             isDisabled: false,
             dialogVisible: false,
             imgDialogVisible: false,
-            messageTypes : getMessageType(),
-            areaList: getAreaList(false),
+            messageTypes : getMessageTypeReject(),
+            //areaList: getAreaList(false),
             appList: getAppList()
         }
     },
@@ -172,7 +172,6 @@ export default {
             let $this = this
             this.formLoading = true
             this.imgUpload(file.raw, 1, function (data){
-                alert(data.uri)
                 $this.form.images.push(data.uri)
                 $this.formLoading = false
             })
@@ -193,7 +192,6 @@ export default {
                 if(arr[i] === val) {
                     arr.splice(i, 1);
                     this.form.images = arr.length === 0 ? undefined : arr
-                    alert(this.form.images)
                     break;
                 }
             }
