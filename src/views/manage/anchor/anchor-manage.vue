@@ -108,9 +108,9 @@
                 <el-table-column type="selection" width="60"/>
                 <el-table-column prop="id" label="主播id" align="center" width="100">
                     <template slot-scope="scope">
-                        <el-button type="text">
+                        <el-link type="primary">
                             <router-link :to="{path:'./anchorInfo',query: {id: scope.row.id}}"> {{ scope.row.id }}</router-link>
-                        </el-button>
+                        </el-link>
                     </template>
                 </el-table-column>
                 <el-table-column prop="app" label="App" align="center" width="120">
@@ -165,7 +165,7 @@
                 <el-table-column prop="price" label="单价" align="center" width="120" />
                 <el-table-column prop="onlineIp" label="上线ip" align="center" width="180">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="getAddress(scope.row)">{{ scope.row.onlineIp }}</el-button>
+                        <el-link type="primary" @click="getAddress(scope.row)">{{ scope.row.onlineIp }}</el-link>
                     </template>
                 </el-table-column>
                 <el-table-column prop="updatedAt" label="最近登录时间" align="center" width="180" />
@@ -306,7 +306,7 @@ export default {
             anchorLevel: getAnchorLevel(),
             reviewStatus: getReviewStatus(),
             onlineStatus: getOnlineStatus(),
-            blockStatusList : getBlockStatus(),
+            blockStatusList : getBlockStatus(false),
             appList: getAppList(true),
             appListAll: getAppList(false)
         }
@@ -339,7 +339,7 @@ export default {
                         "reviewStatus" : item.getReviewStatus(),
                         "reviewStatusStr" : getReviewStatus(item.getReviewStatus()),
                         "blockStatus" : item.getBlockStatus(),
-                        "blockStatusStr" : getBlockStatus(item.getBlockStatus()),
+                        "blockStatusStr" : getBlockStatus(false, item.getBlockStatus()),
                         "profileCount" : item.getProfileCount(),
                         "activeCount" : item.getActiveCount(),
                         "level" : item.getLevel(),

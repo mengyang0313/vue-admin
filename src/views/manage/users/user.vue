@@ -137,7 +137,7 @@
                 <el-table-column prop="appVersion" label="app版本" align="center" width="120" />
                 <el-table-column prop="onlineIp" label="上线IP" align="center" width="140">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="getAddress(scope.row)">{{ scope.row.onlineIp }}</el-button>
+                        <el-link type="primary" @click="getAddress(scope.row)">{{ scope.row.onlineIp }}</el-link>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
@@ -246,7 +246,7 @@ export default {
                         "onlineStatus" : item.getOnlineStatus(),
                         "onlineStatusStr" : getOnlineStatus(item.getOnlineStatus()),
                         "blockStatus" : item.getBlockStatus(),
-                        "blockStatusStr" : getBlockStatus(item.getBlockStatus()),
+                        "blockStatusStr" : getBlockStatus(false, item.getBlockStatus()),
                         "balance": item.getBalance(),
                         "lockedBalance": item.getLockedBalance(),
                         "expense" : item.getExpense(),

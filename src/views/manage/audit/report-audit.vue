@@ -80,8 +80,8 @@
                 <el-table-column prop="id" label="举报Id" align="center" width="120" />
                 <el-table-column prop="reporterId" label="举报方" align="center" width="120" />
                 <el-table-column prop="reportedId" label="被举报方" align="center" width="120" />
-                <el-table-column prop="violationType" label="举报类型" align="center" width="200"/>
-                <el-table-column prop="violationScene" label="举报场景" align="center" width="100"/>
+                <el-table-column prop="violationTypeStr" label="举报类型" align="center" width="200"/>
+                <el-table-column prop="violationSceneStr" label="举报场景" align="center" width="100"/>
                 <el-table-column prop="reportMessage" label="举报信息" align="center" width="150">
 <!--                    <template slot-scope="scope">-->
 <!--                        <a @click="hisVideo(scope.row)" style="color: #1E88C7">查看</a>-->
@@ -92,7 +92,7 @@
 <!--                        <a @click="hisVideo(scope.row)" style="color: #1E88C7">查看</a>-->
 <!--                    </template>-->
                 </el-table-column>
-                <el-table-column prop="dealStatus" label="处理状态" align="center" width="150"/>
+                <el-table-column prop="dealStatusStr" label="处理状态" align="center" width="150"/>
                 <el-table-column prop="dealMessage" label="处理信息" align="center" width="150"/>
                 <el-table-column prop="dealAt" label="处理时间" align="center" width="150"/>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
@@ -111,7 +111,14 @@
 
 <script>
 import Pagination from '../../../components/Pagination'
-import { getReportedTypes, getReportedTime, getAreaList, getViolationScene } from "@/utils/dist";
+import {
+    getReportedTypes,
+    getReportedTime,
+    getAreaList,
+    getViolationScene,
+    getViolationType,
+    getBlockStatus
+} from "@/utils/dist";
 import {toTime} from "@/utils/util";
 
 export default {
@@ -141,7 +148,7 @@ export default {
             areaData: getAreaList(true),
             reportedTypes: getReportedTypes(),
             reportedTimes: getReportedTime(),
-            violationScenes: getViolationScene()
+            violationScenes: getViolationScene(true)
         }
     },
     created() {
@@ -162,10 +169,13 @@ export default {
                         "reporterId" : item.getReporterId(),
                         "reportedId" : item.getReportedId(),
                         "violationType" : item.getViolationType(),
+                        "violationTypeStr" : getViolationType(false, item.getViolationType()),
                         "violationScene" : item.getViolationScene(),
+                        "violationSceneStr" : getViolationScene(false, item.getViolationScene()),
                         "reportMessage" : item.getReportMessage(),
                         "createdAt" : toTime(item.getCreatedAt()),
                         "dealStatus" : item.getDealStatus(),
+                        "dealStatusStr" : getBlockStatus(false, item.getDealStatus()),
                         "dealMessage" : item.getDealMessage(),
                         "dealAt" : item.getDealAt()
                     }

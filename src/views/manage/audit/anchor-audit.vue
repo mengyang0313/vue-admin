@@ -211,7 +211,8 @@ export default {
             const $this = this
             let param = {
                 "profileId" : row.id,
-                "status" : 5
+                "status" : 5,
+                "struct" : row.struct
             }
             this.$service.audit.processProfile(param, function (result){
                 result ? $this.$message.success("审核通过 !") : $this.$message.error("审核失败 !")
@@ -228,7 +229,8 @@ export default {
                 let param = {
                     "profileId" : row.id,
                     "status" : 4,
-                    "reason" : value
+                    "reason" : value,
+                    "struct" : row.struct
                 }
                 this.$service.audit.processProfile(param, function (result){
                     result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")

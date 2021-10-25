@@ -61,7 +61,7 @@ export default {
                 struct: ''
             },
             dialogVisible: false,
-            blockStatusList: getBlockStatus(),
+            blockStatusList: getBlockStatus(false),
             blockTimeList: getBlockTime(),
             rules: {
                 entityId: [

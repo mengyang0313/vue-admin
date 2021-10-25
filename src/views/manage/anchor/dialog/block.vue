@@ -62,7 +62,7 @@ export default {
             },
             dialogVisible: false,
             isHidden: false,
-            blockStatusList: getBlockStatus(),
+            blockStatusList: getBlockStatus(false),
             blockTimeList: getBlockTime(),
             rules: {
                 entityId: [

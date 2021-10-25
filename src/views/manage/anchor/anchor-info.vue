@@ -100,12 +100,12 @@
             </el-col>
         </el-row>
 
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="selItem">
             <el-menu-item index="1">主播资料</el-menu-item>
             <el-menu-item index="2">通话记录</el-menu-item>
             <el-menu-item index="3">订单信息</el-menu-item>
         </el-menu>
-        <el-card shadow="always" style="min-height:10px">
+        <el-card shadow="always" style="min-height:10px" :hidden="isHiddenProfile">
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
@@ -179,6 +179,98 @@
             <!-- 视频列表 -->
             <videoList ref="videoList" @fetchData="fetchData"/>
         </el-card>
+
+        <!-- 通话记录 -->
+        <el-card shadow="always" style="min-height:10px" :hidden="isHiddenCall">
+            <el-table
+                ref="multipleTable"
+                :data="callTableData"
+                tooltip-effect="dark"
+                style="width: 100%"
+                size="medium"
+            >
+                <el-table-column prop="id" label="通话Id" align="center" width="120" />
+                <el-table-column prop="app" label="来源App" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else-if="scope.row.app.os === 2">
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="userId" label="用户Id" align="center" width="120" />
+                <el-table-column prop="anchorId" label="主播Id" align="center" width="120" />
+                <el-table-column prop="areaStr" label="区域" align="center" width="120"/>
+                <el-table-column prop="callType" label="通话发起类型" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            <el-tag size="medium">{{ scope.row.callType }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+
+                <el-table-column prop="connectedAt" label="通话建立时间" align="center" width="150"/>
+                <el-table-column prop="hangAt" label="通话结束时间" align="center" width="150"/>
+                <el-table-column prop="duration" label="通话时长" align="center" width="120"/>
+                <el-table-column prop="billDuration" label="计费时长" align="center" width="120"/>
+                <el-table-column prop="expense" label="用户消费" align="center" width="120"/>
+                <el-table-column prop="hangType" label="通话结束类型" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            <el-tag size="medium" v-if="scope.row.hangType!=''">{{ scope.row.hangType }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="income" label="主播收益" align="center" width="120"/>
+                <el-table-column prop="userScore" label="用户评分" align="center"/>
+                <el-table-column prop="captureDStatus" label="录屏状态" align="center"/>
+                <el-table-column prop="captureDuration" label="录制时长" align="center"/>
+            </el-table>
+        </el-card>
+
+        <!-- 订单管理 -->
+        <el-card shadow="always" style="min-height:10px" :hidden="isHiddenOrder">
+            <el-table
+                ref="multipleTable"
+                :data="orderTableData"
+                tooltip-effect="dark"
+                style="width: 100%"
+                size="medium"
+            >
+                <el-table-column prop="id" label="交易ID" align="center" width="120" />
+                <el-table-column prop="app" label="来源App" align="center" width="120" >
+                    <template scope="scope">
+                        <div slot="reference">
+                            {{ scope.row.app.label }}
+                            <span v-if="scope.row.app.os === 1">
+                                <i class="icon-android-fill"></i>
+                            </span>
+                            <span v-else-if="scope.row.app.os === 2">
+                                <i class="icon-pingguo"></i>
+                            </span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="traderId" label="交易者id" align="center" width="120" />
+                <el-table-column prop="traderType" label="交易者类型" align="center" width="120" />
+                <el-table-column prop="sourceType" label="交易类型" align="center" width="120">
+                    <template scope="scope">
+                        <div slot="reference">
+                            <el-tag size="medium">{{ scope.row.sourceType }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="amount" label="交易金额" align="center" width="220"/>
+                <el-table-column prop="balance" label="交易后余额" align="center" width="120"/>
+                <el-table-column prop="desc" label="描述" align="center" width="450"/>
+                <el-table-column prop="createdAt" label="交易时间" align="center" width="220"/>
+            </el-table>
+        </el-card>
     </div>
 </template>
 
@@ -193,11 +285,17 @@ import {
     getAreaList,
     getGuildList,
     getOnlineStatus,
-    getBlockStatus, getOccupationType, getAnchorLevel
+    getBlockStatus,
+    getOccupationType,
+    getAnchorLevel,
+    getAppName,
+    getCallType,
+    getHangType,
+    getTraderType, getSourceType
 } from "@/utils/dist";
 import videoList from '../audit/dialog/video-list'
 import photoList from '../audit/dialog/photo-list'
-import {toDate} from "@/utils/util";
+import {toDate, toTime} from "@/utils/util";
 
 export default {
     name: 'Table',
@@ -214,8 +312,13 @@ export default {
             },
             basic: {},
             total: 0,
+            isHiddenProfile: false,
+            isHiddenCall: true,
+            isHiddenOrder: true,
             activeIndex: '1',
             profilesTableData: {},
+            callTableData: {},
+            orderTableData: {},
             appList: getAppList(),
             areaList: getAreaList(true),
             guildList: getGuildList()
@@ -243,6 +346,8 @@ export default {
                 $this.handleBasic(result.getBasic())
                 $this.profilePage(result.getProfilesList())
             });
+            this.callPage()
+            this.orderPage()
         },
         handleBasic(basic){
             this.basic.id = basic.getId()
@@ -267,7 +372,7 @@ export default {
             this.basic.fansCount = basic.getFansCount()
             this.basic.liveIds = basic.getLiveIdsList()
             this.basic.offlineAt = basic.getOfflineAt()
-            this.basic.blockStatus = getBlockStatus(basic.getBlockStatus())
+            this.basic.blockStatus = getBlockStatus(false, basic.getBlockStatus())
             this.basic.onlineIp = basic.getOnlineIp()
             this.basic.longitude = basic.getLongitude()
             this.basic.latitude = basic.getLatitude()
@@ -314,6 +419,76 @@ export default {
             this.profilesTableData = profilesData
             this.listLoading = false
         },
+        callPage(){
+            const $this = this
+            let param = {
+                anchorId: this.search.id,
+                page:{
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            }
+            this.$service.call.getCallList(param, function (result){
+                const list = result.getCallsList();
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appList, item.getAppId()),
+                        "areaId" : item.getAreaId(),
+                        "areaStr" : getArrName($this.areaList, item.getAreaId()),
+                        "userId" : item.getUserId(),
+                        "anchorId" : item.getAnchorId(),
+                        "callType" : getCallType(item.getCallType()),
+                        "connectedAt" : toTime(item.getConnectedAt()),
+                        "hangAt" : toTime(item.getHangAt()),
+                        "duration" : item.getDuration(),
+                        "billDuration" : item.getBillDuration(),
+                        "expense": item.getExpense(),
+                        "hangType" : getHangType(item.getHangType()),
+                        "income" : item.getIncome(),
+                        "userScore": item.getUserScore(),
+                        "captureStatus": item.getCaptureStatus(),
+                        "captureDuration": item.getCaptureDuration()
+                    }
+                    data.push(json)
+                })
+                $this.callTableData = data
+
+            })
+        },
+        orderPage(){
+            const $this = this
+            let param = {
+                traderId: this.search.id,
+                page:{
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            }
+            this.$service.transaction.getTransactionList(param, function (result){
+                const list = result.getTransactionsList();
+                const data = []
+                list.forEach((item, index)=>{
+                    const json = {
+                        "id" : item.getId(),
+                        "appId" : item.getAppId(),
+                        "app" : getAppName($this.appList, item.getAppId()),
+                        "traderType" : getTraderType(item.getTraderType()),
+                        "traderId" : item.getTraderId(),
+                        "sourceType" : getSourceType(item.getSourceType()),
+                        "amount" : item.getAmount(),
+                        "balance" : item.getBalance(),
+                        "desc" : item.getDesc(),
+                        "createdAt" : toTime(item.getCreatedAt())
+                    }
+                    data.push(json)
+                })
+                $this.orderTableData = data
+                document.getElementsByName("orderId").forEach(item => item.setAttribute("orderId", "width='120'"))
+            })
+        },
         toDialog(component, row){
             this.$refs[component].dialogVisible = true
             this.$nextTick(()=>{
@@ -322,6 +497,27 @@ export default {
         },
         handleSelectionChange(val) {
             this.multipleSelection = val
+        },
+        selItem(key) {
+            switch (key){
+                case '1':
+                    this.hiddenAll()
+                    this.isHiddenProfile = false
+                    break;
+                case '2':
+                    this.hiddenAll()
+                    this.isHiddenCall = false
+                    break;
+                case '3':
+                    this.hiddenAll()
+                    this.isHiddenOrder = false
+                    break;
+            }
+        },
+        hiddenAll(){
+            this.isHiddenProfile = true
+            this.isHiddenCall = true
+            this.isHiddenOrder = true
         }
     }
 }

@@ -539,11 +539,8 @@ export function getOnlineStatus(key){
 
 
 // 违规场景
-export function getViolationScene(){
-    return [{
-        value: 0,
-        label: '全部'
-    },{
+export function getViolationScene(isShowAll, key){
+    let arr = [{
         value: 1,
         label: '视频通话'
     }, {
@@ -553,11 +550,32 @@ export function getViolationScene(){
         value: 3,
         label: '主播资料'
     }]
+
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        if(isShowAll){
+            arr.unshift({
+                value: 0,
+                label: '全部'
+            })
+        }
+        return arr
+    }
 }
 
 
 // 封禁类型
-export function getBlockStatus(key){
+export function getBlockStatus(isShowAll, key){
     let arr = [{
         value: 1,
         label: '不封禁'
@@ -581,6 +599,12 @@ export function getBlockStatus(key){
         })
         return label
     }else{
+        if(isShowAll){
+            arr.unshift({
+                value: 0,
+                label: '全部'
+            })
+        }
         return arr
     }
 }
@@ -612,6 +636,9 @@ export function getBlockTime(key){
     }, {
         value: 365 * 24 * 60 * 60,
         label: '1年'
+    }, {
+        value: 10 * 365 * 24 * 60 * 60,
+        label: '永久封禁'
     }]
 
     if(typeof(key) != "undefined"){
@@ -809,6 +836,44 @@ export function getActionType(isShowAll, key){
             value: 6,
             label: '发送礼物'
         }]
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        if(isShowAll){
+            arr.unshift({
+                value: 0,
+                label: '全部'
+            })
+        }
+        return arr
+    }
+}
+
+
+// 违规类型
+export function getViolationType(isShowAll, key){
+    let arr =  [{
+        value: 1,
+        label: '诈骗'
+    }, {
+        value: 2,
+        label: '色情'
+    }, {
+        value: 3,
+        label: '反动'
+    }, {
+        value: 4,
+        label: '其他'
+    }]
     if(typeof(key) != "undefined"){
         let label = ""
         if(key===0){
