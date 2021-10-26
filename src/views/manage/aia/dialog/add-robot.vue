@@ -265,7 +265,7 @@ export default {
             const formData = new FormData()
             formData.append('file', file)
             axios({
-                url: 'http://101.33.118.232:8101/file/upload',
+                url: process.env.VUE_APP_UPLOAD_URI,
                 method: 'post',
                 data: formData,
                 headers: headers

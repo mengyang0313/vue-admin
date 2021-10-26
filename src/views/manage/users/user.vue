@@ -10,7 +10,7 @@
                 class="search-form"
             >
                 <el-form-item label="用户Id" prop="userId">
-                    <el-input v-model="search.userId" placeholder="用户Id"/>
+                    <el-input v-model="search.userId" type="number" placeholder="用户Id"/>
                 </el-form-item>
                 <el-form-item label="用户名" prop="nickname">
                     <el-input v-model="search.nickname" placeholder="用户名"/>
@@ -52,7 +52,7 @@
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="钻石余额" prop="minBalance">
-                                <el-input placeholder="请输入余额" v-model="search.minBalance">
+                                <el-input placeholder="请输入余额" v-model="search.minBalance" type="number">
                                     <template slot="prepend">大于</template>
                                 </el-input>
                             </el-form-item>

@@ -136,8 +136,8 @@ export default class {
         req.setAreaId(param.areaId)
         req.setAnchorId(param.anchorId)
         req.setStatus(param.reviewStatus)
-        req.setCreatedStart(param.createdStart)
-        req.setCreatedEnd(param.createdEnd)
+        req.setCreatedStart(param.createdStartUint)
+        req.setCreatedEnd(param.createdEndUint)
 
         const metadata = {'token': getToken()};
         this.client.getLiveList(req, metadata, (err, resp) => {

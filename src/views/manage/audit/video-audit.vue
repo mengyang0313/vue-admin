@@ -36,6 +36,15 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+<!--                <el-form-item label="创建时间" prop="createdStart">-->
+<!--                    <el-date-picker-->
+<!--                        v-model="search.date"-->
+<!--                        type="daterange"-->
+<!--                        range-separator="至"-->
+<!--                        start-placeholder="开始日期"-->
+<!--                        end-placeholder="结束日期">-->
+<!--                    </el-date-picker>-->
+<!--                </el-form-item>-->
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
@@ -97,7 +106,7 @@
 import Pagination from '../../../components/Pagination'
 import {getAppList, getAppName, getAreaList, getArrName, getCurrentUserAreaId, getReviewStatus} from "@/utils/dist"
 import videoList from './dialog/anchor-video-list'
-import {toTime} from "@/utils/util"
+import {endUnix, startUnix, toTime} from "@/utils/util"
 import VueVideoPlayer from '../../../components/VueVideoPlayer'
 
 export default {
@@ -111,6 +120,7 @@ export default {
             search: {
                 areaId: undefined,
                 reviewStatus: 2,
+                date: [],
                 page: {
                     currentPage: 1,
                     pageSize: 10
@@ -136,7 +146,7 @@ export default {
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.audit.getLiveList(this.search, function (result){
+            this.$service.audit.getLiveList(this.handleParam(), function (result){
                 const list = result.getRecordsList()
                 const data = []
                 list.forEach((item, index)=>{
@@ -160,6 +170,14 @@ export default {
                 $this.tableData = data
                 $this.listLoading = false
             });
+        },
+        handleParam(){
+            let param = this.search;
+            if (param.date.length > 0){
+                param.createdStartUint = startUnix(this.search.date[0])
+                param.createdEndUint = endUnix(this.search.date[1])
+            }
+            return param
         },
         // 查询数据
         onSubmit() {

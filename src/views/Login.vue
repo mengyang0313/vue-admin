@@ -43,8 +43,8 @@ export default {
             listLoading: false,
             Background,
             loginForm: {
-                email: 'superadmin',
-                password: '123456',
+                email: '',
+                password: '',
                 rememberMe: true
             },
             loginRules: {

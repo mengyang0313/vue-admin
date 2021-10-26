@@ -24,7 +24,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="机器人ID" prop="robotId">
-                        <el-input v-model="search.robotId" placeholder="机器人主播ID"/>
+                        <el-input v-model="search.robotId" type="number" placeholder="机器人主播ID"/>
                     </el-form-item>
                     <el-form-item label="状态" prop="enable">
                         <el-switch v-model="search.enable"/>

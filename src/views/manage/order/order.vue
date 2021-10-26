@@ -10,10 +10,10 @@
                 class="search-form"
             >
                 <el-form-item label="用户ID" prop="userId">
-                    <el-input v-model="search.userId" placeholder="用户ID"/>
+                    <el-input v-model="search.userId" type="number" placeholder="用户ID"/>
                 </el-form-item>
                 <el-form-item label="订单号" prop="recordId">
-                    <el-input v-model="search.recordId" placeholder="订单号"/>
+                    <el-input v-model="search.recordId" type="number" placeholder="订单号"/>
                 </el-form-item>
                 <el-form-item label="订单状态" prop="payStatus">
                     <el-select v-model="search.payStatus" placeholder="请选择">
@@ -24,6 +24,9 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="是否订阅">
+                    <el-switch v-model="search.isSubscription"/>
+                </el-form-item>
                 <el-form-item style="padding-left: 20px">
                     <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
                 </el-form-item>
@@ -33,21 +36,8 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
-                            <el-form-item label="交易时间" prop="createdStart">
-                                <el-date-picker
-                                    v-model="search.date"
-                                    type="daterange"
-                                    range-separator="至"
-                                    start-placeholder="开始日期"
-                                    end-placeholder="结束日期">
-                                </el-date-picker>
-<!--                                <el-col :span="11">-->
-<!--                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
-<!--                                </el-col>-->
-<!--                                <el-col class="line" :span="1" align="center">-</el-col>-->
-<!--                                <el-col :span="10">-->
-<!--                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
-<!--                                </el-col>-->
+                            <el-form-item label="渠道订单号" prop="payChannel">
+                                <el-input v-model="search.payChannel" placeholder="渠道订单号"/>
                             </el-form-item>
                             <el-form-item label="区域" prop="areaId">
                                 <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
@@ -73,6 +63,15 @@
                                         </span>
                                     </el-option>
                                 </el-select>
+                            </el-form-item>
+                            <el-form-item label="交易时间" prop="createdStart">
+                                <el-date-picker
+                                    v-model="search.date"
+                                    type="daterange"
+                                    range-separator="至"
+                                    start-placeholder="开始日期"
+                                    end-placeholder="结束日期">
+                                </el-date-picker>
                             </el-form-item>
 
                         </div>
@@ -123,7 +122,7 @@
                 <el-table-column prop="payPrice" label="本地价格" align="center" width="150"/>
                 <el-table-column prop="queryAt" label="查询支付状态时间" align="center" width="180"/>
                 <el-table-column prop="createdAt" label="创建时间" align="center" width="170"/>
-                <el-table-column prop="isSubscription" label="是否为订阅" align="center" width="120">
+                <el-table-column prop="isSubscription" label="是否订阅" align="center" width="120">
                     <template slot-scope="scope">
                         <el-switch v-model="scope.row.isSubscription" disabled/>
                     </template>

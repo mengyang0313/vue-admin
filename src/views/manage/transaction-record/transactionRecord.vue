@@ -10,7 +10,7 @@
                 class="search-form"
             >
                 <el-form-item label="交易者id">
-                    <el-input v-model="search.traderId" placeholder="交易者id"/>
+                    <el-input v-model="search.traderId" type="number" placeholder="交易者id"/>
                 </el-form-item>
                 <el-form-item label="交易者类型">
                     <el-select v-model="search.traderType" placeholder="请选择">

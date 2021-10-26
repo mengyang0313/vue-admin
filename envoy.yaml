@@ -15,6 +15,11 @@ static_resources:
                             "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
                             codec_type: auto
                             stat_prefix: ingress_http
+                            access_log:
+                                -   name: envoy.access_loggers.file
+                                    typed_config:
+                                        "@type": type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog
+                                        path: /dev/stdout
                             route_config:
                                 name: local_route
                                 virtual_hosts:
@@ -44,6 +49,11 @@ static_resources:
                                 "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
                                 codec_type: auto
                                 stat_prefix: ingress_http
+                                access_log:
+                                    -   name: envoy.access_loggers.file
+                                        typed_config:
+                                            "@type": type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog
+                                            path: /dev/stdout
                                 route_config:
                                     name: local_route_prod
                                     virtual_hosts:
@@ -64,6 +74,7 @@ static_resources:
                                     -   name: envoy.filters.http.grpc_web
                                     -   name: envoy.filters.http.cors
                                     -   name: envoy.filters.http.router
+
     clusters:
         -   name: cms_service
             connect_timeout: 0.25s
@@ -97,6 +108,6 @@ static_resources:
                             -   endpoint:
                                     address:
                                         socket_address:
-                                            address: 13.213.152.35
+                                            address: 13.214.29.185
                                             port_value: 8100
 

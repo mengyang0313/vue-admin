@@ -15,7 +15,7 @@
                 class="search-form"
             >
                 <el-form-item label="主播Id" prop="anchorId">
-                    <el-input v-model="search.anchorId" placeholder="主播Id"/>
+                    <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="工会" prop="guildId">
                     <el-select v-model="search.guildId" filterable placeholder="请选择">

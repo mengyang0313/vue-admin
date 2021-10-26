@@ -1,5 +1,6 @@
 import { getToken } from '@/utils/cookie'
 import { error } from '@/utils/error'
+import {Message} from "element-ui";
 
 export default class {
     constructor (deps) {
@@ -18,6 +19,7 @@ export default class {
         req.setUserId(param.userId)
         req.setRecordId(param.recordId)
         req.setStatus(param.payStatus)
+        //req.setIsSubscription(param.isSubscription)
         req.setCreatedStart(param.createdStartUint)
         req.setCreatedEnd(param.createdEndUint)
 

@@ -11,7 +11,7 @@
             >
                 <template>
                     <el-form-item label="主播Id">
-                        <el-input v-model="search.anchorId" placeholder="主播Id"/>
+                        <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
                     </el-form-item>
                     <el-form-item label="主播等级">
                         <el-select v-model="search.level" placeholder="请选择">

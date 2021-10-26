@@ -71,6 +71,14 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
+                    <ChartsBarLine :data="subscriptionData" :key="subscriptionKey" class="data-chart"/>
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <el-row class="date-box" :gutter="30">
+            <el-col :span="24">
+                <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
                     <ChartsBarLine :data="totalDate" :key="totalKey" class="data-chart"/>
                 </el-card>
             </el-col>
@@ -132,10 +140,17 @@ export default {
             totalKey: 40,
             activeKey: 60,
             channelKey: 80,
+            subscriptionKey: 100,
             incomeData: {
                 title: '新增收入',
                 name: '',
                 legend: ['新增收入'],
+                data: []
+            },
+            subscriptionData: {
+                title: '订阅收入',
+                name: '',
+                legend: ['订阅收入'],
                 data: []
             },
             totalDate: {

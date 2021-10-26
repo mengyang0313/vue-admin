@@ -52,7 +52,7 @@
                         </template>
                         <div>
                             <el-form-item label="主播ID" prop="anchorId">
-                                <el-input v-model="search.anchorId" placeholder="主播ID"/>
+                                <el-input v-model="search.anchorId" type="number" placeholder="主播ID"/>
                             </el-form-item>
                             <el-form-item label="结算状态" prop="status">
                                 <el-select v-model="search.status" placeholder="请选择">

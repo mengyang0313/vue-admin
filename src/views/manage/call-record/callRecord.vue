@@ -10,10 +10,10 @@
                 class="search-form"
             >
                 <el-form-item label="用户id" prop="userId">
-                    <el-input v-model="search.userId" placeholder="用户id"/>
+                    <el-input v-model="search.userId" type="number" placeholder="用户id"/>
                 </el-form-item>
                 <el-form-item label="主播id" prop="anchorId">
-                    <el-input v-model="search.anchorId" placeholder="主播id"/>
+                    <el-input v-model="search.anchorId" type="number" placeholder="主播id"/>
                 </el-form-item>
                 <el-form-item label="区域" prop="areaId">
                     <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
@@ -97,10 +97,10 @@
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="最小时长" prop="minDuration">
-                                <el-input v-model="search.minDuration" placeholder="最小时长"/>
+                                <el-input v-model="search.minDuration" type="number" placeholder="最小时长"/>
                             </el-form-item>
                             <el-form-item label="最大时长" prop="maxDuration">
-                                <el-input v-model="search.maxDuration" placeholder="最大时长"/>
+                                <el-input v-model="search.maxDuration"  type="number"placeholder="最大时长"/>
                             </el-form-item>
                         </div>
                     </el-collapse-item>

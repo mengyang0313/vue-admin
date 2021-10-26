@@ -11,10 +11,10 @@
             >
                 <template>
                     <el-form-item label="举报方Id" prop="reporterId">
-                        <el-input v-model="search.reporterId" placeholder="举报方Id"/>
+                        <el-input v-model="search.reporterId" type="number" placeholder="举报方Id"/>
                     </el-form-item>
                     <el-form-item label="被举报方Id" prop="reportedId">
-                        <el-input v-model="search.reportedId" placeholder="被举报方Id"/>
+                        <el-input v-model="search.reportedId" type="number" placeholder="被举报方Id"/>
                     </el-form-item>
                     <el-form-item label="举报方类型" prop="reportedType">
                         <el-select v-model="search.reportedType" placeholder="请选择">

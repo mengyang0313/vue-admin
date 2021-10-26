@@ -1,6 +1,7 @@
 import {Empty} from "@/proto/js/usertype_pb";
 import {getToken, removeToken} from "@/utils/cookie";
 import {cmsService} from "@/grpc/server";
+import { Message } from 'element-ui';
 
 // grpc预定义了一套通用错误码 https://grpc.github.io/grpc/core/md_doc_statuscodes.html
 // 程序使用了其中的部分错误码，这个错误码直接通过捕获rpc的异常或者返回值获取，使用的错误码如下
@@ -18,8 +19,12 @@ import {cmsService} from "@/grpc/server";
 
 
 export function error(err) {
+
     if(16 == err.code){
+        Message.success("未登录!!!")
         loginOut()
+    }else{
+        Message.success("内部错误!!!")
     }
     console.log(err)
 }

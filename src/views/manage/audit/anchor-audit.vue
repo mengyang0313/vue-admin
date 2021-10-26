@@ -10,7 +10,7 @@
                 class="search-form"
             >
                 <el-form-item label="主播Id" prop="anchorId">
-                    <el-input v-model="search.anchorId" placeholder="主播Id"/>
+                    <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
                 </el-form-item>
                 <el-form-item label="区域">
                     <el-select v-model="search.areaId" placeholder="请选择" :disabled="authAreaId !== 0" @change="changeArea">

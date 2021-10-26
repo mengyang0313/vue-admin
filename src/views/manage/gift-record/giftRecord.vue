@@ -36,7 +36,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="用户Id">
-                    <el-input v-model="search.userId" placeholder="用户Id"/>
+                    <el-input v-model="search.userId" type="number" placeholder="用户Id"/>
                 </el-form-item>
                 <el-form-item style="padding-left: 20px">
                     <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
@@ -48,7 +48,7 @@
                         </template>
                         <div>
                             <el-form-item label="主播Id">
-                                <el-input v-model="search.anchorId" placeholder="主播Id"/>
+                                <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
                             </el-form-item>
                             <el-form-item label="发送时间">
                                 <el-date-picker
