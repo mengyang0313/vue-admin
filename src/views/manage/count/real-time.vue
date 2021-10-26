@@ -118,7 +118,7 @@ export default {
             areaList: getAreaList(false),
             userData: {
                 title: '实时用户',
-                legend: ['在线用户', '新用户', '付费用户', '空闲主播', '通话主播'],
+                legend: ['在线用户', '新用户', '可通话用户', '空闲主播', '通话主播'],
                 keys: [],
                 values: []
             },
@@ -189,7 +189,7 @@ export default {
             let values = []
             let onlineUser = []
             let newUser = []
-            let payUser = []
+            let validUser = []
             let idleAnchor = []
             let busyAnchor = []
             let len = statList.length
@@ -198,14 +198,14 @@ export default {
                 keys.push(new Date(startAt * 1000).format(this.fmt))
                 onlineUser.push(item.getOnlineUser())
                 newUser.push(item.getNewUser())
-                payUser.push(item.getPayUser())
+                validUser.push(item.getValidUser())
                 idleAnchor.push(item.getIdleAnchor())
                 busyAnchor.push(item.getBusyAnchor())
             })
 
             values.push(onlineUser)
             values.push(newUser)
-            values.push(payUser)
+            values.push(validUser)
             values.push(idleAnchor)
             values.push(busyAnchor)
 

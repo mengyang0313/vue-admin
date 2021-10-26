@@ -7,8 +7,8 @@
                         <div class="date-cont">
                             <div v-if="item.num === 3" style="display: inline">
                                 <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="1000"/>{{ item.unit }}
                             </div>
                             <div v-else-if="item.num === 2" style="display: inline">
                                 <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000" :decimals="item.decimals"/>
@@ -71,7 +71,7 @@
         <el-row class="date-box" :gutter="30">
             <el-col :span="24">
                 <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
-                    <ChartsBarLine :data="subscriptionData" :key="subscriptionKey" class="data-chart"/>
+                    <ChartsBarLine :data="subData" :key="subKey" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
@@ -140,14 +140,14 @@ export default {
             totalKey: 40,
             activeKey: 60,
             channelKey: 80,
-            subscriptionKey: 100,
+            subKey: 100,
             incomeData: {
                 title: '新增收入',
                 name: '',
                 legend: ['新增收入'],
                 data: []
             },
-            subscriptionData: {
+            subData: {
                 title: '订阅收入',
                 name: '',
                 legend: ['订阅收入'],
@@ -200,10 +200,10 @@ export default {
                     income_decimals = 2
                 }
                 let inc = {
-                    title: '大盘实时收入/订单数', num: 2, count: income, count2: result.getPayCount(), decimals: income_decimals
+                    title: '总收入/订阅收入/订单数', num: 3, count: income, count2: result.getSubIncome(), count3: result.getPayCount(), decimals: income_decimals
                 }
                 let user = {
-                    title: '新增/活跃用户', num: 2, count: result.getNewUser(), count2: result.getActiveUser(), decimals: 0
+                    title: '新增/可通话/活跃用户', num: 3, count: result.getNewUser(), count2: result.getValidUser(), count3: result.getActiveUser(), decimals: 0
                 }
                 let anchor = {
                     title: '通话/在线主播', num: 2, count: result.getBusyAnchor(), count2: result.getOnlineAnchor(), decimals: 0
@@ -230,6 +230,7 @@ export default {
                 let statList = result.getStatsList()
 
                 let newArr = []
+                let subArr = []
                 let totalArr = []
                 let userArr = []
                 let channelArr = []
@@ -242,6 +243,13 @@ export default {
                         newArr.push({
                             title: title,
                             val1: toDollar(item.getNewIncome())
+                        })
+                    }
+
+                    if(item.getSubIncome() > 0){
+                        subArr.push({
+                            title: title,
+                            val1: toDollar(item.getSubIncome())
                         })
                     }
 
@@ -279,6 +287,14 @@ export default {
                     return y.val1 - x.val1;
                 })
                 ++$this.newUserKey
+
+
+                // 订阅收入
+                $this.subData.name = "总计:" + $this.countTotal(subArr, 'val1')
+                $this.subData.data = subArr.sort(function(x,y){
+                    return y.val1 - x.val1;
+                })
+                ++$this.subKey
 
                 // 新增收入
                 $this.incomeData.name = "总计:" + $this.countTotal(newArr, 'val1')

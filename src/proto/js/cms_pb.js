@@ -2434,17 +2434,19 @@ proto.pb.cms.OverviewReply.prototype.toObject = function(opt_includeInstance) {
 proto.pb.cms.OverviewReply.toObject = function(includeInstance, msg) {
   var f, obj = {
     income: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    payCount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    newUser: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    activeUser: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    busyAnchor: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    onlineAnchor: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    reviewAnchor: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    reviewProfile: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    reviewVideo: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    newAmount: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    expenseAmount: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    totalAmount: jspb.Message.getFieldWithDefault(msg, 12, 0)
+    subIncome: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    payCount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    newUser: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    validUser: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    activeUser: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    busyAnchor: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    onlineAnchor: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    reviewAnchor: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    reviewProfile: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    reviewVideo: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    newAmount: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    expenseAmount: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    totalAmount: jspb.Message.getFieldWithDefault(msg, 14, 0)
   };
 
   if (includeInstance) {
@@ -2487,45 +2489,53 @@ proto.pb.cms.OverviewReply.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setPayCount(value);
+      msg.setSubIncome(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewUser(value);
+      msg.setPayCount(value);
       break;
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setActiveUser(value);
+      msg.setNewUser(value);
       break;
     case 5:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setBusyAnchor(value);
+      msg.setValidUser(value);
       break;
     case 6:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setOnlineAnchor(value);
+      msg.setActiveUser(value);
       break;
     case 7:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setReviewAnchor(value);
+      msg.setBusyAnchor(value);
       break;
     case 8:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setReviewProfile(value);
+      msg.setOnlineAnchor(value);
       break;
     case 9:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setReviewVideo(value);
+      msg.setReviewAnchor(value);
       break;
     case 10:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setReviewProfile(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setReviewVideo(value);
+      break;
+    case 12:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setNewAmount(value);
       break;
-    case 11:
+    case 13:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setExpenseAmount(value);
       break;
-    case 12:
+    case 14:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setTotalAmount(value);
       break;
@@ -2565,80 +2575,94 @@ proto.pb.cms.OverviewReply.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getPayCount();
+  f = message.getSubIncome();
   if (f !== 0) {
     writer.writeUint32(
       2,
       f
     );
   }
-  f = message.getNewUser();
+  f = message.getPayCount();
   if (f !== 0) {
     writer.writeUint32(
       3,
       f
     );
   }
-  f = message.getActiveUser();
+  f = message.getNewUser();
   if (f !== 0) {
     writer.writeUint32(
       4,
       f
     );
   }
-  f = message.getBusyAnchor();
+  f = message.getValidUser();
   if (f !== 0) {
     writer.writeUint32(
       5,
       f
     );
   }
-  f = message.getOnlineAnchor();
+  f = message.getActiveUser();
   if (f !== 0) {
     writer.writeUint32(
       6,
       f
     );
   }
-  f = message.getReviewAnchor();
+  f = message.getBusyAnchor();
   if (f !== 0) {
     writer.writeUint32(
       7,
       f
     );
   }
-  f = message.getReviewProfile();
+  f = message.getOnlineAnchor();
   if (f !== 0) {
     writer.writeUint32(
       8,
       f
     );
   }
-  f = message.getReviewVideo();
+  f = message.getReviewAnchor();
   if (f !== 0) {
     writer.writeUint32(
       9,
       f
     );
   }
+  f = message.getReviewProfile();
+  if (f !== 0) {
+    writer.writeUint32(
+      10,
+      f
+    );
+  }
+  f = message.getReviewVideo();
+  if (f !== 0) {
+    writer.writeUint32(
+      11,
+      f
+    );
+  }
   f = message.getNewAmount();
   if (f !== 0) {
     writer.writeUint64(
-      10,
+      12,
       f
     );
   }
   f = message.getExpenseAmount();
   if (f !== 0) {
     writer.writeUint64(
-      11,
+      13,
       f
     );
   }
   f = message.getTotalAmount();
   if (f !== 0) {
     writer.writeUint64(
-      12,
+      14,
       f
     );
   }
@@ -2664,10 +2688,10 @@ proto.pb.cms.OverviewReply.prototype.setIncome = function(value) {
 
 
 /**
- * optional uint32 pay_count = 2;
+ * optional uint32 sub_income = 2;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getPayCount = function() {
+proto.pb.cms.OverviewReply.prototype.getSubIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -2676,16 +2700,16 @@ proto.pb.cms.OverviewReply.prototype.getPayCount = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setPayCount = function(value) {
+proto.pb.cms.OverviewReply.prototype.setSubIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * optional uint32 new_user = 3;
+ * optional uint32 pay_count = 3;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getNewUser = function() {
+proto.pb.cms.OverviewReply.prototype.getPayCount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -2694,16 +2718,16 @@ proto.pb.cms.OverviewReply.prototype.getNewUser = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setNewUser = function(value) {
+proto.pb.cms.OverviewReply.prototype.setPayCount = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
- * optional uint32 active_user = 4;
+ * optional uint32 new_user = 4;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getActiveUser = function() {
+proto.pb.cms.OverviewReply.prototype.getNewUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -2712,16 +2736,16 @@ proto.pb.cms.OverviewReply.prototype.getActiveUser = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setActiveUser = function(value) {
+proto.pb.cms.OverviewReply.prototype.setNewUser = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional uint32 busy_anchor = 5;
+ * optional uint32 valid_user = 5;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getBusyAnchor = function() {
+proto.pb.cms.OverviewReply.prototype.getValidUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -2730,16 +2754,16 @@ proto.pb.cms.OverviewReply.prototype.getBusyAnchor = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setBusyAnchor = function(value) {
+proto.pb.cms.OverviewReply.prototype.setValidUser = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
- * optional uint32 online_anchor = 6;
+ * optional uint32 active_user = 6;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getOnlineAnchor = function() {
+proto.pb.cms.OverviewReply.prototype.getActiveUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
@@ -2748,16 +2772,16 @@ proto.pb.cms.OverviewReply.prototype.getOnlineAnchor = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setOnlineAnchor = function(value) {
+proto.pb.cms.OverviewReply.prototype.setActiveUser = function(value) {
   return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
 /**
- * optional uint32 review_anchor = 7;
+ * optional uint32 busy_anchor = 7;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getReviewAnchor = function() {
+proto.pb.cms.OverviewReply.prototype.getBusyAnchor = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
@@ -2766,16 +2790,16 @@ proto.pb.cms.OverviewReply.prototype.getReviewAnchor = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setReviewAnchor = function(value) {
+proto.pb.cms.OverviewReply.prototype.setBusyAnchor = function(value) {
   return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
- * optional uint32 review_profile = 8;
+ * optional uint32 online_anchor = 8;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getReviewProfile = function() {
+proto.pb.cms.OverviewReply.prototype.getOnlineAnchor = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
@@ -2784,16 +2808,16 @@ proto.pb.cms.OverviewReply.prototype.getReviewProfile = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setReviewProfile = function(value) {
+proto.pb.cms.OverviewReply.prototype.setOnlineAnchor = function(value) {
   return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
 /**
- * optional uint32 review_video = 9;
+ * optional uint32 review_anchor = 9;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getReviewVideo = function() {
+proto.pb.cms.OverviewReply.prototype.getReviewAnchor = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
 };
 
@@ -2802,16 +2826,16 @@ proto.pb.cms.OverviewReply.prototype.getReviewVideo = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setReviewVideo = function(value) {
+proto.pb.cms.OverviewReply.prototype.setReviewAnchor = function(value) {
   return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
 /**
- * optional uint64 new_amount = 10;
+ * optional uint32 review_profile = 10;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getNewAmount = function() {
+proto.pb.cms.OverviewReply.prototype.getReviewProfile = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
 };
 
@@ -2820,16 +2844,16 @@ proto.pb.cms.OverviewReply.prototype.getNewAmount = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setNewAmount = function(value) {
+proto.pb.cms.OverviewReply.prototype.setReviewProfile = function(value) {
   return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
 /**
- * optional uint64 expense_amount = 11;
+ * optional uint32 review_video = 11;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getExpenseAmount = function() {
+proto.pb.cms.OverviewReply.prototype.getReviewVideo = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
@@ -2838,16 +2862,16 @@ proto.pb.cms.OverviewReply.prototype.getExpenseAmount = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setExpenseAmount = function(value) {
+proto.pb.cms.OverviewReply.prototype.setReviewVideo = function(value) {
   return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
 /**
- * optional uint64 total_amount = 12;
+ * optional uint64 new_amount = 12;
  * @return {number}
  */
-proto.pb.cms.OverviewReply.prototype.getTotalAmount = function() {
+proto.pb.cms.OverviewReply.prototype.getNewAmount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
@@ -2856,8 +2880,44 @@ proto.pb.cms.OverviewReply.prototype.getTotalAmount = function() {
  * @param {number} value
  * @return {!proto.pb.cms.OverviewReply} returns this
  */
-proto.pb.cms.OverviewReply.prototype.setTotalAmount = function(value) {
+proto.pb.cms.OverviewReply.prototype.setNewAmount = function(value) {
   return jspb.Message.setProto3IntField(this, 12, value);
+};
+
+
+/**
+ * optional uint64 expense_amount = 13;
+ * @return {number}
+ */
+proto.pb.cms.OverviewReply.prototype.getExpenseAmount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.cms.OverviewReply} returns this
+ */
+proto.pb.cms.OverviewReply.prototype.setExpenseAmount = function(value) {
+  return jspb.Message.setProto3IntField(this, 13, value);
+};
+
+
+/**
+ * optional uint64 total_amount = 14;
+ * @return {number}
+ */
+proto.pb.cms.OverviewReply.prototype.getTotalAmount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.cms.OverviewReply} returns this
+ */
+proto.pb.cms.OverviewReply.prototype.setTotalAmount = function(value) {
+  return jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
@@ -3086,10 +3146,11 @@ proto.pb.cms.AppStat.toObject = function(includeInstance, msg) {
     appId: jspb.Message.getFieldWithDefault(msg, 1, 0),
     newIncome: jspb.Message.getFieldWithDefault(msg, 2, 0),
     totalIncome: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    newUser: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    googleIncome: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    appleIncome: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    otherIncome: jspb.Message.getFieldWithDefault(msg, 7, 0)
+    subIncome: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    newUser: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    googleIncome: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    appleIncome: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    otherIncome: jspb.Message.getFieldWithDefault(msg, 8, 0)
   };
 
   if (includeInstance) {
@@ -3140,17 +3201,21 @@ proto.pb.cms.AppStat.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewUser(value);
+      msg.setSubIncome(value);
       break;
     case 5:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setGoogleIncome(value);
+      msg.setNewUser(value);
       break;
     case 6:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAppleIncome(value);
+      msg.setGoogleIncome(value);
       break;
     case 7:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAppleIncome(value);
+      break;
+    case 8:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setOtherIncome(value);
       break;
@@ -3204,31 +3269,38 @@ proto.pb.cms.AppStat.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getNewUser();
+  f = message.getSubIncome();
   if (f !== 0) {
     writer.writeUint32(
       4,
       f
     );
   }
-  f = message.getGoogleIncome();
+  f = message.getNewUser();
   if (f !== 0) {
     writer.writeUint32(
       5,
       f
     );
   }
-  f = message.getAppleIncome();
+  f = message.getGoogleIncome();
   if (f !== 0) {
     writer.writeUint32(
       6,
       f
     );
   }
-  f = message.getOtherIncome();
+  f = message.getAppleIncome();
   if (f !== 0) {
     writer.writeUint32(
       7,
+      f
+    );
+  }
+  f = message.getOtherIncome();
+  if (f !== 0) {
+    writer.writeUint32(
+      8,
       f
     );
   }
@@ -3290,10 +3362,10 @@ proto.pb.cms.AppStat.prototype.setTotalIncome = function(value) {
 
 
 /**
- * optional uint32 new_user = 4;
+ * optional uint32 sub_income = 4;
  * @return {number}
  */
-proto.pb.cms.AppStat.prototype.getNewUser = function() {
+proto.pb.cms.AppStat.prototype.getSubIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -3302,16 +3374,16 @@ proto.pb.cms.AppStat.prototype.getNewUser = function() {
  * @param {number} value
  * @return {!proto.pb.cms.AppStat} returns this
  */
-proto.pb.cms.AppStat.prototype.setNewUser = function(value) {
+proto.pb.cms.AppStat.prototype.setSubIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional uint32 google_income = 5;
+ * optional uint32 new_user = 5;
  * @return {number}
  */
-proto.pb.cms.AppStat.prototype.getGoogleIncome = function() {
+proto.pb.cms.AppStat.prototype.getNewUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -3320,16 +3392,16 @@ proto.pb.cms.AppStat.prototype.getGoogleIncome = function() {
  * @param {number} value
  * @return {!proto.pb.cms.AppStat} returns this
  */
-proto.pb.cms.AppStat.prototype.setGoogleIncome = function(value) {
+proto.pb.cms.AppStat.prototype.setNewUser = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
- * optional uint32 apple_income = 6;
+ * optional uint32 google_income = 6;
  * @return {number}
  */
-proto.pb.cms.AppStat.prototype.getAppleIncome = function() {
+proto.pb.cms.AppStat.prototype.getGoogleIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
@@ -3338,16 +3410,16 @@ proto.pb.cms.AppStat.prototype.getAppleIncome = function() {
  * @param {number} value
  * @return {!proto.pb.cms.AppStat} returns this
  */
-proto.pb.cms.AppStat.prototype.setAppleIncome = function(value) {
+proto.pb.cms.AppStat.prototype.setGoogleIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
 /**
- * optional uint32 other_income = 7;
+ * optional uint32 apple_income = 7;
  * @return {number}
  */
-proto.pb.cms.AppStat.prototype.getOtherIncome = function() {
+proto.pb.cms.AppStat.prototype.getAppleIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
@@ -3356,8 +3428,26 @@ proto.pb.cms.AppStat.prototype.getOtherIncome = function() {
  * @param {number} value
  * @return {!proto.pb.cms.AppStat} returns this
  */
-proto.pb.cms.AppStat.prototype.setOtherIncome = function(value) {
+proto.pb.cms.AppStat.prototype.setAppleIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 7, value);
+};
+
+
+/**
+ * optional uint32 other_income = 8;
+ * @return {number}
+ */
+proto.pb.cms.AppStat.prototype.getOtherIncome = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.cms.AppStat} returns this
+ */
+proto.pb.cms.AppStat.prototype.setOtherIncome = function(value) {
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 

@@ -65,13 +65,6 @@
                                     start-placeholder="开始日期"
                                     end-placeholder="结束日期">
                                 </el-date-picker>
-<!--                                <el-col :span="11">-->
-<!--                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
-<!--                                </el-col>-->
-<!--                                <el-col class="line" :span="1" align="center">-</el-col>-->
-<!--                                <el-col :span="10">-->
-<!--                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
-<!--                                </el-col>-->
                             </el-form-item>
                         </div>
                     </el-collapse-item>

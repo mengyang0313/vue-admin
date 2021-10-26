@@ -159,6 +159,10 @@ service CmsSdk {
     rpc SaveMoment (Moment) returns (Moment) {
     }
 
+    // 删除朋友圈
+    rpc DeleteMoment (Moment) returns (Empty) {
+    }
+
     // 获取自动消息列表，AIB消息
     rpc GetAutoMessageList (AutoMessageListRequest) returns (AutoMessageListReply) {
     }
@@ -306,28 +310,32 @@ message OverviewRequest {
 message OverviewReply {
     // 总收入
     uint32 income = 1;
+    // 订阅收入
+    uint32 sub_income = 2;
     // 总订单数
-    uint32 pay_count = 2;
+    uint32 pay_count = 3;
     // 新增用户
-    uint32 new_user = 3;
+    uint32 new_user = 4;
+    // 可通话用户，在线且余额足够
+    uint32 valid_user = 5;
     // 活跃用户
-    uint32 active_user = 4;
+    uint32 active_user = 6;
     // 通话主播
-    uint32 busy_anchor = 5;
+    uint32 busy_anchor = 7;
     // 在线主播
-    uint32 online_anchor = 6;
+    uint32 online_anchor = 8;
     // 待审核主播
-    uint32 review_anchor = 7;
+    uint32 review_anchor = 9;
     // 待审核profile
-    uint32 review_profile = 8;
+    uint32 review_profile = 10;
     // 待审核视频
-    uint32 review_video = 9;
+    uint32 review_video = 11;
     // 新充值钻石
-    uint64 new_amount = 10;
+    uint64 new_amount = 12;
     // 消费钻石
-    uint64 expense_amount = 11;
+    uint64 expense_amount = 13;
     // 总余额
-    uint64 total_amount = 12;
+    uint64 total_amount = 14;
 }
 
 message HomeStatRequest {
@@ -346,14 +354,16 @@ message AppStat {
     uint32 new_income = 2;
     // 总收入
     uint32 total_income = 3;
+    // 订阅收入
+    uint32 sub_income = 4;
     // 新增用户
-    uint32 new_user = 4;
+    uint32 new_user = 5;
     // google收入
-    uint32 google_income = 5;
+    uint32 google_income = 6;
     // 苹果收入
-    uint32 apple_income = 6;
+    uint32 apple_income = 7;
     // 其他收入
-    uint32 other_income = 7;
+    uint32 other_income = 8;
 }
 
 message HomeStatReply {

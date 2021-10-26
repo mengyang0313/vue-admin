@@ -3120,6 +3120,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveMoment =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.Moment,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_DeleteMoment = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/DeleteMoment',
+  grpc.web.MethodType.UNARY,
+  usertype_pb.Moment,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.Moment} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.Moment,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_DeleteMoment = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.Moment} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.Moment} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.deleteMoment =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteMoment',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteMoment,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.Moment} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.deleteMoment =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteMoment',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteMoment);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.AutoMessageListRequest,
  *   !proto.pb.cms.AutoMessageListReply>}
  */

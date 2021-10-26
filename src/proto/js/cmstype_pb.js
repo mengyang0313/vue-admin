@@ -8760,25 +8760,27 @@ proto.pb.AreaStat.toObject = function(includeInstance, msg) {
     statAt: jspb.Message.getFieldWithDefault(msg, 5, 0),
     activeUser: jspb.Message.getFieldWithDefault(msg, 6, 0),
     onlineUser: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    newUser: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    payUser: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    activeAnchor: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    idleAnchor: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    busyAnchor: jspb.Message.getFieldWithDefault(msg, 12, 0),
-    aiCalling: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    userCalling: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    anchorCalling: jspb.Message.getFieldWithDefault(msg, 15, 0),
-    aiCall: jspb.Message.getFieldWithDefault(msg, 16, 0),
-    userCall: jspb.Message.getFieldWithDefault(msg, 17, 0),
-    anchorCall: jspb.Message.getFieldWithDefault(msg, 18, 0),
-    userAnswer: jspb.Message.getFieldWithDefault(msg, 19, 0),
-    anchorAnswer: jspb.Message.getFieldWithDefault(msg, 20, 0),
-    deposit: jspb.Message.getFieldWithDefault(msg, 21, 0),
-    expense: jspb.Message.getFieldWithDefault(msg, 22, 0),
-    income: jspb.Message.getFieldWithDefault(msg, 23, 0),
-    googlePay: jspb.Message.getFieldWithDefault(msg, 24, 0),
-    applePay: jspb.Message.getFieldWithDefault(msg, 25, 0),
-    otherPay: jspb.Message.getFieldWithDefault(msg, 26, 0),
+    validUser: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    newUser: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    payUser: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    activeAnchor: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    idleAnchor: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    busyAnchor: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    aiCalling: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    userCalling: jspb.Message.getFieldWithDefault(msg, 15, 0),
+    anchorCalling: jspb.Message.getFieldWithDefault(msg, 16, 0),
+    aiCall: jspb.Message.getFieldWithDefault(msg, 17, 0),
+    userCall: jspb.Message.getFieldWithDefault(msg, 18, 0),
+    anchorCall: jspb.Message.getFieldWithDefault(msg, 19, 0),
+    userAnswer: jspb.Message.getFieldWithDefault(msg, 20, 0),
+    anchorAnswer: jspb.Message.getFieldWithDefault(msg, 21, 0),
+    deposit: jspb.Message.getFieldWithDefault(msg, 22, 0),
+    expense: jspb.Message.getFieldWithDefault(msg, 23, 0),
+    income: jspb.Message.getFieldWithDefault(msg, 24, 0),
+    subIncome: jspb.Message.getFieldWithDefault(msg, 25, 0),
+    googlePay: jspb.Message.getFieldWithDefault(msg, 26, 0),
+    applePay: jspb.Message.getFieldWithDefault(msg, 27, 0),
+    otherPay: jspb.Message.getFieldWithDefault(msg, 28, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 30, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 31, 0)
   };
@@ -8847,77 +8849,85 @@ proto.pb.AreaStat.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 8:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewUser(value);
+      msg.setValidUser(value);
       break;
     case 9:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setPayUser(value);
+      msg.setNewUser(value);
       break;
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setActiveAnchor(value);
+      msg.setPayUser(value);
       break;
     case 11:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setIdleAnchor(value);
+      msg.setActiveAnchor(value);
       break;
     case 12:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setBusyAnchor(value);
+      msg.setIdleAnchor(value);
       break;
     case 13:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAiCalling(value);
+      msg.setBusyAnchor(value);
       break;
     case 14:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setUserCalling(value);
+      msg.setAiCalling(value);
       break;
     case 15:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAnchorCalling(value);
+      msg.setUserCalling(value);
       break;
     case 16:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAiCall(value);
+      msg.setAnchorCalling(value);
       break;
     case 17:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setUserCall(value);
+      msg.setAiCall(value);
       break;
     case 18:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAnchorCall(value);
+      msg.setUserCall(value);
       break;
     case 19:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setUserAnswer(value);
+      msg.setAnchorCall(value);
       break;
     case 20:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAnchorAnswer(value);
+      msg.setUserAnswer(value);
       break;
     case 21:
-      var value = /** @type {number} */ (reader.readUint64());
-      msg.setDeposit(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAnchorAnswer(value);
       break;
     case 22:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setExpense(value);
+      msg.setDeposit(value);
       break;
     case 23:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setIncome(value);
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setExpense(value);
       break;
     case 24:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setGooglePay(value);
+      msg.setIncome(value);
       break;
     case 25:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setApplePay(value);
+      msg.setSubIncome(value);
       break;
     case 26:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setGooglePay(value);
+      break;
+    case 27:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setApplePay(value);
+      break;
+    case 28:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setOtherPay(value);
       break;
@@ -9007,136 +9017,150 @@ proto.pb.AreaStat.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getNewUser();
+  f = message.getValidUser();
   if (f !== 0) {
     writer.writeUint32(
       8,
       f
     );
   }
-  f = message.getPayUser();
+  f = message.getNewUser();
   if (f !== 0) {
     writer.writeUint32(
       9,
       f
     );
   }
-  f = message.getActiveAnchor();
+  f = message.getPayUser();
   if (f !== 0) {
     writer.writeUint32(
       10,
       f
     );
   }
-  f = message.getIdleAnchor();
+  f = message.getActiveAnchor();
   if (f !== 0) {
     writer.writeUint32(
       11,
       f
     );
   }
-  f = message.getBusyAnchor();
+  f = message.getIdleAnchor();
   if (f !== 0) {
     writer.writeUint32(
       12,
       f
     );
   }
-  f = message.getAiCalling();
+  f = message.getBusyAnchor();
   if (f !== 0) {
     writer.writeUint32(
       13,
       f
     );
   }
-  f = message.getUserCalling();
+  f = message.getAiCalling();
   if (f !== 0) {
     writer.writeUint32(
       14,
       f
     );
   }
-  f = message.getAnchorCalling();
+  f = message.getUserCalling();
   if (f !== 0) {
     writer.writeUint32(
       15,
       f
     );
   }
-  f = message.getAiCall();
+  f = message.getAnchorCalling();
   if (f !== 0) {
     writer.writeUint32(
       16,
       f
     );
   }
-  f = message.getUserCall();
+  f = message.getAiCall();
   if (f !== 0) {
     writer.writeUint32(
       17,
       f
     );
   }
-  f = message.getAnchorCall();
+  f = message.getUserCall();
   if (f !== 0) {
     writer.writeUint32(
       18,
       f
     );
   }
-  f = message.getUserAnswer();
+  f = message.getAnchorCall();
   if (f !== 0) {
     writer.writeUint32(
       19,
       f
     );
   }
-  f = message.getAnchorAnswer();
+  f = message.getUserAnswer();
   if (f !== 0) {
     writer.writeUint32(
       20,
       f
     );
   }
-  f = message.getDeposit();
+  f = message.getAnchorAnswer();
   if (f !== 0) {
-    writer.writeUint64(
+    writer.writeUint32(
       21,
       f
     );
   }
-  f = message.getExpense();
+  f = message.getDeposit();
   if (f !== 0) {
     writer.writeUint64(
       22,
       f
     );
   }
-  f = message.getIncome();
+  f = message.getExpense();
   if (f !== 0) {
-    writer.writeUint32(
+    writer.writeUint64(
       23,
       f
     );
   }
-  f = message.getGooglePay();
+  f = message.getIncome();
   if (f !== 0) {
     writer.writeUint32(
       24,
       f
     );
   }
-  f = message.getApplePay();
+  f = message.getSubIncome();
   if (f !== 0) {
     writer.writeUint32(
       25,
       f
     );
   }
-  f = message.getOtherPay();
+  f = message.getGooglePay();
   if (f !== 0) {
     writer.writeUint32(
       26,
+      f
+    );
+  }
+  f = message.getApplePay();
+  if (f !== 0) {
+    writer.writeUint32(
+      27,
+      f
+    );
+  }
+  f = message.getOtherPay();
+  if (f !== 0) {
+    writer.writeUint32(
+      28,
       f
     );
   }
@@ -9284,10 +9308,10 @@ proto.pb.AreaStat.prototype.setOnlineUser = function(value) {
 
 
 /**
- * optional uint32 new_user = 8;
+ * optional uint32 valid_user = 8;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getNewUser = function() {
+proto.pb.AreaStat.prototype.getValidUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
@@ -9296,16 +9320,16 @@ proto.pb.AreaStat.prototype.getNewUser = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setNewUser = function(value) {
+proto.pb.AreaStat.prototype.setValidUser = function(value) {
   return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
 /**
- * optional uint32 pay_user = 9;
+ * optional uint32 new_user = 9;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getPayUser = function() {
+proto.pb.AreaStat.prototype.getNewUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
 };
 
@@ -9314,16 +9338,16 @@ proto.pb.AreaStat.prototype.getPayUser = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setPayUser = function(value) {
+proto.pb.AreaStat.prototype.setNewUser = function(value) {
   return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
 /**
- * optional uint32 active_anchor = 10;
+ * optional uint32 pay_user = 10;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getActiveAnchor = function() {
+proto.pb.AreaStat.prototype.getPayUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
 };
 
@@ -9332,16 +9356,16 @@ proto.pb.AreaStat.prototype.getActiveAnchor = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setActiveAnchor = function(value) {
+proto.pb.AreaStat.prototype.setPayUser = function(value) {
   return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
 /**
- * optional uint32 idle_anchor = 11;
+ * optional uint32 active_anchor = 11;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getIdleAnchor = function() {
+proto.pb.AreaStat.prototype.getActiveAnchor = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
@@ -9350,16 +9374,16 @@ proto.pb.AreaStat.prototype.getIdleAnchor = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setIdleAnchor = function(value) {
+proto.pb.AreaStat.prototype.setActiveAnchor = function(value) {
   return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
 /**
- * optional uint32 busy_anchor = 12;
+ * optional uint32 idle_anchor = 12;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getBusyAnchor = function() {
+proto.pb.AreaStat.prototype.getIdleAnchor = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
@@ -9368,16 +9392,16 @@ proto.pb.AreaStat.prototype.getBusyAnchor = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setBusyAnchor = function(value) {
+proto.pb.AreaStat.prototype.setIdleAnchor = function(value) {
   return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
 /**
- * optional uint32 ai_calling = 13;
+ * optional uint32 busy_anchor = 13;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getAiCalling = function() {
+proto.pb.AreaStat.prototype.getBusyAnchor = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
 };
 
@@ -9386,16 +9410,16 @@ proto.pb.AreaStat.prototype.getAiCalling = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setAiCalling = function(value) {
+proto.pb.AreaStat.prototype.setBusyAnchor = function(value) {
   return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
 /**
- * optional uint32 user_calling = 14;
+ * optional uint32 ai_calling = 14;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getUserCalling = function() {
+proto.pb.AreaStat.prototype.getAiCalling = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
 };
 
@@ -9404,16 +9428,16 @@ proto.pb.AreaStat.prototype.getUserCalling = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setUserCalling = function(value) {
+proto.pb.AreaStat.prototype.setAiCalling = function(value) {
   return jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
 /**
- * optional uint32 anchor_calling = 15;
+ * optional uint32 user_calling = 15;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getAnchorCalling = function() {
+proto.pb.AreaStat.prototype.getUserCalling = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
 };
 
@@ -9422,16 +9446,16 @@ proto.pb.AreaStat.prototype.getAnchorCalling = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setAnchorCalling = function(value) {
+proto.pb.AreaStat.prototype.setUserCalling = function(value) {
   return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
 /**
- * optional uint32 ai_call = 16;
+ * optional uint32 anchor_calling = 16;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getAiCall = function() {
+proto.pb.AreaStat.prototype.getAnchorCalling = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
 };
 
@@ -9440,16 +9464,16 @@ proto.pb.AreaStat.prototype.getAiCall = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setAiCall = function(value) {
+proto.pb.AreaStat.prototype.setAnchorCalling = function(value) {
   return jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
 /**
- * optional uint32 user_call = 17;
+ * optional uint32 ai_call = 17;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getUserCall = function() {
+proto.pb.AreaStat.prototype.getAiCall = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
 };
 
@@ -9458,16 +9482,16 @@ proto.pb.AreaStat.prototype.getUserCall = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setUserCall = function(value) {
+proto.pb.AreaStat.prototype.setAiCall = function(value) {
   return jspb.Message.setProto3IntField(this, 17, value);
 };
 
 
 /**
- * optional uint32 anchor_call = 18;
+ * optional uint32 user_call = 18;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getAnchorCall = function() {
+proto.pb.AreaStat.prototype.getUserCall = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 18, 0));
 };
 
@@ -9476,16 +9500,16 @@ proto.pb.AreaStat.prototype.getAnchorCall = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setAnchorCall = function(value) {
+proto.pb.AreaStat.prototype.setUserCall = function(value) {
   return jspb.Message.setProto3IntField(this, 18, value);
 };
 
 
 /**
- * optional uint32 user_answer = 19;
+ * optional uint32 anchor_call = 19;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getUserAnswer = function() {
+proto.pb.AreaStat.prototype.getAnchorCall = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
 };
 
@@ -9494,16 +9518,16 @@ proto.pb.AreaStat.prototype.getUserAnswer = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setUserAnswer = function(value) {
+proto.pb.AreaStat.prototype.setAnchorCall = function(value) {
   return jspb.Message.setProto3IntField(this, 19, value);
 };
 
 
 /**
- * optional uint32 anchor_answer = 20;
+ * optional uint32 user_answer = 20;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getAnchorAnswer = function() {
+proto.pb.AreaStat.prototype.getUserAnswer = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 20, 0));
 };
 
@@ -9512,16 +9536,16 @@ proto.pb.AreaStat.prototype.getAnchorAnswer = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setAnchorAnswer = function(value) {
+proto.pb.AreaStat.prototype.setUserAnswer = function(value) {
   return jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
 /**
- * optional uint64 deposit = 21;
+ * optional uint32 anchor_answer = 21;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getDeposit = function() {
+proto.pb.AreaStat.prototype.getAnchorAnswer = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 21, 0));
 };
 
@@ -9530,16 +9554,16 @@ proto.pb.AreaStat.prototype.getDeposit = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setDeposit = function(value) {
+proto.pb.AreaStat.prototype.setAnchorAnswer = function(value) {
   return jspb.Message.setProto3IntField(this, 21, value);
 };
 
 
 /**
- * optional uint64 expense = 22;
+ * optional uint64 deposit = 22;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getExpense = function() {
+proto.pb.AreaStat.prototype.getDeposit = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
 };
 
@@ -9548,16 +9572,16 @@ proto.pb.AreaStat.prototype.getExpense = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setExpense = function(value) {
+proto.pb.AreaStat.prototype.setDeposit = function(value) {
   return jspb.Message.setProto3IntField(this, 22, value);
 };
 
 
 /**
- * optional uint32 income = 23;
+ * optional uint64 expense = 23;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getIncome = function() {
+proto.pb.AreaStat.prototype.getExpense = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 23, 0));
 };
 
@@ -9566,16 +9590,16 @@ proto.pb.AreaStat.prototype.getIncome = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setIncome = function(value) {
+proto.pb.AreaStat.prototype.setExpense = function(value) {
   return jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
 /**
- * optional uint32 google_pay = 24;
+ * optional uint32 income = 24;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getGooglePay = function() {
+proto.pb.AreaStat.prototype.getIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 24, 0));
 };
 
@@ -9584,16 +9608,16 @@ proto.pb.AreaStat.prototype.getGooglePay = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setGooglePay = function(value) {
+proto.pb.AreaStat.prototype.setIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 24, value);
 };
 
 
 /**
- * optional uint32 apple_pay = 25;
+ * optional uint32 sub_income = 25;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getApplePay = function() {
+proto.pb.AreaStat.prototype.getSubIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 25, 0));
 };
 
@@ -9602,16 +9626,16 @@ proto.pb.AreaStat.prototype.getApplePay = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setApplePay = function(value) {
+proto.pb.AreaStat.prototype.setSubIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 25, value);
 };
 
 
 /**
- * optional uint32 other_pay = 26;
+ * optional uint32 google_pay = 26;
  * @return {number}
  */
-proto.pb.AreaStat.prototype.getOtherPay = function() {
+proto.pb.AreaStat.prototype.getGooglePay = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 26, 0));
 };
 
@@ -9620,8 +9644,44 @@ proto.pb.AreaStat.prototype.getOtherPay = function() {
  * @param {number} value
  * @return {!proto.pb.AreaStat} returns this
  */
-proto.pb.AreaStat.prototype.setOtherPay = function(value) {
+proto.pb.AreaStat.prototype.setGooglePay = function(value) {
   return jspb.Message.setProto3IntField(this, 26, value);
+};
+
+
+/**
+ * optional uint32 apple_pay = 27;
+ * @return {number}
+ */
+proto.pb.AreaStat.prototype.getApplePay = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 27, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AreaStat} returns this
+ */
+proto.pb.AreaStat.prototype.setApplePay = function(value) {
+  return jspb.Message.setProto3IntField(this, 27, value);
+};
+
+
+/**
+ * optional uint32 other_pay = 28;
+ * @return {number}
+ */
+proto.pb.AreaStat.prototype.getOtherPay = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 28, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.AreaStat} returns this
+ */
+proto.pb.AreaStat.prototype.setOtherPay = function(value) {
+  return jspb.Message.setProto3IntField(this, 28, value);
 };
 
 
@@ -10430,26 +10490,29 @@ proto.pb.UserStat.toObject = function(includeInstance, msg) {
     interval: jspb.Message.getFieldWithDefault(msg, 5, 0),
     statAt: jspb.Message.getFieldWithDefault(msg, 6, 0),
     income: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    activeUser: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    newUser: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    payUser: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    vipUser: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    repayUser: jspb.Message.getFieldWithDefault(msg, 12, 0),
-    newIncome: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    newPayUser: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    newCallUser: jspb.Message.getFieldWithDefault(msg, 15, 0),
-    newChatUser: jspb.Message.getFieldWithDefault(msg, 16, 0),
-    call: jspb.Message.getFieldWithDefault(msg, 17, 0),
-    answer: jspb.Message.getFieldWithDefault(msg, 18, 0),
-    duration: jspb.Message.getFieldWithDefault(msg, 19, 0),
-    aiCall: jspb.Message.getFieldWithDefault(msg, 20, 0),
-    aiAnswer: jspb.Message.getFieldWithDefault(msg, 21, 0),
-    aiDuration: jspb.Message.getFieldWithDefault(msg, 22, 0),
-    expense: jspb.Message.getFieldWithDefault(msg, 23, 0),
-    newExpense: jspb.Message.getFieldWithDefault(msg, 24, 0),
-    googlePay: jspb.Message.getFieldWithDefault(msg, 25, 0),
-    applePay: jspb.Message.getFieldWithDefault(msg, 26, 0),
-    otherPay: jspb.Message.getFieldWithDefault(msg, 27, 0),
+    subIncome: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    activeUser: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    onlineUser: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    validUser: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    newUser: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    payUser: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    vipUser: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    repayUser: jspb.Message.getFieldWithDefault(msg, 15, 0),
+    newIncome: jspb.Message.getFieldWithDefault(msg, 16, 0),
+    newPayUser: jspb.Message.getFieldWithDefault(msg, 17, 0),
+    newCallUser: jspb.Message.getFieldWithDefault(msg, 18, 0),
+    newChatUser: jspb.Message.getFieldWithDefault(msg, 19, 0),
+    call: jspb.Message.getFieldWithDefault(msg, 20, 0),
+    answer: jspb.Message.getFieldWithDefault(msg, 21, 0),
+    duration: jspb.Message.getFieldWithDefault(msg, 22, 0),
+    aiCall: jspb.Message.getFieldWithDefault(msg, 23, 0),
+    aiAnswer: jspb.Message.getFieldWithDefault(msg, 24, 0),
+    aiDuration: jspb.Message.getFieldWithDefault(msg, 25, 0),
+    expense: jspb.Message.getFieldWithDefault(msg, 26, 0),
+    newExpense: jspb.Message.getFieldWithDefault(msg, 27, 0),
+    googlePay: jspb.Message.getFieldWithDefault(msg, 28, 0),
+    applePay: jspb.Message.getFieldWithDefault(msg, 29, 0),
+    otherPay: jspb.Message.getFieldWithDefault(msg, 30, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 40, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 41, 0)
   };
@@ -10518,81 +10581,93 @@ proto.pb.UserStat.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 8:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setActiveUser(value);
+      msg.setSubIncome(value);
       break;
     case 9:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewUser(value);
+      msg.setActiveUser(value);
       break;
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setPayUser(value);
+      msg.setOnlineUser(value);
       break;
     case 11:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setVipUser(value);
+      msg.setValidUser(value);
       break;
     case 12:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setRepayUser(value);
+      msg.setNewUser(value);
       break;
     case 13:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewIncome(value);
+      msg.setPayUser(value);
       break;
     case 14:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewPayUser(value);
+      msg.setVipUser(value);
       break;
     case 15:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewCallUser(value);
+      msg.setRepayUser(value);
       break;
     case 16:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setNewChatUser(value);
+      msg.setNewIncome(value);
       break;
     case 17:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setCall(value);
+      msg.setNewPayUser(value);
       break;
     case 18:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAnswer(value);
+      msg.setNewCallUser(value);
       break;
     case 19:
-      var value = /** @type {number} */ (reader.readUint64());
-      msg.setDuration(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setNewChatUser(value);
       break;
     case 20:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAiCall(value);
+      msg.setCall(value);
       break;
     case 21:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAiAnswer(value);
+      msg.setAnswer(value);
       break;
     case 22:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setAiDuration(value);
+      msg.setDuration(value);
       break;
     case 23:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAiCall(value);
+      break;
+    case 24:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAiAnswer(value);
+      break;
+    case 25:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setAiDuration(value);
+      break;
+    case 26:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setExpense(value);
       break;
-    case 24:
+    case 27:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setNewExpense(value);
       break;
-    case 25:
+    case 28:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setGooglePay(value);
       break;
-    case 26:
+    case 29:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setApplePay(value);
       break;
-    case 27:
+    case 30:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setOtherPay(value);
       break;
@@ -10682,143 +10757,164 @@ proto.pb.UserStat.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getActiveUser();
+  f = message.getSubIncome();
   if (f !== 0) {
     writer.writeUint32(
       8,
       f
     );
   }
-  f = message.getNewUser();
+  f = message.getActiveUser();
   if (f !== 0) {
     writer.writeUint32(
       9,
       f
     );
   }
-  f = message.getPayUser();
+  f = message.getOnlineUser();
   if (f !== 0) {
     writer.writeUint32(
       10,
       f
     );
   }
-  f = message.getVipUser();
+  f = message.getValidUser();
   if (f !== 0) {
     writer.writeUint32(
       11,
       f
     );
   }
-  f = message.getRepayUser();
+  f = message.getNewUser();
   if (f !== 0) {
     writer.writeUint32(
       12,
       f
     );
   }
-  f = message.getNewIncome();
+  f = message.getPayUser();
   if (f !== 0) {
     writer.writeUint32(
       13,
       f
     );
   }
-  f = message.getNewPayUser();
+  f = message.getVipUser();
   if (f !== 0) {
     writer.writeUint32(
       14,
       f
     );
   }
-  f = message.getNewCallUser();
+  f = message.getRepayUser();
   if (f !== 0) {
     writer.writeUint32(
       15,
       f
     );
   }
-  f = message.getNewChatUser();
+  f = message.getNewIncome();
   if (f !== 0) {
     writer.writeUint32(
       16,
       f
     );
   }
-  f = message.getCall();
+  f = message.getNewPayUser();
   if (f !== 0) {
     writer.writeUint32(
       17,
       f
     );
   }
-  f = message.getAnswer();
+  f = message.getNewCallUser();
   if (f !== 0) {
     writer.writeUint32(
       18,
       f
     );
   }
-  f = message.getDuration();
+  f = message.getNewChatUser();
   if (f !== 0) {
-    writer.writeUint64(
+    writer.writeUint32(
       19,
       f
     );
   }
-  f = message.getAiCall();
+  f = message.getCall();
   if (f !== 0) {
     writer.writeUint32(
       20,
       f
     );
   }
-  f = message.getAiAnswer();
+  f = message.getAnswer();
   if (f !== 0) {
     writer.writeUint32(
       21,
       f
     );
   }
-  f = message.getAiDuration();
+  f = message.getDuration();
   if (f !== 0) {
     writer.writeUint64(
       22,
       f
     );
   }
+  f = message.getAiCall();
+  if (f !== 0) {
+    writer.writeUint32(
+      23,
+      f
+    );
+  }
+  f = message.getAiAnswer();
+  if (f !== 0) {
+    writer.writeUint32(
+      24,
+      f
+    );
+  }
+  f = message.getAiDuration();
+  if (f !== 0) {
+    writer.writeUint64(
+      25,
+      f
+    );
+  }
   f = message.getExpense();
   if (f !== 0) {
     writer.writeUint64(
-      23,
+      26,
       f
     );
   }
   f = message.getNewExpense();
   if (f !== 0) {
     writer.writeUint64(
-      24,
+      27,
       f
     );
   }
   f = message.getGooglePay();
   if (f !== 0) {
     writer.writeUint32(
-      25,
+      28,
       f
     );
   }
   f = message.getApplePay();
   if (f !== 0) {
     writer.writeUint32(
-      26,
+      29,
       f
     );
   }
   f = message.getOtherPay();
   if (f !== 0) {
     writer.writeUint32(
-      27,
+      30,
       f
     );
   }
@@ -10966,10 +11062,10 @@ proto.pb.UserStat.prototype.setIncome = function(value) {
 
 
 /**
- * optional uint32 active_user = 8;
+ * optional uint32 sub_income = 8;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getActiveUser = function() {
+proto.pb.UserStat.prototype.getSubIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
@@ -10978,16 +11074,16 @@ proto.pb.UserStat.prototype.getActiveUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setActiveUser = function(value) {
+proto.pb.UserStat.prototype.setSubIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
 /**
- * optional uint32 new_user = 9;
+ * optional uint32 active_user = 9;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getNewUser = function() {
+proto.pb.UserStat.prototype.getActiveUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
 };
 
@@ -10996,16 +11092,16 @@ proto.pb.UserStat.prototype.getNewUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setNewUser = function(value) {
+proto.pb.UserStat.prototype.setActiveUser = function(value) {
   return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
 /**
- * optional uint32 pay_user = 10;
+ * optional uint32 online_user = 10;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getPayUser = function() {
+proto.pb.UserStat.prototype.getOnlineUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
 };
 
@@ -11014,16 +11110,16 @@ proto.pb.UserStat.prototype.getPayUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setPayUser = function(value) {
+proto.pb.UserStat.prototype.setOnlineUser = function(value) {
   return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
 /**
- * optional uint32 vip_user = 11;
+ * optional uint32 valid_user = 11;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getVipUser = function() {
+proto.pb.UserStat.prototype.getValidUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
@@ -11032,16 +11128,16 @@ proto.pb.UserStat.prototype.getVipUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setVipUser = function(value) {
+proto.pb.UserStat.prototype.setValidUser = function(value) {
   return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
 /**
- * optional uint32 repay_user = 12;
+ * optional uint32 new_user = 12;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getRepayUser = function() {
+proto.pb.UserStat.prototype.getNewUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
@@ -11050,16 +11146,16 @@ proto.pb.UserStat.prototype.getRepayUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setRepayUser = function(value) {
+proto.pb.UserStat.prototype.setNewUser = function(value) {
   return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
 /**
- * optional uint32 new_income = 13;
+ * optional uint32 pay_user = 13;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getNewIncome = function() {
+proto.pb.UserStat.prototype.getPayUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
 };
 
@@ -11068,16 +11164,16 @@ proto.pb.UserStat.prototype.getNewIncome = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setNewIncome = function(value) {
+proto.pb.UserStat.prototype.setPayUser = function(value) {
   return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
 /**
- * optional uint32 new_pay_user = 14;
+ * optional uint32 vip_user = 14;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getNewPayUser = function() {
+proto.pb.UserStat.prototype.getVipUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
 };
 
@@ -11086,16 +11182,16 @@ proto.pb.UserStat.prototype.getNewPayUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setNewPayUser = function(value) {
+proto.pb.UserStat.prototype.setVipUser = function(value) {
   return jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
 /**
- * optional uint32 new_call_user = 15;
+ * optional uint32 repay_user = 15;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getNewCallUser = function() {
+proto.pb.UserStat.prototype.getRepayUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
 };
 
@@ -11104,16 +11200,16 @@ proto.pb.UserStat.prototype.getNewCallUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setNewCallUser = function(value) {
+proto.pb.UserStat.prototype.setRepayUser = function(value) {
   return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
 /**
- * optional uint32 new_chat_user = 16;
+ * optional uint32 new_income = 16;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getNewChatUser = function() {
+proto.pb.UserStat.prototype.getNewIncome = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
 };
 
@@ -11122,16 +11218,16 @@ proto.pb.UserStat.prototype.getNewChatUser = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setNewChatUser = function(value) {
+proto.pb.UserStat.prototype.setNewIncome = function(value) {
   return jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
 /**
- * optional uint32 call = 17;
+ * optional uint32 new_pay_user = 17;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getCall = function() {
+proto.pb.UserStat.prototype.getNewPayUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
 };
 
@@ -11140,16 +11236,16 @@ proto.pb.UserStat.prototype.getCall = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setCall = function(value) {
+proto.pb.UserStat.prototype.setNewPayUser = function(value) {
   return jspb.Message.setProto3IntField(this, 17, value);
 };
 
 
 /**
- * optional uint32 answer = 18;
+ * optional uint32 new_call_user = 18;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getAnswer = function() {
+proto.pb.UserStat.prototype.getNewCallUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 18, 0));
 };
 
@@ -11158,16 +11254,16 @@ proto.pb.UserStat.prototype.getAnswer = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setAnswer = function(value) {
+proto.pb.UserStat.prototype.setNewCallUser = function(value) {
   return jspb.Message.setProto3IntField(this, 18, value);
 };
 
 
 /**
- * optional uint64 duration = 19;
+ * optional uint32 new_chat_user = 19;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getDuration = function() {
+proto.pb.UserStat.prototype.getNewChatUser = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
 };
 
@@ -11176,16 +11272,16 @@ proto.pb.UserStat.prototype.getDuration = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setDuration = function(value) {
+proto.pb.UserStat.prototype.setNewChatUser = function(value) {
   return jspb.Message.setProto3IntField(this, 19, value);
 };
 
 
 /**
- * optional uint32 ai_call = 20;
+ * optional uint32 call = 20;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getAiCall = function() {
+proto.pb.UserStat.prototype.getCall = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 20, 0));
 };
 
@@ -11194,16 +11290,16 @@ proto.pb.UserStat.prototype.getAiCall = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setAiCall = function(value) {
+proto.pb.UserStat.prototype.setCall = function(value) {
   return jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
 /**
- * optional uint32 ai_answer = 21;
+ * optional uint32 answer = 21;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getAiAnswer = function() {
+proto.pb.UserStat.prototype.getAnswer = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 21, 0));
 };
 
@@ -11212,16 +11308,16 @@ proto.pb.UserStat.prototype.getAiAnswer = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setAiAnswer = function(value) {
+proto.pb.UserStat.prototype.setAnswer = function(value) {
   return jspb.Message.setProto3IntField(this, 21, value);
 };
 
 
 /**
- * optional uint64 ai_duration = 22;
+ * optional uint64 duration = 22;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getAiDuration = function() {
+proto.pb.UserStat.prototype.getDuration = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
 };
 
@@ -11230,16 +11326,16 @@ proto.pb.UserStat.prototype.getAiDuration = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setAiDuration = function(value) {
+proto.pb.UserStat.prototype.setDuration = function(value) {
   return jspb.Message.setProto3IntField(this, 22, value);
 };
 
 
 /**
- * optional uint64 expense = 23;
+ * optional uint32 ai_call = 23;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getExpense = function() {
+proto.pb.UserStat.prototype.getAiCall = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 23, 0));
 };
 
@@ -11248,16 +11344,16 @@ proto.pb.UserStat.prototype.getExpense = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setExpense = function(value) {
+proto.pb.UserStat.prototype.setAiCall = function(value) {
   return jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
 /**
- * optional uint64 new_expense = 24;
+ * optional uint32 ai_answer = 24;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getNewExpense = function() {
+proto.pb.UserStat.prototype.getAiAnswer = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 24, 0));
 };
 
@@ -11266,16 +11362,16 @@ proto.pb.UserStat.prototype.getNewExpense = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setNewExpense = function(value) {
+proto.pb.UserStat.prototype.setAiAnswer = function(value) {
   return jspb.Message.setProto3IntField(this, 24, value);
 };
 
 
 /**
- * optional uint32 google_pay = 25;
+ * optional uint64 ai_duration = 25;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getGooglePay = function() {
+proto.pb.UserStat.prototype.getAiDuration = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 25, 0));
 };
 
@@ -11284,16 +11380,16 @@ proto.pb.UserStat.prototype.getGooglePay = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setGooglePay = function(value) {
+proto.pb.UserStat.prototype.setAiDuration = function(value) {
   return jspb.Message.setProto3IntField(this, 25, value);
 };
 
 
 /**
- * optional uint32 apple_pay = 26;
+ * optional uint64 expense = 26;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getApplePay = function() {
+proto.pb.UserStat.prototype.getExpense = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 26, 0));
 };
 
@@ -11302,16 +11398,16 @@ proto.pb.UserStat.prototype.getApplePay = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setApplePay = function(value) {
+proto.pb.UserStat.prototype.setExpense = function(value) {
   return jspb.Message.setProto3IntField(this, 26, value);
 };
 
 
 /**
- * optional uint32 other_pay = 27;
+ * optional uint64 new_expense = 27;
  * @return {number}
  */
-proto.pb.UserStat.prototype.getOtherPay = function() {
+proto.pb.UserStat.prototype.getNewExpense = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 27, 0));
 };
 
@@ -11320,8 +11416,62 @@ proto.pb.UserStat.prototype.getOtherPay = function() {
  * @param {number} value
  * @return {!proto.pb.UserStat} returns this
  */
-proto.pb.UserStat.prototype.setOtherPay = function(value) {
+proto.pb.UserStat.prototype.setNewExpense = function(value) {
   return jspb.Message.setProto3IntField(this, 27, value);
+};
+
+
+/**
+ * optional uint32 google_pay = 28;
+ * @return {number}
+ */
+proto.pb.UserStat.prototype.getGooglePay = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 28, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.UserStat} returns this
+ */
+proto.pb.UserStat.prototype.setGooglePay = function(value) {
+  return jspb.Message.setProto3IntField(this, 28, value);
+};
+
+
+/**
+ * optional uint32 apple_pay = 29;
+ * @return {number}
+ */
+proto.pb.UserStat.prototype.getApplePay = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 29, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.UserStat} returns this
+ */
+proto.pb.UserStat.prototype.setApplePay = function(value) {
+  return jspb.Message.setProto3IntField(this, 29, value);
+};
+
+
+/**
+ * optional uint32 other_pay = 30;
+ * @return {number}
+ */
+proto.pb.UserStat.prototype.getOtherPay = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 30, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.UserStat} returns this
+ */
+proto.pb.UserStat.prototype.setOtherPay = function(value) {
+  return jspb.Message.setProto3IntField(this, 30, value);
 };
 
 
@@ -11400,6 +11550,7 @@ proto.pb.Receipt.toObject = function(includeInstance, msg) {
     payType: jspb.Message.getFieldWithDefault(msg, 5, 0),
     verified: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     receipt: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    sku: jspb.Message.getFieldWithDefault(msg, 8, ""),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 10, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 11, 0)
   };
@@ -11465,6 +11616,10 @@ proto.pb.Receipt.deserializeBinaryFromReader = function(msg, reader) {
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setReceipt(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSku(value);
       break;
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
@@ -11549,6 +11704,13 @@ proto.pb.Receipt.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getSku();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -11692,6 +11854,24 @@ proto.pb.Receipt.prototype.getReceipt = function() {
  */
 proto.pb.Receipt.prototype.setReceipt = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string sku = 8;
+ * @return {string}
+ */
+proto.pb.Receipt.prototype.getSku = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Receipt} returns this
+ */
+proto.pb.Receipt.prototype.setSku = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

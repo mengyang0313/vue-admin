@@ -495,44 +495,48 @@ message AreaStat {
     uint32 active_user = 6;
     // 在线用户数量
     uint32 online_user = 7;
+    // 有效用户，在线并且余额足够
+    uint32 valid_user = 8;
     // 新用户数量
-    uint32 new_user = 8;
+    uint32 new_user = 9;
     // 付费用户数量
-    uint32 pay_user = 9;
+    uint32 pay_user = 10;
     // 活跃主播数量
-    uint32 active_anchor = 10;
+    uint32 active_anchor = 11;
     // 空闲主播数量
-    uint32 idle_anchor = 11;
+    uint32 idle_anchor = 12;
     // 通话主播数量
-    uint32 busy_anchor = 12;
+    uint32 busy_anchor = 13;
     // AI发起进行中通话数量
-    uint32 ai_calling = 13;
+    uint32 ai_calling = 14;
     // 用户发起进行中通话数量
-    uint32 user_calling = 14;
+    uint32 user_calling = 15;
     // 主播发起进行中通话数量
-    uint32 anchor_calling = 15;
+    uint32 anchor_calling = 16;
     // AI通话发起数量
-    uint32 ai_call = 16;
+    uint32 ai_call = 17;
     // 用户通话发起数量
-    uint32 user_call = 17;
+    uint32 user_call = 18;
     // 主播通话发起数量
-    uint32 anchor_call = 18;
+    uint32 anchor_call = 19;
     // 用户接听数量
-    uint32 user_answer = 19;
+    uint32 user_answer = 20;
     // 主播接听数量
-    uint32 anchor_answer = 20;
+    uint32 anchor_answer = 21;
     // 充值钻石数量
-    uint64 deposit = 21;
+    uint64 deposit = 22;
     // 消耗钻石数量
-    uint64 expense = 22;
-    // 收入
-    uint32 income = 23;
+    uint64 expense = 23;
+    // 总收入
+    uint32 income = 24;
+    // 订阅收入
+    uint32 sub_income = 25;
     // google支付金额
-    uint32 google_pay = 24;
+    uint32 google_pay = 26;
     // apple支付金额
-    uint32 apple_pay = 25;
+    uint32 apple_pay = 27;
     // 三方支付金额
-    uint32 other_pay = 26;
+    uint32 other_pay = 28;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;
@@ -595,46 +599,52 @@ message UserStat {
     uint32 stat_at = 6;
     // 总收入，单位为分
     uint32 income = 7;
+    // 订阅收入，单位为分
+    uint32 sub_income = 8;
     // 活跃用户
-    uint32 active_user = 8;
+    uint32 active_user = 9;
+    // 在线用户数量
+    uint32 online_user = 10;
+    // 有效用户，在线并且余额足够
+    uint32 valid_user = 11;
     // 新增用户
-    uint32 new_user = 9;
+    uint32 new_user = 12;
     // 充值用户数量
-    uint32 pay_user = 10;
+    uint32 pay_user = 13;
     // VIP购买数量
-    uint32 vip_user = 11;
+    uint32 vip_user = 14;
     // 复购用户数量
-    uint32 repay_user = 12;
+    uint32 repay_user = 15;
     // 新用户收入
-    uint32 new_income = 13;
+    uint32 new_income = 16;
     // 新用户充值数量
-    uint32 new_pay_user = 14;
+    uint32 new_pay_user = 17;
     // 通过话的新用户数量，免费钻石消耗人数
-    uint32 new_call_user = 15;
+    uint32 new_call_user = 18;
     // 聊过天的新用户数量，免费消息消耗完人数
-    uint32 new_chat_user = 16;
+    uint32 new_chat_user = 19;
     // 通话数量
-    uint32 call = 17;
+    uint32 call = 20;
     // 接通数量
-    uint32 answer = 18;
+    uint32 answer = 21;
     // 通话时长
-    uint64 duration = 19;
+    uint64 duration = 22;
     // AI通话数量
-    uint32 ai_call = 20;
+    uint32 ai_call = 23;
     // AI接通数量
-    uint32 ai_answer = 21;
+    uint32 ai_answer = 24;
     // AI通话时长
-    uint64 ai_duration = 22;
+    uint64 ai_duration = 25;
     // 总用户消耗
-    uint64 expense = 23;
+    uint64 expense = 26;
     // 新用户消耗
-    uint64 new_expense = 24;
+    uint64 new_expense = 27;
     // google支付订单数
-    uint32 google_pay = 25;
+    uint32 google_pay = 28;
     // apple支付订单数
-    uint32 apple_pay = 26;
+    uint32 apple_pay = 29;
     // 三方支付订单数
-    uint32 other_pay = 27;
+    uint32 other_pay = 30;
 
     uint32 updated_at = 40;
     uint32 created_at = 41;
@@ -655,6 +665,8 @@ message Receipt {
     bool verified = 6;
     // 发票内容
     string receipt = 7;
+    // sku
+    string sku = 8;
 
     uint32 updated_at = 10;
     uint32 created_at = 11;
