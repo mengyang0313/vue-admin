@@ -32,6 +32,7 @@ export default {
         drawing() {
             const title = this.data.title
             const name = this.data.name
+            let osColor = this.data.osColor
             const legendData = this.data.legend
             const xAxisData = this.data.data.map(item => item.title)
             const seriesData1 = this.data.data.map(item => item.val1)
@@ -78,12 +79,13 @@ export default {
                         type: 'category',
                         data: xAxisData,
                         axisPointer: {
-                            type: 'shadow',
-                            color: '#cec92b'
+                            type: 'shadow'
                         },
-                        textBorderColor: '#cec92b',
-                        nameTextStyle: {
-                            textBorderColor: '#cec92b'
+                        axisLabel: {
+                            show: true,
+                            // textStyle: {
+                            //     color: '#baca38'
+                            // }
                         }
                     }
                 ],

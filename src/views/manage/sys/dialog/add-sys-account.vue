@@ -4,7 +4,7 @@
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
 
                 <el-form-item label="账户名" prop="email">
-                    <el-input v-model="form.email" maxlength="15" show-word-limit placeholder="请输入"/>
+                    <el-input v-model="form.email" show-word-limit placeholder="请输入"/>
                 </el-form-item>
                 <el-form-item label="密码" prop="passwordNew">
                     <el-input v-model="form.passwordNew" placeholder="请输入" maxlength="16" show-password/>

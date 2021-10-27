@@ -37,7 +37,6 @@
                         type="textarea"
                         :autosize="{ minRows: 3, maxRows: 5 }"
                         placeholder="请输入内容"
-                        maxlength="50"
                         show-word-limit
                     />
                 </el-form-item>
