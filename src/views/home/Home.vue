@@ -238,14 +238,13 @@ export default {
                 let channelArr = []
                 statList.forEach(item => {
                     let app = getAppName($this.appList, item.getAppId())
-                    let osColor = app.os === 1 ? "#d4ec98" : "#080808";
                     let title = app.label
 
                     if(item.getNewIncome() > 0){
                         newArr.push({
                             title: title,
                             val1: toDollar(item.getNewIncome()),
-                            osColor: osColor
+                            os: app.os
                         })
                     }
 
@@ -253,7 +252,7 @@ export default {
                         subArr.push({
                             title: title,
                             val1: toDollar(item.getSubIncome()),
-                            osColor: osColor
+                            os: app.os
                         })
                     }
 
@@ -261,7 +260,7 @@ export default {
                         totalArr.push({
                             title: title,
                             val1: toDollar(item.getTotalIncome()),
-                            osColor: osColor
+                            os: app.os
                         })
                     }
 
@@ -269,7 +268,7 @@ export default {
                         userArr.push({
                             title: title,
                             val1: item.getNewUser(),
-                            osColor: osColor
+                            os: app.os
                         })
                     }
 
@@ -283,7 +282,7 @@ export default {
                             val2: appleIncome,
                             val3: otherIncome,
                             total: googleIncome + appleIncome + otherIncome,
-                            osColor: osColor
+                            os: app.os
                         })
                     }
                 })

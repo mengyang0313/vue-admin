@@ -33,6 +33,7 @@ export default {
             const title = this.data.title
             const name = this.data.name
             const legendData = this.data.legend
+            const osData = this.data.data.map(item => item.os)
             const xAxisData = this.data.data.map(item => item.title)
             const seriesData1 = this.data.data.map(item => item.val1)
             const seriesData2 = this.data.data.map(item => item.val2)
@@ -75,6 +76,14 @@ export default {
                         data: xAxisData,
                         axisTick: {
                             alignWithLabel: true
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: function(value, index){
+                                    return osData[index] === 1 ? "#080808" : "#485cef"
+                                }
+                            }
                         }
                     }
                 ],

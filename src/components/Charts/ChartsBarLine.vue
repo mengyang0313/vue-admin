@@ -32,9 +32,9 @@ export default {
         drawing() {
             const title = this.data.title
             const name = this.data.name
-            let osColor = this.data.osColor
             const legendData = this.data.legend
             const xAxisData = this.data.data.map(item => item.title)
+            const osData = this.data.data.map(item => item.os)
             const seriesData1 = this.data.data.map(item => item.val1)
             const seriesData2 = this.data.data.map(item => item.val2)
             const seriesData3 = this.data.data.map(item => item.val3)
@@ -83,9 +83,11 @@ export default {
                         },
                         axisLabel: {
                             show: true,
-                            // textStyle: {
-                            //     color: '#baca38'
-                            // }
+                            textStyle: {
+                                color: function(value, index){
+                                    return osData[index] === 1 ? "#080808" : "#485cef"
+                                }
+                            }
                         }
                     }
                 ],
