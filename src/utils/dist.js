@@ -361,15 +361,17 @@ export function getArrName(arr, id){
 export function getAppName(arr, id){
     let label = ""
     let os = 0
+    let isAnchor = false
     arr.forEach((item) => {
         if(typeof(item.value) !== "undefined"){
             if(id.toString() === item.value.toString()){
                 label = item.label
                 os = item.os
+                isAnchor = item.isAnchor
             }
         }
     })
-    return {label:label, os:os}
+    return {label:label, os:os, isAnchor: isAnchor}
 }
 
 

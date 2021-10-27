@@ -17,6 +17,7 @@ export default class {
         let req = new this.proto.UserListRequest();
         req.setPageNo(param.page.currentPage)
         req.setPageSize(param.page.pageSize)
+        req.setAppId(param.appId)
         req.setUserId(param.userId)
         req.setAreaId(param.areaId)
         req.setNickname(param.nickname)

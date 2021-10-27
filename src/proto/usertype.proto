@@ -329,6 +329,8 @@ message User {
     uint32 toya_synced_at = 63;
     // toya同步状态
     ToyaStatus toya_status = 64;
+    // 实时同步时老toya余额
+    uint32 toya_balance = 65;
 
     // 绑定的认证信息，仅app端使用，如果绑定的认证信息为空，则为游客
     repeated EntityAuth auths = 100;
@@ -1080,6 +1082,8 @@ message PayRecord {
     bool is_subscription = 20;
     // 查询支付状态时间
     uint32 query_at = 21;
+    // 发票id
+    uint32 receipt_id = 22;
 
     uint32 updated_at = 30;
     uint32 created_at = 31;
@@ -1273,7 +1277,7 @@ message StreamMessage {
     }
 
     message SubscribeBody {
-        repeated uint32 anchor_ids = 1;
+        repeated uint32 ids = 1;
     }
 
     message AbortBody {

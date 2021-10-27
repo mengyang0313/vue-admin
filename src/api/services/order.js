@@ -19,7 +19,9 @@ export default class {
         req.setUserId(param.userId)
         req.setRecordId(param.recordId)
         req.setStatus(param.payStatus)
-        //req.setIsSubscription(param.isSubscription)
+        req.setPayType(param.payType)
+        req.setOrderId(param.payChannel)
+        req.setSubscriptionOnly(param.isSubscription)
         req.setCreatedStart(param.createdStartUint)
         req.setCreatedEnd(param.createdEndUint)
 

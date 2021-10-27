@@ -67,9 +67,10 @@
             <el-menu-item index="3">整体付费率</el-menu-item>
             <el-menu-item index="4">新增付费率</el-menu-item>
             <el-menu-item index="5">新增用户数</el-menu-item>
-            <el-menu-item index="6">活跃的付费用户数</el-menu-item>
+<!--            <el-menu-item index="6">活跃的付费用户数</el-menu-item>-->
             <el-menu-item index="7">电话接通率</el-menu-item>
             <el-menu-item index="8">平均通话时长</el-menu-item>
+            <el-menu-item index="9">APUR</el-menu-item>
         </el-menu>
 
         <el-row class="date-box" :gutter="30">
@@ -109,9 +110,10 @@
             <el-table-column prop="payPaidRatio" label="整体付费率" align="center" width="120"/>
             <el-table-column prop="newPayPaidRatio" label="新增付费率" align="center" width="120"/>
             <el-table-column prop="newUser" label="新增用户数" align="center" width="120"/>
-            <el-table-column prop="payUser" label="活跃的付费用户数" align="center"/>
+<!--            <el-table-column prop="payUser" label="活跃的付费用户数" align="center"/>-->
             <el-table-column prop="answerRatio" label="电话接通率" align="center"/>
             <el-table-column prop="durationRatio" label="平均通话时长" align="center"/>
+            <el-table-column prop="arpu" label="ARPU" align="center"/>
         </el-table>
         <!-- 分页栏 -->
         <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -201,9 +203,15 @@ export default {
                 keys: [],
                 values: []
             },
-            durationRatioData: {
+            durationAverageData: {
                 title: '平均通话时长',
                 legend: ['通话时长'],
+                keys: [],
+                values: []
+            },
+            arpuData: {
+                title: 'ARPU',
+                legend: ['ARPU'],
                 keys: [],
                 values: []
             }
@@ -236,7 +244,8 @@ export default {
                 let newUser = []
                 let payUser = []
                 let answerRatios = []
-                let durationRatios = []
+                let durationAverages = []
+                let arpus = []
                 list.forEach((item, index)=>{
                     let startAt = item.getStartAt()
                     keys.push(new Date(startAt * 1000).format(fmt))
@@ -256,8 +265,11 @@ export default {
                     let answerRatio = $this.toRatio(item.getAnswer(), item.getCall())
                     answerRatios.push(answerRatio)
 
-                    let durationRatio = $this.toAve(item.getDuration(), item.getAnswer())
-                    durationRatios.push(durationRatio)
+                    let durationAverage = $this.toAve(item.getDuration(), item.getAnswer())
+                    durationAverages.push(durationAverage)
+
+                    let arpu = $this.toAve(item.getIncome(), item.getActiveUser())
+                    arpus.push(toDollar(arpu))
 
                     // 列表数据
                     const json = {
@@ -274,7 +286,8 @@ export default {
                         "newUser" : item.getNewUser(),
                         "payUser" : item.getPayUser(),
                         "answerRatio" : answerRatio,
-                        "durationRatio" : durationRatio
+                        "durationRatio" : durationAverage,
+                        "arpu" : arpu
                     }
                     tableData.push(json)
                 })
@@ -314,9 +327,14 @@ export default {
                 $this.answerRatioData.values.push(answerRatios)
 
                 //平均通话时长
-                $this.durationRatioData.keys = keys
-                $this.durationRatioData.values = []
-                $this.durationRatioData.values.push(durationRatios)
+                $this.durationAverageData.keys = keys
+                $this.durationAverageData.values = []
+                $this.durationAverageData.values.push(durationAverages)
+
+                // ARPU
+                $this.arpuData.keys = keys
+                $this.arpuData.values = []
+                $this.arpuData.values.push(arpus)
 
                 $this.total = tableData.length
                 $this.tableData = tableData
@@ -385,9 +403,13 @@ export default {
                     this.currentDate = this.answerRatioData
                     break;
                 case '8':
-                    this.currentDate = this.durationRatioData
+                    this.currentDate = this.durationAverageData
+                    break;
+                case '9':
+                    this.currentDate = this.arpuData
                     break;
             }
+            this.activeIndex = key
             this.$refs.chartsLine.init(this.currentDate);
         },
         changeArea(val){

@@ -75,7 +75,7 @@
                 <el-table-column prop="commissionIncome" label="用户充值分成" align="center"/>
                 <el-table-column prop="adjustIncome" label="奖惩收入" align="center"/>
                 <el-table-column prop="expense" label="消耗贡献" align="center"/>
-                <el-table-column prop="income" label="充值贡献" align="center"/>
+                <el-table-column prop="userIncome" label="引导用户充值贡献" align="center"/>
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -144,7 +144,7 @@ export default {
                         "commissionIncome" : item.getCommissionIncome(),
                         "adjustIncome" : item.getAdjustIncome(),
                         "expense" : item.getExpense(),
-                        "income" : item.getIncome()
+                        "userIncome" : item.getUserIncome()
                     }
                     data.push(json)
                 })

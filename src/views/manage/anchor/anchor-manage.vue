@@ -45,6 +45,25 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
+                            <el-form-item label="APP">
+                                <el-select v-model="search.appId" placeholder="请选择">
+                                    <el-option v-for="item in appList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                        <span style="float: left">{{ item.label }}</span>
+                                        <span v-if="item.os === 1">
+                                            <i class="icon-android-fill" style="float: right"></i>
+                                        </span>
+                                        <span v-else-if="item.os === 2">
+                                            <i class="icon-pingguo" style="float: right"></i>
+                                        </span>
+                                        <span v-if="item.isAnchor">
+                                            <i class="iconfont icon-zhuboguanli" style="float: right"></i>
+                                        </span>
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
                             <el-form-item label="审核状态" prop="reviewStatus">
                                 <el-select v-model="search.reviewStatus" placeholder="请选择">
                                     <el-option v-for="item in reviewStatus"
@@ -82,13 +101,6 @@
                                     start-placeholder="开始日期"
                                     end-placeholder="结束日期">
                                 </el-date-picker>
-<!--                                <el-col :span="11">-->
-<!--                                    <el-date-picker type="date" placeholder="开始时间" v-model="search.createdStart" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
-<!--                                </el-col>-->
-<!--                                <el-col class="line" :span="1" align="center">-</el-col>-->
-<!--                                <el-col :span="10">-->
-<!--                                    <el-date-picker type="date" placeholder="结束时间" v-model="search.createdEnd" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>-->
-<!--                                </el-col>-->
                             </el-form-item>
                         </div>
                     </el-collapse-item>
@@ -122,6 +134,9 @@
                             </span>
                             <span v-else-if="scope.row.app.os === 2">
                                 <i class="icon-pingguo"></i>
+                            </span>
+                            <span v-if="scope.row.app.isAnchor">
+                                <i class="iconfont icon-zhuboguanli"></i>
                             </span>
                         </div>
                     </template>
@@ -255,7 +270,7 @@ import {
     getAppName,
     getCurrentUserAreaId,
     getGuildListByAreaId,
-    ipToAddress
+    ipToAddress, getAppListByAreaId
 } from "@/utils/dist";
 import videoList from './dialog/video-list'
 import accountStatusList from './dialog/account-status-list'
@@ -284,6 +299,7 @@ export default {
                 areaId: undefined,
                 guildId: undefined,
                 blockStatus: undefined,
+                appId: undefined,
                 onlineStatus: 0,
                 reviewStatus: 0,
                 date: [],
@@ -307,7 +323,7 @@ export default {
             reviewStatus: getReviewStatus(),
             onlineStatus: getOnlineStatus(),
             blockStatusList : getBlockStatus(false),
-            appList: getAppList(true),
+            appList: [],
             appListAll: getAppList(false)
         }
     },
@@ -379,7 +395,7 @@ export default {
             this.search.page.pageSize = msg.limit
         },
         onSearch() {
-            this.search.currentPage = 1
+            this.search.page.currentPage = 1
             this.fetchData()
         },
         toDialog(component, row){
@@ -488,6 +504,8 @@ export default {
         },
         changeArea(val){
             this.guildList = getGuildListByAreaId(val, true)
+            let apps = getAppListByAreaId(val, false, true)
+            this.appList = apps.filter(item => item.isAnchor || item.value === 0)
         }
     }
 }

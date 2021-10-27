@@ -1668,6 +1668,7 @@ proto.pb.User.toObject = function(includeInstance, msg) {
     toyaId: jspb.Message.getFieldWithDefault(msg, 62, 0),
     toyaSyncedAt: jspb.Message.getFieldWithDefault(msg, 63, 0),
     toyaStatus: jspb.Message.getFieldWithDefault(msg, 64, 0),
+    toyaBalance: jspb.Message.getFieldWithDefault(msg, 65, 0),
     authsList: jspb.Message.toObjectList(msg.getAuthsList(),
     proto.pb.EntityAuth.toObject, includeInstance),
     isNew: jspb.Message.getBooleanFieldWithDefault(msg, 101, false),
@@ -1907,6 +1908,10 @@ proto.pb.User.deserializeBinaryFromReader = function(msg, reader) {
     case 64:
       var value = /** @type {!proto.pb.ToyaStatus} */ (reader.readEnum());
       msg.setToyaStatus(value);
+      break;
+    case 65:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setToyaBalance(value);
       break;
     case 100:
       var value = new proto.pb.EntityAuth;
@@ -2297,6 +2302,13 @@ proto.pb.User.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeEnum(
       64,
+      f
+    );
+  }
+  f = message.getToyaBalance();
+  if (f !== 0) {
+    writer.writeUint32(
+      65,
       f
     );
   }
@@ -3222,6 +3234,24 @@ proto.pb.User.prototype.getToyaStatus = function() {
  */
 proto.pb.User.prototype.setToyaStatus = function(value) {
   return jspb.Message.setProto3EnumField(this, 64, value);
+};
+
+
+/**
+ * optional uint32 toya_balance = 65;
+ * @return {number}
+ */
+proto.pb.User.prototype.getToyaBalance = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 65, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.User} returns this
+ */
+proto.pb.User.prototype.setToyaBalance = function(value) {
+  return jspb.Message.setProto3IntField(this, 65, value);
 };
 
 
@@ -12419,6 +12449,7 @@ proto.pb.PayRecord.toObject = function(includeInstance, msg) {
     amount: jspb.Message.getFieldWithDefault(msg, 19, 0),
     isSubscription: jspb.Message.getBooleanFieldWithDefault(msg, 20, false),
     queryAt: jspb.Message.getFieldWithDefault(msg, 21, 0),
+    receiptId: jspb.Message.getFieldWithDefault(msg, 22, 0),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 30, 0),
     createdAt: jspb.Message.getFieldWithDefault(msg, 31, 0)
   };
@@ -12540,6 +12571,10 @@ proto.pb.PayRecord.deserializeBinaryFromReader = function(msg, reader) {
     case 21:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setQueryAt(value);
+      break;
+    case 22:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setReceiptId(value);
       break;
     case 30:
       var value = /** @type {number} */ (reader.readUint32());
@@ -12722,6 +12757,13 @@ proto.pb.PayRecord.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint32(
       21,
+      f
+    );
+  }
+  f = message.getReceiptId();
+  if (f !== 0) {
+    writer.writeUint32(
+      22,
       f
     );
   }
@@ -13117,6 +13159,24 @@ proto.pb.PayRecord.prototype.getQueryAt = function() {
  */
 proto.pb.PayRecord.prototype.setQueryAt = function(value) {
   return jspb.Message.setProto3IntField(this, 21, value);
+};
+
+
+/**
+ * optional uint32 receipt_id = 22;
+ * @return {number}
+ */
+proto.pb.PayRecord.prototype.getReceiptId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.PayRecord} returns this
+ */
+proto.pb.PayRecord.prototype.setReceiptId = function(value) {
+  return jspb.Message.setProto3IntField(this, 22, value);
 };
 
 
@@ -16107,7 +16167,7 @@ proto.pb.StreamMessage.SubscribeBody.prototype.toObject = function(opt_includeIn
  */
 proto.pb.StreamMessage.SubscribeBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    anchorIdsList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
+    idsList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -16147,7 +16207,7 @@ proto.pb.StreamMessage.SubscribeBody.deserializeBinaryFromReader = function(msg,
     case 1:
       var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
       for (var i = 0; i < values.length; i++) {
-        msg.addAnchorIds(values[i]);
+        msg.addIds(values[i]);
       }
       break;
     default:
@@ -16179,7 +16239,7 @@ proto.pb.StreamMessage.SubscribeBody.prototype.serializeBinary = function() {
  */
 proto.pb.StreamMessage.SubscribeBody.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAnchorIdsList();
+  f = message.getIdsList();
   if (f.length > 0) {
     writer.writePackedUint32(
       1,
@@ -16190,10 +16250,10 @@ proto.pb.StreamMessage.SubscribeBody.serializeBinaryToWriter = function(message,
 
 
 /**
- * repeated uint32 anchor_ids = 1;
+ * repeated uint32 ids = 1;
  * @return {!Array<number>}
  */
-proto.pb.StreamMessage.SubscribeBody.prototype.getAnchorIdsList = function() {
+proto.pb.StreamMessage.SubscribeBody.prototype.getIdsList = function() {
   return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
@@ -16202,7 +16262,7 @@ proto.pb.StreamMessage.SubscribeBody.prototype.getAnchorIdsList = function() {
  * @param {!Array<number>} value
  * @return {!proto.pb.StreamMessage.SubscribeBody} returns this
  */
-proto.pb.StreamMessage.SubscribeBody.prototype.setAnchorIdsList = function(value) {
+proto.pb.StreamMessage.SubscribeBody.prototype.setIdsList = function(value) {
   return jspb.Message.setField(this, 1, value || []);
 };
 
@@ -16212,7 +16272,7 @@ proto.pb.StreamMessage.SubscribeBody.prototype.setAnchorIdsList = function(value
  * @param {number=} opt_index
  * @return {!proto.pb.StreamMessage.SubscribeBody} returns this
  */
-proto.pb.StreamMessage.SubscribeBody.prototype.addAnchorIds = function(value, opt_index) {
+proto.pb.StreamMessage.SubscribeBody.prototype.addIds = function(value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
@@ -16221,8 +16281,8 @@ proto.pb.StreamMessage.SubscribeBody.prototype.addAnchorIds = function(value, op
  * Clears the list making it empty but non-null.
  * @return {!proto.pb.StreamMessage.SubscribeBody} returns this
  */
-proto.pb.StreamMessage.SubscribeBody.prototype.clearAnchorIdsList = function() {
-  return this.setAnchorIdsList([]);
+proto.pb.StreamMessage.SubscribeBody.prototype.clearIdsList = function() {
+  return this.setIdsList([]);
 };
 
 

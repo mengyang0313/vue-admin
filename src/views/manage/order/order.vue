@@ -24,7 +24,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="是否订阅">
+                <el-form-item label="只看订阅">
                     <el-switch v-model="search.isSubscription"/>
                 </el-form-item>
                 <el-form-item style="padding-left: 20px">
@@ -38,6 +38,15 @@
                         <div>
                             <el-form-item label="渠道订单号" prop="payChannel">
                                 <el-input v-model="search.payChannel" placeholder="渠道订单号"/>
+                            </el-form-item>
+                            <el-form-item label="支付方式" prop="payType">
+                                <el-select v-model="search.payType" placeholder="请选择">
+                                    <el-option v-for="item in payTypeList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
                             </el-form-item>
                             <el-form-item label="区域" prop="areaId">
                                 <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
@@ -170,8 +179,10 @@ export default {
                 recordId: undefined,
                 date: [],
                 appId: undefined,
+                payChannel: undefined,
                 areaId: getCurrentUserAreaId(),
                 payStatus: 0,
+                isSubscription: false,
                 page: {
                     currentPage: 1,
                     pageSize: 10
@@ -183,7 +194,7 @@ export default {
             areaData: getAreaList(true),
             appList: getAppList(true, true),
             payStatus: getPayStatus(),
-            payTypeList: getPayType(),
+            payTypeList: getPayType(true),
             commodityList: getCommodityList()
         }
     },

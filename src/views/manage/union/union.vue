@@ -1,37 +1,31 @@
 <template>
     <div class="table-classic-wrapper">
         <el-card shadow="always">
-            <!-- 查询栏 -->
-<!--            <el-form-->
-<!--                ref="searchForm"-->
-<!--                :inline="true"-->
-<!--                :model="search"-->
-<!--                label-width="90px"-->
-<!--                class="search-form"-->
-<!--            >-->
-<!--                <el-form-item label="工会ID">-->
-<!--                    <el-input v-model="search.id" placeholder="工会ID"/>-->
-<!--                </el-form-item>-->
-<!--                <el-form-item label="区域">-->
-<!--                    <el-select v-model="search.areaId" placeholder="请选择">-->
-<!--                        <el-option v-for="item in areaData"-->
-<!--                                   :key="item.value"-->
-<!--                                   :label="item.label"-->
-<!--                                   :value="item.value">-->
-<!--                        </el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
-<!--                <el-form-item label="是否启用">-->
-<!--                    <el-switch v-model="search.enable"/>-->
-<!--                </el-form-item>-->
-<!--                <el-form-item style="padding-left: 20px">-->
-<!--                    <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>-->
-<!--                </el-form-item>-->
-<!--            </el-form>-->
             <!-- 操作栏 -->
             <div class="control-btns">
                 <el-button type="primary" @click="toDialog('edit', '')">+ 新增工会</el-button>
             </div>
+            <!-- 查询栏 -->
+            <el-form
+                ref="searchForm"
+                :inline="true"
+                :model="search"
+                label-width="90px"
+                class="search-form"
+            >
+                <el-form-item label="区域">
+                    <el-select v-model="search.areaId" placeholder="请选择">
+                        <el-option v-for="item in areaData"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item style="padding-left: 20px">
+                    <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
+                </el-form-item>
+            </el-form>
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
@@ -91,9 +85,7 @@ export default {
             listLoading: true,
             // 查询列表参数对象
             search: {
-                id: undefined,
-                areaData: undefined,
-                enable: true,
+                areaId: undefined,
                 page: {
                     currentPage: 1,
                     pageSize: 1000

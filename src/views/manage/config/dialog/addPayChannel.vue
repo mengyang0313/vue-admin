@@ -1,7 +1,7 @@
 <template>
     <el-dialog :title="title" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
-            <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
+            <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list" v-loading="formLoading">
 
                 <el-form-item label="区域" prop="areaId">
                     <el-select v-model="form.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
@@ -104,6 +104,7 @@ export default {
             title: '新增支付',
             iconArr: [],
             iconDialog: false,
+            formLoading: false,
             authAreaId: getCurrentUserAreaId(),
             areaList: getAreaList(false),
             appList: getAppList(),
@@ -155,6 +156,7 @@ export default {
         },
         closeDialog() {
             this.iconArr = []
+            this.formLoading = false
             this.dialogVisible = false
             this.resetForm()
             this.$emit('fetchData');
@@ -164,8 +166,10 @@ export default {
         },
         successIcon(file) {
             const $this = this
+            this.formLoading = true
             this.imgUpload(file.raw, 1, function (data){
                 $this.form.icon = data.uri
+                $this.formLoading = false
             })
         },
         imgUpload(file, type, callback){

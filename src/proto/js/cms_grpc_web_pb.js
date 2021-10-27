@@ -960,16 +960,16 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveGuild =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.pb.Empty,
+ *   !proto.pb.cms.GuildListRequest,
  *   !proto.pb.cms.GuildListReply>}
  */
 const methodDescriptor_CmsSdk_GetGuildList = new grpc.web.MethodDescriptor(
   '/pb.cms.CmsSdk/GetGuildList',
   grpc.web.MethodType.UNARY,
-  usertype_pb.Empty,
+  proto.pb.cms.GuildListRequest,
   proto.pb.cms.GuildListReply,
   /**
-   * @param {!proto.pb.Empty} request
+   * @param {!proto.pb.cms.GuildListRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -982,13 +982,13 @@ const methodDescriptor_CmsSdk_GetGuildList = new grpc.web.MethodDescriptor(
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.pb.Empty,
+ *   !proto.pb.cms.GuildListRequest,
  *   !proto.pb.cms.GuildListReply>}
  */
 const methodInfo_CmsSdk_GetGuildList = new grpc.web.AbstractClientBase.MethodInfo(
   proto.pb.cms.GuildListReply,
   /**
-   * @param {!proto.pb.Empty} request
+   * @param {!proto.pb.cms.GuildListRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -999,7 +999,7 @@ const methodInfo_CmsSdk_GetGuildList = new grpc.web.AbstractClientBase.MethodInf
 
 
 /**
- * @param {!proto.pb.Empty} request The
+ * @param {!proto.pb.cms.GuildListRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
@@ -1020,7 +1020,7 @@ proto.pb.cms.CmsSdkClient.prototype.getGuildList =
 
 
 /**
- * @param {!proto.pb.Empty} request The
+ * @param {!proto.pb.cms.GuildListRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata

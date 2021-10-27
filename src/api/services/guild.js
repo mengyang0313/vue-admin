@@ -15,7 +15,8 @@ export default class {
      * @returns {Promise<void>}
      */
     async getGuildList (param, callback) {
-        const req = new this.proto.Empty();
+        const req = new this.proto.GuildListRequest();
+        req.setAreaId(param.areaId)
         const metadata = {'token': getToken()};
         this.client.getGuildList(req, metadata, (err, resp) => {
             if (!err) {

@@ -15,6 +15,7 @@ export default class {
         req.setPageSize(param.page.pageSize)
         req.setAnchorId(param.anchorId)
         req.setAreaId(param.areaId)
+        req.setAppId(param.appId)
         req.setGuildId(param.guildId)
         req.setBlockStatus(param.blockStatus)
         req.setOnlineStatus(param.onlineStatus)

@@ -7,7 +7,7 @@
                         <div class="date-cont">
                             <div v-if="item.num === 3" style="display: inline">
                                 <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
                                 /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="1000"/>{{ item.unit }}
                             </div>
                             <div v-else-if="item.num === 2" style="display: inline">
@@ -194,13 +194,15 @@ export default {
             this.cardInfoData = []
             this.$service.home.getOverview(this.handleSearch(), function (result){
                 let income = result.getIncome()
+                let subIncome = result.getSubIncome()
                 let income_decimals = 0
                 if(income>0){
                     income = toDollar(income)
+                    subIncome = toDollar(subIncome)
                     income_decimals = 2
                 }
                 let inc = {
-                    title: '总收入/订阅收入/订单数', num: 3, count: income, count2: result.getSubIncome(), count3: result.getPayCount(), decimals: income_decimals
+                    title: '总收入/订阅收入/订单数', num: 3, count: income, count2: subIncome, count3: result.getPayCount(), decimals: income_decimals
                 }
                 let user = {
                     title: '新增/可通话/活跃用户', num: 3, count: result.getNewUser(), count2: result.getValidUser(), count3: result.getActiveUser(), decimals: 0

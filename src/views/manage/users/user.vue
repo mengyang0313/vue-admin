@@ -33,6 +33,22 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
+                            <el-form-item label="APP">
+                                <el-select v-model="search.appId" placeholder="请选择">
+                                    <el-option v-for="item in appList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                        <span style="float: left">{{ item.label }}</span>
+                                        <span v-if="item.os === 1">
+                                            <i class="icon-android-fill" style="float: right"></i>
+                                        </span>
+                                        <span v-else-if="item.os === 2">
+                                            <i class="icon-pingguo" style="float: right"></i>
+                                        </span>
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
                             <el-form-item label="VIP" prop="vipOnly">
                                 <el-select v-model="search.vipOnly" placeholder="请选择">
                                     <el-option v-for="item in boolDict"
@@ -186,7 +202,7 @@ import {
     getBlockStatus,
     getAppName,
     getGenderType,
-    getCurrentUserAreaId, getAppListByAreaId, ipToAddress
+    getCurrentUserAreaId, getAppListByAreaId, ipToAddress, getGuildListByAreaId
 } from "@/utils/dist";
 import {endUnix, startUnix, toTime} from "@/utils/util";
 
@@ -196,6 +212,7 @@ export default {
         return {
             listLoading: true,
             search: {
+                appId: undefined,
                 userId: undefined,
                 nickname: undefined,
                 date: [],
@@ -211,11 +228,13 @@ export default {
             total: 0,
             authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
+            appList: [],
             areaData: getAreaList(true),
             boolDict: getBool()
         }
     },
     created() {
+        this.changeArea(this.search.areaId)
         this.fetchData()
     },
     methods: {
@@ -334,6 +353,9 @@ export default {
         },
         resetForm() {
             this.$refs.searchForm.resetFields()
+        },
+        changeArea(val){
+            this.appList = getAppListByAreaId(val, true, true)
         }
     }
 }
