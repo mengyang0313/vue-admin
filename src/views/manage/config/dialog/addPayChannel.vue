@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType, getCurrentUserAreaId} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getOsType, getCurrentUserAreaId, initPayChannel} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 
@@ -143,6 +143,7 @@ export default {
                     this.$service.config.savePayChannel(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
+                            initPayChannel()
                             $this.closeDialog()
                         } else {
                             $this.$message.error("保存失败!")

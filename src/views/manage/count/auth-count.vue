@@ -1,55 +1,67 @@
 <template>
-    <div class="table-classic-wrapper">
-        <el-card shadow="always">
-            <!-- 查询栏 -->
-            <el-form
-                ref="searchForm"
-                :inline="true"
-                :model="search"
-                label-width="90px"
-                class="search-form"
-            >
-                <template>
-                    <el-form-item label="主播Id">
-                        <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
-                    </el-form-item>
-                    <el-form-item label="主播等级">
-                        <el-select v-model="search.level" placeholder="请选择">
-                            <el-option v-for="item in levelList"
-                                       :key="item.value"
-                                       :label="item.label"
-                                       :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="区域">
-                        <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
-                            <el-option v-for="item in areaList"
-                                       :key="item.value"
-                                       :label="item.label"
-                                       :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="日期" prop="settleAt">
-                        <el-date-picker
-                            v-model="search.settleAtTime"
-                            value-format="yyyy-MM-dd"
-                            type="date"
-                            placeholder="选择日期">
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSearch">查  询</el-button>
-                    </el-form-item>
-                </template>
-            </el-form>
+    <div class="home-wrapper">
+        <el-row class="date-box" :gutter="20">
+            <el-col :span="24">
+                <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
+                    <el-form
+                        ref="searchForm"
+                        :inline="true"
+                        :model="search"
+                        label-width="90px"
+                        class="search-form"
+                    >
+                        <template>
+                            <el-form-item label="主播Id">
+                                <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
+                            </el-form-item>
+                            <el-form-item label="主播等级">
+                                <el-select v-model="search.level" placeholder="请选择">
+                                    <el-option v-for="item in levelList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="区域">
+                                <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                                    <el-option v-for="item in areaList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="日期" prop="settleAt">
+                                <el-date-picker
+                                    v-model="search.settleAtTime"
+                                    value-format="yyyy-MM-dd"
+                                    type="date"
+                                    placeholder="选择日期">
+                                </el-date-picker>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="onSearch">查  询</el-button>
+                            </el-form-item>
+                        </template>
+                    </el-form>
+                </el-card>
+            </el-col>
+        </el-row>
 
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                <el-menu-item index="1">实时</el-menu-item>
-                <el-menu-item index="2">上周</el-menu-item>
-            </el-menu>
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="selItem">
+            <el-menu-item index="1">AIB接通率</el-menu-item>
+            <el-menu-item index="2">接通率</el-menu-item>
+        </el-menu>
 
+        <el-row class="date-box" :gutter="30">
+            <el-col :span="24">
+                <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
+                    <ChartsLine :data="aibData" ref="chartsLine" class="data-chart"/>
+                </el-card>
+            </el-col>
+        </el-row>
+        <el-card shadow="always" style="padding-top: 30px;padding-bottom: 50px">
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
@@ -85,13 +97,22 @@
 </template>
 
 <script>
+import CountTo from 'vue-count-to'
+import ChartsLine from '../../../components/Charts/ChartsLine'
 import Pagination from '../../../components/Pagination'
-import {getAreaList, getAnchorLevel, getArrName, getCurrentUserAreaId} from "@/utils/dist";
-import {getCurrentDate, startUnix, toDate} from "@/utils/util"
-
+import {
+    getAnchorLevel,
+    getAppListByAreaId,
+    getAppName,
+    getAreaList,
+    getArrName,
+    getCurrentUserAreaId,
+} from "@/utils/dist";
+import {endUnix, getCurrentDate, startUnix, toDate, toDollar} from "@/utils/util";
 
 export default {
-    components: { Pagination },
+    name: 'Home',
+    components: {CountTo, ChartsLine, Pagination},
     data() {
         return {
             listLoading: true,
@@ -106,23 +127,44 @@ export default {
                 }
             },
             total: 0,
+            activeIndex: '1',
+            fmt: 'hh:mm',
+            currentDate: {},
             authAreaId: getCurrentUserAreaId(),
-            isSubmit: false,
-            activeIndex: 1,
             areaList: getAreaList(false),
-            levelList: getAnchorLevel()
+            levelList: getAnchorLevel(),
+            aibData: {
+                title: 'AIB接通率',
+                legend: ['AIB接通率'],
+                values: []
+            },
+            anchorData: {
+                title: '接通率',
+                legend: ['接通率'],
+                values: []
+            }
         }
     },
-    created() {
-        this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
-        this.fetchData()
+    mounted() {
+        this.init()
     },
     methods: {
+        init(){
+            this.search.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
+            this.changeArea(this.search.areaId)
+            this.fetchData()
+            this.initCount()
+        },
         // 获取数据列表
         fetchData() {
             const $this = this
             this.listLoading = true
-            this.$service.home.getAnchorStat(this.handleParam(), function (result){
+            let param = this.search;
+            param.statAt = startUnix(new Date(this.search.settleAtTime))
+            if (typeof(this.search.anchorId) != "undefined"){
+                param.anchorId = parseInt(this.search.anchorId)
+            }
+            this.$service.home.getAnchorStat(param, function (result){
                 const list = result.getStatsList()
                 const data = []
                 list.forEach((item, index) => {
@@ -153,17 +195,47 @@ export default {
                 $this.listLoading = false
             });
         },
-        handleParam(){
+        initCount(){
+            const $this = this
             let param = this.search;
-            param.statAt = startUnix(new Date(this.search.settleAtTime))
-            if (typeof(this.search.anchorId) != "undefined"){
-                param.anchorId = parseInt(this.search.anchorId)
-            }
-            return param
+            let date = new Date(this.search.settleAtTime)
+            param.startAt = startUnix(date)
+            param.endAt = endUnix(date)
+            this.$service.home.getAreaStat(param, function (result){
+                let statList = result.getStatsList()
+                let keys = []
+                let aib = []
+                let anchor = []
+                statList.forEach((item, index) => {
+                    let startAt = item.getStartAt()
+                    keys.push(new Date(startAt * 1000).format("hh:mm"))
+
+                    let aibRatio = $this.toRatio(item.getAiCalling(), item.getAiCall())
+                    aib.push(aibRatio)
+
+                    let totalCall = item.getAiCall() + item.getAnchorCall() + item.getAnchorCall()
+                    let totalAnswer = item.getUserAnswer() + item.getAnchorAnswer()
+                    let anchorRatio = $this.toRatio(totalAnswer, totalCall)
+                    anchor.push(anchorRatio)
+                })
+
+                //aib接通率
+                $this.aibData.keys = keys
+                $this.aibData.values = []
+                $this.aibData.values.push(aib)
+
+                //主播接通率
+                $this.anchorData.keys = keys
+                $this.anchorData.values = []
+                $this.anchorData.values.push(anchor)
+
+                $this.selItem($this.activeIndex)
+            });
         },
         onSearch() {
             this.search.page.currentPage = 1
             this.fetchData()
+            this.initCount()
         },
         toDialog(component, row){
             this.$refs[component].dialogVisible = true
@@ -174,13 +246,18 @@ export default {
         resetForm() {
             this.search = this.initQuery();
         },
-        handleSelect(key, keyPath) {
+        selItem(key) {
+            this.currentDate = {}
             switch (key){
                 case '1':
+                    this.currentDate = this.aibData
                     break;
                 case '2':
+                    this.currentDate = this.anchorData
                     break;
             }
+            this.activeIndex = key
+            this.$refs.chartsLine.init(this.currentDate);
         },
         formatSeconds(value) {
             let result = parseInt(value)
@@ -191,11 +268,32 @@ export default {
             let res = '';
             if(m !== '00') res += `${h}:${m}`;
             return res;
+        },
+        toRatio(num, total){
+            num = parseFloat(num);
+            total = parseFloat(total);
+            if (isNaN(num) || isNaN(total)) {
+                return 0;
+            }
+            return total <= 0 ? 0 : (Math.round(num / total * 10000) / 100.00);
+        },
+        toAve(num, total){
+            if (total === 0) {
+                return num
+            }else {
+                return Math.round(num / total)
+            }
+        },
+        changeArea(val){
+            this.appList = getAppListByAreaId(val, true, true)
         }
     }
 }
 </script>
 
+<style lang="less">
+@import "../../../assets/less/home";
+</style>
 <style lang="less">
 .table-classic-wrapper {
     .el-card {

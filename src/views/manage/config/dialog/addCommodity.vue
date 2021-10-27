@@ -109,7 +109,7 @@ import {
     getOsType,
     getCurrentUserAreaId,
     getAppListByAreaId,
-    getPayChannelList
+    getPayChannelList, initApps, initCommodity
 } from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
@@ -167,6 +167,7 @@ export default {
                     this.$service.config.saveCommodity(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
+                            initCommodity()
                             $this.closeDialog()
                         } else {
                             $this.$message.error("保存失败!")

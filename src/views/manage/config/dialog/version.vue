@@ -35,12 +35,12 @@
                 </el-table-column>
                 <el-table-column prop="enable" label="是否启用" align="center" width="90">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.enable" disabled/>
+                        <el-switch v-model="scope.row.enable" :disabled="!scope.row.editable"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="inReview" label="是否审核中" align="center" width="90">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.inReview" disabled/>
+                        <el-switch v-model="scope.row.inReview" :disabled="!scope.row.editable"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="note" label="备注" align="center" >

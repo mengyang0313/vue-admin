@@ -67,8 +67,9 @@
             <el-menu-item index="3">整体付费率</el-menu-item>
             <el-menu-item index="4">新增付费率</el-menu-item>
             <el-menu-item index="5">新增用户数</el-menu-item>
-<!--            <el-menu-item index="6">活跃的付费用户数</el-menu-item>-->
-            <el-menu-item index="7">电话接通率</el-menu-item>
+            <el-menu-item index="10">活跃用户数</el-menu-item>
+            <el-menu-item index="6">付费用户数</el-menu-item>
+            <el-menu-item index="7">接通率</el-menu-item>
             <el-menu-item index="8">平均通话时长</el-menu-item>
             <el-menu-item index="9">APUR</el-menu-item>
         </el-menu>
@@ -110,8 +111,8 @@
             <el-table-column prop="payPaidRatio" label="整体付费率" align="center" width="120"/>
             <el-table-column prop="newPayPaidRatio" label="新增付费率" align="center" width="120"/>
             <el-table-column prop="newUser" label="新增用户数" align="center" width="120"/>
-<!--            <el-table-column prop="payUser" label="活跃的付费用户数" align="center"/>-->
-            <el-table-column prop="answerRatio" label="电话接通率" align="center"/>
+            <el-table-column prop="payUser" label="付费用户数" align="center"/>
+            <el-table-column prop="answerRatio" label="接通率" align="center"/>
             <el-table-column prop="durationRatio" label="平均通话时长" align="center"/>
             <el-table-column prop="arpu" label="ARPU" align="center"/>
         </el-table>
@@ -141,9 +142,7 @@ export default {
     components: {CountTo, ChartsLine, Pagination},
     data() {
         return {
-            // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
             search: {
                 areaId: 0,
                 appId: 0,
@@ -185,6 +184,12 @@ export default {
                 keys: [],
                 values: []
             },
+            activeUserData: {
+                title: '活跃用户数',
+                legend: ['活跃用户'],
+                keys: [],
+                values: []
+            },
             newUserData: {
                 title: '新增用户数',
                 legend: ['新增用户'],
@@ -192,7 +197,7 @@ export default {
                 values: []
             },
             payUserData: {
-                title: '活跃的付费用户数',
+                title: '付费用户数',
                 legend: ['付费率用户'],
                 keys: [],
                 values: []
@@ -241,6 +246,7 @@ export default {
                 let newIncomes = []
                 let payPaidRatios = []
                 let newPayPaidRatios = []
+                let activeUser = []
                 let newUser = []
                 let payUser = []
                 let answerRatios = []
@@ -257,6 +263,8 @@ export default {
 
                     let newPayPaidRatio = $this.toRatio(item.getNewPayUser(), item.getNewUser())
                     newPayPaidRatios.push(newPayPaidRatio)
+
+                    activeUser.push(item.getActiveUser())
 
                     newUser.push(item.getNewUser())
 
@@ -287,7 +295,7 @@ export default {
                         "payUser" : item.getPayUser(),
                         "answerRatio" : answerRatio,
                         "durationRatio" : durationAverage,
-                        "arpu" : arpu
+                        "arpu" : toDollar(arpu)
                     }
                     tableData.push(json)
                 })
@@ -311,17 +319,22 @@ export default {
                 $this.newPayPaidRatioData.values = []
                 $this.newPayPaidRatioData.values.push(newPayPaidRatios)
 
+                //活跃用户数
+                $this.activeUserData.keys = keys
+                $this.activeUserData.values = []
+                $this.activeUserData.values.push(activeUser)
+
                 //新增用户数
                 $this.newUserData.keys = keys
                 $this.newUserData.values = []
                 $this.newUserData.values.push(newUser)
 
-                //活跃的付费用户数
+                //付费用户数
                 $this.payUserData.keys = keys
                 $this.payUserData.values = []
                 $this.payUserData.values.push(payUser)
 
-                //电话接通率
+                //接通率
                 $this.answerRatioData.keys = keys
                 $this.answerRatioData.values = []
                 $this.answerRatioData.values.push(answerRatios)
@@ -407,6 +420,9 @@ export default {
                     break;
                 case '9':
                     this.currentDate = this.arpuData
+                    break;
+                case '10':
+                    this.currentDate = this.activeUserData
                     break;
             }
             this.activeIndex = key

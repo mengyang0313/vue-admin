@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {getAreaList, getAppList, getPayType, getOsType} from "@/utils/dist";
+import {getAreaList, getAppList, getPayType, getOsType, initApps} from "@/utils/dist";
 import {getToken} from "@/utils/cookie";
 import axios from "axios";
 
@@ -126,6 +126,7 @@ export default {
                     this.$service.config.saveApp(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
+                            initApps()
                             $this.closeDialog()
                         } else {
                             $this.$message.error("保存失败!")

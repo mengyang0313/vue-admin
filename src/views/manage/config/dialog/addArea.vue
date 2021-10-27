@@ -114,7 +114,14 @@
 </template>
 
 <script>
-import {getAreaList, getPayType, getPayChannelList, getAppListByAreaId, getCurrentUserAreaId} from "@/utils/dist";
+import {
+    getAreaList,
+    getPayType,
+    getPayChannelList,
+    getAppListByAreaId,
+    getCurrentUserAreaId,
+    initAreas
+} from "@/utils/dist";
 import {isEmpty} from "@/api/api";
 
 export default {
@@ -199,6 +206,7 @@ export default {
                     this.$service.config.saveAreaConfig(param, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
+                            initAreas()
                             $this.closeDialog()
                         } else {
                             $this.$message.error("保存失败!")

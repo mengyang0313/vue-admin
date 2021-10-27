@@ -41,7 +41,7 @@
 <script>
 
 import { boolDict} from '@/dict/index'
-import {getAreaList, getBool, getCurrentUserAreaId} from "@/utils/dist";
+import {getAreaList, getBool, getCurrentUserAreaId, initAreas, initGuilds} from "@/utils/dist";
 
 export default {
     name: 'Form',
@@ -89,6 +89,7 @@ export default {
                     this.$service.guild.saveGuild(this.form, function (result){
                         if (result) {
                             $this.$message.success("保存成功!")
+                            initGuilds()
                             $this.closeDialog()
                         } else {
                             $this.$message.error("保存失败!")

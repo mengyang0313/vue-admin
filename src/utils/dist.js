@@ -8,26 +8,17 @@ import {loginOut} from "@/utils/error";
 
 export async function initData() {
     let areaArr = await initAreas()
-    sessionStorage.setItem("areaArr", JSON.stringify(areaArr));
     // getAreaList()
     // getGuildList()
     // getAppList()
     // getPayChannelList()
     // getCommodityList()
     let guildArr = await initGuilds()
-    sessionStorage.setItem("guildArr", JSON.stringify(guildArr));
-
     let currentUser = await initCurrentUserInfo()
-    sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-    let apps = await getApps()
-    sessionStorage.setItem("appArr", JSON.stringify(apps));
-
+    let apps = await initApps()
     let payChannelArr = await initPayChannel()
-    sessionStorage.setItem("payChannelArr", JSON.stringify(payChannelArr));
-
     let commodityArr = await initCommodity()
-    sessionStorage.setItem("commodityArr", JSON.stringify(commodityArr));
+
 }
 
 // export function initAsyncData(){
@@ -55,6 +46,7 @@ export const initCurrentUserInfo = () => new Promise((resolve, reject) => {
                 appIds : resp.getAppIdsList(),
                 modules : resp.getModules()
             }
+            sessionStorage.setItem("currentUser", JSON.stringify(json));
             resolve(json)
         } else {
             console.log("initCurrentUserInfo :" + err)
@@ -100,6 +92,7 @@ export const initAreas = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
+            sessionStorage.setItem("areaArr", JSON.stringify(arr));
             resolve(arr)
         } else {
             console.log("initAreas:" + err)
@@ -110,9 +103,7 @@ export const initAreas = () => new Promise((resolve, reject) => {
 export function getAreaList(isShowAll) {
     let json = sessionStorage.getItem("areaArr");
     if (isEmpty(json)) {
-        initAreas().then(r => {
-            sessionStorage.setItem("areaArr", JSON.stringify(r));
-        })
+        initAreas().then()
     }else{
         let arr = JSON.parse(json)
         return setOk(isShowAll, arr)
@@ -138,6 +129,8 @@ export const initGuilds = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
+            console.log("初始化工会:" + JSON.stringify(arr))
+            sessionStorage.setItem("guildArr", JSON.stringify(arr))
             resolve(arr)
         } else {
             console.log("initGuilds:" +err)
@@ -148,9 +141,7 @@ export const initGuilds = () => new Promise((resolve, reject) => {
 export function getGuildList(isShowAll) {
     let json = sessionStorage.getItem("guildArr");
     if (isEmpty(json)) {
-        initGuilds().then(r => {
-            sessionStorage.setItem("guildArr", JSON.stringify(r));
-        })
+        initGuilds().then()
     }else{
         let arr = JSON.parse(json)
         return setOk(isShowAll, arr)
@@ -189,6 +180,7 @@ export const initApps = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
+            sessionStorage.setItem("appArr", JSON.stringify(arr));
             resolve(arr)
         } else {
             console.log("initApps:" + err)
@@ -196,18 +188,11 @@ export const initApps = () => new Promise((resolve, reject) => {
     })
 })
 
-export async function getApps(isNoAnchor, isShowAll) {
-    let arr = await initApps()
-    return arr
-}
-
 export function getAppList(isNoAnchor, isShowAll) {
     let json = sessionStorage.getItem("appArr");
     let arr = []
     if (isEmpty(json)) {
-        initApps().then(r => {
-            sessionStorage.setItem("appArr", JSON.stringify(r));
-        })
+        initApps().then()
     }else{
         arr = JSON.parse(json)
     }
@@ -258,6 +243,7 @@ export const initPayChannel = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
+            sessionStorage.setItem("payChannelArr", JSON.stringify(arr));
             resolve(arr)
         } else {
             console.log("initPayChannel:" +err)
@@ -269,10 +255,7 @@ export const initPayChannel = () => new Promise((resolve, reject) => {
 export function getPayChannelList(areaId) {
     let str = sessionStorage.getItem("payChannelArr");
     if (isEmpty(str)) {
-        initPayChannel().then(r => {
-            console.log("init PayChannel list: "+ r)
-            sessionStorage.setItem("payChannelArr", JSON.stringify(r));
-        })
+        initPayChannel().then()
     }else{
         let arr = JSON.parse(str)
         let result = []
@@ -305,6 +288,7 @@ export const initCommodity = () => new Promise((resolve, reject) => {
                 }
                 arr.push(json)
             })
+            sessionStorage.setItem("commodityArr", JSON.stringify(arr));
             resolve(arr)
         } else {
             console.log("initCommodity:" +err)
@@ -315,13 +299,9 @@ export const initCommodity = () => new Promise((resolve, reject) => {
 export function getCommodityList() {
     let str = sessionStorage.getItem("commodityArr");
     if (isEmpty(str)) {
-        initCommodity().then(r => {
-            console.log("init Commodity list: "+ r)
-            sessionStorage.setItem("commodityArr", JSON.stringify(r));
-        })
+        initCommodity().then()
     }else{
         let arr = JSON.parse(str)
-
         return setOk(false, arr)
     }
 }
