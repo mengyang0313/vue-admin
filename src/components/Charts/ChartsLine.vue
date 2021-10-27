@@ -4,6 +4,7 @@
 
 <script>
 import echarts from 'echarts'
+import {isEmpty} from "@/api/api";
 
 export default {
     name: 'ChartsLine',
@@ -35,6 +36,8 @@ export default {
         },
         drawing() {
             const title = this.data.title
+            let unit = this.data.unit
+            unit = isEmpty(unit) ? ' ' : unit
             const legendData = this.data.legend
             const xAxisData = this.data.keys
             const seriesData = []
@@ -62,7 +65,8 @@ export default {
                         crossStyle: {
                             color: '#999'
                         }
-                    }
+                    },
+                    formatter: '{b} <br/>{a} : {c} ' + unit
                 },
                 toolbox: {
                     feature: {
@@ -85,11 +89,7 @@ export default {
                 xAxis: [
                     {
                         type: 'category',
-                        data: xAxisData,
-                        axisTick: {
-                            alignWithLabel: true,
-                            type: 'shadow'
-                        }
+                        data: xAxisData
                     }
                 ],
                 yAxis: [

@@ -817,6 +817,21 @@ export function getActionType(isShowAll, key){
         }, {
             value: 6,
             label: '发送礼物'
+        }, {
+            value: 7,
+            label: '主播打招呼'
+        }, {
+            value: 8,
+            label: '引导充值'
+        }, {
+            value: 9,
+            label: '引导送礼'
+        }, {
+            value: 10,
+            label: '引导通话'
+        }, {
+            value: 11,
+            label: '主播拒绝接听警告'
         }]
     if(typeof(key) != "undefined"){
         let label = ""

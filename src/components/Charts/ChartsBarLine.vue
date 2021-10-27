@@ -78,7 +78,12 @@ export default {
                         type: 'category',
                         data: xAxisData,
                         axisPointer: {
-                            type: 'shadow'
+                            type: 'shadow',
+                            color: '#cec92b'
+                        },
+                        textBorderColor: '#cec92b',
+                        nameTextStyle: {
+                            textBorderColor: '#cec92b'
                         }
                     }
                 ],

@@ -71,7 +71,7 @@
             <el-menu-item index="6">付费用户数</el-menu-item>
             <el-menu-item index="7">接通率</el-menu-item>
             <el-menu-item index="8">平均通话时长</el-menu-item>
-            <el-menu-item index="9">APUR</el-menu-item>
+            <el-menu-item index="9">ARPU</el-menu-item>
         </el-menu>
 
         <el-row class="date-box" :gutter="30">
@@ -287,36 +287,40 @@ export default {
                         "app" : getAppName($this.appList, item.getAppId()),
                         "areaId" : item.getAreaId(),
                         "areaName" : getArrName($this.areaListAll, item.getAreaId()),
-                        "income" : toDollar(item.getIncome()),
-                        "newIncome" : toDollar(item.getNewIncome()),
-                        "payPaidRatio" : payPaidRatio,
-                        "newPayPaidRatio" : newPayPaidRatio,
+                        "income" : toDollar(item.getIncome())+ "$",
+                        "newIncome" : toDollar(item.getNewIncome())+ "$",
+                        "payPaidRatio" : payPaidRatio+ "%",
+                        "newPayPaidRatio" : newPayPaidRatio+ "%",
                         "newUser" : item.getNewUser(),
                         "payUser" : item.getPayUser(),
-                        "answerRatio" : answerRatio,
+                        "answerRatio" : answerRatio+ "%",
                         "durationRatio" : durationAverage,
-                        "arpu" : toDollar(arpu)
+                        "arpu" : toDollar(arpu)+ "$"
                     }
                     tableData.push(json)
                 })
                 //整体收入
                 $this.incomeData.keys = keys
                 $this.incomeData.values = []
+                $this.incomeData.unit = '$'
                 $this.incomeData.values.push(incomes)
 
                 //新增收入
                 $this.newIncomeData.keys = keys
                 $this.newIncomeData.values = []
+                $this.newIncomeData.unit = '$'
                 $this.newIncomeData.values.push(newIncomes)
 
                 //整体付费率
                 $this.payPaidRatioData.keys = keys
                 $this.payPaidRatioData.values = []
+                $this.payPaidRatioData.unit = '%'
                 $this.payPaidRatioData.values.push(payPaidRatios)
 
                 //新增付费率
                 $this.newPayPaidRatioData.keys = keys
                 $this.newPayPaidRatioData.values = []
+                $this.newPayPaidRatioData.unit = '%'
                 $this.newPayPaidRatioData.values.push(newPayPaidRatios)
 
                 //活跃用户数
@@ -337,16 +341,19 @@ export default {
                 //接通率
                 $this.answerRatioData.keys = keys
                 $this.answerRatioData.values = []
+                $this.answerRatioData.unit = '%'
                 $this.answerRatioData.values.push(answerRatios)
 
                 //平均通话时长
                 $this.durationAverageData.keys = keys
                 $this.durationAverageData.values = []
+                $this.durationAverageData.unit = 'S'
                 $this.durationAverageData.values.push(durationAverages)
 
                 // ARPU
                 $this.arpuData.keys = keys
                 $this.arpuData.values = []
+                $this.arpuData.unit = '$'
                 $this.arpuData.values.push(arpus)
 
                 $this.total = tableData.length

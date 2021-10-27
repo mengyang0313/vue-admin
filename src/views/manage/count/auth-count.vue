@@ -222,11 +222,13 @@ export default {
                 //aib接通率
                 $this.aibData.keys = keys
                 $this.aibData.values = []
+                $this.aibData.unit = '%'
                 $this.aibData.values.push(aib)
 
                 //主播接通率
                 $this.anchorData.keys = keys
                 $this.anchorData.values = []
+                $this.anchorData.unit = '%'
                 $this.anchorData.values.push(anchor)
 
                 $this.selItem($this.activeIndex)

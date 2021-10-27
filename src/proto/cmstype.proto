@@ -365,6 +365,8 @@ enum ActionType {
     ActionAskGift = 9;
     // 引导通话
     ActionAskCall = 10;
+    // 主播拒绝接听警告
+    ActionWarnNoAnswer = 11;
 }
 
 message RobotMessage {

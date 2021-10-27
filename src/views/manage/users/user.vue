@@ -24,6 +24,9 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="只看VIP">
+                    <el-switch v-model="search.vipOnly"/>
+                </el-form-item>
                 <el-form-item style="padding-left: 20px">
                     <el-button @click="onSearch" type="primary" size="small" style="width: 120px;">查&nbsp;&nbsp;询</el-button>
                 </el-form-item>
@@ -33,6 +36,9 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
+                            <el-form-item label="仅查询充值">
+                                <el-switch v-model="search.depositOnly"/>
+                            </el-form-item>
                             <el-form-item label="APP">
                                 <el-select v-model="search.appId" placeholder="请选择">
                                     <el-option v-for="item in appList"
@@ -46,24 +52,6 @@
                                         <span v-else-if="item.os === 2">
                                             <i class="icon-pingguo" style="float: right"></i>
                                         </span>
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="VIP" prop="vipOnly">
-                                <el-select v-model="search.vipOnly" placeholder="请选择">
-                                    <el-option v-for="item in boolDict"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="是否付费" prop="depositOnly">
-                                <el-select v-model="search.depositOnly" placeholder="请选择">
-                                    <el-option v-for="item in boolDict"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
                                     </el-option>
                                 </el-select>
                             </el-form-item>

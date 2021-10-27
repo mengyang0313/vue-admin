@@ -238,34 +238,38 @@ export default {
                 let channelArr = []
                 statList.forEach(item => {
                     let app = getAppName($this.appList, item.getAppId())
-                    let osStr = app.os === 1 ? "🤖" : "";
-                    let title = app.label + osStr
+                    let osColor = app.os === 1 ? "#d4ec98" : "#080808";
+                    let title = app.label
 
                     if(item.getNewIncome() > 0){
                         newArr.push({
                             title: title,
-                            val1: toDollar(item.getNewIncome())
+                            val1: toDollar(item.getNewIncome()),
+                            osColor: osColor
                         })
                     }
 
                     if(item.getSubIncome() > 0){
                         subArr.push({
                             title: title,
-                            val1: toDollar(item.getSubIncome())
+                            val1: toDollar(item.getSubIncome()),
+                            osColor: osColor
                         })
                     }
 
                     if(item.getTotalIncome()>0){
                         totalArr.push({
                             title: title,
-                            val1: toDollar(item.getTotalIncome())
+                            val1: toDollar(item.getTotalIncome()),
+                            osColor: osColor
                         })
                     }
 
                     if(item.getNewUser()>0){
                         userArr.push({
                             title: title,
-                            val1: item.getNewUser()
+                            val1: item.getNewUser(),
+                            osColor: osColor
                         })
                     }
 
@@ -278,7 +282,8 @@ export default {
                             val1: googleIncome,
                             val2: appleIncome,
                             val3: otherIncome,
-                            total: googleIncome + appleIncome + otherIncome
+                            total: googleIncome + appleIncome + otherIncome,
+                            osColor: osColor
                         })
                     }
                 })
