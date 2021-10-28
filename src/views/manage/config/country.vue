@@ -91,6 +91,7 @@ import addCountry from './dialog/addCountry'
 import payConfig from './dialog/payConfig'
 import approximationConfig from './dialog/approximationConfig'
 import {getAreaList, getArrName, getPayType, getPayChannelList, getCurrentUserAreaId} from "@/utils/dist"
+import {isEmpty} from "@/api/api";
 
 export default {
     components: { Pagination, Hints, imageShow, addCountry, payConfig, approximationConfig },
@@ -120,8 +121,8 @@ export default {
     watch: {
         $route: {
             handler() {
-                if (typeof(this.$route.query.areaId) !== "undefined"){
-                    let areaId = this.$route.query.areaId
+                let areaId = this.$route.query.areaId
+                if (!isEmpty(areaId)){
                     this.search.areaId = Number(areaId)
                     this.search.areaName = this.$route.query.areaName
                     this.isHints = false

@@ -203,7 +203,7 @@ export default {
                 values: []
             },
             answerRatioData: {
-                title: '电话接通率',
+                title: '接通率',
                 legend: ['接通率'],
                 keys: [],
                 values: []

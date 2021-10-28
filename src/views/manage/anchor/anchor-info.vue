@@ -296,6 +296,7 @@ import {
 import videoList from '../audit/dialog/video-list'
 import photoList from '../audit/dialog/photo-list'
 import {toDate, toTime} from "@/utils/util";
+import {isEmpty} from "@/api/api";
 
 export default {
     name: 'Table',
@@ -331,8 +332,11 @@ export default {
     watch: {
         $route: {
             handler(newName, oldName) {
-                this.search.id = this.$route.query.id
-                this.fetchData()
+                let id = this.$route.query.id
+                if(!isEmpty(id)){
+                    this.search.id = id
+                    this.fetchData()
+                }
             },
             deep: true
         }

@@ -96,6 +96,7 @@ import addRobotMessage from './dialog/add-robot-message'
 import Hints from '../../../components/Hints'
 import {getActionType, getMessageType} from "@/utils/dist"
 import VueVideoPlayer from '../../../components/VueVideoPlayer'
+import {isEmpty} from "@/api/api";
 
 export default {
     name: 'Table',
@@ -128,9 +129,13 @@ export default {
     watch: {
         $route: {
             handler() {
-                this.search.robotId = this.$route.query.robotId
-                this.search.nickname = this.$route.query.nickname
-                this.fetchData()
+                let robotId = this.$route.query.robotId
+                let nickname = this.$route.query.nickname
+                if(!isEmpty(robotId)){
+                    this.search.entityId = robotId
+                    this.search.nickname = nickname
+                    this.fetchData()
+                }
             },
             deep: true
         }

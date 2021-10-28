@@ -76,7 +76,7 @@
                 <el-table-column prop="thumb" label="文件" align="center" width="200">
                     <template scope="scope">
                         <div v-if="scope.row.type === 4">
-                            <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
+                            <el-image contain style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
                         </div>
                         <div v-if="scope.row.type === 5">
                             <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>

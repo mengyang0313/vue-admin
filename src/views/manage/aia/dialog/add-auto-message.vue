@@ -171,7 +171,7 @@ export default {
                 this.isText = false
                 this.fileType = 2
                 this.form.text = ''
-            }else if(6 === val){
+            }else if(6 === val || 8 === val){
                 this.isText = false
                 this.fileType = 3
                 this.form.text = ''

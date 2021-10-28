@@ -29,7 +29,7 @@
                 <el-table-column prop="content" label="内容" align="center" width="350" />
                 <el-table-column prop="images" label="图片" align="center" width="120">
                     <template scope="scope">
-                        <el-image v-if="scope.row.images[0]" fit="contain" style="width: 50px; height: 50px" :src="scope.row.images[0]" :preview-src-list="scope.row.images"/>
+                        <el-image v-if="scope.row.images[0]" contain style="width: 50px; height: 50px" :src="scope.row.images[0]" :preview-src-list="scope.row.images"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="thumb" label="视频" align="center" width="150">
@@ -72,6 +72,7 @@ import Hints from '../../../components/Hints'
 import {getArrName, getAreaList, getReviewStatus} from "@/utils/dist";
 import {toTime} from "@/utils/util";
 import VueVideoPlayer from '../../../components/VueVideoPlayer'
+import {isEmpty} from "@/api/api";
 
 
 export default {
@@ -107,9 +108,13 @@ export default {
     watch: {
         $route: {
             handler(newName, oldName) {
-                this.search.entityId = this.$route.query.robotId
-                this.search.nickname = this.$route.query.nickname
-                this.fetchData()
+                let robotId = this.$route.query.robotId
+                let nickname = this.$route.query.nickname
+                if(!isEmpty(robotId)){
+                    this.search.entityId = robotId
+                    this.search.nickname = nickname
+                    this.fetchData()
+                }
             },
             deep: true
         }

@@ -184,7 +184,7 @@ export default {
                 this.fileType = 2
                 this.form.text = ''
                 this.accept = 'video/*'
-            }else if(6 === val){
+            }else if(6 === val || 8 === val){
                 this.isText = false
                 this.fileType = 3
                 this.form.text = ''
