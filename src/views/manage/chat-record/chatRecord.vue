@@ -119,11 +119,18 @@
                         <div v-if="scope.row.type === 1">
                             {{ scope.row.text }}
                         </div>
-                        <div v-else-if="scope.row.type === 4">
-                            <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
+                        <div v-if="scope.row.type === 4">
+                            <el-image contain style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
                         </div>
-                        <div v-else-if="scope.row.type === 5">
-                            <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        <div v-if="scope.row.type === 5 || scope.row.type === 8">
+                            <div @click="play(scope.row)">
+                                <el-image style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                            </div>
+                        </div>
+                        <div v-if="scope.row.type === 6">
+                            <div v-if="scope.row.uri">
+                                <m-audio :src="scope.row.uri" ></m-audio>
+                            </div>
                         </div>
                         <div v-else>
                             {{ scope.row.text }}
@@ -143,7 +150,15 @@
 
             <!-- 对话 弹出栏 -->
             <showDialog ref="showDialog"/>
-
+            <el-dialog
+                title="播放视频"
+                :visible.sync="playVisible"
+                :before-close="closeVideo"
+                :append-to-body="true">
+                <div class="content-item">
+                    <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
+                </div>
+            </el-dialog>
         </el-card>
     </div>
 </template>
@@ -152,6 +167,7 @@
 import "@/assets/icon/iconfont.css"
 import Pagination from '../../../components/Pagination'
 import showDialog from './dialog/show-dialog'
+import VueVideoPlayer from '../../../components/VueVideoPlayer'
 import {
     getAreaList,
     getMessageType,
@@ -162,7 +178,7 @@ import {
 import {endUnix, startUnix, toTime} from "@/utils/util";
 
 export default {
-    components: { Pagination, showDialog },
+    components: { Pagination, showDialog, VueVideoPlayer },
     data() {
         return {
             // 数据列表加载动画
@@ -184,6 +200,7 @@ export default {
             },
             // 数据总条数
             total: 0,
+            playVisible: false,
             authAreaId: getCurrentUserAreaId(),
             isCollapse: true,
             areaData: getAreaList(true),
@@ -256,6 +273,12 @@ export default {
             let src = row.uri
             this.$nextTick(()=>{
                 this.$refs.myVideoPlayer.initSrc(src);
+            })
+        },
+        closeVideo(){
+            this.playVisible = false;
+            this.$nextTick(()=>{
+                this.$refs.myVideoPlayer.emptySrc();
             })
         },
         changeArea(val){

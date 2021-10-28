@@ -47,7 +47,7 @@
                 <el-table-column prop="areaStr" label="区域" align="center" width="150" />
                 <el-table-column prop="avatar" label="头像" align="center" width="150">
                     <template scope="scope">
-                        <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
+                        <el-image contain style="width: 50px; height: 50px" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"/>
                     </template>
                 </el-table-column>
                 <el-table-column prop="nickname" label="昵称" align="center"/>

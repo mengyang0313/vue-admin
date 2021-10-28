@@ -44,10 +44,12 @@
                 <el-table-column prop="thumb" label="文件" align="center" width="150">
                     <template scope="scope">
                         <div v-if="scope.row.type === 4">
-                            <el-image :fit="contain" style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
+                            <el-image contain style="width: 50px; height: 50px" :src="scope.row.uri" :preview-src-list="[scope.row.uri]"/>
                         </div>
-                        <div v-if="scope.row.type === 5">
-                            <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        <div v-if="scope.row.type === 5 || scope.row.type === 8">
+                            <div @click="play(scope.row)">
+                                <el-image style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                            </div>
                         </div>
                         <div v-if="scope.row.type === 6">
                             <div v-if="scope.row.uri">
@@ -132,7 +134,7 @@ export default {
                 let robotId = this.$route.query.robotId
                 let nickname = this.$route.query.nickname
                 if(!isEmpty(robotId)){
-                    this.search.entityId = robotId
+                    this.search.robotId = robotId
                     this.search.nickname = nickname
                     this.fetchData()
                 }

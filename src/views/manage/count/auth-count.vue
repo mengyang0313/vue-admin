@@ -11,20 +11,8 @@
                         class="search-form"
                     >
                         <template>
-                            <el-form-item label="主播Id">
-                                <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
-                            </el-form-item>
-                            <el-form-item label="主播等级">
-                                <el-select v-model="search.level" placeholder="请选择">
-                                    <el-option v-for="item in levelList"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
                             <el-form-item label="区域">
-                                <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                                <el-select v-model="searchCount.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
                                     <el-option v-for="item in areaList"
                                                :key="item.value"
                                                :label="item.label"
@@ -32,12 +20,13 @@
                                     </el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="日期" prop="settleAt">
+                            <el-form-item label="时间" prop="date">
                                 <el-date-picker
-                                    v-model="search.settleAtTime"
-                                    value-format="yyyy-MM-dd"
-                                    type="date"
-                                    placeholder="选择日期">
+                                    v-model="searchCount.date"
+                                    type="daterange"
+                                    range-separator="至"
+                                    start-placeholder="开始日期"
+                                    end-placeholder="结束日期">
                                 </el-date-picker>
                             </el-form-item>
                             <el-form-item>
@@ -45,23 +34,60 @@
                             </el-form-item>
                         </template>
                     </el-form>
-                </el-card>
-            </el-col>
-        </el-row>
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="selItem">
+                        <el-menu-item index="1">AIB接通率</el-menu-item>
+                        <el-menu-item index="2">接通率</el-menu-item>
+                    </el-menu>
 
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="selItem">
-            <el-menu-item index="1">AIB接通率</el-menu-item>
-            <el-menu-item index="2">接通率</el-menu-item>
-        </el-menu>
-
-        <el-row class="date-box" :gutter="30">
-            <el-col :span="24">
-                <el-card shadow="always" :body-style="{padding: '10px', paddingTop:'20px'}">
                     <ChartsLine :data="aibData" ref="chartsLine" class="data-chart"/>
                 </el-card>
             </el-col>
         </el-row>
+
+
         <el-card shadow="always" style="padding-top: 30px;padding-bottom: 50px">
+            <el-form
+                ref="searchForm"
+                :inline="true"
+                :model="search"
+                label-width="90px"
+                class="search-form"
+            >
+                <template>
+                    <el-form-item label="主播Id">
+                        <el-input v-model="search.anchorId" type="number" placeholder="主播Id"/>
+                    </el-form-item>
+                    <el-form-item label="主播等级">
+                        <el-select v-model="search.level" placeholder="请选择">
+                            <el-option v-for="item in levelList"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="区域">
+                        <el-select v-model="search.areaId" :disabled="authAreaId !== 0" placeholder="请选择">
+                            <el-option v-for="item in areaList"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="日期" prop="settleAt">
+                        <el-date-picker
+                            v-model="search.settleAtTime"
+                            value-format="yyyy-MM-dd"
+                            type="date"
+                            placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="onSearch">查  询</el-button>
+                    </el-form-item>
+                </template>
+            </el-form>
             <!-- 表格栏 -->
             <el-table
                 ref="multipleTable"
@@ -121,6 +147,17 @@ export default {
                 level: undefined,
                 anchorId: undefined,
                 settleAtTime: getCurrentDate(),
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            },
+            searchCount: {
+                areaId: undefined,
+                date: [
+                    getCurrentDate(-6),
+                    getCurrentDate()
+                ],
                 page: {
                     currentPage: 1,
                     pageSize: 10

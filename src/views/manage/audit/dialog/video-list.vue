@@ -14,7 +14,9 @@
                 <el-table-column prop="ownerId" label="所有者ID" align="center" width="150"/>
                 <el-table-column prop="thumb" label="视频" align="center">
                     <template scope="scope">
-                        <el-image @click="play(scope.row)" style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        <div @click="play(scope.row)">
+                            <el-image style="width: 50px; height: 50px" :src="scope.row.thumb" contain></el-image>
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="180"/>
