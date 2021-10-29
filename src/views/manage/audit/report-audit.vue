@@ -126,9 +126,7 @@ export default {
     components: {Pagination},
     data() {
         return {
-            // 数据列表加载动画
             listLoading: true,
-            // 查询列表参数对象
             search: {
                 areaId: 1,
                 scene: 0,

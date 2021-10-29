@@ -163,10 +163,10 @@ export default {
                 this.changeArea(row.areaId)
                 this.changeApp(row.appId)
             }else {
+                this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
                 this.form.appId = 0
                 this.changeArea(this.form.areaId)
                 this.changeApp(this.form.appId)
-                this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             }
         },
         submitForm() {

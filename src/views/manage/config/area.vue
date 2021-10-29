@@ -70,7 +70,7 @@
                 </el-table-column>
                 <el-table-column prop="convertRate" label="积分转换比例" align="center" width="120" />
                 <el-table-column prop="depositCommission" label="充值分成" align="center" width="120"/>
-                <el-table-column prop="rewardCommission" label="消费分成" align="center" width="120"/>
+                <el-table-column prop="rewardCommission" label="赠送分成" align="center" width="120"/>
                 <el-table-column prop="callPrice" label="通话价格" align="center" width="120"/>
                 <el-table-column prop="freeMessageCount" label="免费消息" align="center" width="120" />
                 <el-table-column prop="newUserReward" label="奖励钻石" align="center" width="120"/>
