@@ -127,6 +127,10 @@ export default {
             })
         },
         resetForm() {
+            this.form = {
+                enable: true,
+                areaId : undefined
+            }
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {

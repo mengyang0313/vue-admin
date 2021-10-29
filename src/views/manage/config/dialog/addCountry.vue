@@ -46,7 +46,7 @@
                     <div class="imgSpan2">只能上传jpg/png文件，50X50px</div>
                 </el-form-item>
                 <el-form-item label="汇率" prop="exchangeRate">
-                    <el-input-number v-model="form.exchangeRate" :min="0" style="width: 70%"></el-input-number>
+                    <el-input-number v-model="form.exchangeRate" :min="0" style="width: 50%"></el-input-number>
                 </el-form-item>
                 <el-form-item label="排序" prop="sort">
                     <el-input-number v-model="form.sort" :precision="0" :min="1" style="width: 30%"></el-input-number>
@@ -140,6 +140,9 @@ export default {
             return param
         },
         resetForm() {
+            this.form = {
+                areaId : getCurrentUserAreaId()
+            }
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {

@@ -103,9 +103,6 @@ export default {
                 ],
                 areaIds: [
                     {required: true, message: '内容不能为空', trigger: 'change'}
-                ],
-                enable: [
-                    {required: true, message: '内容不能为空', trigger: 'change'}
                 ]
             }
         }
@@ -136,6 +133,7 @@ export default {
             })
         },
         resetForm() {
+            this.form = {}
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {

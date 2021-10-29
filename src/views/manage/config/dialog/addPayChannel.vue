@@ -153,6 +153,9 @@ export default {
             })
         },
         resetForm() {
+            this.form = {
+                areaId : getCurrentUserAreaId()
+            }
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
