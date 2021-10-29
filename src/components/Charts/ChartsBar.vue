@@ -79,11 +79,11 @@ export default {
                         },
                         axisLabel: {
                             show: true,
-                            textStyle: {
-                                color: function(value, index){
-                                    return osData[index] === 1 ? "#080808" : "#485cef"
-                                }
-                            }
+                            // textStyle: {
+                            //     color: function(value, index){
+                            //         return osData[index] === 1 ? "#080808" : "#485cef"
+                            //     }
+                            // }
                         }
                     }
                 ],

@@ -251,6 +251,22 @@ import {getCurrentUserModules} from "@/utils/dist";
         ]
     },
     {
+        path: '/message',
+        name: 'message',
+        component: Layout,
+        children: [
+            {
+                path: 'message',
+                name: 'message',
+                component: () => import('../views/manage/message/message'),
+                meta: {
+                    title: '消息推送',
+                    icon: 'iconfont icon-gonghuiguanli'
+                }
+            }
+        ]
+    },
+    {
         path: '/config',
         name: 'config',
         component: Layout,

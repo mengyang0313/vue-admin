@@ -342,6 +342,9 @@ export function getAppName(arr, id){
     let label = ""
     let os = 0
     let isAnchor = false
+    if(isEmpty(id) || id === 0){
+        return {label:label, os:os, isAnchor: isAnchor}
+    }
     arr.forEach((item) => {
         if(typeof(item.value) !== "undefined"){
             if(id.toString() === item.value.toString()){
@@ -945,16 +948,16 @@ export function getHangType(key){
         value: 4,
         label: '客户端网络不好'
     }, {
-        value: 4,
+        value: 5,
         label: '余额不足'
     }, {
-        value: 4,
+        value: 6,
         label: '系统错误'
     }, {
-        value: 4,
+        value: 7,
         label: '声网超时'
     }, {
-        value: 4,
+        value: 8,
         label: '声网错误'
     }]
     if(typeof(key) != "undefined"){

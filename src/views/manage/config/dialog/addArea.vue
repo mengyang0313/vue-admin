@@ -12,7 +12,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="应用" prop="appId">
-                    <el-select v-model="form.appId" placeholder="请选择">
+                    <el-select v-model="form.appId" placeholder="请选择" @change="changeApp">
                         <el-option v-for="item in appList"
                                    :key="item.value"
                                    :label="item.label"
@@ -30,33 +30,33 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="积分转换比例" prop="convertRate">
+                <el-form-item label="积分转换比例" prop="convertRate" :hidden="isHidden">
                     <el-input-number v-model="form.convertRate" :min="0"></el-input-number>
                 </el-form-item>
-                <el-form-item label="充值分成比例" prop="depositCommission">
+                <el-form-item label="充值分成比例" prop="depositCommission" :hidden="isHidden">
                     <el-input-number v-model="form.depositCommission" :min="0" :max="100"></el-input-number>
                     &nbsp;%
                 </el-form-item>
-                <el-form-item label="赠送分成比例" prop="rewardCommission">
+                <el-form-item label="赠送分成比例" prop="rewardCommission" :hidden="isHidden">
                     <el-input-number v-model="form.rewardCommission" :min="0" :max="100"></el-input-number>
                     &nbsp;%
                 </el-form-item>
-                <el-form-item label="默认通话价格" prop="callPrice">
+                <el-form-item label="默认通话价格" prop="callPrice" :hidden="isHidden">
                     <el-input-number v-model="form.callPrice" :precision="0" :min="1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="免费消息数量" prop="freeMessageCount">
-                    <el-input-number v-model="form.freeMessageCount" :precision="0" :min="1"></el-input-number>
+                    <el-input-number v-model="form.freeMessageCount" :precision="0" :min="0"></el-input-number>
                 </el-form-item>
                 <el-form-item label="新用户奖励钻石" prop="newUserReward">
-                    <el-input-number v-model="form.newUserReward" :precision="0" :min="1"></el-input-number>
+                    <el-input-number v-model="form.newUserReward" :precision="0" :min="0"></el-input-number>
                 </el-form-item>
-                <el-form-item label="心跳间隔" prop="heartbeatInterval">
+                <el-form-item label="心跳间隔" prop="heartbeatInterval" :hidden="isHidden">
                     <el-input-number v-model="form.heartbeatInterval" :precision="0" :min="1"></el-input-number>&nbsp;秒
                 </el-form-item>
-                <el-form-item label="免打扰时长" prop="dndPeriod">
+                <el-form-item label="免打扰时长" prop="dndPeriod" :hidden="isHidden">
                     <el-input-number v-model="form.dndPeriod" :precision="0" :min="1"></el-input-number>&nbsp;秒
                 </el-form-item>
-                <el-form-item label="主播转换usd汇率" prop="anchorExchangeRate">
+                <el-form-item label="主播转换usd汇率" prop="anchorExchangeRate" :hidden="isHidden">
                     <el-input-number v-model="form.anchorExchangeRate" :precision="0" :min="1"></el-input-number>&nbsp;
                 </el-form-item>
                 <el-form-item label="是否启用AIA" prop="enableAia">
@@ -70,7 +70,7 @@
                         <el-checkbox v-for="item in payTypeList" :label="item.value" :key="item">{{ item.label }}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
-                <el-form-item label="支付渠道" prop="payChannelIds" :hidden="isPayChannel">
+                <el-form-item label="支付渠道" prop="payChannelIds" :hidden="!isHidden">
                     <el-select v-model="form.payChannelIds" multiple placeholder="请选择">
                         <el-option v-for="item in payChannelList"
                                    :key="item.value"
@@ -79,10 +79,10 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="cdn" prop="cdn">
+                <el-form-item label="cdn" prop="cdn" :hidden="isHidden">
                     <el-input v-model="form.cdn" placeholder="请输入" />
                 </el-form-item>
-                <el-form-item label="标签" prop="tags">
+                <el-form-item label="标签" prop="tags" :hidden="isHidden">
                     <el-tag
                         :key="tag"
                         v-for="tag in form.tagList"
@@ -141,40 +141,9 @@ export default {
             appList: [],
             payTypeList: getPayType(),
             payChannelList: [],
-            isPayChannel: true,
+            isHidden: true,
             authAreaId: getCurrentUserAreaId(),
-            rules: {
-                convertRate: [
-                    {required: true, message: '内容不能为空', trigger: 'change'}
-                ],
-                depositCommission: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                rewardCommission: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                callPrice: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                freeMessageCount: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                newUserReward: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                heartbeatInterval: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                dndPeriod: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                payTypes: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ],
-                cdn: [
-                    {required: true, message: '内容不能为空', trigger: 'blur'}
-                ]
-            }
+            rules: {}
         }
     },
     methods: {
@@ -194,7 +163,9 @@ export default {
                 this.changeArea(row.areaId)
                 this.changeApp(row.appId)
             }else {
+                this.form.appId = 0
                 this.changeArea(this.form.areaId)
+                this.changeApp(this.form.appId)
                 this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
             }
         },
@@ -248,11 +219,11 @@ export default {
             this.inputValue = '';
         },
         changeArea(val) {
-            this.appList = getAppListByAreaId(val, true)
+            this.appList = getAppListByAreaId(val, true, true)
             this.payChannelList = getPayChannelList(val)
         },
         changeApp(val) {
-            this.isPayChannel = val !== 0 && typeof(val) != "undefined" ? false : true
+            this.isHidden = !isEmpty(val)
         }
     }
 }

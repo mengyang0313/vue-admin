@@ -139,7 +139,7 @@ export function getTableList(param, url) {
 
 
 export function isEmpty(str){
-    if(typeof(str) === "undefined" || str === "undefined" || str === null || str === ""){
+    if(typeof(str) === "undefined" || str === "undefined" || str === null || str === "" || str === 0){
         return true;
     }
     return false;

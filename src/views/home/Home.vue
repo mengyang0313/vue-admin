@@ -238,13 +238,13 @@ export default {
                 let channelArr = []
                 statList.forEach(item => {
                     let app = getAppName($this.appList, item.getAppId())
-                    let title = app.label
+                    let osStr = app.os === 1 ? "android" : "ios"
+                    let title = app.label + "\n\r" + osStr
 
                     if(item.getNewIncome() > 0){
                         newArr.push({
                             title: title,
                             val1: toDollar(item.getNewIncome()),
-                            os: app.os
                         })
                     }
 
@@ -252,7 +252,6 @@ export default {
                         subArr.push({
                             title: title,
                             val1: toDollar(item.getSubIncome()),
-                            os: app.os
                         })
                     }
 
@@ -260,7 +259,6 @@ export default {
                         totalArr.push({
                             title: title,
                             val1: toDollar(item.getTotalIncome()),
-                            os: app.os
                         })
                     }
 
@@ -268,7 +266,6 @@ export default {
                         userArr.push({
                             title: title,
                             val1: item.getNewUser(),
-                            os: app.os
                         })
                     }
 
@@ -282,7 +279,6 @@ export default {
                             val2: appleIncome,
                             val3: otherIncome,
                             total: googleIncome + appleIncome + otherIncome,
-                            os: app.os
                         })
                     }
                 })

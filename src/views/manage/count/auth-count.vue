@@ -97,23 +97,26 @@
                 style="width: 100%"
                 size="medium"
             >
-                <el-table-column prop="anchorId" label="主播ID" align="center" />
-                <el-table-column prop="areaStr" label="区域" align="center"/>
-                <el-table-column prop="startAt" label="统计时间" align="center"/>
-                <el-table-column prop="onlineDuration" label="在线时长" align="center"/>
-                <el-table-column prop="inCall" label="来电数" align="center"  />
-                <el-table-column prop="outCall" label="呼出数" align="center"/>
-                <el-table-column prop="answer" label="接听数" align="center/>
+                <el-table-column prop="anchorId" label="主播ID" align="center" width="120"/>
+                <el-table-column prop="areaStr" label="区域" align="center" width="120"/>
+                <el-table-column prop="startAt" label="统计时间" align="center" width="170"/>
+                <el-table-column prop="onlineDuration" label="在线时长" align="center" width="100"/>
+                <el-table-column prop="inCall" label="来电数" align="center" width="100"/>
+                <el-table-column prop="inCallRatio" label="来电接通率" align="center" width="100"/>
+                <el-table-column prop="outCall" label="呼出数" align="center" width="100"/>
+                <el-table-column prop="answer" label="接听数" align="center" width="100"/>
                 <el-table-column prop="answer10" label="" align="center"/>
-                <el-table-column prop="answer30" label="通话30s" align="center"/>
-                <el-table-column prop="answer50" label="通话50s" align="center"/>
-                <el-table-column prop="duration" label="通话时长" align="center"/>
-                <el-table-column prop="callIncome" label="通话收入" align="center"/>
-                <el-table-column prop="giftIncome" label="礼物收入" align="center"/>
-                <el-table-column prop="commissionIncome" label="用户充值分成" align="center"/>
-                <el-table-column prop="adjustIncome" label="奖惩收入" align="center"/>
-                <el-table-column prop="expense" label="消耗贡献" align="center"/>
-                <el-table-column prop="userIncome" label="引导用户充值贡献" align="center"/>
+                <el-table-column prop="answer30" label="通话30s" align="center" width="100"/>
+                <el-table-column prop="answer50" label="通话50s" align="center" width="100"/>
+                <el-table-column prop="duration" label="通话时长" align="center" width="100"/>
+                <el-table-column prop="callIncome" label="通话收入" align="center" width="100"/>
+                <el-table-column prop="giftIncome" label="礼物收入" align="center" width="100"/>
+                <el-table-column prop="commissionIncome" label="用户充值分成" align="center" width="100"/>
+                <el-table-column prop="adjustIncome" label="奖惩收入" align="center" width="100"/>
+                <el-table-column prop="expense" label="消耗贡献" align="center" width="100"/>
+                <el-table-column prop="userIncome" label="引导用户充值贡献" align="center" width="100"/>
+                <el-table-column label="操作" align="center" width="1" fixed="right">
+                </el-table-column>
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -213,6 +216,7 @@ export default {
                         "anchorId" : item.getAnchorId(),
                         "onlineDuration" : $this.formatSeconds(item.getOnlineDuration()),
                         "inCall" : item.getInCall(),
+                        "inCallRatio": $this.toRatio(item.getAnswer(), item.getInCall()) + "%",
                         "outCall" : item.getOutCall(),
                         "answer" : item.getAnswer(),
                         "answer30" : item.getAnswer30(),

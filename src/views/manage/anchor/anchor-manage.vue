@@ -166,9 +166,7 @@
                 </el-table-column>
                 <el-table-column prop="blockStatusStr" label="封禁状态" align="center" width="120">
                     <template slot-scope="scope">
-                        <div slot="reference">
-                            <el-tag @click="toDialog('blockStatus',scope.row)" v-if="scope.row.blockStatusStr!=''" size="medium">{{ scope.row.blockStatusStr }}</el-tag>
-                        </div>
+                        <el-link type="primary" @click="toDialog('blockList',scope.row)"> {{ scope.row.blockStatusStr }}</el-link>
                     </template>
                 </el-table-column>
                 <el-table-column prop="balance" label="余额" align="center" width="120" />
@@ -198,7 +196,6 @@
                         <el-button type="text" @click="toDialog('incentive', scope.row)">更新奖惩</el-button><br/>
                         <el-button type="text" @click="toDialog('multiAccount', scope.row)">多帐号</el-button>
                         <el-button type="text" @click="toDialog('migrate', scope.row)">帐号迁移</el-button>
-                        <el-button type="text" @click="toDialog('merge', scope.row)">帐号合并</el-button>
 
                         <span v-if="scope.row.reviewStatus === 5" style="padding-right:10px;padding-left:10px;">
                             <el-button type="text" @click="stopAccount(scope.row)">停用</el-button>
@@ -214,23 +211,14 @@
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                         @pagination="fetchData()" @changePageSize="changePageSize($event)"/>
 
-            <!-- 视频记录 弹出栏 -->
-            <videoList ref="videoList" @fetchData="fetchData"/>
-
-            <!-- 账户状态 弹出栏 -->
-            <accountStatusList ref="accountStatusList" @fetchData="fetchData"/>
-
-            <!-- 资料管理 弹出栏 -->
-            <dataList ref="dataList" @fetchData="fetchData"/>
-
-            <!-- 银行信息 弹出栏 -->
-            <bankInfo ref="bankInfo" @fetchData="fetchData"/>
-
             <!-- 更新信息 弹出栏 -->
             <updateInfo ref="updateInfo" @fetchData="fetchData"/>
 
             <!-- 封禁设备 弹出栏 -->
             <block ref="block" @fetchData="fetchData"/>
+
+            <!-- 封禁历史 弹出栏 -->
+            <blockList ref="blockList" @fetchData="fetchData"/>
 
             <!-- 认证主播 弹出栏 -->
             <auth ref="auth" @fetchData="fetchData"/>
@@ -272,23 +260,19 @@ import {
     getGuildListByAreaId,
     ipToAddress, getAppListByAreaId
 } from "@/utils/dist";
-import videoList from './dialog/video-list'
-import accountStatusList from './dialog/account-status-list'
-import dataList from './dialog/dataInfo'
 import block from './dialog/block'
+import blockList from './dialog/block-list'
 import auth from './dialog/auth'
-import bankInfo from './dialog/bank-info'
 import updateInfo from './dialog/update-info'
 import incentive from './dialog/incentive'
 import multiAccount from './dialog/multi-account'
 import migrate from './dialog/migrate'
-import merge from './dialog/merge'
 import Child from './anchor-info';
 import {endUnix, startUnix, toTime} from "@/utils/util";
 
 
 export default {
-    components: { Pagination, Child, videoList, accountStatusList, dataList, block, auth, bankInfo, updateInfo, incentive, multiAccount, migrate, merge},
+    components: { Pagination, Child, block, blockList, auth, updateInfo, incentive, multiAccount, migrate},
     data() {
         return {
             // 数据列表加载动画

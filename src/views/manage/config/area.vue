@@ -87,14 +87,16 @@
                 <el-table-column prop="tags" label="标签配置" align="center" width="820" />
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text">
-                            <router-link :to="{path:'./country',query: {areaId: scope.row.areaId,areaName: scope.row.areaStr}}">国家配置</router-link>
-                        </el-button>
-                        <el-button type="text" @click="toDialog('ossConfig', scope.row)">OSS配置</el-button>
-                        <el-button type="text" @click="toDialog('agoraConfig', scope.row)">声网配置</el-button>
-                        <el-button type="text" @click="toDialog('rongcloudConfig', scope.row)">融云配置</el-button>
-                        <el-button type="text" @click="toDialog('greenConfig', scope.row)">鉴黄配置</el-button>
                         <el-button type="text" @click="toDialog('addArea', scope.row)">参数配置</el-button>
+                        <div :hidden="scope.row.isHidden">
+                            <el-button type="text">
+                                <router-link :to="{path:'./country',query: {areaId: scope.row.areaId,areaName: scope.row.areaStr}}">国家配置</router-link>
+                            </el-button>
+                            <el-button type="text" @click="toDialog('ossConfig', scope.row)">OSS配置</el-button>
+                            <el-button type="text" @click="toDialog('agoraConfig', scope.row)">声网配置</el-button>
+                            <el-button type="text" @click="toDialog('rongcloudConfig', scope.row)">融云配置</el-button>
+                            <el-button type="text" @click="toDialog('greenConfig', scope.row)">鉴黄配置</el-button>
+                        </div>
                     </template>
                 </el-table-column>
             </el-table>
@@ -135,6 +137,7 @@ import {
     getAppName,
     getCurrentUserAreaId
 } from "@/utils/dist";
+import {isEmpty} from "@/api/api";
 
 export default {
     components: { Pagination, imageShow, addArea, ossConfig, agoraConfig, rongcloudConfig, greenConfig},
@@ -177,6 +180,7 @@ export default {
                         "areaStr" : getArrName($this.areaList, item.getAreaId()),
                         "appId" : item.getAppId(),
                         "app" : getAppName(getAppListByAreaId($this.search.areaId, false), item.getAppId()),
+                        "isHidden" : !isEmpty(item.getAppId()),
                         "convertRate" : item.getConvertRate(),
                         "depositCommission" : item.getDepositCommission(),
                         "rewardCommission" : item.getRewardCommission(),
@@ -199,6 +203,7 @@ export default {
                         "greenConfigJson": $this.toJsonGreenConfig(item.getGreenConfig()),
                         "enableAia": item.getEnableAia(),
                         "matchInterval": item.getMatchInterval(),
+                        "payChannelIds": item.getPayChannelIdsList(),
                         "struct" : item
                     }
                     data.push(json)

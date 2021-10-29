@@ -62,16 +62,18 @@
         </el-row>
 
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="selItem">
-            <el-menu-item index="1">整体收入</el-menu-item>
-            <el-menu-item index="2">新增收入</el-menu-item>
-            <el-menu-item index="3">整体付费率</el-menu-item>
-            <el-menu-item index="4">新增付费率</el-menu-item>
-            <el-menu-item index="5">新增用户数</el-menu-item>
-            <el-menu-item index="10">活跃用户数</el-menu-item>
-            <el-menu-item index="6">付费用户数</el-menu-item>
-            <el-menu-item index="7">接通率</el-menu-item>
-            <el-menu-item index="8">平均通话时长</el-menu-item>
-            <el-menu-item index="9">ARPU</el-menu-item>
+            <el-menu-item index="1">活跃用户数</el-menu-item>
+            <el-menu-item index="2">ARPU</el-menu-item>
+            <el-menu-item index="3">整体收入</el-menu-item>
+            <el-menu-item index="4">付费用户数</el-menu-item>
+            <el-menu-item index="5">整体付费率</el-menu-item>
+            <el-menu-item index="6">接通率</el-menu-item>
+            <el-menu-item index="7">平均通话时长</el-menu-item>
+            <el-menu-item index="8">新增收入</el-menu-item>
+            <el-menu-item index="9">新增用户数</el-menu-item>
+            <el-menu-item index="10">新增付费率</el-menu-item>
+            <el-menu-item index="11">送钻消耗比</el-menu-item>
+            <el-menu-item index="12">消息消耗比</el-menu-item>
         </el-menu>
 
         <el-row class="date-box" :gutter="30">
@@ -91,7 +93,7 @@
             style="width: 100%"
             size="medium"
         >
-            <el-table-column prop="date" label="日期" align="center" width="200" />
+            <el-table-column prop="date" label="日期" align="center" width="180" />
             <el-table-column prop="app" label="APP" align="center" width="120">
                 <template scope="scope">
                     <div slot="reference">
@@ -105,16 +107,22 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="areaName" label="区域" align="center" width="120" />
+            <el-table-column prop="areaName" label="区域" align="center" width="100"/>
+            <el-table-column prop="activeUser" label="活跃用户数" align="center" width="120"/>
+            <el-table-column prop="arpu" label="ARPU" align="center" width="120"/>
             <el-table-column prop="income" label="整体收入" align="center" width="120"/>
-            <el-table-column prop="newIncome" label="新增收入" align="center" width="120"/>
+            <el-table-column prop="payUser" label="付费用户数" align="center" width="120"/>
             <el-table-column prop="payPaidRatio" label="整体付费率" align="center" width="120"/>
-            <el-table-column prop="newPayPaidRatio" label="新增付费率" align="center" width="120"/>
+            <el-table-column prop="answerRatio" label="接通率" align="center" width="120"/>
+            <el-table-column prop="durationRatio" label="平均通话时长" align="center" width="120"/>
+            <el-table-column prop="newIncome" label="新增收入" align="center" width="120"/>
             <el-table-column prop="newUser" label="新增用户数" align="center" width="120"/>
-            <el-table-column prop="payUser" label="付费用户数" align="center"/>
-            <el-table-column prop="answerRatio" label="接通率" align="center"/>
-            <el-table-column prop="durationRatio" label="平均通话时长" align="center"/>
-            <el-table-column prop="arpu" label="ARPU" align="center"/>
+            <el-table-column prop="newPayPaidRatio" label="新增付费率" align="center" width="120"/>
+            <el-table-column prop="newFreeDiamondConsume" label="送钻消耗比" align="center" width="120"/>
+            <el-table-column prop="newFreeMessageConsume" label="消息消耗比" align="center" width="120"/>
+
+            <el-table-column label="操作" align="center" width="1" fixed="right">
+            </el-table-column>
         </el-table>
         <!-- 分页栏 -->
         <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -162,64 +170,9 @@ export default {
             authAreaId: getCurrentUserAreaId(),
             appList: undefined,
             areaList: getAreaList(true),
-            areaListAll: getAreaList(false),
+            areaListAll: getAreaList(true),
             intervalList: getStatInterval(),
-            incomeData: {
-                title: '整体收入',
-                legend: ['整体收入'],
-                values: []
-            },
-            newIncomeData: {
-                title: '新增收入',
-                legend: ['新增收入']
-            },
-            payPaidRatioData: {
-                title: '整体付费率',
-                legend: ['整体付费率'],
-                values: []
-            },
-            newPayPaidRatioData: {
-                title: '新增付费率',
-                legend: ['新增付费率'],
-                keys: [],
-                values: []
-            },
-            activeUserData: {
-                title: '活跃用户数',
-                legend: ['活跃用户'],
-                keys: [],
-                values: []
-            },
-            newUserData: {
-                title: '新增用户数',
-                legend: ['新增用户'],
-                keys: [],
-                values: []
-            },
-            payUserData: {
-                title: '付费用户数',
-                legend: ['付费率用户'],
-                keys: [],
-                values: []
-            },
-            answerRatioData: {
-                title: '接通率',
-                legend: ['接通率'],
-                keys: [],
-                values: []
-            },
-            durationAverageData: {
-                title: '平均通话时长',
-                legend: ['通话时长'],
-                keys: [],
-                values: []
-            },
-            arpuData: {
-                title: 'ARPU',
-                legend: ['ARPU'],
-                keys: [],
-                values: []
-            }
+            data: {}
         }
     },
     mounted() {
@@ -239,45 +192,54 @@ export default {
                 const list = result.getStatsList()
                 let keys = []
                 let tableData = []
-
                 let fmt = $this.toFmt(param)
 
-                let incomes = []
-                let newIncomes = []
-                let payPaidRatios = []
-                let newPayPaidRatios = []
-                let activeUser = []
-                let newUser = []
-                let payUser = []
-                let answerRatios = []
-                let durationAverages = []
-                let arpus = []
+                let incomeJson = $this.format("整体收入", "整体收入",'$')
+                let newIncomeJson = $this.format("新增收入", "新增收入",'$')
+                let payPaidRatioJson = $this.format("整体付费率", "整体付费率",'%')
+                let newPayPaidRatioJson = $this.format("新增付费率", "新增付费率",'%')
+                let activeUserJson = $this.format("活跃用户数", "活跃用户数",'')
+                let newUserJson = $this.format("新增用户数", "新增用户数",'')
+                let payUserJson = $this.format("付费用户数", "付费用户数",'')
+                let newFreeDiamondConsumeJson = $this.format("送钻消耗比", "送钻消耗比",'%')
+                let newFreeMessageConsumeJson = $this.format("消息消耗比", "消息消耗比",'%')
+                let answerRatioJson = $this.format("接通率", "接通率",'%')
+                let durationAverageJson = $this.format("平均通话时长", "平均通话时长",'')
+                let arpuJson = $this.format("ARPU", "ARPU",'$')
+
                 list.forEach((item, index)=>{
                     let startAt = item.getStartAt()
                     keys.push(new Date(startAt * 1000).format(fmt))
-                    incomes.push(toDollar(item.getIncome()))
-                    newIncomes.push(toDollar(item.getNewIncome()))
+
+                    incomeJson.values[0].push(toDollar(item.getIncome()))
+                    newIncomeJson.values[0].push(toDollar(item.getNewIncome()))
 
                     let payPaidRatio = $this.toRatio(item.getPayUser(), item.getActiveUser())
-                    payPaidRatios.push(payPaidRatio)
+                    payPaidRatioJson.values[0].push(payPaidRatio)
 
                     let newPayPaidRatio = $this.toRatio(item.getNewPayUser(), item.getNewUser())
-                    newPayPaidRatios.push(newPayPaidRatio)
+                    newPayPaidRatioJson.values[0].push(newPayPaidRatio)
 
-                    activeUser.push(item.getActiveUser())
+                    activeUserJson.values[0].push(item.getActiveUser())
 
-                    newUser.push(item.getNewUser())
+                    newUserJson.values[0].push(item.getNewUser())
 
-                    payUser.push(item.getPayUser())
+                    payUserJson.values[0].push(item.getPayUser())
+
+                    let newFreeDiamondConsumeRatio = $this.toRatio(item.getNewCallUser(), item.getNewUser())
+                    newFreeDiamondConsumeJson.values[0].push(newFreeDiamondConsumeRatio)
+
+                    let newFreeMessageConsumeRatio = $this.toRatio(item.getNewChatUser(), item.getNewUser())
+                    newFreeMessageConsumeJson.values[0].push(newFreeMessageConsumeRatio)
 
                     let answerRatio = $this.toRatio(item.getAnswer(), item.getCall())
-                    answerRatios.push(answerRatio)
+                    answerRatioJson.values[0].push(answerRatio)
 
                     let durationAverage = $this.toAve(item.getDuration(), item.getAnswer())
-                    durationAverages.push(durationAverage)
+                    durationAverageJson.values[0].push(durationAverage)
 
                     let arpu = $this.toAve(item.getIncome(), item.getActiveUser())
-                    arpus.push(toDollar(arpu))
+                    arpuJson.values[0].push(toDollar(arpu))
 
                     // 列表数据
                     const json = {
@@ -293,68 +255,52 @@ export default {
                         "newPayPaidRatio" : newPayPaidRatio+ "%",
                         "newUser" : item.getNewUser(),
                         "payUser" : item.getPayUser(),
+                        "newFreeDiamondConsume" : newFreeDiamondConsumeRatio + "%",
+                        "newFreeMessageConsume" : newFreeMessageConsumeRatio + "%",
                         "answerRatio" : answerRatio+ "%",
                         "durationRatio" : durationAverage,
-                        "arpu" : toDollar(arpu)+ "$"
+                        "arpu" : toDollar(arpu)+ "$",
+                        "activeUser": item.getActiveUser()
                     }
                     tableData.push(json)
                 })
-                //整体收入
-                $this.incomeData.keys = keys
-                $this.incomeData.values = []
-                $this.incomeData.unit = '$'
-                $this.incomeData.values.push(incomes)
 
-                //新增收入
-                $this.newIncomeData.keys = keys
-                $this.newIncomeData.values = []
-                $this.newIncomeData.unit = '$'
-                $this.newIncomeData.values.push(newIncomes)
+                incomeJson.keys = keys
+                $this.data.incomeJson = incomeJson
 
-                //整体付费率
-                $this.payPaidRatioData.keys = keys
-                $this.payPaidRatioData.values = []
-                $this.payPaidRatioData.unit = '%'
-                $this.payPaidRatioData.values.push(payPaidRatios)
+                newIncomeJson.keys = keys
+                $this.data.newIncomeJson = newIncomeJson
 
-                //新增付费率
-                $this.newPayPaidRatioData.keys = keys
-                $this.newPayPaidRatioData.values = []
-                $this.newPayPaidRatioData.unit = '%'
-                $this.newPayPaidRatioData.values.push(newPayPaidRatios)
+                payPaidRatioJson.keys = keys
+                $this.data.payPaidRatioJson = payPaidRatioJson
 
-                //活跃用户数
-                $this.activeUserData.keys = keys
-                $this.activeUserData.values = []
-                $this.activeUserData.values.push(activeUser)
+                newPayPaidRatioJson.keys = keys
+                $this.data.newPayPaidRatioJson = newPayPaidRatioJson
 
-                //新增用户数
-                $this.newUserData.keys = keys
-                $this.newUserData.values = []
-                $this.newUserData.values.push(newUser)
+                activeUserJson.keys = keys
+                $this.data.activeUserJson = activeUserJson
 
-                //付费用户数
-                $this.payUserData.keys = keys
-                $this.payUserData.values = []
-                $this.payUserData.values.push(payUser)
+                newUserJson.keys = keys
+                $this.data.newUserJson = newUserJson
 
-                //接通率
-                $this.answerRatioData.keys = keys
-                $this.answerRatioData.values = []
-                $this.answerRatioData.unit = '%'
-                $this.answerRatioData.values.push(answerRatios)
+                payUserJson.keys = keys
+                $this.data.payUserJson = payUserJson
 
-                //平均通话时长
-                $this.durationAverageData.keys = keys
-                $this.durationAverageData.values = []
-                $this.durationAverageData.unit = 'S'
-                $this.durationAverageData.values.push(durationAverages)
+                newFreeDiamondConsumeJson.keys = keys
+                $this.data.newFreeDiamondConsumeJson = newFreeDiamondConsumeJson
 
-                // ARPU
-                $this.arpuData.keys = keys
-                $this.arpuData.values = []
-                $this.arpuData.unit = '$'
-                $this.arpuData.values.push(arpus)
+                newFreeMessageConsumeJson.keys = keys
+                $this.data.newFreeMessageConsumeJson = newFreeMessageConsumeJson
+
+                answerRatioJson.keys = keys
+                $this.data.answerRatioJson = answerRatioJson
+
+                durationAverageJson.keys = keys
+                $this.data.durationAverageJson = durationAverageJson
+
+                arpuJson.keys = keys
+                $this.data.arpuJson = arpuJson
+
 
                 $this.total = tableData.length
                 $this.tableData = tableData
@@ -362,6 +308,18 @@ export default {
 
                 $this.selItem($this.activeIndex)
             });
+        },
+        format(title, subtitle, unit){
+            let json = {
+                    title: title,
+                    legend: [subtitle],
+                    unit: unit,
+                    keys: [],
+                    values: [
+                        []
+                    ]
+                }
+            return json
         },
         toFmt(param){
             let fmt = "MM-dd hh:mm";
@@ -402,34 +360,40 @@ export default {
             this.currentDate = {}
             switch (key){
                 case '1':
-                    this.currentDate = this.incomeData
+                    this.currentDate = this.data.activeUserJson
                     break;
                 case '2':
-                    this.currentDate = this.newIncomeData
+                    this.currentDate = this.data.arpuJson
                     break;
                 case '3':
-                    this.currentDate = this.payPaidRatioData
+                    this.currentDate = this.data.incomeJson
                     break;
                 case '4':
-                    this.currentDate = this.newPayPaidRatioData
+                    this.currentDate = this.data.payUserJson
                     break;
                 case '5':
-                    this.currentDate = this.newUserData
+                    this.currentDate = this.data.payPaidRatioJson
                     break;
                 case '6':
-                    this.currentDate = this.payUserData
+                    this.currentDate = this.data.answerRatioJson
                     break;
                 case '7':
-                    this.currentDate = this.answerRatioData
+                    this.currentDate = this.data.durationAverageJson
                     break;
                 case '8':
-                    this.currentDate = this.durationAverageData
+                    this.currentDate = this.data.newIncomeJson
                     break;
                 case '9':
-                    this.currentDate = this.arpuData
+                    this.currentDate = this.data.newUserJson
                     break;
                 case '10':
-                    this.currentDate = this.activeUserData
+                    this.currentDate = this.data.newPayPaidRatioJson
+                    break;
+                case '11':
+                    this.currentDate = this.data.newFreeDiamondConsumeJson
+                    break;
+                case '12':
+                    this.currentDate = this.data.newFreeMessageConsumeJson
                     break;
             }
             this.activeIndex = key

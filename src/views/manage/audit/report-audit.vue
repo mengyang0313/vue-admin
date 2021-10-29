@@ -97,8 +97,8 @@
                 <el-table-column prop="dealAt" label="处理时间" align="center" width="150"/>
                 <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="primary" plain size="mini" :disabled="scope.row.forbid" @click="processViolation(scope.row)">处理</el-button>
-                        <el-button type="success" plain size="mini" @click="processViolation(scope.row)">忽略</el-button>
+                        <el-button type="text" plain size="mini" :disabled="scope.row.forbid" @click="handlePassed(scope.row)">处理</el-button>
+                        <el-button type="text" plain size="mini" @click="handleRefuse(scope.row)">忽略</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -213,7 +213,7 @@ export default {
                 });
             })
         },
-        // 拒绝
+        // 忽略
         handleRefuse(index, row) {
             const $this = this
             this.$prompt('', '通过原因', {
@@ -222,11 +222,11 @@ export default {
             }).then(({ value }) => {
                 let param = {
                     "violationId" : row.id,
-                    "dealStatus" : 4,
+                    "dealStatus" : 0,
                     "dealMessage" : value
                 }
                 this.$service.audit.processViolation(param, function (result){
-                    result ? $this.$message.success("已拒绝 !") : $this.$message.error("拒绝失败 !")
+                    result ? $this.$message.success("已忽略 !") : $this.$message.error("失败 !")
                     this.fetchData()
                 });
             })
