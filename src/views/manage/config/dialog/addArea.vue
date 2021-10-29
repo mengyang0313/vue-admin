@@ -12,7 +12,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="应用" prop="appId">
-                    <el-select v-model="form.appId" placeholder="请选择" @change="changeApp">
+                    <el-select v-model="form.appId" @change="changeApp" placeholder="请选择">
                         <el-option v-for="item in appList"
                                    :key="item.value"
                                    :label="item.label"
@@ -129,6 +129,7 @@ export default {
         return {
             form: {
                 areaId : getCurrentUserAreaId(),
+                appId: 0,
                 payTypes: [],
                 tagList: []
             },
@@ -164,7 +165,6 @@ export default {
                 this.changeApp(row.appId)
             }else {
                 this.form.areaId = this.authAreaId === 0 ? this.areaList[0].value : this.authAreaId
-                this.form.appId = 0
                 this.changeArea(this.form.areaId)
                 this.changeApp(this.form.appId)
             }
