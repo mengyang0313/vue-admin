@@ -192,6 +192,11 @@ export default {
             return param
         },
         resetForm() {
+            this.form = {
+                areaId : getCurrentUserAreaId(),
+                payTypes: [],
+                tagList: []
+            }
             this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
