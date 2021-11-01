@@ -457,8 +457,8 @@ export function getReviewStatus(key){
 
 
 //
-export function getReportedTypes(){
-    return [{
+export function getReportedTypes(key){
+    let arr = [{
         value: 0,
         label: '全部'
     }, {
@@ -468,6 +468,21 @@ export function getReportedTypes(){
         value: 2,
         label: '主播'
     }]
+
+    if(typeof(key) != "undefined"){
+        let label = ""
+        if(key===0){
+            return label
+        }
+        arr.forEach((item) => {
+            if(key.toString() === item.value.toString()){
+                label = item.label
+            }
+        })
+        return label
+    }else{
+        return arr
+    }
 }
 
 
@@ -502,7 +517,7 @@ export function getOnlineStatus(key){
             value: 3,
             label: '忙线'
         }, {
-            value: 3,
+            value: 4,
             label: '勿扰'
         }]
 
@@ -629,7 +644,7 @@ export function getBlockTime(key){
     if(typeof(key) != "undefined"){
         let label = ""
         arr.forEach((item) => {
-            if(key.toString() === item.value.toString()){
+            if(key === item.value || key*2 === item.value){
                 label = item.label
             }
         })

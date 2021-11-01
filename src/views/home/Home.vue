@@ -6,16 +6,16 @@
                     <div class="date-block">
                         <div class="date-cont">
                             <div v-if="item.num === 3" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000" :decimals="item.decimals"/>{{ item.unit }}
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="1000"/>{{ item.unit }}
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="500" :decimals="item.decimals"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="500" :decimals="item.decimals"/>{{ item.unit }}
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count3" :duration="500"/>{{ item.unit }}
                             </div>
                             <div v-else-if="item.num === 2" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000" :decimals="item.decimals"/>
-                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="1000"/>
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="500" :decimals="item.decimals"/>
+                                /<CountTo class="count-min" :start-val="0" :end-val="item.count2" :duration="500"/>
                             </div>
                             <div v-else-if="item.num === 1" style="display: inline">
-                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="1000"/>
+                                <CountTo class="count-min" :start-val="0" :end-val="item.count" :duration="500"/>
                             </div>
                             <p class="title">{{ item.title }}</p>
                         </div>

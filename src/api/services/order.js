@@ -22,6 +22,7 @@ export default class {
         req.setPayType(param.payType)
         req.setOrderId(param.payChannel)
         req.setSubscriptionOnly(param.isSubscription)
+        req.setNewUserOnly(param.newUserOnly)
         req.setCreatedStart(param.createdStartUint)
         req.setCreatedEnd(param.createdEndUint)
 

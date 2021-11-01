@@ -11158,7 +11158,8 @@ proto.pb.cms.PayListRequest.toObject = function(includeInstance, msg) {
     orderId: jspb.Message.getFieldWithDefault(msg, 9, ""),
     subscriptionOnly: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
     createdStart: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    createdEnd: jspb.Message.getFieldWithDefault(msg, 12, 0)
+    createdEnd: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    newUserOnly: jspb.Message.getBooleanFieldWithDefault(msg, 13, false)
   };
 
   if (includeInstance) {
@@ -11242,6 +11243,10 @@ proto.pb.cms.PayListRequest.deserializeBinaryFromReader = function(msg, reader) 
     case 12:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setCreatedEnd(value);
+      break;
+    case 13:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setNewUserOnly(value);
       break;
     default:
       reader.skipField();
@@ -11353,6 +11358,13 @@ proto.pb.cms.PayListRequest.serializeBinaryToWriter = function(message, writer) 
   if (f !== 0) {
     writer.writeUint32(
       12,
+      f
+    );
+  }
+  f = message.getNewUserOnly();
+  if (f) {
+    writer.writeBool(
+      13,
       f
     );
   }
@@ -11572,6 +11584,24 @@ proto.pb.cms.PayListRequest.prototype.getCreatedEnd = function() {
  */
 proto.pb.cms.PayListRequest.prototype.setCreatedEnd = function(value) {
   return jspb.Message.setProto3IntField(this, 12, value);
+};
+
+
+/**
+ * optional bool new_user_only = 13;
+ * @return {boolean}
+ */
+proto.pb.cms.PayListRequest.prototype.getNewUserOnly = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 13, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.cms.PayListRequest} returns this
+ */
+proto.pb.cms.PayListRequest.prototype.setNewUserOnly = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 13, value);
 };
 
 

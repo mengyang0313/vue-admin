@@ -111,6 +111,10 @@ service CmsSdk {
     rpc SaveProfile (AnchorProfile) returns (AnchorProfile) {
     }
 
+    // 删除文件
+    rpc DeleteFile (FileRecord) returns (Empty) {
+    }
+
     // 获取举报记录
     rpc GetViolationList (ViolationListRequest) returns (ViolationListReply) {
     }
@@ -728,6 +732,8 @@ message PayListRequest {
     uint32 created_start = 11;
     // 创建结束时间
     uint32 created_end = 12;
+    // 仅查询新用户订单
+    bool new_user_only = 13;
 }
 
 message PayListReply {

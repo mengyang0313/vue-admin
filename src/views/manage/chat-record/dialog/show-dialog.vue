@@ -1,7 +1,6 @@
 <template>
-    <el-dialog title="对话" :visible.sync="dialogVisible" append-to-body width="80%" :before-close="closeDialog">
-        <div class="table-classic-wrapper">
-            <el-card shadow="always">
+    <el-dialog title="对话" :visible.sync="dialogVisible" append-to-body width="70%" :before-close="closeDialog">
+        <div class="table-classic-wrapper" style="padding-bottom: 20px">
                 <!-- 表格栏 -->
                 <el-table
                     ref="multipleTable"
@@ -40,7 +39,6 @@
                 <!-- 分页栏 -->
                 <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                             @pagination="fetchData"/>
-            </el-card>
         </div>
     </el-dialog>
 </template>

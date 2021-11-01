@@ -9,11 +9,12 @@
                 label-width="90px"
                 class="search-form"
             >
-                <el-form-item label="用户ID" prop="userId">
-                    <el-input v-model="search.userId" type="number" placeholder="用户ID"/>
-                </el-form-item>
+
                 <el-form-item label="订单号" prop="recordId">
                     <el-input v-model="search.recordId" type="number" placeholder="订单号"/>
+                </el-form-item>
+                <el-form-item label="新用户订单">
+                    <el-switch v-model="search.newUserOnly" />
                 </el-form-item>
                 <el-form-item label="订单状态" prop="payStatus">
                     <el-select v-model="search.payStatus" placeholder="请选择">
@@ -36,17 +37,8 @@
                             {{isCollapse ? '展开' : '收起'}}
                         </template>
                         <div>
-                            <el-form-item label="渠道订单号" prop="payChannel">
-                                <el-input v-model="search.payChannel" placeholder="渠道订单号"/>
-                            </el-form-item>
-                            <el-form-item label="支付方式" prop="payType">
-                                <el-select v-model="search.payType" placeholder="请选择">
-                                    <el-option v-for="item in payTypeList"
-                                               :key="item.value"
-                                               :label="item.label"
-                                               :value="item.value">
-                                    </el-option>
-                                </el-select>
+                            <el-form-item label="用户ID" prop="userId">
+                                <el-input v-model="search.userId" type="number" placeholder="用户ID"/>
                             </el-form-item>
                             <el-form-item label="区域" prop="areaId">
                                 <el-select v-model="search.areaId" @change="changeArea" :disabled="authAreaId !== 0" placeholder="请选择">
@@ -70,6 +62,18 @@
                                         <span v-else-if="item.os === 2">
                                             <i class="icon-pingguo" style="float: right"></i>
                                         </span>
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="渠道订单号" prop="payChannel">
+                                <el-input v-model="search.payChannel" placeholder="渠道订单号"/>
+                            </el-form-item>
+                            <el-form-item label="支付方式" prop="payType">
+                                <el-select v-model="search.payType" placeholder="请选择">
+                                    <el-option v-for="item in payTypeList"
+                                               :key="item.value"
+                                               :label="item.label"
+                                               :value="item.value">
                                     </el-option>
                                 </el-select>
                             </el-form-item>
@@ -183,6 +187,7 @@ export default {
                 areaId: getCurrentUserAreaId(),
                 payStatus: 0,
                 isSubscription: false,
+                newUserOnly: false,
                 page: {
                     currentPage: 1,
                     pageSize: 10

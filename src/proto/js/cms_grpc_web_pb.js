@@ -2160,6 +2160,86 @@ proto.pb.cms.CmsSdkPromiseClient.prototype.saveProfile =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.pb.FileRecord,
+ *   !proto.pb.Empty>}
+ */
+const methodDescriptor_CmsSdk_DeleteFile = new grpc.web.MethodDescriptor(
+  '/pb.cms.CmsSdk/DeleteFile',
+  grpc.web.MethodType.UNARY,
+  usertype_pb.FileRecord,
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.FileRecord} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.pb.FileRecord,
+ *   !proto.pb.Empty>}
+ */
+const methodInfo_CmsSdk_DeleteFile = new grpc.web.AbstractClientBase.MethodInfo(
+  usertype_pb.Empty,
+  /**
+   * @param {!proto.pb.FileRecord} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  usertype_pb.Empty.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.pb.FileRecord} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.pb.Empty)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.pb.Empty>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.pb.cms.CmsSdkClient.prototype.deleteFile =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteFile',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteFile,
+      callback);
+};
+
+
+/**
+ * @param {!proto.pb.FileRecord} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.pb.Empty>}
+ *     Promise that resolves to the response
+ */
+proto.pb.cms.CmsSdkPromiseClient.prototype.deleteFile =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/pb.cms.CmsSdk/DeleteFile',
+      request,
+      metadata || {},
+      methodDescriptor_CmsSdk_DeleteFile);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.pb.cms.ViolationListRequest,
  *   !proto.pb.cms.ViolationListReply>}
  */

@@ -21,12 +21,11 @@
                 </el-table-column>
                 <el-table-column prop="areaStr" label="区域" align="center" width="180"/>
                 <el-table-column prop="type" label="文件类型" align="center" width="180"/>
-<!--                <el-table-column label="操作" align="center" width="250" fixed="right">
+                <el-table-column label="操作" align="center" width="250" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="passed(scope.row)">通过</el-button>
                         <el-button type="text" @click="delVideo(scope.row)">删除</el-button>
                     </template>
-                </el-table-column>-->
+                </el-table-column>
             </el-table>
             <!-- 分页栏 -->
             <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -112,6 +111,17 @@ export default {
             this.$nextTick(()=>{
                 this.$refs.myVideoPlayer.emptySrc();
             })
+        },
+        delVideo(row) {
+            const $this = this
+            let param = {
+                "id" : row.id,
+                "status" : 4
+            }
+            this.$service.file.deleteFile(param, function (result){
+                result ? $this.$message.success("已删除 !") : $this.$message.error("删除失败 !")
+                $this.fetchData()
+            });
         },
         closeDialog() {
             this.dialogVisible = false

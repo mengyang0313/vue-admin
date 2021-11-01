@@ -1,7 +1,6 @@
 <template>
-    <el-dialog title="封禁历史" :visible.sync="dialogVisible" append-to-body width="80%" :before-close="closeDialog">
-        <div class="table-classic-wrapper">
-            <el-card shadow="always">
+    <el-dialog title="封禁历史" :visible.sync="dialogVisible" append-to-body width="60%" :before-close="closeDialog">
+        <div class="table-classic-wrapper" style="padding-bottom: 20px">
                 <!-- 表格栏 -->
                 <el-table
                     ref="multipleTable"
@@ -12,22 +11,17 @@
                     size="medium"
                 >
                     <el-table-column type="selection" width="60"/>
-                    <el-table-column prop="id" label="举报Id" align="center" width="120" />
-                    <el-table-column prop="reporterId" label="举报方" align="center" width="120" />
-                    <el-table-column prop="reportedId" label="被举报方" align="center" width="120" />
-                    <el-table-column prop="violationTypeStr" label="举报类型" align="center" width="200"/>
-                    <el-table-column prop="violationSceneStr" label="举报场景" align="center" width="100"/>
-                    <el-table-column prop="reportMessage" label="举报信息" align="center" width="150"/>
-                    <el-table-column prop="createdAt" label="举报时间" align="center" width="150"/>
-                    <el-table-column prop="dealStatusStr" label="处理状态" align="center" width="150"/>
-                    <el-table-column prop="dealMessage" label="处理信息" align="center" width="150"/>
-                    <el-table-column prop="dealAt" label="处理时间" align="center" width="150"/>
+                    <el-table-column prop="createdAt" label="封禁时间" align="center" width="150"/>
+                    <el-table-column prop="reportedId" label="主播Id" align="center" width="120" />
+                    <el-table-column prop="dealStatusStr" label="封禁状态" align="center" width="150"/>
+                    <el-table-column prop="dealMessage" label="封禁信息" align="center" />
+                    <el-table-column prop="blockDuration" label="封禁时常" align="center"/>
+                    <el-table-column prop="dealAt" label="处理时间" align="center" />
                 </el-table>
                 <!-- 分页栏 -->
                 <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
                             @pagination="fetchData"/>
 
-            </el-card>d
         </div>
     </el-dialog>
 </template>
@@ -38,7 +32,7 @@ import {
     getAppList,
     getAppName,
     getAreaList,
-    getBlockStatus,
+    getBlockStatus, getBlockTime,
     getMessageType,
     getViolationScene,
     getViolationType
@@ -88,16 +82,13 @@ export default {
                         "id" : item.getId(),
                         "reporterId" : item.getReporterId(),
                         "reportedId" : item.getReportedId(),
-                        "violationType" : item.getViolationType(),
-                        "violationTypeStr" : getViolationType(false, item.getViolationType()),
-                        "violationScene" : item.getViolationScene(),
-                        "violationSceneStr" : getViolationScene(false, item.getViolationScene()),
                         "reportMessage" : item.getReportMessage(),
                         "createdAt" : toTime(item.getCreatedAt()),
                         "dealStatus" : item.getDealStatus(),
                         "dealStatusStr" : getBlockStatus(false, item.getDealStatus()),
                         "dealMessage" : item.getDealMessage(),
-                        "dealAt" : item.getDealAt()
+                        "dealAt" : toTime(item.getDealAt()),
+                        "blockDuration": getBlockTime(item.getBlockDuration())
                     }
                     data.push(json)
                 })
@@ -120,9 +111,6 @@ export default {
 
 <style lang="less">
 .table-classic-wrapper {
-    .el-card {
-        min-height: 656px;
-    }
 
     .control-btns {
         margin-bottom: 20px;

@@ -1,7 +1,6 @@
 <template>
     <el-dialog title="已有视频" :visible.sync="dialogVisible" append-to-body width="80%" :before-close="closeDialog">
-        <div class="table-classic-wrapper">
-            <el-card shadow="always">
+        <div class="table-classic-wrapper" style="padding-bottom: 20px">
                 <!-- 表格栏 -->
                 <el-table
                     ref="multipleTable"
@@ -44,7 +43,6 @@
                         <VueVideoPlayer ref="myVideoPlayer"></VueVideoPlayer>
                     </div>
                 </el-dialog>
-            </el-card>
         </div>
     </el-dialog>
 </template>

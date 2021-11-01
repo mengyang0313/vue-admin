@@ -85,12 +85,15 @@ export default class {
         const req = new this.proto.ViolationListRequest()
         req.setPageNo(param.page.currentPage)
         req.setPageSize(param.page.pageSize)
+        req.setDealStatusList([2,3])
         req.setScene(param.scene)
-        req.setAreaId(param.areaId)
-        req.setReportedType(this.proto.EntityType.ENTITYUSER)
+        req.setReporterType(param.reporterType)
+        req.setReporterId(param.reporterId)
+        req.setReportedType(param.reportedType)
+        req.setReportedId(param.reportedId)
         req.setCreatedStart(param.createdStart)
         req.setCreatedEnd(param.createdEnd)
-        req.setReportedId(param.reporterId)
+
 
         const metadata = {'token': getToken()};
         this.client.getViolationList(req, metadata, (err, resp) => {
@@ -108,10 +111,10 @@ export default class {
      */
     async processViolation (param, callback) {
         let req = new this.proto.ProcessViolationRequest()
-        req.setViolationId(param.violationId)
+        req.setViolationId(param.entityId)
         req.setDealStatus(param.dealStatus)
         req.setDealMessage(param.dealMessage)
-        req.setBlockDuration(param.blockDuration)
+        req.setBlockDuration(param.duration)
 
         const metadata = {'token': getToken()}
         this.client.processViolation(req, metadata, (err, resp) => {
