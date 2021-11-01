@@ -83,8 +83,9 @@ export default {
         fetchData() {
             let $this = this
             let data = []
-            this.videoList.forEach(item => {
+            this.videoList.forEach((item, index) => {
                 let json = {
+                    "index" : index,
                     "id" : item.getId(),
                     "app" : getAppName($this.appList, item.getAppId()),
                     "areaStr" : getArrName($this.areaList, item.getAreaId()),
@@ -120,9 +121,11 @@ export default {
             }
             this.$service.file.deleteFile(param, function (result){
                 result ? $this.$message.success("已删除 !") : $this.$message.error("删除失败 !")
+                $this.videoList.splice(row.index, 1);
                 $this.fetchData()
             });
         },
+
         closeDialog() {
             this.dialogVisible = false
             this.resetForm()
