@@ -11,12 +11,18 @@
                     size="medium"
                 >
                     <el-table-column type="selection" width="60"/>
-                    <el-table-column prop="createdAt" label="封禁时间" align="center" width="150"/>
                     <el-table-column prop="reportedId" label="主播Id" align="center" width="120" />
                     <el-table-column prop="dealStatusStr" label="封禁状态" align="center" width="150"/>
                     <el-table-column prop="dealMessage" label="封禁信息" align="center" />
                     <el-table-column prop="blockDuration" label="封禁时常" align="center"/>
-                    <el-table-column prop="dealAt" label="处理时间" align="center" />
+                    <el-table-column prop="dealAt" label="封禁时间" align="center" />
+                    <el-table-column prop="revoked" label="是否撤销" align="center">
+                        <template scope="scope">
+                            <div slot="reference">
+                                <el-switch v-model="scope.row.revoked" disabled/>
+                            </div>
+                        </template>
+                    </el-table-column>
                 </el-table>
                 <!-- 分页栏 -->
                 <Pagination :total="total" :page.sync="search.page.currentPage" :limit.sync="search.page.pageSize"
@@ -88,7 +94,8 @@ export default {
                         "dealStatusStr" : getBlockStatus(false, item.getDealStatus()),
                         "dealMessage" : item.getDealMessage(),
                         "dealAt" : toTime(item.getDealAt()),
-                        "blockDuration": getBlockTime(item.getBlockDuration())
+                        "blockDuration": getBlockTime(item.getBlockDuration()),
+                        "revoked": item.getRevoked()
                     }
                     data.push(json)
                 })

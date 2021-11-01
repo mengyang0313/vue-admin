@@ -62,9 +62,9 @@
         </el-row>
 
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="selItem">
+            <el-menu-item index="3">整体收入</el-menu-item>
             <el-menu-item index="1">活跃用户数</el-menu-item>
             <el-menu-item index="2">ARPU</el-menu-item>
-            <el-menu-item index="3">整体收入</el-menu-item>
             <el-menu-item index="4">付费用户数</el-menu-item>
             <el-menu-item index="5">整体付费率</el-menu-item>
             <el-menu-item index="6">接通率</el-menu-item>
@@ -108,9 +108,9 @@
                 </template>
             </el-table-column>
             <el-table-column prop="areaName" label="区域" align="center" width="100"/>
+            <el-table-column prop="income" label="整体收入" align="center" width="120"/>
             <el-table-column prop="activeUser" label="活跃用户数" align="center" width="120"/>
             <el-table-column prop="arpu" label="ARPU" align="center" width="120"/>
-            <el-table-column prop="income" label="整体收入" align="center" width="120"/>
             <el-table-column prop="payUser" label="付费用户数" align="center" width="120"/>
             <el-table-column prop="payPaidRatio" label="整体付费率" align="center" width="120"/>
             <el-table-column prop="answerRatio" label="接通率" align="center" width="120"/>
@@ -165,7 +165,7 @@ export default {
                 }
             },
             total: 0,
-            activeIndex: '1',
+            activeIndex: '3',
             currentDate: {},
             authAreaId: getCurrentUserAreaId(),
             appList: undefined,

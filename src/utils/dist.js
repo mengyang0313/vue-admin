@@ -628,6 +628,9 @@ export function getBlockTime(key){
         value: 24 * 60 * 60,
         label: '1天'
     }, {
+        value: 3 * 24 * 60 * 60,
+        label: '3天'
+    }, {
         value: 7 * 24 * 60 * 60,
         label: '7天'
     }, {
@@ -644,8 +647,11 @@ export function getBlockTime(key){
     if(typeof(key) != "undefined"){
         let label = ""
         arr.forEach((item) => {
-            if(key === item.value || key*2 === item.value){
+            if(key === item.value ){
                 label = item.label
+            }
+            if(key >= arr[arr.length-1].value){
+                label = arr[arr.length-1].label
             }
         })
         return label

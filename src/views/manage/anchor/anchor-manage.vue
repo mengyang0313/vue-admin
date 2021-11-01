@@ -306,7 +306,7 @@ export default {
             anchorLevel: getAnchorLevel(),
             reviewStatus: getReviewStatus(),
             onlineStatus: getOnlineStatus(),
-            blockStatusList : getBlockStatus(false),
+            blockStatusList : getBlockStatus(true),
             appList: [],
             appListAll: getAppList(false)
         }
