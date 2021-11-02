@@ -86,6 +86,7 @@ export default class {
         req.setPageNo(param.page.currentPage)
         req.setPageSize(param.page.pageSize)
         req.setDealStatusList([2,3])
+        req.setAreaId(param.areaId)
         req.setScene(param.scene)
         req.setReporterType(param.reporterType)
         req.setReporterId(param.reporterId)

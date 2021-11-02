@@ -12,7 +12,7 @@
                 >
                     <el-table-column type="selection" width="60"/>
                     <el-table-column prop="reportedId" label="主播Id" align="center" width="120" />
-                    <el-table-column prop="dealStatusStr" label="封禁状态" align="center" width="150"/>
+                    <el-table-column prop="dealStatusStr" label="处理操作" align="center" width="150"/>
                     <el-table-column prop="dealMessage" label="封禁信息" align="center" />
                     <el-table-column prop="blockDuration" label="封禁时常" align="center"/>
                     <el-table-column prop="dealAt" label="封禁时间" align="center" />

@@ -134,6 +134,14 @@ import {getCurrentUserModules} from "@/utils/dist";
                 meta: {
                     title: '主播详情'
                 }
+            },
+            {
+                path: 'blockLog',
+                name: 'blockLog',
+                component: () => import('../views/manage/anchor/block-log'),
+                meta: {
+                    title: '封禁历史'
+                }
             }
         ]
     },
@@ -280,6 +288,14 @@ import {getCurrentUserModules} from "@/utils/dist";
                 path: 'area',
                 name: 'area',
                 component: () => import('../views/manage/config/area'),
+                meta: {
+                    title: '区域管理'
+                }
+            },
+            {
+                path: 'areaConfig',
+                name: 'areaConfig',
+                component: () => import('../views/manage/config/areaConfig'),
                 meta: {
                     title: '区域配置'
                 }

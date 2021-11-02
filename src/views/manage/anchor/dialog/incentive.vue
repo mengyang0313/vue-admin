@@ -1,36 +1,20 @@
 <template>
-    <el-dialog title="更新奖惩" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
+    <el-dialog title="奖惩" :visible.sync="dialogVisible" append-to-body width="50%" :before-close="closeDialog">
         <div class="form-list-wrapper">
             <el-form ref="ruleForm" :model="form" :rules="rules" label-width="150px" class="form-list">
-                <el-form-item label="主播Id：" prop="uid">
-                    <el-input v-model="form.uid" placeholder="请输入" :disabled="true"/>
+                <el-form-item label="主播Id：" prop="id">
+                    <el-input v-model="form.id" :disabled="true"/>
                 </el-form-item>
-                <el-form-item label="用户昵称" prop="nickname">
-                    <el-input v-model="form.nickname" placeholder="请输入" :disabled="true"/>
+                <el-form-item label="钻石数量" prop="amount">
+                    <el-input-number v-model="form.amount"></el-input-number>
+                    <div class="imgSpan2">正数为增加，负数为扣除</div>
                 </el-form-item>
-
-                <el-form-item label="奖励类型" prop="type">
-                    <el-select v-model="form.type" placeholder="请选择">
-                        <el-option
-                            v-for="item in incentiveType"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
+                <el-form-item label="是否通知" prop="sendNotify">
+                    <el-switch v-model="form.sendNotify"/>
                 </el-form-item>
-
-                <el-form-item label="操作金额" prop="nickname">
-                    <el-input v-model="form.nickname" placeholder="请输入" :disabled="true"/>
-                </el-form-item>
-
-                <el-form-item label="是否发送通知：" prop="bool">
-                    <el-switch v-model="form.bool"/>
-                </el-form-item>
-
-                <el-form-item label="通知内容" prop="reason">
+                <el-form-item label="备注" prop="desc">
                     <el-input
-                        v-model="form.reason"
+                        v-model="form.desc"
                         type="textarea"
                         :autosize="{ minRows: 3, maxRows: 5 }"
                         placeholder="请输入内容"
@@ -49,43 +33,53 @@
 </template>
 
 <script>
-import { incentiveType } from '@/dict/index'
 
 export default {
-    components: { incentiveType },
+    components: {  },
     data() {
         return {
             form: {
-                uid: '',
-                nickname: ''
+                id: '',
+                nickname: '',
+                amount: 100,
+                sendNotify: false,
+                desc: ''
             },
-            incentiveType,
-            dialogVisible: false
+            dialogVisible: false,
+            rules: {
+                amount: [
+                    {required: true, message: '不能为空', trigger: 'blur'}
+                ]
+            }
         }
     },
     methods: {
         init(row){
-            this.form.uid = row.anchorId
+            this.form.id = row.id
             this.form.nickname = row.nickname
         },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
+        submitForm() {
+            const $this = this
+            this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    // 此处添加后端接口
-                    alert('提交成功!')
-                } else {
-                    console.log('提交失败!')
-                    return false
+                    this.$service.anchor.adjustBalance(this.form, function (result){
+                        if (result) {
+                            $this.$message.success("保存成功!")
+                            $this.closeDialog()
+                        } else {
+                            $this.$message.error("保存失败!")
+                        }
+                    })
                 }
             })
-        },
-        resetForm() {
-            this.$refs.ruleForm.resetFields()
         },
         closeDialog() {
             this.dialogVisible = false
             this.resetForm()
-            this.$emit('fetchData');
+            this.$emit('fetchData')
+        },
+        resetForm() {
+            this.$refs.ruleForm.resetFields()
         }
     }
 }
@@ -93,6 +87,8 @@ export default {
 
 <style lang="less">
 .form-list-wrapper {
+    .el-card {
+    }
     .form-list {
         width: 80%;
         margin: 0 auto;

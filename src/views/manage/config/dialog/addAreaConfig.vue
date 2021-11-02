@@ -136,7 +136,7 @@ export default {
             dialogVisible: false,
             imgDialogVisible: false,
             inputVisible: false,
-            title: '新增区域',
+            title: '新增区域配置',
             inputValue: '',
             areaList: getAreaList(false),
             appList: [],
@@ -150,7 +150,7 @@ export default {
     methods: {
         init(row){
             if(typeof(row.id) != "undefined"){
-                this.title = '编辑区域'
+                this.title = '编辑区域配置'
                 this.form = row
                 if(typeof(row.tags) !== "undefined"){
                     this.form.tagList = row.tags.split(",")

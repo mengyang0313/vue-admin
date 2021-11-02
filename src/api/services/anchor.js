@@ -153,4 +153,25 @@ export default class {
     }
 
 
+    /**
+     * 更新奖励惩罚
+     */
+    async adjustBalance ( param, callback) {
+        const req = new this.proto.AdjustBalanceRequest()
+        req.setEntityType(this.proto.EntityType.ENTITYANCHOR)
+        req.setEntityId(param.id)
+        req.setAmount(param.amount)
+        req.setSendNotify(param.sendNotify)
+        req.setDesc(param.desc)
+
+        const metadata = {'token': getToken()};
+        this.client.adjustBalance(req, metadata, (err, resp) => {
+            if (!err) {
+                callback(resp)
+            } else {
+                error(err)
+            }
+        })
+    }
+
 }
