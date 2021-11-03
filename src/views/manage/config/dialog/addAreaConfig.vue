@@ -42,7 +42,7 @@
                     &nbsp;%
                 </el-form-item>
                 <el-form-item label="默认通话价格" prop="callPrice" :hidden="isHidden">
-                    <el-input-number v-model="form.callPrice" :precision="0" :min="1"></el-input-number>
+                    <el-input-number v-model="form.callPrice" :precision="0" :min="0" ></el-input-number>
                 </el-form-item>
                 <el-form-item label="免费消息数量" prop="freeMessageCount">
                     <el-input-number v-model="form.freeMessageCount" :precision="0" :min="0"></el-input-number>
@@ -51,13 +51,13 @@
                     <el-input-number v-model="form.newUserReward" :precision="0" :min="0"></el-input-number>
                 </el-form-item>
                 <el-form-item label="心跳间隔" prop="heartbeatInterval" :hidden="isHidden">
-                    <el-input-number v-model="form.heartbeatInterval" :precision="0" :min="1"></el-input-number>&nbsp;秒
+                    <el-input-number v-model="form.heartbeatInterval" :precision="0" :min="0"></el-input-number>&nbsp;秒
                 </el-form-item>
                 <el-form-item label="免打扰时长" prop="dndPeriod" :hidden="isHidden">
-                    <el-input-number v-model="form.dndPeriod" :precision="0" :min="1"></el-input-number>&nbsp;秒
+                    <el-input-number v-model="form.dndPeriod" :precision="0" :min="0"></el-input-number>&nbsp;秒
                 </el-form-item>
                 <el-form-item label="主播转换usd汇率" prop="anchorExchangeRate" :hidden="isHidden">
-                    <el-input-number v-model="form.anchorExchangeRate" :precision="0" :min="1"></el-input-number>&nbsp;
+                    <el-input-number v-model="form.anchorExchangeRate" :precision="0" :min="0"></el-input-number>&nbsp;
                 </el-form-item>
                 <el-form-item label="是否启用AIA" prop="enableAia">
                     <el-switch v-model="form.enableAia"/>

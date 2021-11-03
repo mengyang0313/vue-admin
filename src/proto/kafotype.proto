@@ -1,0 +1,198 @@
+syntax = "proto3";
+
+package pb;
+
+import "usertype.proto";
+
+// grpc预定义了一套通用错误码 https://grpc.github.io/grpc/core/md_doc_statuscodes.html
+// 程序使用了其中的部分错误码，这个错误码直接通过捕获rpc的异常或者返回值获取，使用的错误码如下
+// 2 UNKNOWN 未知错误
+// 3 INVALID_ARGUMENT 调用参数非法
+// 5 NOT_FOUND 查询的记录不存在
+// 6 ALREADY_EXISTS 创建的记录已存在
+// 7 PERMISSION_DENIED 没有操作权限
+// 9 FAILED_PRECONDITION 前置条件不满足，用户已被封禁，检测到该错误时跳到封禁页面并调用GetBlockInfo获取封禁的详细信息
+// 13 INTERNAL 内部服务器错误
+// 14 UNAVAILABLE 网络错误或超时，app本地错误，请求没有到服务器
+// 16 UNAUTHENTICATED 未登录，检测到该错误时跳到登录页面
+// 其中需要特殊处理的是"2 UNKNOWN 未知错误"，检测到该错误码时表示为业务层错误，需要通过返回的header来获取详细的
+// 业务层错误码，业务层错误码通过枚举ErrorCode定义，header的key为"error-code"
+
+
+// 动态
+message Moment {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 实体类型，主播或用户
+    EntityType entity_type = 4;
+    // 主播或用户id
+    uint32 entity_id = 5;
+    // 审核状态
+    ReviewStatus status = 6;
+    // 文本内容
+    string content = 7;
+    // 图片地址
+    repeated string images = 8;
+    // 视频地址
+    string video = 9;
+    // 视频截图
+    string thumb = 10;
+
+    // 发布时间
+    uint32 publish_at = 11;
+    // 点赞次数
+    uint32 likes = 12;
+    // 是否点赞
+    uint32 is_like = 13;
+    // 评论次数
+    uint32 comments = 14;
+    // 是否评论
+    uint32 is_comment = 15;
+    // 是否收藏
+    uint32 is_collect = 16;
+
+    // 关注状态
+    FollowStatus follow_status = 20;
+
+    uint32 updated_at = 30;
+    uint32 created_at = 31;
+
+    // 昵称
+    string nickname = 40;
+    // 头像
+    string avatar = 41;
+
+}
+
+
+// 评论
+message Comment {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 发布者类型
+    EntityType post_type = 4;
+    // 发布者id
+    uint32 post_id = 5;
+    // 审核状态
+    ReviewStatus status = 6;
+    // 评论对象类型
+    EntityType entity_type = 7;
+    // 评论对象id
+    uint64 entity_id = 8;
+    // 评论内容
+    string content = 9;
+
+    uint32 created_at = 21;
+
+    // 昵称
+    string nickname = 40;
+    // 头像
+    string avatar = 41;
+}
+
+
+// 动态元信息
+message MomentMate {
+    uint64 id = 1;
+    // 应用id
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 发布者类型
+    EntityType post_type = 4;
+    // 发布者id
+    uint32 post_id = 5;
+    // 审核状态
+    ReviewStatus status = 6;
+    // 实体对象类型
+    EntityType entity_type = 7;
+    // 实体对象id
+    uint64 entity_id = 8;
+    // 实体所有者 id
+    uint64 entity_owner_uid = 9;
+    // 评论内容
+    string content = 10;
+
+    uint32 created_at = 21;
+
+    // 动态
+    Moment moment = 30;
+
+    // 昵称
+    string nickname = 40;
+    // 头像
+    string avatar = 41;
+}
+
+
+
+// 用户礼物记录
+message GiftUserRecord {
+    uint64 id = 1;
+    // 所属APP
+    uint32 app_id = 2;
+    // 区域id
+    uint32 area_id = 3;
+    // 用户id
+    uint32 user_id = 4;
+    // 礼物id
+    uint32 gift_id = 5;
+    // 数量
+    uint32 quantity = 6;
+
+    uint32 created_at = 20;
+
+    // 礼物类型
+    GiftType type = 30;
+    // 商品本地化名称，客户端使用
+    string name = 31;
+    // 图标地址
+    string icon = 32;
+    // 动效地址
+    string animation = 33;
+}
+
+
+// 动态类型
+enum MomentType {
+    MomentUnknown = 0;
+    // 文字
+    MomentText = 1;
+    // 文字+图片
+    MomentTextImg = 2;
+    // 文字+视频
+    MomentTextVideo = 3;
+    // 视频
+    MomentVideo = 4;
+}
+
+// 动态列表类型
+enum MomentListType {
+    MomentListUnknown = 0;
+    // 关注
+    MomentListFollow = 1;
+    // 广场
+    MomentListSquare = 2;
+    // 个人
+    MomentListUser = 3;
+}
+
+
+// 收藏状态
+enum CollectStatus {
+    CollectStatusUnknown = 0;
+    // 收藏
+    CollectStatusYes = 1;
+    // 取消收藏
+    CollectStatusNo = 2;
+}
+
+
+message Empty {
+}

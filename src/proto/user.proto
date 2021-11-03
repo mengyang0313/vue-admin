@@ -364,7 +364,7 @@ message AnchorInfoRequest {
 message AnchorIdsReply {
     // 关注列表
     repeated uint32 follow_ids = 1;
-    // 拉黑列表
+    // 拉黑列表SendGiftRequest
     repeated uint32 block_ids = 2;
 }
 
@@ -440,7 +440,7 @@ message SearchAnchorReply {
 }
 
 message SendGiftRequest {
-    // 礼物id
+    // 礼物idf
     uint32 gift_id = 1;
     // 数量
     uint32 quantity = 2;

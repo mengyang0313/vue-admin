@@ -56,7 +56,7 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="点赞次数" prop="likes">
-                    <el-input-number v-model="form.likes" :min="1"></el-input-number>
+                    <el-input-number v-model="form.likes" :min="0"></el-input-number>
                 </el-form-item>
                 <el-form-item label="发布时间" prop="likes">
                     <el-date-picker

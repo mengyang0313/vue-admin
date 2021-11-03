@@ -126,6 +126,8 @@ enum EntityType {
     EntityLikeRecord = 17;
     // 评论
     EntityComment = 18;
+    // 收藏
+    EntityCollectRecord = 19;
 }
 
 // 网络类型

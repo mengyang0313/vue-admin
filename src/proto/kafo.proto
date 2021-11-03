@@ -1,0 +1,160 @@
+syntax = "proto3";
+
+package pb.user;
+
+import "kafotype.proto";
+
+// 所有接口都需要在请求时通过metadata（类似http header）设置appkey
+// 除开GetAreaList接口的其他结构都需要通过metadata设置area-id（区域id）
+// 除开GetAreaList和Login无需登录状态外，其他接口都需要在登录之后调用，需要通过metadata设置token
+service UserSdk {
+
+    // 获取动态信息流列表
+    rpc GetMomentList (MomentListRequest) returns (MomentListReply) {
+    }
+
+    // 获取动态图片/视频流列表
+    rpc GetMomentMediaList (MomentMediaListRequest) returns (MomentMediaListReply) {
+    }
+
+    // 获取动态详情
+    rpc GetMomentInfo (MomentInfoRequest) returns (Moment) {
+    }
+
+    // 发布朋友圈
+    rpc SaveMoment (Moment) returns (Moment) {
+    }
+
+    // 发布评论
+    rpc SaveComment (Comment) returns (Comment) {
+    }
+
+    // 删除评论
+    rpc DeleteComment (DeleteCommentRequest) returns (Empty) {
+    }
+
+    // 点赞/取消点赞
+    rpc Like (LikeRequest) returns (Empty) {
+    }
+
+    // 收藏/取消收藏
+    rpc collect (CollectRequest) returns (Empty) {
+    }
+
+    // 获取评论/点赞/收藏列表
+    rpc GetMomentMetaList (MomentMetaListRequest) returns (MomentMetaListReply) {
+    }
+
+    // 获取用户礼物记录
+    rpc GetGiftUserList (GiftUserListRequest) returns (GiftUserListReply) {
+    }
+
+    // 更新用户标签
+    rpc UpdateUserTag (UpdateUserTagRequest) returns (Empty) {
+    }
+
+}
+
+message MomentListRequest {
+    // 请求数量
+    uint32 count = 1;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 2;
+    // 动态列表类型
+    MomentListType list_type = 3;
+    // 实体id
+    uint32 entity_id = 4;
+}
+
+message MomentListReply {
+    // 动态列表
+    repeated Moment moments = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message MomentMediaListRequest {
+    // 请求数量
+    uint32 count = 1;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 2;
+}
+
+message MomentMediaListReply {
+    // 动态列表
+    repeated Moment moments = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+message MomentInfoRequest {
+    // 动态Id
+    uint32 moment_id = 1;
+}
+
+message DeleteCommentRequest {
+    uint32 comment_id = 1;
+}
+
+message LikeRequest {
+    // 实体类型
+    EntityType entity_type = 1;
+    // 实体id
+    uint64 entity_id = 2;
+    // 点赞次数，正数点赞，负数取消点赞
+    int32 count = 3;
+}
+
+
+message CollectRequest {
+    // 实体类型
+    EntityType entity_type = 1;
+    // 实体id
+    uint64 entity_id = 2;
+    // 收藏状态
+    CollectStatus status = 3;
+}
+
+message MomentMetaListRequest {
+    // 请求数量
+    uint32 count = 1;
+    // 分页游标，第一次请求时为空，后续分页需要传值
+    string cursor = 2;
+    // 实体类型
+    EntityType entity_type = 3;
+    // 实体id
+    uint32 entity_id = 4;
+}
+
+message MomentMetaListReply {
+    // 数据列表
+    repeated MomentMeta metas = 1;
+    // 分页游标，请求下一页是需要在请求中传该值
+    string cursor = 2;
+    // 是否还有更多
+    bool has_more = 3;
+}
+
+
+message GiftUserListRequest {
+    // 用户Id
+    uint32 user_id = 1;
+}
+
+message GiftUserListReply {
+    // 礼物列表
+    repeated GiftUserRecord gifts = 1;
+}
+
+
+message UpdateUserTagRequest {
+    // 用户Id
+    uint32 user_id = 1;
+    // 标签
+    repeated string tags = 2;
+}
+

@@ -26,7 +26,7 @@ export default {
                 this.isRouterAlive = true;
             })
             initRouter(function (){
-                //location.reload()
+                location.reload()
             })
         }
     }

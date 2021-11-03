@@ -55,7 +55,7 @@
                 </el-form-item>
 
                 <el-form-item label="时间间隔" prop="interval">
-                    <el-input-number v-model="form.interval" :min="1"></el-input-number>  秒
+                    <el-input-number v-model="form.interval" :min="0"></el-input-number>  秒
                 </el-form-item>
                 <el-form-item label="是否开启" prop="enable">
                     <el-switch v-model="form.enable"/>
